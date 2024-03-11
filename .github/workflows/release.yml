@@ -1,0 +1,41 @@
+name: release
+on:
+  push:
+    tags:
+      - 'releases/stable-*'
+      - 'releases/test-release/*'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # call other workflows
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.9
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install poetry
+          poetry install
+      - name: Run tests
+        env:
+          TEST_ELO_IX_URL: ${{ secrets.TEST_ELO_IX_URL }}
+          TEST_ELO_IX_USER: ${{ secrets.TEST_ELO_IX_USER }}
+          TEST_ELO_IX_PASSWORD: ${{ secrets.TEST_ELO_IX_PASSWORD }}
+        run: poetry run python -m unittest discover test
+      - name: Build documentation
+        run: make html SPHINXBUILD="poetry run sphinx-build"
+      - name: Archive documentation
+        uses: actions/upload-artifact@v4
+        with:
+          name: documentation
+          path: _build/html
+  deploy:
+      - name: Deploy to githubpages
+        uses: actions/deploy-pages
+        with:
+          artifact_name: documentation
+          token: ${{ secrets.GITHUB_TOKEN }}
