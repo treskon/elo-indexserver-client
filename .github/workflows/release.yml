@@ -53,5 +53,4 @@ jobs:
         - name: Deploy to githubpages
           uses: actions/upload-pages-artifact@v3
           with:
-            artifact_name: documentation
-            token: ${{ secrets.GITHUB_TOKEN }}
+            name: documentation
