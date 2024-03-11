@@ -16,4 +16,8 @@ jobs:
           pip install poetry
           poetry install
       - name: Run tests
+        env:
+          TEST_ELO_IX_URL: ${{ secrets.TEST_ELO_IX_URL }}
+          TEST_ELO_USERNAME: ${{ secrets.TEST_ELO_USERNAME }}
+          TEST_ELO_PASSWORD: ${{ secrets.TEST_ELO_PASSWORD }}
         run: poetry run python -m unittest discover test
