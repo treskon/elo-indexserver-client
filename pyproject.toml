@@ -2,6 +2,7 @@
 name = "elo-indexserver-client"
 version = "0.1.9"
 description = "A client library for accessing indexserver REST API of the ECM system ELO Digital Office."
+repository = "https://github.com/treskon/elo-indexserver-client"
 
 authors = [
     "Manuel Eiweck <manuel.eiweck@treskon.at>"
@@ -11,7 +12,7 @@ maintainers = [
     "Treskon GmbH <internal-dev@treskon.at>",
     "Manuel Eiweck <manuel.eiweck@treskon.at>"
 ]
-documentation = "https://install.portrait.app/elo-indexserver-client/html/"
+documentation = "https://treskon.github.io/elo-indexserver-client/"
 
 readme = "README.md"
 packages = [
