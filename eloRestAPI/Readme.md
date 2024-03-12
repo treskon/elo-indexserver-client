@@ -11,14 +11,13 @@ Also notice that other resources are available at http://eloServer.com:6056/ix-A
 In addition, there is a small example from elo directly:
 * https://eloServer.com/ix-Archive/js-api-examples/rest/index.html
 
-### Client generated
+### Client generation
 
 based on the openapi.json we can generate a client to make our life easier
 
 Tool used https://github.com/openapi-generators/openapi-python-client
 
 ```
-# go to your project folder and enable your pipenv shell
 pip install openapi-python-client
 openapi-python-client generate --path eloRestAPI/openapi.json 
 ```
@@ -26,10 +25,11 @@ openapi-python-client generate --path eloRestAPI/openapi.json
 
 ## Authentication
 
-The authentication is done via a ticket, which is returned by the login function ("/IXServicePortIF/login").
-The ticket is valid for a certain amount of time, which is returned by the login function as well.
+The authentication is done via
+~~a ticket, which is returned by the login function ("/IXServicePortIF/login").
+The ticket is valid for a certain amount of time, which is returned by the login function as well.~~ I could not get the ticketed based authentication to work. Therefore, I used **HTTP Basic Auth**.
 
-## Notes
+### Notes on the Ticket based authentication
 
 Entities
 

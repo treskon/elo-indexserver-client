@@ -1,6 +1,8 @@
 # ELO Indexserver Client
 
-Developed by [Treskon GmbH](https://treskon.at/) published on PyPI: https://pypi.org/project/elo-indexserver-client/
+Developed by [Treskon GmbH](https://treskon.at/) 
+* published on PyPI: https://pypi.org/project/elo-indexserver-client/ 
+* Sourcecode [GitHub repository](https://github.com/treskon/elo-indexserver-client)
 
 A client library for accessing Indexserver component of [ELO Digital Office GmbH](https://www.elo.com/de-at.html) via
 REST API.
@@ -68,13 +70,16 @@ The used ELO version was 20.0.0.111.
 Based on the OpenAPI specification, the client library was generated using
 the [openapi-python-client tool](https://github.com/openapi-generators/openapi-python-client).
 
-## Get in touch
+## Contributing and Support
+
+We are happy to receive any contributions to this library. Feel free to open an issue or a pull request in our
+[GitHub repository](https://github.com/treskon/elo-indexserver-client). To get started read the [Contributing Guide](CONTRIBUTING.md).
 
 We're not able to offer any commercial assistance for this library, but we're always happy to hear your thoughts and
 assist you with any issues, as time permits.
 
-Feel free to contact us via mail
-at: internal-dev@treskon.at.
+Feel free to open an issue in our [GitHub repository](https://github.com/treskon/elo-indexserver-client) or contact us
+via mail at: internal-dev@treskon.at.
 
 ## License
 
