@@ -28,10 +28,14 @@ jobs:
         run: poetry run python -m unittest discover test
       - name: Build documentation
         run: make html SPHINXBUILD="poetry run sphinx-build"
+      - name: Fix permissions on documentation
+        run: |
+          chmod -c -R +rX "_build/html/" | while read line; do
+            echo "::warning title=Invalid file permissions automatically fixed::$line"
+          done
       - name: Archive documentation
-        uses: actions/upload-artifact@v4
+        uses:  actions/upload-pages-artifact@v3
         with:
-          name: documentation
           path: _build/html
   deploy:
     # Add a dependency to the build job
@@ -51,6 +55,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
         - name: Deploy to githubpages
-          uses: actions/upload-pages-artifact@v3
-          with:
-            name: documentation
+          uses: actions/deploy-pages@v4
