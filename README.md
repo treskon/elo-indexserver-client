@@ -56,7 +56,7 @@ search_result = elo_service.search(search_mask_fields={"LATITUDE": "35.732581196
 print(f"sordID of the found file: {search_result[0]}")
 ```
 
-For more information visit the [Documentation](https://install.portrait.app/elo-indexserver-client/html/) or see the
+For more information visit the [Documentation](https://treskon.github.io/elo-indexserver-client/) or see the
 docstrings in the code.
 
 ## Technical Details
