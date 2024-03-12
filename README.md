@@ -33,7 +33,7 @@ First, init the Service with the baseurl, user and password of the Indexserver R
 ```python
 from eloservice.elo_service import EloService
 
-rest_baseurl = "http://localhost::6056/ix-Archive/rest/"
+rest_baseurl = "http://localhost:9090/ix-Archive/rest/"
 rest_user = "elo"
 rest_password = "elo"
 elo_service = EloService(url=rest_baseurl, user=rest_user, password=rest_password)
@@ -64,7 +64,7 @@ docstrings in the code.
 ## Technical Details
 
 The client library is based on the OpenAPI specification provided by ELO Indexserver. Downloaded from the ELO Server
-under the url http://eloIndexServer:6056/ix/resources/openapi.json.
+under the url http://eloIndexServer:9090/ix/resources/openapi.json.
 The used ELO version was 20.0.0.111.
 
 Based on the OpenAPI specification, the client library was generated using
