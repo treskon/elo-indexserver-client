@@ -9,7 +9,7 @@ The release is done by the following steps:
 
 * increase the version in the pyproject.toml
 * git commit
-* git tag 'stable-<version>' use Semantic Versioning. Remember that a version can't be deleted or overwritten once it's
+* git tag 'releases/stable-<version>' use Semantic Versioning. Remember that a version can't be deleted or overwritten once it's
   published on pypi.org
 * git push
 
