@@ -1,0 +1,20 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pandas = "*"
+seaborn = "*"
+elo-indexserver-client = "*"
+jupyterlab = "*"
+notebook = "*"
+pip = "*"
+install = "*"
+python-decouple = "*"
+reportlab = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.12"
