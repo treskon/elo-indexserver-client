@@ -13,6 +13,8 @@ pip = "*"
 install = "*"
 python-decouple = "*"
 reportlab = "*"
+pandarallel = "*"
+ipywidgets = "*"
 
 [dev-packages]
 
