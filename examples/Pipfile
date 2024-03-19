@@ -15,6 +15,7 @@ python-decouple = "*"
 reportlab = "*"
 pandarallel = "*"
 ipywidgets = "*"
+tqdm = "*"
 
 [dev-packages]
 
