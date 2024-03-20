@@ -61,6 +61,9 @@ print(f"sordID of the found file: {search_result[0]}")
 For more information visit the [Documentation](https://treskon.github.io/elo-indexserver-client/) or see the
 docstrings in the code.
 
+There are also some demos via juptyer notebook in the examples folder.
+See [Readme](examples/Readme.md) for more information.
+
 ## Technical Details
 
 The client library is based on the OpenAPI specification provided by ELO Indexserver. Downloaded from the ELO Server
