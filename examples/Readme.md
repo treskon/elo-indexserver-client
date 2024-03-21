@@ -1,6 +1,6 @@
 # Demos
 
-## How to run the demos
+## How to run the demos locally
 
 ```bash
 pipenv install
@@ -25,4 +25,19 @@ generate a simple barchart. Afterwards, we generate a pdf via reportlab.
 ## DataImport
 
 This demos uses a sales dataset from kaggle to demonstrate how to import data into the indexserver. 
+
+## Run via docker (compose)
+
+Set the required env variables:
+```bash
+SET ELO_IX_URL=http://...
+SET ELO_IX_USER=...
+SET ELO_IX_PASSWORD=...
+```
+
+
+Build and run:
+```bash
+docker-compose up --build dataimport
+```
 

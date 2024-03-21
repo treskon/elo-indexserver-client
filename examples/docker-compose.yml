@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  dataimport:
+    build:
+      dockerfile: Dockerfile_dataImport
+    command: pipenv run python data_import.py
+    environment:
+        - TEST_ELO_IX_URL=${TEST_ELO_IX_URL:?err}
+        - TEST_ELO_IX_USER=${TEST_ELO_IX_USER:?err}
+        - TEST_ELO_IX_PASSWORD=${TEST_ELO_IX_PASSWORD:?err}
