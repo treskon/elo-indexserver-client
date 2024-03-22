@@ -1,5 +1,7 @@
 # Demos
 
+These demos were part of a presentation, the slides are published here: [speakerdeck](https://speakerdeck.com/emanum/wiederverwendbare-software-komponenten-mit-elo-und-python)
+
 ## How to run the demos locally
 
 ```bash
