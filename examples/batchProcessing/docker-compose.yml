@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+
+  producer:
+    build:
+      dockerfile: Dockerfile_producer
+    command: pipenv run python producer.py
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+    depends_on:
+     rabbitmq:
+       condition: service_healthy
+
+  consumer:
+    build:
+      dockerfile: Dockerfile_consumer
+    command: pipenv run python consumer.py
+    deploy:
+      mode: replicated
+      replicas: 5
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - TEST_ELO_IX_URL=${TEST_ELO_IX_URL:?err}
+      - TEST_ELO_IX_USER=${TEST_ELO_IX_USER:?err}
+      - TEST_ELO_IX_PASSWORD=${TEST_ELO_IX_PASSWORD:?err}
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+volumes:
+    rabbitmq_data:

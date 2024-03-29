@@ -1,0 +1,19 @@
+# Use an official Python image as a base image
+FROM python:3.12
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy Pipfile and Pipfile.lock to the working directory
+COPY ./Pipfile /app/
+
+# Install pipenv and use it to create a virtual environment
+RUN pip install pipenv
+RUN pipenv install --deploy --ignore-pipfile
+
+# Copy the pythonfile and the data to the working directory
+COPY ./producer.py /app/
+COPY ./sales_data_sample.csv /app/
+
+# Run the data_import.py script
+CMD ["pipenv", "run", "python", "producer.py"]
