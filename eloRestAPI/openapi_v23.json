@@ -20478,6 +20478,10 @@
           "blobValue": {
             "description": "BLOB value.",
             "$ref": "#/components/schemas/FileData"
+          },
+          "key": {
+            "description": "Key or identifying name.",
+            "type": "string"
           }
         }
       },

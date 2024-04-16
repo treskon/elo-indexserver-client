@@ -19,7 +19,8 @@ Tool used https://github.com/openapi-generators/openapi-python-client
 
 ```
 pip install openapi-python-client
-openapi-python-client generate --path eloRestAPI/openapi.json 
+cd eloclient
+openapi-python-client generate --path ../eloRestAPI/openapi_v23.json 
 ```
 
 
