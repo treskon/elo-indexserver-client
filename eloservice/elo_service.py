@@ -56,7 +56,7 @@ class EloService:
             sord_z=SordZ(SordC().mb_all)
         )
 
-        erg = ix_service_port_if_checkin_sord_path.sync_detailed(client=self.elo_client, json_body=body)
+        erg = ix_service_port_if_checkin_sord_path.sync_detailed(client=self.elo_client, body=body)
         _check_response(erg)
         object_id = erg.parsed.result[-1]
         if object_id is None:
@@ -134,7 +134,7 @@ class EloService:
         :param sord_id: The sordID of the sord in ELO
         """
         body = BRequestIXServicePortIFDeleteSord(obj_id=sord_id)
-        res = ix_service_port_if_delete_sord.sync_detailed(client=self.elo_client, json_body=body)
+        res = ix_service_port_if_delete_sord.sync_detailed(client=self.elo_client, body=body)
         _check_response(res)
         if res.parsed.result is None:
             raise ValueError("Could not delete sord")
@@ -167,7 +167,7 @@ class EloService:
             obj_id=source_sord_id,
             copy_sord_z=COPY_SORD_C_MOVE
         )
-        res = ix_service_port_if_copy_sord.sync_detailed(client=self.elo_client, json_body=body)
+        res = ix_service_port_if_copy_sord.sync_detailed(client=self.elo_client, body=body)
         _check_response(res)
         return new_parent_id
 

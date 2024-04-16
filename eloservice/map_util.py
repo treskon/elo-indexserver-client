@@ -68,7 +68,7 @@ class MapUtil:
             obj_id=sord_id,
             data=[_convert_key_value(key, value) for key, value in fields.items()]
         )
-        res = ix_service_port_if_checkin_map.sync_detailed(client=self.elo_client, json_body=body)
+        res = ix_service_port_if_checkin_map.sync_detailed(client=self.elo_client, body=body)
         _check_response(res)
 
     def _write_map_field_blob_string(self, sord_id, map_domain, fields: dict, content_type):
@@ -78,5 +78,5 @@ class MapUtil:
             obj_id=sord_id,
             data=[_convert_map_value(key, value, content_type) for key, value in fields.items()]
         )
-        res = ix_service_port_if_checkin_map.sync_detailed(client=self.elo_client, json_body=body)
+        res = ix_service_port_if_checkin_map.sync_detailed(client=self.elo_client, body=body)
         _check_response(res)

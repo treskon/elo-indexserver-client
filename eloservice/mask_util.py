@@ -29,7 +29,7 @@ class MaskUtil:
             edit_info_z=elo_const.EDIT_INFO_Z_MASK_NAMES
         )
 
-        res = ix_service_port_if_create_sord.sync_detailed(client=self.elo_client, json_body=body)
+        res = ix_service_port_if_create_sord.sync_detailed(client=self.elo_client, body=body)
 
         _check_response(res)
 
@@ -58,7 +58,7 @@ class MaskUtil:
             edit_info_z=elo_const.EDIT_INFO_Z_MB_ALL
         )
 
-        res = ix_service_port_if_create_sord.sync_detailed(client=self.elo_client, json_body=body)
+        res = ix_service_port_if_create_sord.sync_detailed(client=self.elo_client, body=body)
         _check_response(res)
         return res.parsed.result.mask
 
@@ -75,7 +75,7 @@ class MaskUtil:
             edit_info_z=elo_const.EDIT_INFO_Z_MB_ALL,
             lock_z=lockZ
         )
-        erg = ix_service_port_if_checkout_sord.sync_detailed(client=self.elo_client, json_body=body)
+        erg = ix_service_port_if_checkout_sord.sync_detailed(client=self.elo_client, body=body)
         old_sord: Sord = erg.parsed.result.sord
 
         old_sord.mask = mask.id
@@ -95,7 +95,7 @@ class MaskUtil:
                 sord_z=SordZ(bset=elo_const.ElobitsetEditz.MB_ALL.value),
                 unlock_z=LockZ(LockC().bset_yes)
             )
-            erg = ix_service_port_if_checkin_sord.sync_detailed(client=self.elo_client, json_body=body)
+            erg = ix_service_port_if_checkin_sord.sync_detailed(client=self.elo_client, body=body)
 
         _check_response(erg)
 
