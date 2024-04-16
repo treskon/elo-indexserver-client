@@ -16,39 +16,41 @@ T = TypeVar("T", bound="BRequestMyELOServiceCheckState")
 class BRequestMyELOServiceCheckState:
     """
     Attributes:
+        user_guid_or_id (Union[Unset, str]):
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        user_guid_or_id (Union[Unset, str]):
         since_date_iso (Union[Unset, str]):
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
     user_guid_or_id: Union[Unset, str] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
     since_date_iso: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        user_guid_or_id = self.user_guid_or_id
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        user_guid_or_id = self.user_guid_or_id
         since_date_iso = self.since_date_iso
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
         if user_guid_or_id is not UNSET:
             field_dict["userGuidOrID"] = user_guid_or_id
+        if ci is not UNSET:
+            field_dict["ci"] = ci
         if since_date_iso is not UNSET:
             field_dict["sinceDateIso"] = since_date_iso
 
@@ -59,6 +61,8 @@ class BRequestMyELOServiceCheckState:
         from ..models.client_info import ClientInfo
 
         d = src_dict.copy()
+        user_guid_or_id = d.pop("userGuidOrID", UNSET)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
@@ -66,13 +70,11 @@ class BRequestMyELOServiceCheckState:
         else:
             ci = ClientInfo.from_dict(_ci)
 
-        user_guid_or_id = d.pop("userGuidOrID", UNSET)
-
         since_date_iso = d.pop("sinceDateIso", UNSET)
 
         b_request_my_elo_service_check_state = cls(
-            ci=ci,
             user_guid_or_id=user_guid_or_id,
+            ci=ci,
             since_date_iso=since_date_iso,
         )
 

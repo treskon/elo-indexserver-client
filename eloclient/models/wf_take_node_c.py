@@ -19,46 +19,48 @@ class WFTakeNodeC:
      </p>
 
         Attributes:
-            default (Union[Unset, int]): Standard action. Neither WFNode.department2 nor WFNode.inUseDateIso are returned.
             reset_department2 (Union[Unset, int]): WFNode.department2 is set when the node is taken over by another user.
             reset_in_use_date (Union[Unset, int]): WFNode.inUseDateIso is set when the node is taken over by another user.
+            default (Union[Unset, int]): Standard action. Neither WFNode.department2 nor WFNode.inUseDateIso are returned.
     """
 
-    default: Union[Unset, int] = UNSET
     reset_department2: Union[Unset, int] = UNSET
     reset_in_use_date: Union[Unset, int] = UNSET
+    default: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        default = self.default
         reset_department2 = self.reset_department2
+
         reset_in_use_date = self.reset_in_use_date
+
+        default = self.default
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if default is not UNSET:
-            field_dict["DEFAULT"] = default
         if reset_department2 is not UNSET:
             field_dict["RESET_DEPARTMENT2"] = reset_department2
         if reset_in_use_date is not UNSET:
             field_dict["RESET_IN_USE_DATE"] = reset_in_use_date
+        if default is not UNSET:
+            field_dict["DEFAULT"] = default
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        default = d.pop("DEFAULT", UNSET)
-
         reset_department2 = d.pop("RESET_DEPARTMENT2", UNSET)
 
         reset_in_use_date = d.pop("RESET_IN_USE_DATE", UNSET)
 
+        default = d.pop("DEFAULT", UNSET)
+
         wf_take_node_c = cls(
-            default=default,
             reset_department2=reset_department2,
             reset_in_use_date=reset_in_use_date,
+            default=default,
         )
 
         wf_take_node_c.additional_properties = d

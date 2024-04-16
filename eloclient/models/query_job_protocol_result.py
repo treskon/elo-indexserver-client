@@ -19,8 +19,9 @@ class QueryJobProtocolResult:
      </p>
 
         Attributes:
-            download_url (Union[Unset, str]): This String contains a URL where the whole protocol can be downloaded. Empty,
-                if no protocol file exists.
+            download_url (Union[Unset, str]): This String contains a URL where the whole protocol can be downloaded.
+                Empty, if no protocol
+                 file exists.
             events (Union[Unset, List['QueryJobProtocolEvent']]):
     """
 
@@ -30,12 +31,12 @@ class QueryJobProtocolResult:
 
     def to_dict(self) -> Dict[str, Any]:
         download_url = self.download_url
+
         events: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.events, Unset):
             events = []
             for events_item_data in self.events:
                 events_item = events_item_data.to_dict()
-
                 events.append(events_item)
 
         field_dict: Dict[str, Any] = {}

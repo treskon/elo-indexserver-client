@@ -17,45 +17,45 @@ T = TypeVar("T", bound="BRequestIXServicePortIFDeleteSubscription")
 class BRequestIXServicePortIFDeleteSubscription:
     """
     Attributes:
+        subs (Union[Unset, Subscription]): This class describes a subscription. A user can subscribe for changes to an
+            object.
+            Currently,
+             the only supported object type is a document feed. If the feed receives new comments,
+             notification information is inserted into the database for the user. By calling
+             FeedService.findFirstActions and setting FindActionsInfo.findNotifications=true, the user can
+             search for her notifications.
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        subs (Union[Unset, Subscription]): This class describes a subscription. A user can subscribe for changes to an
-            object.
-            Currently, the only supported
-             object type is a document feed. If the feed receives new comments, notification information is inserted into
-            the
-             database for the user. By calling FeedService.findFirstActions and setting
-            FindActionsInfo.findNotifications=true,
-             the user can search for her notifications.
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
     subs: Union[Unset, "Subscription"] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        ci: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.ci, Unset):
-            ci = self.ci.to_dict()
-
         subs: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.subs, Unset):
             subs = self.subs.to_dict()
 
+        ci: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.ci, Unset):
+            ci = self.ci.to_dict()
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
         if subs is not UNSET:
             field_dict["subs"] = subs
+        if ci is not UNSET:
+            field_dict["ci"] = ci
 
         return field_dict
 
@@ -65,13 +65,6 @@ class BRequestIXServicePortIFDeleteSubscription:
         from ..models.subscription import Subscription
 
         d = src_dict.copy()
-        _ci = d.pop("ci", UNSET)
-        ci: Union[Unset, ClientInfo]
-        if isinstance(_ci, Unset):
-            ci = UNSET
-        else:
-            ci = ClientInfo.from_dict(_ci)
-
         _subs = d.pop("subs", UNSET)
         subs: Union[Unset, Subscription]
         if isinstance(_subs, Unset):
@@ -79,9 +72,16 @@ class BRequestIXServicePortIFDeleteSubscription:
         else:
             subs = Subscription.from_dict(_subs)
 
+        _ci = d.pop("ci", UNSET)
+        ci: Union[Unset, ClientInfo]
+        if isinstance(_ci, Unset):
+            ci = UNSET
+        else:
+            ci = ClientInfo.from_dict(_ci)
+
         b_request_ix_service_port_if_delete_subscription = cls(
-            ci=ci,
             subs=subs,
+            ci=ci,
         )
 
         b_request_ix_service_port_if_delete_subscription.additional_properties = d

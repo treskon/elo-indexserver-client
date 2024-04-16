@@ -12,70 +12,75 @@ T = TypeVar("T", bound="ArchivingModeC")
 class ArchivingModeC:
     """
     Attributes:
+        dummy (Union[Unset, int]):
         readwrite (Union[Unset, int]): Version flag: no versioning.
         version (Union[Unset, int]): Version flag: version controlled.
+        none (Union[Unset, int]):
         readonly (Union[Unset, int]): Version flag: read only.
         default (Union[Unset, int]):
-        none (Union[Unset, int]):
-        dummy (Union[Unset, int]):
     """
 
+    dummy: Union[Unset, int] = UNSET
     readwrite: Union[Unset, int] = UNSET
     version: Union[Unset, int] = UNSET
+    none: Union[Unset, int] = UNSET
     readonly: Union[Unset, int] = UNSET
     default: Union[Unset, int] = UNSET
-    none: Union[Unset, int] = UNSET
-    dummy: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        readwrite = self.readwrite
-        version = self.version
-        readonly = self.readonly
-        default = self.default
-        none = self.none
         dummy = self.dummy
+
+        readwrite = self.readwrite
+
+        version = self.version
+
+        none = self.none
+
+        readonly = self.readonly
+
+        default = self.default
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
+        if dummy is not UNSET:
+            field_dict["dummy"] = dummy
         if readwrite is not UNSET:
             field_dict["READWRITE"] = readwrite
         if version is not UNSET:
             field_dict["VERSION"] = version
+        if none is not UNSET:
+            field_dict["NONE"] = none
         if readonly is not UNSET:
             field_dict["READONLY"] = readonly
         if default is not UNSET:
             field_dict["DEFAULT"] = default
-        if none is not UNSET:
-            field_dict["NONE"] = none
-        if dummy is not UNSET:
-            field_dict["dummy"] = dummy
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
+        dummy = d.pop("dummy", UNSET)
+
         readwrite = d.pop("READWRITE", UNSET)
 
         version = d.pop("VERSION", UNSET)
+
+        none = d.pop("NONE", UNSET)
 
         readonly = d.pop("READONLY", UNSET)
 
         default = d.pop("DEFAULT", UNSET)
 
-        none = d.pop("NONE", UNSET)
-
-        dummy = d.pop("dummy", UNSET)
-
         archiving_mode_c = cls(
+            dummy=dummy,
             readwrite=readwrite,
             version=version,
+            none=none,
             readonly=readonly,
             default=default,
-            none=none,
-            dummy=dummy,
         )
 
         archiving_mode_c.additional_properties = d

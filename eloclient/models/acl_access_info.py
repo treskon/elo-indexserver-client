@@ -17,43 +17,43 @@ class AclAccessInfo:
     """This class contains the option for the methode getAclAccess
 
     Attributes:
-        acl (Union[Unset, str]):
         acl_items (Union[Unset, List['AclItem']]):
         obj_id (Union[Unset, str]):
-        parent_id (Union[Unset, str]): Parent's ID of the current object. (Useful to get the inherited ACLs of objects
-            which haven't any ID yet, i.e.
-            the
-             ones being just added in archive.)
+        acl (Union[Unset, str]):
+        parent_id (Union[Unset, str]): Parent's ID of the current object.
+            (Useful to get the inherited ACLs of objects which haven't
+             any ID yet, i.e. the ones being just added in archive.)
     """
 
-    acl: Union[Unset, str] = UNSET
     acl_items: Union[Unset, List["AclItem"]] = UNSET
     obj_id: Union[Unset, str] = UNSET
+    acl: Union[Unset, str] = UNSET
     parent_id: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        acl = self.acl
         acl_items: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.acl_items, Unset):
             acl_items = []
             for acl_items_item_data in self.acl_items:
                 acl_items_item = acl_items_item_data.to_dict()
-
                 acl_items.append(acl_items_item)
 
         obj_id = self.obj_id
+
+        acl = self.acl
+
         parent_id = self.parent_id
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if acl is not UNSET:
-            field_dict["acl"] = acl
         if acl_items is not UNSET:
             field_dict["aclItems"] = acl_items
         if obj_id is not UNSET:
             field_dict["objId"] = obj_id
+        if acl is not UNSET:
+            field_dict["acl"] = acl
         if parent_id is not UNSET:
             field_dict["parentId"] = parent_id
 
@@ -64,8 +64,6 @@ class AclAccessInfo:
         from ..models.acl_item import AclItem
 
         d = src_dict.copy()
-        acl = d.pop("acl", UNSET)
-
         acl_items = []
         _acl_items = d.pop("aclItems", UNSET)
         for acl_items_item_data in _acl_items or []:
@@ -75,12 +73,14 @@ class AclAccessInfo:
 
         obj_id = d.pop("objId", UNSET)
 
+        acl = d.pop("acl", UNSET)
+
         parent_id = d.pop("parentId", UNSET)
 
         acl_access_info = cls(
-            acl=acl,
             acl_items=acl_items,
             obj_id=obj_id,
+            acl=acl,
             parent_id=parent_id,
         )
 

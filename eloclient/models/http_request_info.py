@@ -18,19 +18,19 @@ class HttpRequestInfo:
 
     Attributes:
         headers (Union[Unset, List['KeyValue']]):
-        cookies (Union[Unset, List['KeyValue']]):
+        request_url (Union[Unset, str]): Value of the request URL. HttpServletRequest.
+            getRequestURL()
         request_params (Union[Unset, List['KeyValue']]):
         request_uri (Union[Unset, str]): Value of the request URI. HttpServletRequest.
             getRequestURI()
-        request_url (Union[Unset, str]): Value of the request URL. HttpServletRequest.
-            getRequestURL()
+        cookies (Union[Unset, List['KeyValue']]):
     """
 
     headers: Union[Unset, List["KeyValue"]] = UNSET
-    cookies: Union[Unset, List["KeyValue"]] = UNSET
+    request_url: Union[Unset, str] = UNSET
     request_params: Union[Unset, List["KeyValue"]] = UNSET
     request_uri: Union[Unset, str] = UNSET
-    request_url: Union[Unset, str] = UNSET
+    cookies: Union[Unset, List["KeyValue"]] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -39,41 +39,39 @@ class HttpRequestInfo:
             headers = []
             for headers_item_data in self.headers:
                 headers_item = headers_item_data.to_dict()
-
                 headers.append(headers_item)
 
-        cookies: Union[Unset, List[Dict[str, Any]]] = UNSET
-        if not isinstance(self.cookies, Unset):
-            cookies = []
-            for cookies_item_data in self.cookies:
-                cookies_item = cookies_item_data.to_dict()
-
-                cookies.append(cookies_item)
+        request_url = self.request_url
 
         request_params: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.request_params, Unset):
             request_params = []
             for request_params_item_data in self.request_params:
                 request_params_item = request_params_item_data.to_dict()
-
                 request_params.append(request_params_item)
 
         request_uri = self.request_uri
-        request_url = self.request_url
+
+        cookies: Union[Unset, List[Dict[str, Any]]] = UNSET
+        if not isinstance(self.cookies, Unset):
+            cookies = []
+            for cookies_item_data in self.cookies:
+                cookies_item = cookies_item_data.to_dict()
+                cookies.append(cookies_item)
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if headers is not UNSET:
             field_dict["headers"] = headers
-        if cookies is not UNSET:
-            field_dict["cookies"] = cookies
+        if request_url is not UNSET:
+            field_dict["requestURL"] = request_url
         if request_params is not UNSET:
             field_dict["requestParams"] = request_params
         if request_uri is not UNSET:
             field_dict["requestURI"] = request_uri
-        if request_url is not UNSET:
-            field_dict["requestURL"] = request_url
+        if cookies is not UNSET:
+            field_dict["cookies"] = cookies
 
         return field_dict
 
@@ -89,12 +87,7 @@ class HttpRequestInfo:
 
             headers.append(headers_item)
 
-        cookies = []
-        _cookies = d.pop("cookies", UNSET)
-        for cookies_item_data in _cookies or []:
-            cookies_item = KeyValue.from_dict(cookies_item_data)
-
-            cookies.append(cookies_item)
+        request_url = d.pop("requestURL", UNSET)
 
         request_params = []
         _request_params = d.pop("requestParams", UNSET)
@@ -105,14 +98,19 @@ class HttpRequestInfo:
 
         request_uri = d.pop("requestURI", UNSET)
 
-        request_url = d.pop("requestURL", UNSET)
+        cookies = []
+        _cookies = d.pop("cookies", UNSET)
+        for cookies_item_data in _cookies or []:
+            cookies_item = KeyValue.from_dict(cookies_item_data)
+
+            cookies.append(cookies_item)
 
         http_request_info = cls(
             headers=headers,
-            cookies=cookies,
+            request_url=request_url,
             request_params=request_params,
             request_uri=request_uri,
-            request_url=request_url,
+            cookies=cookies,
         )
 
         http_request_info.additional_properties = d

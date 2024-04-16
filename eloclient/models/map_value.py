@@ -15,8 +15,9 @@ T = TypeVar("T", bound="MapValue")
 @_attrs_define
 class MapValue:
     """This class represents map values.
-    A map value is either a string, stored in member {@link KeyValue#value} of the
-     super class. Or a map value is a BLOB available in {@link #blobValue}.
+    A map value is either a string, stored in member
+     {@link KeyValue#value} of the super class. Or a map value is a BLOB available in
+     {@link #blobValue}.
 
         Attributes:
             blob_value (Union[Unset, FileData]): Class for the data contained in a file.
@@ -26,9 +27,11 @@ class MapValue:
                  <p>
                  Organisation: ELO Digital Office GmbH
                  </p>
+            key (Union[Unset, str]): Key or identifying name.
     """
 
     blob_value: Union[Unset, "FileData"] = UNSET
+    key: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -36,11 +39,15 @@ class MapValue:
         if not isinstance(self.blob_value, Unset):
             blob_value = self.blob_value.to_dict()
 
+        key = self.key
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if blob_value is not UNSET:
             field_dict["blobValue"] = blob_value
+        if key is not UNSET:
+            field_dict["key"] = key
 
         return field_dict
 
@@ -56,8 +63,11 @@ class MapValue:
         else:
             blob_value = FileData.from_dict(_blob_value)
 
+        key = d.pop("key", UNSET)
+
         map_value = cls(
             blob_value=blob_value,
+            key=key,
         )
 
         map_value.additional_properties = d

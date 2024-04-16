@@ -17,9 +17,8 @@ class BResult1485735592:
     """
     Attributes:
         result (Union[Unset, UserInfo]): <p>
-            Data class containing the user information data for the user logged in to the Index server. User information
-            includes
-             ID, name, rights, parent, etc.
+            Data class containing the user information data for the user logged in to the Index server. User
+             information includes ID, name, rights, parent, etc.
              </p>
              <p>
              Copyright: Copyright (c) 2004

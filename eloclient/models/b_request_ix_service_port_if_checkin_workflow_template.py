@@ -19,23 +19,6 @@ T = TypeVar("T", bound="BRequestIXServicePortIFCheckinWorkflowTemplate")
 class BRequestIXServicePortIFCheckinWorkflowTemplate:
     """
     Attributes:
-        ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
-             <p>
-             Copyright: Copyright (c) 2004
-             </p>
-             <p>
-             Organisation: ELO Digital Office GmbH
-             </p>
-        wf (Union[Unset, WFDiagram]): This class represents an active or finished workflow or a workflow template
-        wf_z (Union[Unset, WFDiagramZ]): This class encapsulates the constants of the WFDiagramC class.
-            <p>
-             Copyright: Copyright (c) 2004
-             </p>
-             <p>
-             Organisation: ELO Digital Office GmbH
-             </p>
         unlock_z (Union[Unset, LockZ]): This class encapsulates the constants of the LockC class.
             <p>
              Copyright: Copyright (c) 2004
@@ -43,42 +26,60 @@ class BRequestIXServicePortIFCheckinWorkflowTemplate:
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
+        ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
+             <p>
+             Copyright: Copyright (c) 2004
+             </p>
+             <p>
+             Organisation: ELO Digital Office GmbH
+             </p>
+        wf_z (Union[Unset, WFDiagramZ]): This class encapsulates the constants of the WFDiagramC class.
+            <p>
+             Copyright: Copyright (c) 2004
+             </p>
+             <p>
+             Organisation: ELO Digital Office GmbH
+             </p>
+        wf (Union[Unset, WFDiagram]): This class represents an active or finished workflow or a workflow template
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
-    wf: Union[Unset, "WFDiagram"] = UNSET
-    wf_z: Union[Unset, "WFDiagramZ"] = UNSET
     unlock_z: Union[Unset, "LockZ"] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
+    wf_z: Union[Unset, "WFDiagramZ"] = UNSET
+    wf: Union[Unset, "WFDiagram"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        unlock_z: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.unlock_z, Unset):
+            unlock_z = self.unlock_z.to_dict()
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
-
-        wf: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.wf, Unset):
-            wf = self.wf.to_dict()
 
         wf_z: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.wf_z, Unset):
             wf_z = self.wf_z.to_dict()
 
-        unlock_z: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.unlock_z, Unset):
-            unlock_z = self.unlock_z.to_dict()
+        wf: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.wf, Unset):
+            wf = self.wf.to_dict()
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
-        if wf is not UNSET:
-            field_dict["wf"] = wf
-        if wf_z is not UNSET:
-            field_dict["wfZ"] = wf_z
         if unlock_z is not UNSET:
             field_dict["unlockZ"] = unlock_z
+        if ci is not UNSET:
+            field_dict["ci"] = ci
+        if wf_z is not UNSET:
+            field_dict["wfZ"] = wf_z
+        if wf is not UNSET:
+            field_dict["wf"] = wf
 
         return field_dict
 
@@ -90,19 +91,19 @@ class BRequestIXServicePortIFCheckinWorkflowTemplate:
         from ..models.wf_diagram_z import WFDiagramZ
 
         d = src_dict.copy()
+        _unlock_z = d.pop("unlockZ", UNSET)
+        unlock_z: Union[Unset, LockZ]
+        if isinstance(_unlock_z, Unset):
+            unlock_z = UNSET
+        else:
+            unlock_z = LockZ.from_dict(_unlock_z)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
             ci = UNSET
         else:
             ci = ClientInfo.from_dict(_ci)
-
-        _wf = d.pop("wf", UNSET)
-        wf: Union[Unset, WFDiagram]
-        if isinstance(_wf, Unset):
-            wf = UNSET
-        else:
-            wf = WFDiagram.from_dict(_wf)
 
         _wf_z = d.pop("wfZ", UNSET)
         wf_z: Union[Unset, WFDiagramZ]
@@ -111,18 +112,18 @@ class BRequestIXServicePortIFCheckinWorkflowTemplate:
         else:
             wf_z = WFDiagramZ.from_dict(_wf_z)
 
-        _unlock_z = d.pop("unlockZ", UNSET)
-        unlock_z: Union[Unset, LockZ]
-        if isinstance(_unlock_z, Unset):
-            unlock_z = UNSET
+        _wf = d.pop("wf", UNSET)
+        wf: Union[Unset, WFDiagram]
+        if isinstance(_wf, Unset):
+            wf = UNSET
         else:
-            unlock_z = LockZ.from_dict(_unlock_z)
+            wf = WFDiagram.from_dict(_wf)
 
         b_request_ix_service_port_if_checkin_workflow_template = cls(
-            ci=ci,
-            wf=wf,
-            wf_z=wf_z,
             unlock_z=unlock_z,
+            ci=ci,
+            wf_z=wf_z,
+            wf=wf,
         )
 
         b_request_ix_service_port_if_checkin_workflow_template.additional_properties = d

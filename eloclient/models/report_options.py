@@ -15,8 +15,10 @@ T = TypeVar("T", bound="ReportOptions")
 
 @_attrs_define
 class ReportOptions:
-    """This class contains the codes for the activities/processes that are to be protocolled in a report.
-    <p>
+    """This class contains the codes for the activities/processes that are to be protocolled in a
+    report.
+
+     <p>
      Copyright: Copyright (c) 2004
      </p>
      <p>
@@ -24,7 +26,6 @@ class ReportOptions:
      </p>
 
         Attributes:
-            erp_codes (Union[Unset, List['ReportErpCode']]):
             mode (Union[Unset, ReportModeZ]): <p>
                 This class encapsulates the constants of <code>ReportModeC</code>
                  </p>
@@ -35,32 +36,32 @@ class ReportOptions:
                  <p>
                  Organisation: ELO Digital Office GmbH
                  </p>
+            erp_codes (Union[Unset, List['ReportErpCode']]):
     """
 
-    erp_codes: Union[Unset, List["ReportErpCode"]] = UNSET
     mode: Union[Unset, "ReportModeZ"] = UNSET
+    erp_codes: Union[Unset, List["ReportErpCode"]] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        mode: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.mode, Unset):
+            mode = self.mode.to_dict()
+
         erp_codes: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.erp_codes, Unset):
             erp_codes = []
             for erp_codes_item_data in self.erp_codes:
                 erp_codes_item = erp_codes_item_data.to_dict()
-
                 erp_codes.append(erp_codes_item)
-
-        mode: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.mode, Unset):
-            mode = self.mode.to_dict()
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if erp_codes is not UNSET:
-            field_dict["erpCodes"] = erp_codes
         if mode is not UNSET:
             field_dict["mode"] = mode
+        if erp_codes is not UNSET:
+            field_dict["erpCodes"] = erp_codes
 
         return field_dict
 
@@ -70,13 +71,6 @@ class ReportOptions:
         from ..models.report_mode_z import ReportModeZ
 
         d = src_dict.copy()
-        erp_codes = []
-        _erp_codes = d.pop("erpCodes", UNSET)
-        for erp_codes_item_data in _erp_codes or []:
-            erp_codes_item = ReportErpCode.from_dict(erp_codes_item_data)
-
-            erp_codes.append(erp_codes_item)
-
         _mode = d.pop("mode", UNSET)
         mode: Union[Unset, ReportModeZ]
         if isinstance(_mode, Unset):
@@ -84,9 +78,16 @@ class ReportOptions:
         else:
             mode = ReportModeZ.from_dict(_mode)
 
+        erp_codes = []
+        _erp_codes = d.pop("erpCodes", UNSET)
+        for erp_codes_item_data in _erp_codes or []:
+            erp_codes_item = ReportErpCode.from_dict(erp_codes_item_data)
+
+            erp_codes.append(erp_codes_item)
+
         report_options = cls(
-            erp_codes=erp_codes,
             mode=mode,
+            erp_codes=erp_codes,
         )
 
         report_options.additional_properties = d

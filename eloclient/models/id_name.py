@@ -22,46 +22,57 @@ class IdName:
      </p>
 
         Attributes:
+            display_name (Union[Unset, str]): Localized name.
+            name (Union[Unset, str]): Name.
             guid (Union[Unset, str]): GUID.
             id (Union[Unset, int]): Numeric ID.
-            name (Union[Unset, str]): Name.
     """
 
+    display_name: Union[Unset, str] = UNSET
+    name: Union[Unset, str] = UNSET
     guid: Union[Unset, str] = UNSET
     id: Union[Unset, int] = UNSET
-    name: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        guid = self.guid
-        id = self.id
+        display_name = self.display_name
+
         name = self.name
+
+        guid = self.guid
+
+        id = self.id
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
+        if display_name is not UNSET:
+            field_dict["displayName"] = display_name
+        if name is not UNSET:
+            field_dict["name"] = name
         if guid is not UNSET:
             field_dict["guid"] = guid
         if id is not UNSET:
             field_dict["id"] = id
-        if name is not UNSET:
-            field_dict["name"] = name
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
+        display_name = d.pop("displayName", UNSET)
+
+        name = d.pop("name", UNSET)
+
         guid = d.pop("guid", UNSET)
 
         id = d.pop("id", UNSET)
 
-        name = d.pop("name", UNSET)
-
         id_name = cls(
+            display_name=display_name,
+            name=name,
             guid=guid,
             id=id,
-            name=name,
         )
 
         id_name.additional_properties = d

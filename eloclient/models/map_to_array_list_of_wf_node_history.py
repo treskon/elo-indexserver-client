@@ -17,8 +17,6 @@ class MapToArrayListOfWFNodeHistory:
     additional_properties: Dict[str, List["WFNodeHistory"]] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        pass
-
         field_dict: Dict[str, Any] = {}
         for prop_name, prop in self.additional_properties.items():
             field_dict[prop_name] = []
@@ -26,10 +24,7 @@ class MapToArrayListOfWFNodeHistory:
                 componentsschemas_array_list_of_wf_node_history_item = (
                     componentsschemas_array_list_of_wf_node_history_item_data.to_dict()
                 )
-
                 field_dict[prop_name].append(componentsschemas_array_list_of_wf_node_history_item)
-
-        field_dict.update({})
 
         return field_dict
 

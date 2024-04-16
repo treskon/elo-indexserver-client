@@ -16,42 +16,45 @@ T = TypeVar("T", bound="BRequestIXServicePortIFCollectJobStates")
 class BRequestIXServicePortIFCollectJobStates:
     """
     Attributes:
+        active_jobs (Union[Unset, bool]):
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        active_jobs (Union[Unset, bool]):
         finished_jobs (Union[Unset, bool]):
         full_info (Union[Unset, bool]):
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
     active_jobs: Union[Unset, bool] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
     finished_jobs: Union[Unset, bool] = UNSET
     full_info: Union[Unset, bool] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        active_jobs = self.active_jobs
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        active_jobs = self.active_jobs
         finished_jobs = self.finished_jobs
+
         full_info = self.full_info
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
         if active_jobs is not UNSET:
             field_dict["activeJobs"] = active_jobs
+        if ci is not UNSET:
+            field_dict["ci"] = ci
         if finished_jobs is not UNSET:
             field_dict["finishedJobs"] = finished_jobs
         if full_info is not UNSET:
@@ -64,6 +67,8 @@ class BRequestIXServicePortIFCollectJobStates:
         from ..models.client_info import ClientInfo
 
         d = src_dict.copy()
+        active_jobs = d.pop("activeJobs", UNSET)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
@@ -71,15 +76,13 @@ class BRequestIXServicePortIFCollectJobStates:
         else:
             ci = ClientInfo.from_dict(_ci)
 
-        active_jobs = d.pop("activeJobs", UNSET)
-
         finished_jobs = d.pop("finishedJobs", UNSET)
 
         full_info = d.pop("fullInfo", UNSET)
 
         b_request_ix_service_port_if_collect_job_states = cls(
-            ci=ci,
             active_jobs=active_jobs,
+            ci=ci,
             finished_jobs=finished_jobs,
             full_info=full_info,
         )

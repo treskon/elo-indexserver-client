@@ -17,21 +17,22 @@ class BRequestIXServicePortIFImportWorkFlow:
     """
     Attributes:
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        flow_name (Union[Unset, str]):
         file_data (Union[Unset, str]):
+        flow_name (Union[Unset, str]):
     """
 
     ci: Union[Unset, "ClientInfo"] = UNSET
-    flow_name: Union[Unset, str] = UNSET
     file_data: Union[Unset, str] = UNSET
+    flow_name: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -39,18 +40,19 @@ class BRequestIXServicePortIFImportWorkFlow:
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        flow_name = self.flow_name
         file_data = self.file_data
+
+        flow_name = self.flow_name
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if ci is not UNSET:
             field_dict["ci"] = ci
-        if flow_name is not UNSET:
-            field_dict["flowName"] = flow_name
         if file_data is not UNSET:
             field_dict["fileData"] = file_data
+        if flow_name is not UNSET:
+            field_dict["flowName"] = flow_name
 
         return field_dict
 
@@ -66,14 +68,14 @@ class BRequestIXServicePortIFImportWorkFlow:
         else:
             ci = ClientInfo.from_dict(_ci)
 
-        flow_name = d.pop("flowName", UNSET)
-
         file_data = d.pop("fileData", UNSET)
+
+        flow_name = d.pop("flowName", UNSET)
 
         b_request_ix_service_port_if_import_work_flow = cls(
             ci=ci,
-            flow_name=flow_name,
             file_data=file_data,
+            flow_name=flow_name,
         )
 
         b_request_ix_service_port_if_import_work_flow.additional_properties = d

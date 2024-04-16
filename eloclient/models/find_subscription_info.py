@@ -18,6 +18,7 @@ class FindSubscriptionInfo:
     """Find criteria for function findFirstSubscriptions.
 
     Attributes:
+        feed_z (Union[Unset, FeedZ]): Type safe element selector for class Feed.
         sord_z (Union[Unset, SordZ]): <p>
             This class encapsulates the constants of <code>SordC</code>
              </p>
@@ -28,36 +29,34 @@ class FindSubscriptionInfo:
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        feed_z (Union[Unset, FeedZ]): Type safe element selector for class Feed.
-        user_id (Union[Unset, str]): Find subscriptions of this user. If this member is empty, the current users
-            subscriptions are returned.
-            This member
-             is ignored for non-administrators. User ID, GUID or Name is accepted.
+        user_id (Union[Unset, str]): Find subscriptions of this user.
+            If this member is empty, the current users subscriptions are
+             returned. This member is ignored for non-administrators. User ID, GUID or Name is accepted.
     """
 
-    sord_z: Union[Unset, "SordZ"] = UNSET
     feed_z: Union[Unset, "FeedZ"] = UNSET
+    sord_z: Union[Unset, "SordZ"] = UNSET
     user_id: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        sord_z: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.sord_z, Unset):
-            sord_z = self.sord_z.to_dict()
-
         feed_z: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.feed_z, Unset):
             feed_z = self.feed_z.to_dict()
+
+        sord_z: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.sord_z, Unset):
+            sord_z = self.sord_z.to_dict()
 
         user_id = self.user_id
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if sord_z is not UNSET:
-            field_dict["sordZ"] = sord_z
         if feed_z is not UNSET:
             field_dict["feedZ"] = feed_z
+        if sord_z is not UNSET:
+            field_dict["sordZ"] = sord_z
         if user_id is not UNSET:
             field_dict["userId"] = user_id
 
@@ -69,13 +68,6 @@ class FindSubscriptionInfo:
         from ..models.sord_z import SordZ
 
         d = src_dict.copy()
-        _sord_z = d.pop("sordZ", UNSET)
-        sord_z: Union[Unset, SordZ]
-        if isinstance(_sord_z, Unset):
-            sord_z = UNSET
-        else:
-            sord_z = SordZ.from_dict(_sord_z)
-
         _feed_z = d.pop("feedZ", UNSET)
         feed_z: Union[Unset, FeedZ]
         if isinstance(_feed_z, Unset):
@@ -83,11 +75,18 @@ class FindSubscriptionInfo:
         else:
             feed_z = FeedZ.from_dict(_feed_z)
 
+        _sord_z = d.pop("sordZ", UNSET)
+        sord_z: Union[Unset, SordZ]
+        if isinstance(_sord_z, Unset):
+            sord_z = UNSET
+        else:
+            sord_z = SordZ.from_dict(_sord_z)
+
         user_id = d.pop("userId", UNSET)
 
         find_subscription_info = cls(
-            sord_z=sord_z,
             feed_z=feed_z,
+            sord_z=sord_z,
             user_id=user_id,
         )
 

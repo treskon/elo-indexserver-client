@@ -14,10 +14,11 @@ T = TypeVar("T", bound="SessionOptions")
 
 @_attrs_define
 class SessionOptions:
-    """Objects of this class hold an array of options that are used to manipulate the current Indexserver session.
+    """Objects of this class hold an array of options that are used to manipulate the current
+    Indexserver session.
 
-    Attributes:
-        options (Union[Unset, List['KeyValue']]):
+        Attributes:
+            options (Union[Unset, List['KeyValue']]):
     """
 
     options: Union[Unset, List["KeyValue"]] = UNSET
@@ -29,7 +30,6 @@ class SessionOptions:
             options = []
             for options_item_data in self.options:
                 options_item = options_item_data.to_dict()
-
                 options.append(options_item)
 
         field_dict: Dict[str, Any] = {}

@@ -16,36 +16,37 @@ T = TypeVar("T", bound="BRequestIXServicePortIFCookKeyword")
 class BRequestIXServicePortIFCookKeyword:
     """
     Attributes:
+        kwid (Union[Unset, str]):
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        kwid (Union[Unset, str]):
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
     kwid: Union[Unset, str] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        kwid = self.kwid
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        kwid = self.kwid
-
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
         if kwid is not UNSET:
             field_dict["kwid"] = kwid
+        if ci is not UNSET:
+            field_dict["ci"] = ci
 
         return field_dict
 
@@ -54,6 +55,8 @@ class BRequestIXServicePortIFCookKeyword:
         from ..models.client_info import ClientInfo
 
         d = src_dict.copy()
+        kwid = d.pop("kwid", UNSET)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
@@ -61,11 +64,9 @@ class BRequestIXServicePortIFCookKeyword:
         else:
             ci = ClientInfo.from_dict(_ci)
 
-        kwid = d.pop("kwid", UNSET)
-
         b_request_ix_service_port_if_cook_keyword = cls(
-            ci=ci,
             kwid=kwid,
+            ci=ci,
         )
 
         b_request_ix_service_port_if_cook_keyword.additional_properties = d

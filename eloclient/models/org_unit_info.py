@@ -21,74 +21,78 @@ class OrgUnitInfo:
      </p>
 
         Attributes:
-            id (Union[Unset, int]): OU identifier
-            name (Union[Unset, str]): OU name
-            desc (Union[Unset, str]): OU description.
-            ou_props (Union[Unset, List[str]]):
             t_stamp (Union[Unset, str]): Timestamp The format is JJJJ.MM.DD.hh.mm.
                 ss
+            name (Union[Unset, str]): OU name
             guid (Union[Unset, str]): GUID
+            id (Union[Unset, int]): OU identifier
+            ou_props (Union[Unset, List[str]]):
+            desc (Union[Unset, str]): OU description.
     """
 
-    id: Union[Unset, int] = UNSET
-    name: Union[Unset, str] = UNSET
-    desc: Union[Unset, str] = UNSET
-    ou_props: Union[Unset, List[str]] = UNSET
     t_stamp: Union[Unset, str] = UNSET
+    name: Union[Unset, str] = UNSET
     guid: Union[Unset, str] = UNSET
+    id: Union[Unset, int] = UNSET
+    ou_props: Union[Unset, List[str]] = UNSET
+    desc: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        id = self.id
+        t_stamp = self.t_stamp
+
         name = self.name
-        desc = self.desc
+
+        guid = self.guid
+
+        id = self.id
+
         ou_props: Union[Unset, List[str]] = UNSET
         if not isinstance(self.ou_props, Unset):
             ou_props = self.ou_props
 
-        t_stamp = self.t_stamp
-        guid = self.guid
+        desc = self.desc
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if id is not UNSET:
-            field_dict["id"] = id
-        if name is not UNSET:
-            field_dict["name"] = name
-        if desc is not UNSET:
-            field_dict["desc"] = desc
-        if ou_props is not UNSET:
-            field_dict["ouProps"] = ou_props
         if t_stamp is not UNSET:
             field_dict["tStamp"] = t_stamp
+        if name is not UNSET:
+            field_dict["name"] = name
         if guid is not UNSET:
             field_dict["guid"] = guid
+        if id is not UNSET:
+            field_dict["id"] = id
+        if ou_props is not UNSET:
+            field_dict["ouProps"] = ou_props
+        if desc is not UNSET:
+            field_dict["desc"] = desc
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        id = d.pop("id", UNSET)
+        t_stamp = d.pop("tStamp", UNSET)
 
         name = d.pop("name", UNSET)
 
-        desc = d.pop("desc", UNSET)
+        guid = d.pop("guid", UNSET)
+
+        id = d.pop("id", UNSET)
 
         ou_props = cast(List[str], d.pop("ouProps", UNSET))
 
-        t_stamp = d.pop("tStamp", UNSET)
-
-        guid = d.pop("guid", UNSET)
+        desc = d.pop("desc", UNSET)
 
         org_unit_info = cls(
-            id=id,
-            name=name,
-            desc=desc,
-            ou_props=ou_props,
             t_stamp=t_stamp,
+            name=name,
             guid=guid,
+            id=id,
+            ou_props=ou_props,
+            desc=desc,
         )
 
         org_unit_info.additional_properties = d

@@ -19,8 +19,9 @@ class BRequestIXServicePortIFCheckoutNotes:
     """
     Attributes:
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
@@ -28,7 +29,6 @@ class BRequestIXServicePortIFCheckoutNotes:
              Organisation: ELO Digital Office GmbH
              </p>
         obj_id (Union[Unset, str]):
-        note_ids (Union[Unset, List[str]]):
         note_z (Union[Unset, NoteZ]): This class encapsulates the constants of the NoteC class.
             <p>
              Copyright: Copyright (c) 2004
@@ -43,13 +43,14 @@ class BRequestIXServicePortIFCheckoutNotes:
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
+        note_ids (Union[Unset, List[str]]):
     """
 
     ci: Union[Unset, "ClientInfo"] = UNSET
     obj_id: Union[Unset, str] = UNSET
-    note_ids: Union[Unset, List[str]] = UNSET
     note_z: Union[Unset, "NoteZ"] = UNSET
     lock_z: Union[Unset, "LockZ"] = UNSET
+    note_ids: Union[Unset, List[str]] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -58,9 +59,6 @@ class BRequestIXServicePortIFCheckoutNotes:
             ci = self.ci.to_dict()
 
         obj_id = self.obj_id
-        note_ids: Union[Unset, List[str]] = UNSET
-        if not isinstance(self.note_ids, Unset):
-            note_ids = self.note_ids
 
         note_z: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.note_z, Unset):
@@ -70,6 +68,10 @@ class BRequestIXServicePortIFCheckoutNotes:
         if not isinstance(self.lock_z, Unset):
             lock_z = self.lock_z.to_dict()
 
+        note_ids: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.note_ids, Unset):
+            note_ids = self.note_ids
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
@@ -77,12 +79,12 @@ class BRequestIXServicePortIFCheckoutNotes:
             field_dict["ci"] = ci
         if obj_id is not UNSET:
             field_dict["objId"] = obj_id
-        if note_ids is not UNSET:
-            field_dict["noteIds"] = note_ids
         if note_z is not UNSET:
             field_dict["noteZ"] = note_z
         if lock_z is not UNSET:
             field_dict["lockZ"] = lock_z
+        if note_ids is not UNSET:
+            field_dict["noteIds"] = note_ids
 
         return field_dict
 
@@ -102,8 +104,6 @@ class BRequestIXServicePortIFCheckoutNotes:
 
         obj_id = d.pop("objId", UNSET)
 
-        note_ids = cast(List[str], d.pop("noteIds", UNSET))
-
         _note_z = d.pop("noteZ", UNSET)
         note_z: Union[Unset, NoteZ]
         if isinstance(_note_z, Unset):
@@ -118,12 +118,14 @@ class BRequestIXServicePortIFCheckoutNotes:
         else:
             lock_z = LockZ.from_dict(_lock_z)
 
+        note_ids = cast(List[str], d.pop("noteIds", UNSET))
+
         b_request_ix_service_port_if_checkout_notes = cls(
             ci=ci,
             obj_id=obj_id,
-            note_ids=note_ids,
             note_z=note_z,
             lock_z=lock_z,
+            note_ids=note_ids,
         )
 
         b_request_ix_service_port_if_checkout_notes.additional_properties = d

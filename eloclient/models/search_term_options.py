@@ -16,40 +16,41 @@ class SearchTermOptions:
      Deliver query by {@link de.elo.ix.client.esearch.ESearchParams}.
 
         Attributes:
+            synonyms (Union[Unset, bool]): Return synonyms for search query.
             correction (Union[Unset, bool]): Return correction suggestion for search query.
                 <br>
                  Example for a correction: tets -> test
-            synonyms (Union[Unset, bool]): Return synonyms for search query.
     """
 
-    correction: Union[Unset, bool] = UNSET
     synonyms: Union[Unset, bool] = UNSET
+    correction: Union[Unset, bool] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        correction = self.correction
         synonyms = self.synonyms
+
+        correction = self.correction
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if correction is not UNSET:
-            field_dict["correction"] = correction
         if synonyms is not UNSET:
             field_dict["synonyms"] = synonyms
+        if correction is not UNSET:
+            field_dict["correction"] = correction
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        correction = d.pop("correction", UNSET)
-
         synonyms = d.pop("synonyms", UNSET)
 
+        correction = d.pop("correction", UNSET)
+
         search_term_options = cls(
-            correction=correction,
             synonyms=synonyms,
+            correction=correction,
         )
 
         search_term_options.additional_properties = d

@@ -18,15 +18,15 @@ class BRequestIXServicePortIFCheckoutActivityProject:
     """
     Attributes:
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        project_name (Union[Unset, str]):
         lock_z (Union[Unset, LockZ]): This class encapsulates the constants of the LockC class.
             <p>
              Copyright: Copyright (c) 2004
@@ -34,11 +34,12 @@ class BRequestIXServicePortIFCheckoutActivityProject:
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
+        project_name (Union[Unset, str]):
     """
 
     ci: Union[Unset, "ClientInfo"] = UNSET
-    project_name: Union[Unset, str] = UNSET
     lock_z: Union[Unset, "LockZ"] = UNSET
+    project_name: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -46,20 +47,21 @@ class BRequestIXServicePortIFCheckoutActivityProject:
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        project_name = self.project_name
         lock_z: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.lock_z, Unset):
             lock_z = self.lock_z.to_dict()
+
+        project_name = self.project_name
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if ci is not UNSET:
             field_dict["ci"] = ci
-        if project_name is not UNSET:
-            field_dict["projectName"] = project_name
         if lock_z is not UNSET:
             field_dict["lockZ"] = lock_z
+        if project_name is not UNSET:
+            field_dict["projectName"] = project_name
 
         return field_dict
 
@@ -76,8 +78,6 @@ class BRequestIXServicePortIFCheckoutActivityProject:
         else:
             ci = ClientInfo.from_dict(_ci)
 
-        project_name = d.pop("projectName", UNSET)
-
         _lock_z = d.pop("lockZ", UNSET)
         lock_z: Union[Unset, LockZ]
         if isinstance(_lock_z, Unset):
@@ -85,10 +85,12 @@ class BRequestIXServicePortIFCheckoutActivityProject:
         else:
             lock_z = LockZ.from_dict(_lock_z)
 
+        project_name = d.pop("projectName", UNSET)
+
         b_request_ix_service_port_if_checkout_activity_project = cls(
             ci=ci,
-            project_name=project_name,
             lock_z=lock_z,
+            project_name=project_name,
         )
 
         b_request_ix_service_port_if_checkout_activity_project.additional_properties = d

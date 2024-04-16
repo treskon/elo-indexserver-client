@@ -18,18 +18,18 @@ T = TypeVar("T", bound="BRequestIXServicePortIFCheckoutNoteTemplates")
 class BRequestIXServicePortIFCheckoutNoteTemplates:
     """
     Attributes:
+        ntempl_z (Union[Unset, NoteTemplateZ]):
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        user_id (Union[Unset, str]):
         ids (Union[Unset, List[str]]):
-        ntempl_z (Union[Unset, NoteTemplateZ]):
         lock_z (Union[Unset, LockZ]): This class encapsulates the constants of the LockC class.
             <p>
              Copyright: Copyright (c) 2004
@@ -37,46 +37,48 @@ class BRequestIXServicePortIFCheckoutNoteTemplates:
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
+        user_id (Union[Unset, str]):
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
-    user_id: Union[Unset, str] = UNSET
-    ids: Union[Unset, List[str]] = UNSET
     ntempl_z: Union[Unset, "NoteTemplateZ"] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
+    ids: Union[Unset, List[str]] = UNSET
     lock_z: Union[Unset, "LockZ"] = UNSET
+    user_id: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        ntempl_z: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.ntempl_z, Unset):
+            ntempl_z = self.ntempl_z.to_dict()
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        user_id = self.user_id
         ids: Union[Unset, List[str]] = UNSET
         if not isinstance(self.ids, Unset):
             ids = self.ids
-
-        ntempl_z: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.ntempl_z, Unset):
-            ntempl_z = self.ntempl_z.to_dict()
 
         lock_z: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.lock_z, Unset):
             lock_z = self.lock_z.to_dict()
 
+        user_id = self.user_id
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
-        if user_id is not UNSET:
-            field_dict["userId"] = user_id
-        if ids is not UNSET:
-            field_dict["ids"] = ids
         if ntempl_z is not UNSET:
             field_dict["ntemplZ"] = ntempl_z
+        if ci is not UNSET:
+            field_dict["ci"] = ci
+        if ids is not UNSET:
+            field_dict["ids"] = ids
         if lock_z is not UNSET:
             field_dict["lockZ"] = lock_z
+        if user_id is not UNSET:
+            field_dict["userId"] = user_id
 
         return field_dict
 
@@ -87,6 +89,13 @@ class BRequestIXServicePortIFCheckoutNoteTemplates:
         from ..models.note_template_z import NoteTemplateZ
 
         d = src_dict.copy()
+        _ntempl_z = d.pop("ntemplZ", UNSET)
+        ntempl_z: Union[Unset, NoteTemplateZ]
+        if isinstance(_ntempl_z, Unset):
+            ntempl_z = UNSET
+        else:
+            ntempl_z = NoteTemplateZ.from_dict(_ntempl_z)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
@@ -94,16 +103,7 @@ class BRequestIXServicePortIFCheckoutNoteTemplates:
         else:
             ci = ClientInfo.from_dict(_ci)
 
-        user_id = d.pop("userId", UNSET)
-
         ids = cast(List[str], d.pop("ids", UNSET))
-
-        _ntempl_z = d.pop("ntemplZ", UNSET)
-        ntempl_z: Union[Unset, NoteTemplateZ]
-        if isinstance(_ntempl_z, Unset):
-            ntempl_z = UNSET
-        else:
-            ntempl_z = NoteTemplateZ.from_dict(_ntempl_z)
 
         _lock_z = d.pop("lockZ", UNSET)
         lock_z: Union[Unset, LockZ]
@@ -112,12 +112,14 @@ class BRequestIXServicePortIFCheckoutNoteTemplates:
         else:
             lock_z = LockZ.from_dict(_lock_z)
 
+        user_id = d.pop("userId", UNSET)
+
         b_request_ix_service_port_if_checkout_note_templates = cls(
-            ci=ci,
-            user_id=user_id,
-            ids=ids,
             ntempl_z=ntempl_z,
+            ci=ci,
+            ids=ids,
             lock_z=lock_z,
+            user_id=user_id,
         )
 
         b_request_ix_service_port_if_checkout_note_templates.additional_properties = d

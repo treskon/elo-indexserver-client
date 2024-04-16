@@ -13,56 +13,60 @@ class PurgeStatus:
     """This class represents the status of the ELOdm purge task
 
     Attributes:
+        last_purge_time (Union[Unset, str]): last purge work time (ISO UTC date and time without dots) If no purge has
+            been done yet, the
+            variable is empty.
         is_running (Union[Unset, bool]): if the ELOdm purge task is running (it can only run in combination with the
             backup task)
-        number_of_docs_purged (Union[Unset, int]): number of purged documents
-        last_purge_time (Union[Unset, str]): last purge work time (ISO UTC date and time without dots) If no purge has
-            been done yet, the variable is empty.
         error_message (Union[Unset, str]): an error message, if an error occured, else an empty String
+        number_of_docs_purged (Union[Unset, int]): number of purged documents
     """
 
-    is_running: Union[Unset, bool] = UNSET
-    number_of_docs_purged: Union[Unset, int] = UNSET
     last_purge_time: Union[Unset, str] = UNSET
+    is_running: Union[Unset, bool] = UNSET
     error_message: Union[Unset, str] = UNSET
+    number_of_docs_purged: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        is_running = self.is_running
-        number_of_docs_purged = self.number_of_docs_purged
         last_purge_time = self.last_purge_time
+
+        is_running = self.is_running
+
         error_message = self.error_message
+
+        number_of_docs_purged = self.number_of_docs_purged
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if is_running is not UNSET:
-            field_dict["isRunning"] = is_running
-        if number_of_docs_purged is not UNSET:
-            field_dict["numberOfDocsPurged"] = number_of_docs_purged
         if last_purge_time is not UNSET:
             field_dict["lastPurgeTime"] = last_purge_time
+        if is_running is not UNSET:
+            field_dict["isRunning"] = is_running
         if error_message is not UNSET:
             field_dict["errorMessage"] = error_message
+        if number_of_docs_purged is not UNSET:
+            field_dict["numberOfDocsPurged"] = number_of_docs_purged
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        is_running = d.pop("isRunning", UNSET)
-
-        number_of_docs_purged = d.pop("numberOfDocsPurged", UNSET)
-
         last_purge_time = d.pop("lastPurgeTime", UNSET)
+
+        is_running = d.pop("isRunning", UNSET)
 
         error_message = d.pop("errorMessage", UNSET)
 
+        number_of_docs_purged = d.pop("numberOfDocsPurged", UNSET)
+
         purge_status = cls(
-            is_running=is_running,
-            number_of_docs_purged=number_of_docs_purged,
             last_purge_time=last_purge_time,
+            is_running=is_running,
             error_message=error_message,
+            number_of_docs_purged=number_of_docs_purged,
         )
 
         purge_status.additional_properties = d

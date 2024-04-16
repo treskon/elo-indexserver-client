@@ -10,43 +10,45 @@ T = TypeVar("T", bound="HttpResponseInfo")
 
 @_attrs_define
 class HttpResponseInfo:
-    """This class contains information for the HttpServletResponse object to be sent by the Indexserver servlet.
+    """This class contains information for the HttpServletResponse object to be sent by the Indexserver
+    servlet.
 
-    Attributes:
-        content_type (Union[Unset, str]): Content type header. HttpServletResponse.
-            setContentType()
-        response_string (Union[Unset, str]): Response text. Written to HttpServletResponse.
-            getOutputStream()
+        Attributes:
+            response_string (Union[Unset, str]): Response text. Written to HttpServletResponse.
+                getOutputStream()
+            content_type (Union[Unset, str]): Content type header. HttpServletResponse.
+                setContentType()
     """
 
-    content_type: Union[Unset, str] = UNSET
     response_string: Union[Unset, str] = UNSET
+    content_type: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        content_type = self.content_type
         response_string = self.response_string
+
+        content_type = self.content_type
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if content_type is not UNSET:
-            field_dict["contentType"] = content_type
         if response_string is not UNSET:
             field_dict["responseString"] = response_string
+        if content_type is not UNSET:
+            field_dict["contentType"] = content_type
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        content_type = d.pop("contentType", UNSET)
-
         response_string = d.pop("responseString", UNSET)
 
+        content_type = d.pop("contentType", UNSET)
+
         http_response_info = cls(
-            content_type=content_type,
             response_string=response_string,
+            content_type=content_type,
         )
 
         http_response_info.additional_properties = d

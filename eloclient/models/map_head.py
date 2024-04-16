@@ -13,62 +13,75 @@ class MapHead:
     """Internal class.
 
     Attributes:
-        id (Union[Unset, str]): Map id.
         lock_id (Union[Unset, int]): Lock status. -1: unlocked, &gt;=0 user-ID.
-        obj_id (Union[Unset, int]): Associated object ID or 0.
         t_stamp (Union[Unset, str]): Timestamp.
+        t_stamp_sync (Union[Unset, str]): EIX-3097: TimeStampSync
+        obj_id (Union[Unset, int]): Associated object ID or 0.
         guid (Union[Unset, str]): GUID.
+        id (Union[Unset, str]): Map id.
     """
 
-    id: Union[Unset, str] = UNSET
     lock_id: Union[Unset, int] = UNSET
-    obj_id: Union[Unset, int] = UNSET
     t_stamp: Union[Unset, str] = UNSET
+    t_stamp_sync: Union[Unset, str] = UNSET
+    obj_id: Union[Unset, int] = UNSET
     guid: Union[Unset, str] = UNSET
+    id: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        id = self.id
         lock_id = self.lock_id
-        obj_id = self.obj_id
+
         t_stamp = self.t_stamp
+
+        t_stamp_sync = self.t_stamp_sync
+
+        obj_id = self.obj_id
+
         guid = self.guid
+
+        id = self.id
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if id is not UNSET:
-            field_dict["id"] = id
         if lock_id is not UNSET:
             field_dict["lockId"] = lock_id
-        if obj_id is not UNSET:
-            field_dict["objId"] = obj_id
         if t_stamp is not UNSET:
             field_dict["TStamp"] = t_stamp
+        if t_stamp_sync is not UNSET:
+            field_dict["TStampSync"] = t_stamp_sync
+        if obj_id is not UNSET:
+            field_dict["objId"] = obj_id
         if guid is not UNSET:
             field_dict["guid"] = guid
+        if id is not UNSET:
+            field_dict["id"] = id
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        id = d.pop("id", UNSET)
-
         lock_id = d.pop("lockId", UNSET)
-
-        obj_id = d.pop("objId", UNSET)
 
         t_stamp = d.pop("TStamp", UNSET)
 
+        t_stamp_sync = d.pop("TStampSync", UNSET)
+
+        obj_id = d.pop("objId", UNSET)
+
         guid = d.pop("guid", UNSET)
 
+        id = d.pop("id", UNSET)
+
         map_head = cls(
-            id=id,
             lock_id=lock_id,
-            obj_id=obj_id,
             t_stamp=t_stamp,
+            t_stamp_sync=t_stamp_sync,
+            obj_id=obj_id,
             guid=guid,
+            id=id,
         )
 
         map_head.additional_properties = d

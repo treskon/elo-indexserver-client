@@ -18,21 +18,22 @@ class BRequestIXServicePortIFAddUrlParams:
     """
     Attributes:
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        url (Union[Unset, str]):
         params (Union[Unset, UrlParams]): This class describes additional params for an upload or download URL.
+        url (Union[Unset, str]):
     """
 
     ci: Union[Unset, "ClientInfo"] = UNSET
-    url: Union[Unset, str] = UNSET
     params: Union[Unset, "UrlParams"] = UNSET
+    url: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -40,20 +41,21 @@ class BRequestIXServicePortIFAddUrlParams:
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        url = self.url
         params: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.params, Unset):
             params = self.params.to_dict()
+
+        url = self.url
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if ci is not UNSET:
             field_dict["ci"] = ci
-        if url is not UNSET:
-            field_dict["url"] = url
         if params is not UNSET:
             field_dict["params"] = params
+        if url is not UNSET:
+            field_dict["url"] = url
 
         return field_dict
 
@@ -70,8 +72,6 @@ class BRequestIXServicePortIFAddUrlParams:
         else:
             ci = ClientInfo.from_dict(_ci)
 
-        url = d.pop("url", UNSET)
-
         _params = d.pop("params", UNSET)
         params: Union[Unset, UrlParams]
         if isinstance(_params, Unset):
@@ -79,10 +79,12 @@ class BRequestIXServicePortIFAddUrlParams:
         else:
             params = UrlParams.from_dict(_params)
 
+        url = d.pop("url", UNSET)
+
         b_request_ix_service_port_if_add_url_params = cls(
             ci=ci,
-            url=url,
             params=params,
+            url=url,
         )
 
         b_request_ix_service_port_if_add_url_params.additional_properties = d

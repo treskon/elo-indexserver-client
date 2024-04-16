@@ -23,6 +23,7 @@ class PointInfo:
 
     def to_dict(self) -> Dict[str, Any]:
         x = self.x
+
         y = self.y
 
         field_dict: Dict[str, Any] = {}

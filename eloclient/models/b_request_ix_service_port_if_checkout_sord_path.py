@@ -18,16 +18,6 @@ T = TypeVar("T", bound="BRequestIXServicePortIFCheckoutSordPath")
 class BRequestIXServicePortIFCheckoutSordPath:
     """
     Attributes:
-        ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
-             <p>
-             Copyright: Copyright (c) 2004
-             </p>
-             <p>
-             Organisation: ELO Digital Office GmbH
-             </p>
-        obj_id (Union[Unset, str]):
         sord_z (Union[Unset, SordZ]): <p>
             This class encapsulates the constants of <code>SordC</code>
              </p>
@@ -38,24 +28,36 @@ class BRequestIXServicePortIFCheckoutSordPath:
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
+        ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
+             <p>
+             Copyright: Copyright (c) 2004
+             </p>
+             <p>
+             Organisation: ELO Digital Office GmbH
+             </p>
+        obj_id (Union[Unset, str]):
         csi (Union[Unset, CheckoutSordPathInfo]):
     """
 
+    sord_z: Union[Unset, "SordZ"] = UNSET
     ci: Union[Unset, "ClientInfo"] = UNSET
     obj_id: Union[Unset, str] = UNSET
-    sord_z: Union[Unset, "SordZ"] = UNSET
     csi: Union[Unset, "CheckoutSordPathInfo"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        sord_z: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.sord_z, Unset):
+            sord_z = self.sord_z.to_dict()
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
         obj_id = self.obj_id
-        sord_z: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.sord_z, Unset):
-            sord_z = self.sord_z.to_dict()
 
         csi: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.csi, Unset):
@@ -64,12 +66,12 @@ class BRequestIXServicePortIFCheckoutSordPath:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
+        if sord_z is not UNSET:
+            field_dict["sordZ"] = sord_z
         if ci is not UNSET:
             field_dict["ci"] = ci
         if obj_id is not UNSET:
             field_dict["objId"] = obj_id
-        if sord_z is not UNSET:
-            field_dict["sordZ"] = sord_z
         if csi is not UNSET:
             field_dict["csi"] = csi
 
@@ -82,6 +84,13 @@ class BRequestIXServicePortIFCheckoutSordPath:
         from ..models.sord_z import SordZ
 
         d = src_dict.copy()
+        _sord_z = d.pop("sordZ", UNSET)
+        sord_z: Union[Unset, SordZ]
+        if isinstance(_sord_z, Unset):
+            sord_z = UNSET
+        else:
+            sord_z = SordZ.from_dict(_sord_z)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
@@ -91,13 +100,6 @@ class BRequestIXServicePortIFCheckoutSordPath:
 
         obj_id = d.pop("objId", UNSET)
 
-        _sord_z = d.pop("sordZ", UNSET)
-        sord_z: Union[Unset, SordZ]
-        if isinstance(_sord_z, Unset):
-            sord_z = UNSET
-        else:
-            sord_z = SordZ.from_dict(_sord_z)
-
         _csi = d.pop("csi", UNSET)
         csi: Union[Unset, CheckoutSordPathInfo]
         if isinstance(_csi, Unset):
@@ -106,9 +108,9 @@ class BRequestIXServicePortIFCheckoutSordPath:
             csi = CheckoutSordPathInfo.from_dict(_csi)
 
         b_request_ix_service_port_if_checkout_sord_path = cls(
+            sord_z=sord_z,
             ci=ci,
             obj_id=obj_id,
-            sord_z=sord_z,
             csi=csi,
         )
 

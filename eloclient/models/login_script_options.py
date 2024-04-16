@@ -17,8 +17,8 @@ class LoginScriptOptions:
             The value of this field must be one value of
              {{@link LoginScriptOptionsC}.CLIENT_NAME_*}.
         tech_user (Union[Unset, str]): User name used for authentication. This member is only valid for run-as logins.
-            It contains the name of the
-             technical user used for authentication.
+            It contains the
+             name of the technical user used for authentication.
     """
 
     client_name: Union[Unset, str] = UNSET
@@ -27,6 +27,7 @@ class LoginScriptOptions:
 
     def to_dict(self) -> Dict[str, Any]:
         client_name = self.client_name
+
         tech_user = self.tech_user
 
         field_dict: Dict[str, Any] = {}

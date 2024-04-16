@@ -12,21 +12,17 @@ T = TypeVar("T", bound="SearchIndexerStatus")
 class SearchIndexerStatus:
     """
     Attributes:
-        inactive (Union[Unset, SearchIndexerStatus]):
         sleeping (Union[Unset, SearchIndexerStatus]):
         running (Union[Unset, SearchIndexerStatus]):
+        inactive (Union[Unset, SearchIndexerStatus]):
     """
 
-    inactive: Union[Unset, "SearchIndexerStatus"] = UNSET
     sleeping: Union[Unset, "SearchIndexerStatus"] = UNSET
     running: Union[Unset, "SearchIndexerStatus"] = UNSET
+    inactive: Union[Unset, "SearchIndexerStatus"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        inactive: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.inactive, Unset):
-            inactive = self.inactive.to_dict()
-
         sleeping: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.sleeping, Unset):
             sleeping = self.sleeping.to_dict()
@@ -35,28 +31,25 @@ class SearchIndexerStatus:
         if not isinstance(self.running, Unset):
             running = self.running.to_dict()
 
+        inactive: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.inactive, Unset):
+            inactive = self.inactive.to_dict()
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if inactive is not UNSET:
-            field_dict["Inactive"] = inactive
         if sleeping is not UNSET:
             field_dict["Sleeping"] = sleeping
         if running is not UNSET:
             field_dict["Running"] = running
+        if inactive is not UNSET:
+            field_dict["Inactive"] = inactive
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        _inactive = d.pop("Inactive", UNSET)
-        inactive: Union[Unset, SearchIndexerStatus]
-        if isinstance(_inactive, Unset):
-            inactive = UNSET
-        else:
-            inactive = SearchIndexerStatus.from_dict(_inactive)
-
         _sleeping = d.pop("Sleeping", UNSET)
         sleeping: Union[Unset, SearchIndexerStatus]
         if isinstance(_sleeping, Unset):
@@ -71,10 +64,17 @@ class SearchIndexerStatus:
         else:
             running = SearchIndexerStatus.from_dict(_running)
 
+        _inactive = d.pop("Inactive", UNSET)
+        inactive: Union[Unset, SearchIndexerStatus]
+        if isinstance(_inactive, Unset):
+            inactive = UNSET
+        else:
+            inactive = SearchIndexerStatus.from_dict(_inactive)
+
         search_indexer_status = cls(
-            inactive=inactive,
             sleeping=sleeping,
             running=running,
+            inactive=inactive,
         )
 
         search_indexer_status.additional_properties = d

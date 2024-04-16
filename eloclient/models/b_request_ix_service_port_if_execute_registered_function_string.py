@@ -16,41 +16,43 @@ T = TypeVar("T", bound="BRequestIXServicePortIFExecuteRegisteredFunctionString")
 class BRequestIXServicePortIFExecuteRegisteredFunctionString:
     """
     Attributes:
+        function_name (Union[Unset, str]):
+        param (Union[Unset, str]):
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        function_name (Union[Unset, str]):
-        param (Union[Unset, str]):
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
     function_name: Union[Unset, str] = UNSET
     param: Union[Unset, str] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        function_name = self.function_name
+
+        param = self.param
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        function_name = self.function_name
-        param = self.param
-
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
         if function_name is not UNSET:
             field_dict["functionName"] = function_name
         if param is not UNSET:
             field_dict["param"] = param
+        if ci is not UNSET:
+            field_dict["ci"] = ci
 
         return field_dict
 
@@ -59,6 +61,10 @@ class BRequestIXServicePortIFExecuteRegisteredFunctionString:
         from ..models.client_info import ClientInfo
 
         d = src_dict.copy()
+        function_name = d.pop("functionName", UNSET)
+
+        param = d.pop("param", UNSET)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
@@ -66,14 +72,10 @@ class BRequestIXServicePortIFExecuteRegisteredFunctionString:
         else:
             ci = ClientInfo.from_dict(_ci)
 
-        function_name = d.pop("functionName", UNSET)
-
-        param = d.pop("param", UNSET)
-
         b_request_ix_service_port_if_execute_registered_function_string = cls(
-            ci=ci,
             function_name=function_name,
             param=param,
+            ci=ci,
         )
 
         b_request_ix_service_port_if_execute_registered_function_string.additional_properties = d

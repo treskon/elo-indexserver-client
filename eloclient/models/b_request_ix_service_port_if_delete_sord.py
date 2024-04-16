@@ -18,17 +18,6 @@ T = TypeVar("T", bound="BRequestIXServicePortIFDeleteSord")
 class BRequestIXServicePortIFDeleteSord:
     """
     Attributes:
-        ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
-             <p>
-             Copyright: Copyright (c) 2004
-             </p>
-             <p>
-             Organisation: ELO Digital Office GmbH
-             </p>
-        parent_id (Union[Unset, str]):
-        obj_id (Union[Unset, str]):
         unlock_z (Union[Unset, LockZ]): This class encapsulates the constants of the LockC class.
             <p>
              Copyright: Copyright (c) 2004
@@ -44,22 +33,28 @@ class BRequestIXServicePortIFDeleteSord:
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
+        ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
+             <p>
+             Copyright: Copyright (c) 2004
+             </p>
+             <p>
+             Organisation: ELO Digital Office GmbH
+             </p>
+        obj_id (Union[Unset, str]):
+        parent_id (Union[Unset, str]):
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
-    parent_id: Union[Unset, str] = UNSET
-    obj_id: Union[Unset, str] = UNSET
     unlock_z: Union[Unset, "LockZ"] = UNSET
     delete_options: Union[Unset, "DeleteOptions"] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
+    obj_id: Union[Unset, str] = UNSET
+    parent_id: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        ci: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.ci, Unset):
-            ci = self.ci.to_dict()
-
-        parent_id = self.parent_id
-        obj_id = self.obj_id
         unlock_z: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.unlock_z, Unset):
             unlock_z = self.unlock_z.to_dict()
@@ -68,19 +63,27 @@ class BRequestIXServicePortIFDeleteSord:
         if not isinstance(self.delete_options, Unset):
             delete_options = self.delete_options.to_dict()
 
+        ci: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.ci, Unset):
+            ci = self.ci.to_dict()
+
+        obj_id = self.obj_id
+
+        parent_id = self.parent_id
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
-        if parent_id is not UNSET:
-            field_dict["parentId"] = parent_id
-        if obj_id is not UNSET:
-            field_dict["objId"] = obj_id
         if unlock_z is not UNSET:
             field_dict["unlockZ"] = unlock_z
         if delete_options is not UNSET:
             field_dict["deleteOptions"] = delete_options
+        if ci is not UNSET:
+            field_dict["ci"] = ci
+        if obj_id is not UNSET:
+            field_dict["objId"] = obj_id
+        if parent_id is not UNSET:
+            field_dict["parentId"] = parent_id
 
         return field_dict
 
@@ -91,17 +94,6 @@ class BRequestIXServicePortIFDeleteSord:
         from ..models.lock_z import LockZ
 
         d = src_dict.copy()
-        _ci = d.pop("ci", UNSET)
-        ci: Union[Unset, ClientInfo]
-        if isinstance(_ci, Unset):
-            ci = UNSET
-        else:
-            ci = ClientInfo.from_dict(_ci)
-
-        parent_id = d.pop("parentId", UNSET)
-
-        obj_id = d.pop("objId", UNSET)
-
         _unlock_z = d.pop("unlockZ", UNSET)
         unlock_z: Union[Unset, LockZ]
         if isinstance(_unlock_z, Unset):
@@ -116,12 +108,23 @@ class BRequestIXServicePortIFDeleteSord:
         else:
             delete_options = DeleteOptions.from_dict(_delete_options)
 
+        _ci = d.pop("ci", UNSET)
+        ci: Union[Unset, ClientInfo]
+        if isinstance(_ci, Unset):
+            ci = UNSET
+        else:
+            ci = ClientInfo.from_dict(_ci)
+
+        obj_id = d.pop("objId", UNSET)
+
+        parent_id = d.pop("parentId", UNSET)
+
         b_request_ix_service_port_if_delete_sord = cls(
-            ci=ci,
-            parent_id=parent_id,
-            obj_id=obj_id,
             unlock_z=unlock_z,
             delete_options=delete_options,
+            ci=ci,
+            obj_id=obj_id,
+            parent_id=parent_id,
         )
 
         b_request_ix_service_port_if_delete_sord.additional_properties = d

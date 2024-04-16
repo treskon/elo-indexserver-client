@@ -13,37 +13,35 @@ class PreviewImageResult:
     """
     Attributes:
         urls (Union[Unset, List[str]]):
-        dpi (Union[Unset, int]): Dots per inch of the requested preview images.
-            If the document source is a multi-page file, this value holds for
-             every requested pages.
-        dimension_width (Union[Unset, int]): Width of first page. Use this value to get an idea about the dimensions of
-            the preview image in general.
-            While this
-             value is exact for the first page, following pages may have different dimension (e.g. different orientation,
-            image
-             as a whole page in a PDF document, ...)
         dimension_height (Union[Unset, int]): Height of the first page.
-            Please consider the hints at {@link PreviewImageResult#dimensionWidth} with respect to
-             multi-page documents.
-        progress (Union[Unset, int]): Current progress of processing at the server.
-            Processing is finished at server side when this value equals
-             {@link PreviewImageResult#progressMax}.
-        progress_max (Union[Unset, int]): Estimated value about the workload at the server.
-            There is a chance that the server is finished with the processing
-             of the request when progress reaches this estimated value. In repeated requests progresMax can increase in
-             comparison to calls in earlier times.
-        status_message (Union[Unset, str]): Status message about the current processing of preview images at the server.
+            Please consider the hints at
+             {@link PreviewImageResult#dimensionWidth} with respect to multi-page documents.
         pages (Union[Unset, int]): Number of pages.
+        progress_max (Union[Unset, int]): Estimated value about the workload at the server.
+            There is a chance that the server is finished
+             with the processing of the request when progress reaches this estimated value. In repeated
+             requests progresMax can increase in comparison to calls in earlier times.
+        progress (Union[Unset, int]): Current progress of processing at the server.
+            Processing is finished at server side when this
+             value equals {@link PreviewImageResult#progressMax}.
+        dimension_width (Union[Unset, int]): Width of first page.
+            Use this value to get an idea about the dimensions of the preview image in
+             general. While this value is exact for the first page, following pages may have different
+             dimension (e.g. different orientation, image as a whole page in a PDF document, ...)
+        dpi (Union[Unset, int]): Dots per inch of the requested preview images.
+            If the document source is a multi-page file,
+             this value holds for every requested pages.
+        status_message (Union[Unset, str]): Status message about the current processing of preview images at the server.
     """
 
     urls: Union[Unset, List[str]] = UNSET
-    dpi: Union[Unset, int] = UNSET
-    dimension_width: Union[Unset, int] = UNSET
     dimension_height: Union[Unset, int] = UNSET
-    progress: Union[Unset, int] = UNSET
-    progress_max: Union[Unset, int] = UNSET
-    status_message: Union[Unset, str] = UNSET
     pages: Union[Unset, int] = UNSET
+    progress_max: Union[Unset, int] = UNSET
+    progress: Union[Unset, int] = UNSET
+    dimension_width: Union[Unset, int] = UNSET
+    dpi: Union[Unset, int] = UNSET
+    status_message: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -51,33 +49,39 @@ class PreviewImageResult:
         if not isinstance(self.urls, Unset):
             urls = self.urls
 
-        dpi = self.dpi
-        dimension_width = self.dimension_width
         dimension_height = self.dimension_height
-        progress = self.progress
-        progress_max = self.progress_max
-        status_message = self.status_message
+
         pages = self.pages
+
+        progress_max = self.progress_max
+
+        progress = self.progress
+
+        dimension_width = self.dimension_width
+
+        dpi = self.dpi
+
+        status_message = self.status_message
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if urls is not UNSET:
             field_dict["urls"] = urls
-        if dpi is not UNSET:
-            field_dict["dpi"] = dpi
-        if dimension_width is not UNSET:
-            field_dict["dimensionWidth"] = dimension_width
         if dimension_height is not UNSET:
             field_dict["dimensionHeight"] = dimension_height
-        if progress is not UNSET:
-            field_dict["progress"] = progress
-        if progress_max is not UNSET:
-            field_dict["progressMax"] = progress_max
-        if status_message is not UNSET:
-            field_dict["statusMessage"] = status_message
         if pages is not UNSET:
             field_dict["pages"] = pages
+        if progress_max is not UNSET:
+            field_dict["progressMax"] = progress_max
+        if progress is not UNSET:
+            field_dict["progress"] = progress
+        if dimension_width is not UNSET:
+            field_dict["dimensionWidth"] = dimension_width
+        if dpi is not UNSET:
+            field_dict["dpi"] = dpi
+        if status_message is not UNSET:
+            field_dict["statusMessage"] = status_message
 
         return field_dict
 
@@ -86,29 +90,29 @@ class PreviewImageResult:
         d = src_dict.copy()
         urls = cast(List[str], d.pop("urls", UNSET))
 
-        dpi = d.pop("dpi", UNSET)
-
-        dimension_width = d.pop("dimensionWidth", UNSET)
-
         dimension_height = d.pop("dimensionHeight", UNSET)
-
-        progress = d.pop("progress", UNSET)
-
-        progress_max = d.pop("progressMax", UNSET)
-
-        status_message = d.pop("statusMessage", UNSET)
 
         pages = d.pop("pages", UNSET)
 
+        progress_max = d.pop("progressMax", UNSET)
+
+        progress = d.pop("progress", UNSET)
+
+        dimension_width = d.pop("dimensionWidth", UNSET)
+
+        dpi = d.pop("dpi", UNSET)
+
+        status_message = d.pop("statusMessage", UNSET)
+
         preview_image_result = cls(
             urls=urls,
-            dpi=dpi,
-            dimension_width=dimension_width,
             dimension_height=dimension_height,
-            progress=progress,
-            progress_max=progress_max,
-            status_message=status_message,
             pages=pages,
+            progress_max=progress_max,
+            progress=progress,
+            dimension_width=dimension_width,
+            dpi=dpi,
+            status_message=status_message,
         )
 
         preview_image_result.additional_properties = d

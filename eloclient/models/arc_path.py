@@ -31,7 +31,6 @@ class ArcPath:
             path = []
             for path_item_data in self.path:
                 path_item = path_item_data.to_dict()
-
                 path.append(path_item)
 
         path_as_string = self.path_as_string

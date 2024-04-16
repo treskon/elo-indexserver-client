@@ -10,20 +10,28 @@ T = TypeVar("T", bound="HealthCheckInfoType")
 
 @_attrs_define
 class HealthCheckInfoType:
-    """Defines the type of the HealthCheck values. Depending on the type the evaluation differs. Either MMA, CNT or MSG.
+    """Defines the type of the HealthCheck values. Depending on the type the evaluation differs.
+    Either
+     MMA, CNT or MSG.
 
-    Attributes:
-        mma (Union[Unset, HealthCheckInfoType]): Defines the type of the HealthCheck values. Depending on the type the
-            evaluation differs. Either MMA, CNT or MSG.
-        cnt (Union[Unset, HealthCheckInfoType]): Defines the type of the HealthCheck values. Depending on the type the
-            evaluation differs. Either MMA, CNT or MSG.
-        msg (Union[Unset, HealthCheckInfoType]): Defines the type of the HealthCheck values. Depending on the type the
-            evaluation differs. Either MMA, CNT or MSG.
+        Attributes:
+            mma (Union[Unset, HealthCheckInfoType]): Defines the type of the HealthCheck values. Depending on the type the
+                evaluation differs.
+                Either
+                 MMA, CNT or MSG.
+            msg (Union[Unset, HealthCheckInfoType]): Defines the type of the HealthCheck values. Depending on the type the
+                evaluation differs.
+                Either
+                 MMA, CNT or MSG.
+            cnt (Union[Unset, HealthCheckInfoType]): Defines the type of the HealthCheck values. Depending on the type the
+                evaluation differs.
+                Either
+                 MMA, CNT or MSG.
     """
 
     mma: Union[Unset, "HealthCheckInfoType"] = UNSET
-    cnt: Union[Unset, "HealthCheckInfoType"] = UNSET
     msg: Union[Unset, "HealthCheckInfoType"] = UNSET
+    cnt: Union[Unset, "HealthCheckInfoType"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -31,23 +39,23 @@ class HealthCheckInfoType:
         if not isinstance(self.mma, Unset):
             mma = self.mma.to_dict()
 
-        cnt: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.cnt, Unset):
-            cnt = self.cnt.to_dict()
-
         msg: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.msg, Unset):
             msg = self.msg.to_dict()
+
+        cnt: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.cnt, Unset):
+            cnt = self.cnt.to_dict()
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if mma is not UNSET:
             field_dict["MMA"] = mma
-        if cnt is not UNSET:
-            field_dict["CNT"] = cnt
         if msg is not UNSET:
             field_dict["MSG"] = msg
+        if cnt is not UNSET:
+            field_dict["CNT"] = cnt
 
         return field_dict
 
@@ -61,13 +69,6 @@ class HealthCheckInfoType:
         else:
             mma = HealthCheckInfoType.from_dict(_mma)
 
-        _cnt = d.pop("CNT", UNSET)
-        cnt: Union[Unset, HealthCheckInfoType]
-        if isinstance(_cnt, Unset):
-            cnt = UNSET
-        else:
-            cnt = HealthCheckInfoType.from_dict(_cnt)
-
         _msg = d.pop("MSG", UNSET)
         msg: Union[Unset, HealthCheckInfoType]
         if isinstance(_msg, Unset):
@@ -75,10 +76,17 @@ class HealthCheckInfoType:
         else:
             msg = HealthCheckInfoType.from_dict(_msg)
 
+        _cnt = d.pop("CNT", UNSET)
+        cnt: Union[Unset, HealthCheckInfoType]
+        if isinstance(_cnt, Unset):
+            cnt = UNSET
+        else:
+            cnt = HealthCheckInfoType.from_dict(_cnt)
+
         health_check_info_type = cls(
             mma=mma,
-            cnt=cnt,
             msg=msg,
+            cnt=cnt,
         )
 
         health_check_info_type.additional_properties = d

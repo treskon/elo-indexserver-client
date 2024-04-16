@@ -16,41 +16,43 @@ T = TypeVar("T", bound="BRequestIXServicePortIFLoginKerberos")
 class BRequestIXServicePortIFLoginKerberos:
     """
     Attributes:
+        client_computer (Union[Unset, str]):
+        ticket (Union[Unset, str]):
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        ticket (Union[Unset, str]):
-        client_computer (Union[Unset, str]):
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
-    ticket: Union[Unset, str] = UNSET
     client_computer: Union[Unset, str] = UNSET
+    ticket: Union[Unset, str] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        client_computer = self.client_computer
+
+        ticket = self.ticket
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        ticket = self.ticket
-        client_computer = self.client_computer
-
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
-        if ticket is not UNSET:
-            field_dict["ticket"] = ticket
         if client_computer is not UNSET:
             field_dict["clientComputer"] = client_computer
+        if ticket is not UNSET:
+            field_dict["ticket"] = ticket
+        if ci is not UNSET:
+            field_dict["ci"] = ci
 
         return field_dict
 
@@ -59,6 +61,10 @@ class BRequestIXServicePortIFLoginKerberos:
         from ..models.client_info import ClientInfo
 
         d = src_dict.copy()
+        client_computer = d.pop("clientComputer", UNSET)
+
+        ticket = d.pop("ticket", UNSET)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
@@ -66,14 +72,10 @@ class BRequestIXServicePortIFLoginKerberos:
         else:
             ci = ClientInfo.from_dict(_ci)
 
-        ticket = d.pop("ticket", UNSET)
-
-        client_computer = d.pop("clientComputer", UNSET)
-
         b_request_ix_service_port_if_login_kerberos = cls(
-            ci=ci,
-            ticket=ticket,
             client_computer=client_computer,
+            ticket=ticket,
+            ci=ci,
         )
 
         b_request_ix_service_port_if_login_kerberos.additional_properties = d

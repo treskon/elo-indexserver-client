@@ -17,53 +17,57 @@ T = TypeVar("T", bound="BRequestFeedServiceFindNextHashTagRelation")
 class BRequestFeedServiceFindNextHashTagRelation:
     """
     Attributes:
+        search_id (Union[Unset, str]):
+        max_ (Union[Unset, int]):
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        search_id (Union[Unset, str]):
-        idx (Union[Unset, int]):
-        max_ (Union[Unset, int]):
         hash_tag_z (Union[Unset, HashTagZ]):
+        idx (Union[Unset, int]):
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
     search_id: Union[Unset, str] = UNSET
-    idx: Union[Unset, int] = UNSET
     max_: Union[Unset, int] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
     hash_tag_z: Union[Unset, "HashTagZ"] = UNSET
+    idx: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        search_id = self.search_id
+
+        max_ = self.max_
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        search_id = self.search_id
-        idx = self.idx
-        max_ = self.max_
         hash_tag_z: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.hash_tag_z, Unset):
             hash_tag_z = self.hash_tag_z.to_dict()
 
+        idx = self.idx
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
         if search_id is not UNSET:
             field_dict["searchId"] = search_id
-        if idx is not UNSET:
-            field_dict["idx"] = idx
         if max_ is not UNSET:
             field_dict["max"] = max_
+        if ci is not UNSET:
+            field_dict["ci"] = ci
         if hash_tag_z is not UNSET:
             field_dict["hashTagZ"] = hash_tag_z
+        if idx is not UNSET:
+            field_dict["idx"] = idx
 
         return field_dict
 
@@ -73,18 +77,16 @@ class BRequestFeedServiceFindNextHashTagRelation:
         from ..models.hash_tag_z import HashTagZ
 
         d = src_dict.copy()
+        search_id = d.pop("searchId", UNSET)
+
+        max_ = d.pop("max", UNSET)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
             ci = UNSET
         else:
             ci = ClientInfo.from_dict(_ci)
-
-        search_id = d.pop("searchId", UNSET)
-
-        idx = d.pop("idx", UNSET)
-
-        max_ = d.pop("max", UNSET)
 
         _hash_tag_z = d.pop("hashTagZ", UNSET)
         hash_tag_z: Union[Unset, HashTagZ]
@@ -93,12 +95,14 @@ class BRequestFeedServiceFindNextHashTagRelation:
         else:
             hash_tag_z = HashTagZ.from_dict(_hash_tag_z)
 
+        idx = d.pop("idx", UNSET)
+
         b_request_feed_service_find_next_hash_tag_relation = cls(
-            ci=ci,
             search_id=search_id,
-            idx=idx,
             max_=max_,
+            ci=ci,
             hash_tag_z=hash_tag_z,
+            idx=idx,
         )
 
         b_request_feed_service_find_next_hash_tag_relation.additional_properties = d

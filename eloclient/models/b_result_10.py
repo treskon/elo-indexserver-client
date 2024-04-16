@@ -22,6 +22,7 @@ class BResult10:
 
     def to_dict(self) -> Dict[str, Any]:
         result = self.result
+
         exception = self.exception
 
         field_dict: Dict[str, Any] = {}

@@ -28,7 +28,6 @@ class SordPaths:
             sord_paths = []
             for componentsschemas_list_of_sord_path_item_data in self.sord_paths:
                 componentsschemas_list_of_sord_path_item = componentsschemas_list_of_sord_path_item_data.to_dict()
-
                 sord_paths.append(componentsschemas_list_of_sord_path_item)
 
         field_dict: Dict[str, Any] = {}

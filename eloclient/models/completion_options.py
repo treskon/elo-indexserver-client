@@ -28,21 +28,18 @@ class CompletionOptions:
                  It references a field in which should be searched and its value.
                  </p>
                  <p>
-                 There are other usecases, in which a QueryFilter is used to describe a certain field and its value is not
-                needed and
-                 therefore ignored: To retrieve context terms and completions.
+                 There are other usecases, in which a QueryFilter is used to describe a certain field and its
+                 value is not needed and therefore ignored: To retrieve context terms and completions.
                  </p>
                  <p>
-                 <b>Usage:</b> Define where to search for the value by the parameters searchField and indexFieldKey. If the
-                field you
-                 want to search in is defined in SearchFieldC, use one of the constants. In this case, the value of
-                indexFieldKey is
-                 ignored.<br>
-                 If you want to search in an index field, set searchField = SearchFieldC.INDEXFIELD and provide its name in
-                 indexFieldKey. For a DocMask with data organization "Aspect" the indexFieldKey must contain the name of the
-                 aspectAssoc and the lineKey of the aspectLine separated by "_". For a DocMask with data organization "ObjKey"
-                or
-                 "Table" the indexFieldKey must contain the lineKey of the docMaskLine.
+                 <b>Usage:</b> Define where to search for the value by the parameters searchField and
+                 indexFieldKey. If the field you want to search in is defined in SearchFieldC, use one of the
+                 constants. In this case, the value of indexFieldKey is ignored.<br>
+                 If you want to search in an index field, set searchField = SearchFieldC.INDEXFIELD and provide
+                 its name in indexFieldKey. For a DocMask with data organization "Aspect" the indexFieldKey must
+                 contain the name of the aspectAssoc and the lineKey of the aspectLine separated by "¶". For a
+                 DocMask with data organization "ObjKey" or "Table" the indexFieldKey must contain the lineKey of
+                 the docMaskLine.
                  <p>
                  <b>Examples:</b>
                  <ul>
@@ -62,9 +59,8 @@ class CompletionOptions:
                  It can, for example, be used with {@link QueryFilter#fieldType}
                  </p>
                  <p>
-                 For every {@link SearchFieldE} it is defined, which {@link FieldTypeE} can be used and, therefore, which data
-                classes
-                 (e.g. {@link StringSingleValue}) can be used.
+                 For every {@link SearchFieldE} it is defined, which {@link FieldTypeE} can be used and,
+                 therefore, which data classes (e.g. {@link StringSingleValue}) can be used.
                  </p>
     """
 

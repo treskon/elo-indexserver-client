@@ -17,8 +17,10 @@ class BResult784089396:
     """
     Attributes:
         result (Union[Unset, IXExceptionData]): This class describes an exception that can occur during the execution of
-            an Index server function.
-            <p>
+            an Index server
+            function.
+
+             <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>

@@ -13,21 +13,17 @@ class PluginMessageSource:
     """Source of plugin message.
 
     Attributes:
-        notihng (Union[Unset, PluginMessageSource]): Source of plugin message.
         ixapi (Union[Unset, PluginMessageSource]): Source of plugin message.
         http (Union[Unset, PluginMessageSource]): Source of plugin message.
+        notihng (Union[Unset, PluginMessageSource]): Source of plugin message.
     """
 
-    notihng: Union[Unset, "PluginMessageSource"] = UNSET
     ixapi: Union[Unset, "PluginMessageSource"] = UNSET
     http: Union[Unset, "PluginMessageSource"] = UNSET
+    notihng: Union[Unset, "PluginMessageSource"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        notihng: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.notihng, Unset):
-            notihng = self.notihng.to_dict()
-
         ixapi: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ixapi, Unset):
             ixapi = self.ixapi.to_dict()
@@ -36,28 +32,25 @@ class PluginMessageSource:
         if not isinstance(self.http, Unset):
             http = self.http.to_dict()
 
+        notihng: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.notihng, Unset):
+            notihng = self.notihng.to_dict()
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if notihng is not UNSET:
-            field_dict["NOTIHNG"] = notihng
         if ixapi is not UNSET:
             field_dict["IXAPI"] = ixapi
         if http is not UNSET:
             field_dict["HTTP"] = http
+        if notihng is not UNSET:
+            field_dict["NOTIHNG"] = notihng
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        _notihng = d.pop("NOTIHNG", UNSET)
-        notihng: Union[Unset, PluginMessageSource]
-        if isinstance(_notihng, Unset):
-            notihng = UNSET
-        else:
-            notihng = PluginMessageSource.from_dict(_notihng)
-
         _ixapi = d.pop("IXAPI", UNSET)
         ixapi: Union[Unset, PluginMessageSource]
         if isinstance(_ixapi, Unset):
@@ -72,10 +65,17 @@ class PluginMessageSource:
         else:
             http = PluginMessageSource.from_dict(_http)
 
+        _notihng = d.pop("NOTIHNG", UNSET)
+        notihng: Union[Unset, PluginMessageSource]
+        if isinstance(_notihng, Unset):
+            notihng = UNSET
+        else:
+            notihng = PluginMessageSource.from_dict(_notihng)
+
         plugin_message_source = cls(
-            notihng=notihng,
             ixapi=ixapi,
             http=http,
+            notihng=notihng,
         )
 
         plugin_message_source.additional_properties = d

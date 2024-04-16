@@ -17,7 +17,8 @@ class BResult1197100286:
     """
     Attributes:
         result (Union[Unset, SessionOptions]): Objects of this class hold an array of options that are used to
-            manipulate the current Indexserver session.
+            manipulate the current
+            Indexserver session.
         exception (Union[Unset, str]): Error message
     """
 

@@ -18,9 +18,10 @@ T = TypeVar("T", bound="BRequestIXServicePortIFCheckoutSordTypes")
 class BRequestIXServicePortIFCheckoutSordTypes:
     """
     Attributes:
-        ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+        sord_type_z (Union[Unset, SordTypeZ]): <p>
+            This class encapsulates the constants of <code>SordTypeC</code>
+             </p>
+
              <p>
              Copyright: Copyright (c) 2004
              </p>
@@ -28,10 +29,10 @@ class BRequestIXServicePortIFCheckoutSordTypes:
              Organisation: ELO Digital Office GmbH
              </p>
         sord_type_ids (Union[Unset, List[int]]):
-        sord_type_z (Union[Unset, SordTypeZ]): <p>
-            This class encapsulates the constants of <code>SordTypeC</code>
-             </p>
-
+        ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
@@ -47,24 +48,24 @@ class BRequestIXServicePortIFCheckoutSordTypes:
              </p>
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
-    sord_type_ids: Union[Unset, List[int]] = UNSET
     sord_type_z: Union[Unset, "SordTypeZ"] = UNSET
+    sord_type_ids: Union[Unset, List[int]] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
     lock_z: Union[Unset, "LockZ"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        ci: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.ci, Unset):
-            ci = self.ci.to_dict()
+        sord_type_z: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.sord_type_z, Unset):
+            sord_type_z = self.sord_type_z.to_dict()
 
         sord_type_ids: Union[Unset, List[int]] = UNSET
         if not isinstance(self.sord_type_ids, Unset):
             sord_type_ids = self.sord_type_ids
 
-        sord_type_z: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.sord_type_z, Unset):
-            sord_type_z = self.sord_type_z.to_dict()
+        ci: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.ci, Unset):
+            ci = self.ci.to_dict()
 
         lock_z: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.lock_z, Unset):
@@ -73,12 +74,12 @@ class BRequestIXServicePortIFCheckoutSordTypes:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
-        if sord_type_ids is not UNSET:
-            field_dict["sordTypeIds"] = sord_type_ids
         if sord_type_z is not UNSET:
             field_dict["sordTypeZ"] = sord_type_z
+        if sord_type_ids is not UNSET:
+            field_dict["sordTypeIds"] = sord_type_ids
+        if ci is not UNSET:
+            field_dict["ci"] = ci
         if lock_z is not UNSET:
             field_dict["lockZ"] = lock_z
 
@@ -91,21 +92,21 @@ class BRequestIXServicePortIFCheckoutSordTypes:
         from ..models.sord_type_z import SordTypeZ
 
         d = src_dict.copy()
-        _ci = d.pop("ci", UNSET)
-        ci: Union[Unset, ClientInfo]
-        if isinstance(_ci, Unset):
-            ci = UNSET
-        else:
-            ci = ClientInfo.from_dict(_ci)
-
-        sord_type_ids = cast(List[int], d.pop("sordTypeIds", UNSET))
-
         _sord_type_z = d.pop("sordTypeZ", UNSET)
         sord_type_z: Union[Unset, SordTypeZ]
         if isinstance(_sord_type_z, Unset):
             sord_type_z = UNSET
         else:
             sord_type_z = SordTypeZ.from_dict(_sord_type_z)
+
+        sord_type_ids = cast(List[int], d.pop("sordTypeIds", UNSET))
+
+        _ci = d.pop("ci", UNSET)
+        ci: Union[Unset, ClientInfo]
+        if isinstance(_ci, Unset):
+            ci = UNSET
+        else:
+            ci = ClientInfo.from_dict(_ci)
 
         _lock_z = d.pop("lockZ", UNSET)
         lock_z: Union[Unset, LockZ]
@@ -115,9 +116,9 @@ class BRequestIXServicePortIFCheckoutSordTypes:
             lock_z = LockZ.from_dict(_lock_z)
 
         b_request_ix_service_port_if_checkout_sord_types = cls(
-            ci=ci,
-            sord_type_ids=sord_type_ids,
             sord_type_z=sord_type_z,
+            sord_type_ids=sord_type_ids,
+            ci=ci,
             lock_z=lock_z,
         )
 

@@ -17,15 +17,24 @@ T = TypeVar("T", bound="BRequestIXServicePortIFCollectWorkFlowNodes")
 class BRequestIXServicePortIFCollectWorkFlowNodes:
     """
     Attributes:
+        node_name (Union[Unset, str]):
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
+        only_start_nodes (Union[Unset, bool]):
+        user_ids (Union[Unset, List[str]]):
+        only_active (Union[Unset, bool]):
+        obj_id (Union[Unset, str]):
+        enter_date_iso (Union[Unset, str]):
+        exit_date_iso (Union[Unset, str]):
+        node_type (Union[Unset, int]):
         flow_name (Union[Unset, str]):
         wf_type_z (Union[Unset, WFTypeZ]): This class encapsulates the constants of the WFTypeC class.
             <p>
@@ -34,76 +43,75 @@ class BRequestIXServicePortIFCollectWorkFlowNodes:
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        node_name (Union[Unset, str]):
-        node_type (Union[Unset, int]):
-        obj_id (Union[Unset, str]):
-        enter_date_iso (Union[Unset, str]):
-        exit_date_iso (Union[Unset, str]):
-        user_ids (Union[Unset, List[str]]):
-        only_active (Union[Unset, bool]):
-        only_start_nodes (Union[Unset, bool]):
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
-    flow_name: Union[Unset, str] = UNSET
-    wf_type_z: Union[Unset, "WFTypeZ"] = UNSET
     node_name: Union[Unset, str] = UNSET
-    node_type: Union[Unset, int] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
+    only_start_nodes: Union[Unset, bool] = UNSET
+    user_ids: Union[Unset, List[str]] = UNSET
+    only_active: Union[Unset, bool] = UNSET
     obj_id: Union[Unset, str] = UNSET
     enter_date_iso: Union[Unset, str] = UNSET
     exit_date_iso: Union[Unset, str] = UNSET
-    user_ids: Union[Unset, List[str]] = UNSET
-    only_active: Union[Unset, bool] = UNSET
-    only_start_nodes: Union[Unset, bool] = UNSET
+    node_type: Union[Unset, int] = UNSET
+    flow_name: Union[Unset, str] = UNSET
+    wf_type_z: Union[Unset, "WFTypeZ"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        node_name = self.node_name
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        flow_name = self.flow_name
-        wf_type_z: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.wf_type_z, Unset):
-            wf_type_z = self.wf_type_z.to_dict()
+        only_start_nodes = self.only_start_nodes
 
-        node_name = self.node_name
-        node_type = self.node_type
-        obj_id = self.obj_id
-        enter_date_iso = self.enter_date_iso
-        exit_date_iso = self.exit_date_iso
         user_ids: Union[Unset, List[str]] = UNSET
         if not isinstance(self.user_ids, Unset):
             user_ids = self.user_ids
 
         only_active = self.only_active
-        only_start_nodes = self.only_start_nodes
+
+        obj_id = self.obj_id
+
+        enter_date_iso = self.enter_date_iso
+
+        exit_date_iso = self.exit_date_iso
+
+        node_type = self.node_type
+
+        flow_name = self.flow_name
+
+        wf_type_z: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.wf_type_z, Unset):
+            wf_type_z = self.wf_type_z.to_dict()
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
-        if flow_name is not UNSET:
-            field_dict["flowName"] = flow_name
-        if wf_type_z is not UNSET:
-            field_dict["wfTypeZ"] = wf_type_z
         if node_name is not UNSET:
             field_dict["nodeName"] = node_name
-        if node_type is not UNSET:
-            field_dict["nodeType"] = node_type
+        if ci is not UNSET:
+            field_dict["ci"] = ci
+        if only_start_nodes is not UNSET:
+            field_dict["onlyStartNodes"] = only_start_nodes
+        if user_ids is not UNSET:
+            field_dict["userIds"] = user_ids
+        if only_active is not UNSET:
+            field_dict["onlyActive"] = only_active
         if obj_id is not UNSET:
             field_dict["objId"] = obj_id
         if enter_date_iso is not UNSET:
             field_dict["enterDateIso"] = enter_date_iso
         if exit_date_iso is not UNSET:
             field_dict["exitDateIso"] = exit_date_iso
-        if user_ids is not UNSET:
-            field_dict["userIds"] = user_ids
-        if only_active is not UNSET:
-            field_dict["onlyActive"] = only_active
-        if only_start_nodes is not UNSET:
-            field_dict["onlyStartNodes"] = only_start_nodes
+        if node_type is not UNSET:
+            field_dict["nodeType"] = node_type
+        if flow_name is not UNSET:
+            field_dict["flowName"] = flow_name
+        if wf_type_z is not UNSET:
+            field_dict["wfTypeZ"] = wf_type_z
 
         return field_dict
 
@@ -113,12 +121,28 @@ class BRequestIXServicePortIFCollectWorkFlowNodes:
         from ..models.wf_type_z import WFTypeZ
 
         d = src_dict.copy()
+        node_name = d.pop("nodeName", UNSET)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
             ci = UNSET
         else:
             ci = ClientInfo.from_dict(_ci)
+
+        only_start_nodes = d.pop("onlyStartNodes", UNSET)
+
+        user_ids = cast(List[str], d.pop("userIds", UNSET))
+
+        only_active = d.pop("onlyActive", UNSET)
+
+        obj_id = d.pop("objId", UNSET)
+
+        enter_date_iso = d.pop("enterDateIso", UNSET)
+
+        exit_date_iso = d.pop("exitDateIso", UNSET)
+
+        node_type = d.pop("nodeType", UNSET)
 
         flow_name = d.pop("flowName", UNSET)
 
@@ -129,34 +153,18 @@ class BRequestIXServicePortIFCollectWorkFlowNodes:
         else:
             wf_type_z = WFTypeZ.from_dict(_wf_type_z)
 
-        node_name = d.pop("nodeName", UNSET)
-
-        node_type = d.pop("nodeType", UNSET)
-
-        obj_id = d.pop("objId", UNSET)
-
-        enter_date_iso = d.pop("enterDateIso", UNSET)
-
-        exit_date_iso = d.pop("exitDateIso", UNSET)
-
-        user_ids = cast(List[str], d.pop("userIds", UNSET))
-
-        only_active = d.pop("onlyActive", UNSET)
-
-        only_start_nodes = d.pop("onlyStartNodes", UNSET)
-
         b_request_ix_service_port_if_collect_work_flow_nodes = cls(
-            ci=ci,
-            flow_name=flow_name,
-            wf_type_z=wf_type_z,
             node_name=node_name,
-            node_type=node_type,
+            ci=ci,
+            only_start_nodes=only_start_nodes,
+            user_ids=user_ids,
+            only_active=only_active,
             obj_id=obj_id,
             enter_date_iso=enter_date_iso,
             exit_date_iso=exit_date_iso,
-            user_ids=user_ids,
-            only_active=only_active,
-            only_start_nodes=only_start_nodes,
+            node_type=node_type,
+            flow_name=flow_name,
+            wf_type_z=wf_type_z,
         )
 
         b_request_ix_service_port_if_collect_work_flow_nodes.additional_properties = d

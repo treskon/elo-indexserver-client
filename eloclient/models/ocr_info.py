@@ -19,14 +19,16 @@ class OcrInfo:
 
     Attributes:
         bus_id (Union[Unset, str]): Return OCR result over this event bus.
-            If the OCR request should be performed asynchronously, this value must
-             contain the event bus ID on which the result event is sent. If this value is 0, the OCR request is performed
-             synchronously.
+            If the OCR request should be performed asynchronously,
+             this value must contain the event bus ID on which the result event is sent. If this value is 0,
+             the OCR request is performed synchronously.
         event_id (Union[Unset, str]): OCR result should be sent in an event with this event ID.
-            This member helps to map the OCR request to the OCR
-             result. Optional.
+            This member helps to map the OCR
+             request to the OCR result. Optional.
         messages_language (Union[Unset, int]): Language of error messages produced by the OCR engine. One of the
-            OcrInfoC.MESSAGES_LANGUAGE_ constants. Optional.
+            OcrInfoC.
+            MESSAGES_LANGUAGE_
+             constants. Optional.
         recognize_file (Union[Unset, OcrInfoRecognizeFile]): This class describes an OCR analysis request.
         query_languages (Union[Unset, OcrInfoQueryLanguages]): This class describes a request for querying the supported
             languages of the OCR.
@@ -41,8 +43,11 @@ class OcrInfo:
 
     def to_dict(self) -> Dict[str, Any]:
         bus_id = self.bus_id
+
         event_id = self.event_id
+
         messages_language = self.messages_language
+
         recognize_file: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.recognize_file, Unset):
             recognize_file = self.recognize_file.to_dict()

@@ -17,17 +17,21 @@ class ActivityC:
     """Constants for class Activity.
 
     Attributes:
+        mb_all (Union[Unset, ActivityZ]): Typed element selector for class Activity.
         mb_only_guid (Union[Unset, ActivityZ]): Typed element selector for class Activity.
         mb_activity_and_object_guid (Union[Unset, ActivityZ]): Typed element selector for class Activity.
-        mb_all (Union[Unset, ActivityZ]): Typed element selector for class Activity.
     """
 
+    mb_all: Union[Unset, "ActivityZ"] = UNSET
     mb_only_guid: Union[Unset, "ActivityZ"] = UNSET
     mb_activity_and_object_guid: Union[Unset, "ActivityZ"] = UNSET
-    mb_all: Union[Unset, "ActivityZ"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        mb_all: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.mb_all, Unset):
+            mb_all = self.mb_all.to_dict()
+
         mb_only_guid: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.mb_only_guid, Unset):
             mb_only_guid = self.mb_only_guid.to_dict()
@@ -36,19 +40,15 @@ class ActivityC:
         if not isinstance(self.mb_activity_and_object_guid, Unset):
             mb_activity_and_object_guid = self.mb_activity_and_object_guid.to_dict()
 
-        mb_all: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.mb_all, Unset):
-            mb_all = self.mb_all.to_dict()
-
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
+        if mb_all is not UNSET:
+            field_dict["mbAll"] = mb_all
         if mb_only_guid is not UNSET:
             field_dict["mbOnlyGuid"] = mb_only_guid
         if mb_activity_and_object_guid is not UNSET:
             field_dict["mbActivityAndObjectGuid"] = mb_activity_and_object_guid
-        if mb_all is not UNSET:
-            field_dict["mbAll"] = mb_all
 
         return field_dict
 
@@ -57,6 +57,13 @@ class ActivityC:
         from ..models.activity_z import ActivityZ
 
         d = src_dict.copy()
+        _mb_all = d.pop("mbAll", UNSET)
+        mb_all: Union[Unset, ActivityZ]
+        if isinstance(_mb_all, Unset):
+            mb_all = UNSET
+        else:
+            mb_all = ActivityZ.from_dict(_mb_all)
+
         _mb_only_guid = d.pop("mbOnlyGuid", UNSET)
         mb_only_guid: Union[Unset, ActivityZ]
         if isinstance(_mb_only_guid, Unset):
@@ -71,17 +78,10 @@ class ActivityC:
         else:
             mb_activity_and_object_guid = ActivityZ.from_dict(_mb_activity_and_object_guid)
 
-        _mb_all = d.pop("mbAll", UNSET)
-        mb_all: Union[Unset, ActivityZ]
-        if isinstance(_mb_all, Unset):
-            mb_all = UNSET
-        else:
-            mb_all = ActivityZ.from_dict(_mb_all)
-
         activity_c = cls(
+            mb_all=mb_all,
             mb_only_guid=mb_only_guid,
             mb_activity_and_object_guid=mb_activity_and_object_guid,
-            mb_all=mb_all,
         )
 
         activity_c.additional_properties = d

@@ -19,14 +19,16 @@ class BRequestIXServicePortIFChangeSordMask:
     """
     Attributes:
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
+        mask_id (Union[Unset, str]):
         sord (Union[Unset, Sord]): <p>
             Indexing information of an archive entry.
              </p>
@@ -36,10 +38,9 @@ class BRequestIXServicePortIFChangeSordMask:
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        mask_id (Union[Unset, str]):
         edit_info_z (Union[Unset, EditInfoZ]): This class encapsulates the constants of the EditInfoC class.
-            EditInfo also returns a Sord object and a SordZ member
-             is included to control the Sord data returned.
+            EditInfo also returns a Sord object
+             and a SordZ member is included to control the Sord data returned.
 
              <p>
              Copyright: Copyright (c) 2004
@@ -50,8 +51,8 @@ class BRequestIXServicePortIFChangeSordMask:
     """
 
     ci: Union[Unset, "ClientInfo"] = UNSET
-    sord: Union[Unset, "Sord"] = UNSET
     mask_id: Union[Unset, str] = UNSET
+    sord: Union[Unset, "Sord"] = UNSET
     edit_info_z: Union[Unset, "EditInfoZ"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -60,11 +61,12 @@ class BRequestIXServicePortIFChangeSordMask:
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
+        mask_id = self.mask_id
+
         sord: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.sord, Unset):
             sord = self.sord.to_dict()
 
-        mask_id = self.mask_id
         edit_info_z: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.edit_info_z, Unset):
             edit_info_z = self.edit_info_z.to_dict()
@@ -74,10 +76,10 @@ class BRequestIXServicePortIFChangeSordMask:
         field_dict.update({})
         if ci is not UNSET:
             field_dict["ci"] = ci
-        if sord is not UNSET:
-            field_dict["sord"] = sord
         if mask_id is not UNSET:
             field_dict["maskId"] = mask_id
+        if sord is not UNSET:
+            field_dict["sord"] = sord
         if edit_info_z is not UNSET:
             field_dict["editInfoZ"] = edit_info_z
 
@@ -97,14 +99,14 @@ class BRequestIXServicePortIFChangeSordMask:
         else:
             ci = ClientInfo.from_dict(_ci)
 
+        mask_id = d.pop("maskId", UNSET)
+
         _sord = d.pop("sord", UNSET)
         sord: Union[Unset, Sord]
         if isinstance(_sord, Unset):
             sord = UNSET
         else:
             sord = Sord.from_dict(_sord)
-
-        mask_id = d.pop("maskId", UNSET)
 
         _edit_info_z = d.pop("editInfoZ", UNSET)
         edit_info_z: Union[Unset, EditInfoZ]
@@ -115,8 +117,8 @@ class BRequestIXServicePortIFChangeSordMask:
 
         b_request_ix_service_port_if_change_sord_mask = cls(
             ci=ci,
-            sord=sord,
             mask_id=mask_id,
+            sord=sord,
             edit_info_z=edit_info_z,
         )
 

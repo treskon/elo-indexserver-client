@@ -10,10 +10,10 @@ T = TypeVar("T", bound="Bitset")
 
 @_attrs_define
 class Bitset:
-    """This class is used in the scripting API of Indexserver and provides bit operations on 64 bit integers.
-    JavaScript
-     does not support bit operations for 64 bit integers. The global context of the JavaScripts executed by Indexserver
-     contain an object named Bitset which is an instance of this class.
+    """This class is used in the scripting API of Indexserver and provides bit operations on 64 bit
+    integers. JavaScript does not support bit operations for 64 bit integers. The global context of
+     the JavaScripts executed by Indexserver contain an object named Bitset which is an instance of
+     this class.
 
         Attributes:
             v (Union[Unset, str]): Internal 64 bit integer value

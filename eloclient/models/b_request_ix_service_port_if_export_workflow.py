@@ -17,15 +17,6 @@ T = TypeVar("T", bound="BRequestIXServicePortIFExportWorkflow")
 class BRequestIXServicePortIFExportWorkflow:
     """
     Attributes:
-        ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
-             <p>
-             Copyright: Copyright (c) 2004
-             </p>
-             <p>
-             Organisation: ELO Digital Office GmbH
-             </p>
         wf_export_options (Union[Unset, WorkflowExportOptions]): Structure for the options for the workflow-export.
             <p>
              Copyright: Copyright (c) 2009
@@ -33,28 +24,38 @@ class BRequestIXServicePortIFExportWorkflow:
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
+        ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
+             <p>
+             Copyright: Copyright (c) 2004
+             </p>
+             <p>
+             Organisation: ELO Digital Office GmbH
+             </p>
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
     wf_export_options: Union[Unset, "WorkflowExportOptions"] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        ci: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.ci, Unset):
-            ci = self.ci.to_dict()
-
         wf_export_options: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.wf_export_options, Unset):
             wf_export_options = self.wf_export_options.to_dict()
 
+        ci: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.ci, Unset):
+            ci = self.ci.to_dict()
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
         if wf_export_options is not UNSET:
             field_dict["wfExportOptions"] = wf_export_options
+        if ci is not UNSET:
+            field_dict["ci"] = ci
 
         return field_dict
 
@@ -64,13 +65,6 @@ class BRequestIXServicePortIFExportWorkflow:
         from ..models.workflow_export_options import WorkflowExportOptions
 
         d = src_dict.copy()
-        _ci = d.pop("ci", UNSET)
-        ci: Union[Unset, ClientInfo]
-        if isinstance(_ci, Unset):
-            ci = UNSET
-        else:
-            ci = ClientInfo.from_dict(_ci)
-
         _wf_export_options = d.pop("wfExportOptions", UNSET)
         wf_export_options: Union[Unset, WorkflowExportOptions]
         if isinstance(_wf_export_options, Unset):
@@ -78,9 +72,16 @@ class BRequestIXServicePortIFExportWorkflow:
         else:
             wf_export_options = WorkflowExportOptions.from_dict(_wf_export_options)
 
+        _ci = d.pop("ci", UNSET)
+        ci: Union[Unset, ClientInfo]
+        if isinstance(_ci, Unset):
+            ci = UNSET
+        else:
+            ci = ClientInfo.from_dict(_ci)
+
         b_request_ix_service_port_if_export_workflow = cls(
-            ci=ci,
             wf_export_options=wf_export_options,
+            ci=ci,
         )
 
         b_request_ix_service_port_if_export_workflow.additional_properties = d

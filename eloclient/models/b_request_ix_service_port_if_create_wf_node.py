@@ -17,21 +17,22 @@ class BRequestIXServicePortIFCreateWFNode:
     """
     Attributes:
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        node_id (Union[Unset, int]):
         node_type_c (Union[Unset, int]):
+        node_id (Union[Unset, int]):
     """
 
     ci: Union[Unset, "ClientInfo"] = UNSET
-    node_id: Union[Unset, int] = UNSET
     node_type_c: Union[Unset, int] = UNSET
+    node_id: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -39,18 +40,19 @@ class BRequestIXServicePortIFCreateWFNode:
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        node_id = self.node_id
         node_type_c = self.node_type_c
+
+        node_id = self.node_id
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if ci is not UNSET:
             field_dict["ci"] = ci
-        if node_id is not UNSET:
-            field_dict["nodeId"] = node_id
         if node_type_c is not UNSET:
             field_dict["nodeTypeC"] = node_type_c
+        if node_id is not UNSET:
+            field_dict["nodeId"] = node_id
 
         return field_dict
 
@@ -66,14 +68,14 @@ class BRequestIXServicePortIFCreateWFNode:
         else:
             ci = ClientInfo.from_dict(_ci)
 
-        node_id = d.pop("nodeId", UNSET)
-
         node_type_c = d.pop("nodeTypeC", UNSET)
+
+        node_id = d.pop("nodeId", UNSET)
 
         b_request_ix_service_port_if_create_wf_node = cls(
             ci=ci,
-            node_id=node_id,
             node_type_c=node_type_c,
+            node_id=node_id,
         )
 
         b_request_ix_service_port_if_create_wf_node.additional_properties = d

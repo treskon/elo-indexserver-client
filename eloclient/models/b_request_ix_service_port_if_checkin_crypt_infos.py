@@ -18,16 +18,6 @@ T = TypeVar("T", bound="BRequestIXServicePortIFCheckinCryptInfos")
 class BRequestIXServicePortIFCheckinCryptInfos:
     """
     Attributes:
-        ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
-             <p>
-             Copyright: Copyright (c) 2004
-             </p>
-             <p>
-             Organisation: ELO Digital Office GmbH
-             </p>
-        crypt_infos (Union[Unset, List['CryptInfo']]):
         unlock_z (Union[Unset, LockZ]): This class encapsulates the constants of the LockC class.
             <p>
              Copyright: Copyright (c) 2004
@@ -35,39 +25,49 @@ class BRequestIXServicePortIFCheckinCryptInfos:
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
+        crypt_infos (Union[Unset, List['CryptInfo']]):
+        ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
+             <p>
+             Copyright: Copyright (c) 2004
+             </p>
+             <p>
+             Organisation: ELO Digital Office GmbH
+             </p>
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
-    crypt_infos: Union[Unset, List["CryptInfo"]] = UNSET
     unlock_z: Union[Unset, "LockZ"] = UNSET
+    crypt_infos: Union[Unset, List["CryptInfo"]] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        ci: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.ci, Unset):
-            ci = self.ci.to_dict()
+        unlock_z: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.unlock_z, Unset):
+            unlock_z = self.unlock_z.to_dict()
 
         crypt_infos: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.crypt_infos, Unset):
             crypt_infos = []
             for crypt_infos_item_data in self.crypt_infos:
                 crypt_infos_item = crypt_infos_item_data.to_dict()
-
                 crypt_infos.append(crypt_infos_item)
 
-        unlock_z: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.unlock_z, Unset):
-            unlock_z = self.unlock_z.to_dict()
+        ci: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.ci, Unset):
+            ci = self.ci.to_dict()
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
-        if crypt_infos is not UNSET:
-            field_dict["cryptInfos"] = crypt_infos
         if unlock_z is not UNSET:
             field_dict["unlockZ"] = unlock_z
+        if crypt_infos is not UNSET:
+            field_dict["cryptInfos"] = crypt_infos
+        if ci is not UNSET:
+            field_dict["ci"] = ci
 
         return field_dict
 
@@ -78,12 +78,12 @@ class BRequestIXServicePortIFCheckinCryptInfos:
         from ..models.lock_z import LockZ
 
         d = src_dict.copy()
-        _ci = d.pop("ci", UNSET)
-        ci: Union[Unset, ClientInfo]
-        if isinstance(_ci, Unset):
-            ci = UNSET
+        _unlock_z = d.pop("unlockZ", UNSET)
+        unlock_z: Union[Unset, LockZ]
+        if isinstance(_unlock_z, Unset):
+            unlock_z = UNSET
         else:
-            ci = ClientInfo.from_dict(_ci)
+            unlock_z = LockZ.from_dict(_unlock_z)
 
         crypt_infos = []
         _crypt_infos = d.pop("cryptInfos", UNSET)
@@ -92,17 +92,17 @@ class BRequestIXServicePortIFCheckinCryptInfos:
 
             crypt_infos.append(crypt_infos_item)
 
-        _unlock_z = d.pop("unlockZ", UNSET)
-        unlock_z: Union[Unset, LockZ]
-        if isinstance(_unlock_z, Unset):
-            unlock_z = UNSET
+        _ci = d.pop("ci", UNSET)
+        ci: Union[Unset, ClientInfo]
+        if isinstance(_ci, Unset):
+            ci = UNSET
         else:
-            unlock_z = LockZ.from_dict(_unlock_z)
+            ci = ClientInfo.from_dict(_ci)
 
         b_request_ix_service_port_if_checkin_crypt_infos = cls(
-            ci=ci,
-            crypt_infos=crypt_infos,
             unlock_z=unlock_z,
+            crypt_infos=crypt_infos,
+            ci=ci,
         )
 
         b_request_ix_service_port_if_checkin_crypt_infos.additional_properties = d

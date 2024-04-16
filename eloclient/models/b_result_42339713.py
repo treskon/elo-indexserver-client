@@ -17,14 +17,12 @@ class BResult42339713:
     """
     Attributes:
         result (Union[Unset, MapDomain]): This class contains the information of a map domain.
-            A map is a set of key value pairs and can be addressed by a map
-             domain name and a map ID. All maps with the same domain name are stored in the same database tables. These maps
-            are
-             distinguished by their ID, which can be an arbitary string. A map can be attached to a Sord object by setting
-            the map
-             ID to the Sord ID. Attached maps are deleted, when the Sord object is finally deleted. Furthermore they can be
-            copied
-             with the Sord object.
+            A map is a set of key value pairs and can be
+             addressed by a map domain name and a map ID. All maps with the same domain name are stored in the
+             same database tables. These maps are distinguished by their ID, which can be an arbitary string.
+             A map can be attached to a Sord object by setting the map ID to the Sord ID. Attached maps are
+             deleted, when the Sord object is finally deleted. Furthermore they can be copied with the Sord
+             object.
         exception (Union[Unset, str]): Error message
     """
 

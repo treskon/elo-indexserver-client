@@ -13,57 +13,61 @@ class ControlBackupInfoC:
     """Constants for class ControlBackupInfo (mode for the ELOdm backup and purge tasks)
 
     Attributes:
+        mode_stop (Union[Unset, int]): Stop the backup and purge tasks
+        mode_start_backup_purge (Union[Unset, int]): Start the backup and the purge task.
+            If the backup task is already running, only the purge task
+             is started.
         mode_status (Union[Unset, int]): Query the status of the backup and purge tasks
         mode_start_backup (Union[Unset, int]): Start the backup task (if it is already running, nothing happens).
-            If the purge task is already running, it is
-             stopped.
-        mode_start_backup_purge (Union[Unset, int]): Start the backup and the purge task. If the backup task is already
-            running, only the purge task is started.
-        mode_stop (Union[Unset, int]): Stop the backup and purge tasks
+            If the purge task is already
+             running, it is stopped.
     """
 
+    mode_stop: Union[Unset, int] = UNSET
+    mode_start_backup_purge: Union[Unset, int] = UNSET
     mode_status: Union[Unset, int] = UNSET
     mode_start_backup: Union[Unset, int] = UNSET
-    mode_start_backup_purge: Union[Unset, int] = UNSET
-    mode_stop: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        mode_status = self.mode_status
-        mode_start_backup = self.mode_start_backup
-        mode_start_backup_purge = self.mode_start_backup_purge
         mode_stop = self.mode_stop
+
+        mode_start_backup_purge = self.mode_start_backup_purge
+
+        mode_status = self.mode_status
+
+        mode_start_backup = self.mode_start_backup
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
+        if mode_stop is not UNSET:
+            field_dict["MODE_STOP"] = mode_stop
+        if mode_start_backup_purge is not UNSET:
+            field_dict["MODE_START_BACKUP_PURGE"] = mode_start_backup_purge
         if mode_status is not UNSET:
             field_dict["MODE_STATUS"] = mode_status
         if mode_start_backup is not UNSET:
             field_dict["MODE_START_BACKUP"] = mode_start_backup
-        if mode_start_backup_purge is not UNSET:
-            field_dict["MODE_START_BACKUP_PURGE"] = mode_start_backup_purge
-        if mode_stop is not UNSET:
-            field_dict["MODE_STOP"] = mode_stop
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
+        mode_stop = d.pop("MODE_STOP", UNSET)
+
+        mode_start_backup_purge = d.pop("MODE_START_BACKUP_PURGE", UNSET)
+
         mode_status = d.pop("MODE_STATUS", UNSET)
 
         mode_start_backup = d.pop("MODE_START_BACKUP", UNSET)
 
-        mode_start_backup_purge = d.pop("MODE_START_BACKUP_PURGE", UNSET)
-
-        mode_stop = d.pop("MODE_STOP", UNSET)
-
         control_backup_info_c = cls(
+            mode_stop=mode_stop,
+            mode_start_backup_purge=mode_start_backup_purge,
             mode_status=mode_status,
             mode_start_backup=mode_start_backup,
-            mode_start_backup_purge=mode_start_backup_purge,
-            mode_stop=mode_stop,
         )
 
         control_backup_info_c.additional_properties = d

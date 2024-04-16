@@ -19,19 +19,19 @@ class DateIsoValue:
      </p>
      <p>
      Date format: YYYYMMddHHmmss<br>
-     If less than 14 digits are commited, it is converted to a 14 digit numer, e.g.: "2017" -> "20170101000000"
+     If less than 14 digits are commited, it is converted to a 14 digit numer, e.g.: "2017" ->
+     "20170101000000"
      </p>
      <p>
      If roundTo is null, a search for an exact date is executed.
      </p>
      <p>
-     If roundTo is != null, DateIsoValue is converted to a Range query. From is dateIso rounded down, To is dateIso
-     rounded up.
+     If roundTo is != null, DateIsoValue is converted to a Range query. From is dateIso rounded down,
+     To is dateIso rounded up.
      </p>
      <p>
-     <b>Example</b> <code>dateIso=2017, roundTo=DateRoundC.YEAR</code> results in From=01.01.2017 00:00:00,
-    To=31.12.2017
-     23:59:59
+     <b>Example</b> <code>dateIso=2017, roundTo=DateRoundC.YEAR</code> results in From=01.01.2017
+     00:00:00, To=31.12.2017 23:59:59
      </p>
      <p>
      The delivered date is converted to the time zone submitted in ClientInfo
@@ -63,6 +63,7 @@ class DateIsoValue:
 
     def to_dict(self) -> Dict[str, Any]:
         date_iso = self.date_iso
+
         round_to: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.round_to, Unset):
             round_to = self.round_to.to_dict()

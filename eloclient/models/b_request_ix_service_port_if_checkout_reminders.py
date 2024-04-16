@@ -17,16 +17,17 @@ T = TypeVar("T", bound="BRequestIXServicePortIFCheckoutReminders")
 class BRequestIXServicePortIFCheckoutReminders:
     """
     Attributes:
+        reminder_ids (Union[Unset, List[int]]):
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        reminder_ids (Union[Unset, List[int]]):
         lock_z (Union[Unset, LockZ]): This class encapsulates the constants of the LockC class.
             <p>
              Copyright: Copyright (c) 2004
@@ -36,19 +37,19 @@ class BRequestIXServicePortIFCheckoutReminders:
              </p>
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
     reminder_ids: Union[Unset, List[int]] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
     lock_z: Union[Unset, "LockZ"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        ci: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.ci, Unset):
-            ci = self.ci.to_dict()
-
         reminder_ids: Union[Unset, List[int]] = UNSET
         if not isinstance(self.reminder_ids, Unset):
             reminder_ids = self.reminder_ids
+
+        ci: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.ci, Unset):
+            ci = self.ci.to_dict()
 
         lock_z: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.lock_z, Unset):
@@ -57,10 +58,10 @@ class BRequestIXServicePortIFCheckoutReminders:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
         if reminder_ids is not UNSET:
             field_dict["reminderIds"] = reminder_ids
+        if ci is not UNSET:
+            field_dict["ci"] = ci
         if lock_z is not UNSET:
             field_dict["lockZ"] = lock_z
 
@@ -72,14 +73,14 @@ class BRequestIXServicePortIFCheckoutReminders:
         from ..models.lock_z import LockZ
 
         d = src_dict.copy()
+        reminder_ids = cast(List[int], d.pop("reminderIds", UNSET))
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
             ci = UNSET
         else:
             ci = ClientInfo.from_dict(_ci)
-
-        reminder_ids = cast(List[int], d.pop("reminderIds", UNSET))
 
         _lock_z = d.pop("lockZ", UNSET)
         lock_z: Union[Unset, LockZ]
@@ -89,8 +90,8 @@ class BRequestIXServicePortIFCheckoutReminders:
             lock_z = LockZ.from_dict(_lock_z)
 
         b_request_ix_service_port_if_checkout_reminders = cls(
-            ci=ci,
             reminder_ids=reminder_ids,
+            ci=ci,
             lock_z=lock_z,
         )
 

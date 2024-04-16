@@ -30,7 +30,6 @@ class BResult1756288553:
             result = []
             for result_item_data in self.result:
                 result_item = result_item_data.to_dict()
-
                 result.append(result_item)
 
         exception = self.exception

@@ -17,19 +17,23 @@ class HealthCheckInfos:
     """This class holds the values for health check evaluation.
 
     Attributes:
-        infos (Union[Unset, List['HealthCheckInfo']]):
-        archive_guid (Union[Unset, str]): Archive GUID.
         customer_license_key_hash (Union[Unset, str]): MD5 hash of license key.
-            The part of the license key used to compute this hash can be obtained by
-             <code><pre>conn.getServerInfo().getLicense().getSerno();</pre></code>
+            The part of the license key used to compute this hash can be obtained
+             by <code><pre>conn.getServerInfo().getLicense().getSerno();</pre></code>
+        archive_guid (Union[Unset, str]): Archive GUID.
+        infos (Union[Unset, List['HealthCheckInfo']]):
     """
 
-    infos: Union[Unset, List["HealthCheckInfo"]] = UNSET
-    archive_guid: Union[Unset, str] = UNSET
     customer_license_key_hash: Union[Unset, str] = UNSET
+    archive_guid: Union[Unset, str] = UNSET
+    infos: Union[Unset, List["HealthCheckInfo"]] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        customer_license_key_hash = self.customer_license_key_hash
+
+        archive_guid = self.archive_guid
+
         infos: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.infos, Unset):
             infos = []
@@ -37,21 +41,17 @@ class HealthCheckInfos:
                 componentsschemas_list_of_health_check_info_item = (
                     componentsschemas_list_of_health_check_info_item_data.to_dict()
                 )
-
                 infos.append(componentsschemas_list_of_health_check_info_item)
-
-        archive_guid = self.archive_guid
-        customer_license_key_hash = self.customer_license_key_hash
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if infos is not UNSET:
-            field_dict["infos"] = infos
-        if archive_guid is not UNSET:
-            field_dict["archiveGuid"] = archive_guid
         if customer_license_key_hash is not UNSET:
             field_dict["customerLicenseKeyHash"] = customer_license_key_hash
+        if archive_guid is not UNSET:
+            field_dict["archiveGuid"] = archive_guid
+        if infos is not UNSET:
+            field_dict["infos"] = infos
 
         return field_dict
 
@@ -60,6 +60,10 @@ class HealthCheckInfos:
         from ..models.health_check_info import HealthCheckInfo
 
         d = src_dict.copy()
+        customer_license_key_hash = d.pop("customerLicenseKeyHash", UNSET)
+
+        archive_guid = d.pop("archiveGuid", UNSET)
+
         infos = []
         _infos = d.pop("infos", UNSET)
         for componentsschemas_list_of_health_check_info_item_data in _infos or []:
@@ -69,14 +73,10 @@ class HealthCheckInfos:
 
             infos.append(componentsschemas_list_of_health_check_info_item)
 
-        archive_guid = d.pop("archiveGuid", UNSET)
-
-        customer_license_key_hash = d.pop("customerLicenseKeyHash", UNSET)
-
         health_check_infos = cls(
-            infos=infos,
-            archive_guid=archive_guid,
             customer_license_key_hash=customer_license_key_hash,
+            archive_guid=archive_guid,
+            infos=infos,
         )
 
         health_check_infos.additional_properties = d

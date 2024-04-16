@@ -13,21 +13,24 @@ class SystemReport:
     """
     Attributes:
         doccount (Union[Unset, str]):
-        docsize (Union[Unset, str]):
         ftsize (Union[Unset, str]):
+        docsize (Union[Unset, str]):
         previewsize (Union[Unset, str]):
     """
 
     doccount: Union[Unset, str] = UNSET
-    docsize: Union[Unset, str] = UNSET
     ftsize: Union[Unset, str] = UNSET
+    docsize: Union[Unset, str] = UNSET
     previewsize: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         doccount = self.doccount
-        docsize = self.docsize
+
         ftsize = self.ftsize
+
+        docsize = self.docsize
+
         previewsize = self.previewsize
 
         field_dict: Dict[str, Any] = {}
@@ -35,10 +38,10 @@ class SystemReport:
         field_dict.update({})
         if doccount is not UNSET:
             field_dict["doccount"] = doccount
-        if docsize is not UNSET:
-            field_dict["docsize"] = docsize
         if ftsize is not UNSET:
             field_dict["ftsize"] = ftsize
+        if docsize is not UNSET:
+            field_dict["docsize"] = docsize
         if previewsize is not UNSET:
             field_dict["previewsize"] = previewsize
 
@@ -49,16 +52,16 @@ class SystemReport:
         d = src_dict.copy()
         doccount = d.pop("doccount", UNSET)
 
-        docsize = d.pop("docsize", UNSET)
-
         ftsize = d.pop("ftsize", UNSET)
+
+        docsize = d.pop("docsize", UNSET)
 
         previewsize = d.pop("previewsize", UNSET)
 
         system_report = cls(
             doccount=doccount,
-            docsize=docsize,
             ftsize=ftsize,
+            docsize=docsize,
             previewsize=previewsize,
         )
 

@@ -18,9 +18,11 @@ T = TypeVar("T", bound="BRequestIXServicePortIFFindFirstActivities")
 class BRequestIXServicePortIFFindFirstActivities:
     """
     Attributes:
+        max_ (Union[Unset, int]):
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
@@ -30,25 +32,25 @@ class BRequestIXServicePortIFFindFirstActivities:
         find_info (Union[Unset, FindActivityInfo]): This class specifies constraints for the API function
             {@link IXServicePortIF#findFirstActivities(ClientInfo, FindActivityInfo, int, ActivityZ)}.
              <p>
-             By default, the members of this class are combined by AND. If {@link #senderOrReceiver} is set, senderId and
-             receiverId are combined by OR.
+             By default, the members of this class are combined by AND. If {@link #senderOrReceiver} is set,
+             senderId and receiverId are combined by OR.
              </p>
              <p>
-             If neither senderId nor receiverId is set, the function findFirstActivities collects all activities that can be
-            read
-             by the current session.
+             If neither senderId nor receiverId is set, the function findFirstActivities collects all
+             activities that can be read by the current session.
              </p>
-        max_ (Union[Unset, int]):
         activity_z (Union[Unset, ActivityZ]): Typed element selector for class Activity.
     """
 
+    max_: Union[Unset, int] = UNSET
     ci: Union[Unset, "ClientInfo"] = UNSET
     find_info: Union[Unset, "FindActivityInfo"] = UNSET
-    max_: Union[Unset, int] = UNSET
     activity_z: Union[Unset, "ActivityZ"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        max_ = self.max_
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
@@ -57,7 +59,6 @@ class BRequestIXServicePortIFFindFirstActivities:
         if not isinstance(self.find_info, Unset):
             find_info = self.find_info.to_dict()
 
-        max_ = self.max_
         activity_z: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.activity_z, Unset):
             activity_z = self.activity_z.to_dict()
@@ -65,12 +66,12 @@ class BRequestIXServicePortIFFindFirstActivities:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
+        if max_ is not UNSET:
+            field_dict["max"] = max_
         if ci is not UNSET:
             field_dict["ci"] = ci
         if find_info is not UNSET:
             field_dict["findInfo"] = find_info
-        if max_ is not UNSET:
-            field_dict["max"] = max_
         if activity_z is not UNSET:
             field_dict["activityZ"] = activity_z
 
@@ -83,6 +84,8 @@ class BRequestIXServicePortIFFindFirstActivities:
         from ..models.find_activity_info import FindActivityInfo
 
         d = src_dict.copy()
+        max_ = d.pop("max", UNSET)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
@@ -97,8 +100,6 @@ class BRequestIXServicePortIFFindFirstActivities:
         else:
             find_info = FindActivityInfo.from_dict(_find_info)
 
-        max_ = d.pop("max", UNSET)
-
         _activity_z = d.pop("activityZ", UNSET)
         activity_z: Union[Unset, ActivityZ]
         if isinstance(_activity_z, Unset):
@@ -107,9 +108,9 @@ class BRequestIXServicePortIFFindFirstActivities:
             activity_z = ActivityZ.from_dict(_activity_z)
 
         b_request_ix_service_port_if_find_first_activities = cls(
+            max_=max_,
             ci=ci,
             find_info=find_info,
-            max_=max_,
             activity_z=activity_z,
         )
 

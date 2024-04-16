@@ -15,8 +15,8 @@ class CheckinDocOptions:
     Attributes:
         keep_ids (Union[Unset, bool]): If <tt>true</tt>, the DocVersion to check-in will use the ID and GUID you
             specify.
-            In order to only set the GUID,
-             set the ID to 0.
+            In order to
+             only set the GUID, set the ID to 0.
     """
 
     keep_ids: Union[Unset, bool] = UNSET

@@ -33,7 +33,6 @@ class StringListValue:
             value_list = []
             for componentsschemas_list_of_string_value_item_data in self.value_list:
                 componentsschemas_list_of_string_value_item = componentsschemas_list_of_string_value_item_data.to_dict()
-
                 value_list.append(componentsschemas_list_of_string_value_item)
 
         and_operator = self.and_operator

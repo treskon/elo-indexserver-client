@@ -21,40 +21,29 @@ class PluginMessage:
     """A message that can be sent to or received from a plugin.
 
     Attributes:
+        bytes_ (Union[Unset, MapToArrayOfbyte]):
+        objects (Union[Unset, MapToBValueClass]):
+        streams (Union[Unset, MapToBStreamReference]):
         source (Union[Unset, PluginMessageSource]): Source of plugin message.
         id (Union[Unset, str]): Message ID.
         uri (Union[Unset, str]): Message URI.
         parameters (Union[Unset, MapToString]):
-        bytes_ (Union[Unset, MapToArrayOfbyte]):
-        objects (Union[Unset, MapToBValueClass]):
-        streams (Union[Unset, MapToBStreamReference]):
-        status (Union[Unset, int]): Message response status code. In case of a HTTP request, this element specifies the
-            response status code.
-            A value
-             of 0 is implicitly mapped to 200.
+        status (Union[Unset, int]): Message response status code.
+            In case of a HTTP request, this element specifies the response
+             status code. A value of 0 is implicitly mapped to 200.
     """
 
+    bytes_: Union[Unset, "MapToArrayOfbyte"] = UNSET
+    objects: Union[Unset, "MapToBValueClass"] = UNSET
+    streams: Union[Unset, "MapToBStreamReference"] = UNSET
     source: Union[Unset, "PluginMessageSource"] = UNSET
     id: Union[Unset, str] = UNSET
     uri: Union[Unset, str] = UNSET
     parameters: Union[Unset, "MapToString"] = UNSET
-    bytes_: Union[Unset, "MapToArrayOfbyte"] = UNSET
-    objects: Union[Unset, "MapToBValueClass"] = UNSET
-    streams: Union[Unset, "MapToBStreamReference"] = UNSET
     status: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        source: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.source, Unset):
-            source = self.source.to_dict()
-
-        id = self.id
-        uri = self.uri
-        parameters: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.parameters, Unset):
-            parameters = self.parameters.to_dict()
-
         bytes_: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.bytes_, Unset):
             bytes_ = self.bytes_.to_dict()
@@ -67,11 +56,29 @@ class PluginMessage:
         if not isinstance(self.streams, Unset):
             streams = self.streams.to_dict()
 
+        source: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.source, Unset):
+            source = self.source.to_dict()
+
+        id = self.id
+
+        uri = self.uri
+
+        parameters: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.parameters, Unset):
+            parameters = self.parameters.to_dict()
+
         status = self.status
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
+        if bytes_ is not UNSET:
+            field_dict["bytes"] = bytes_
+        if objects is not UNSET:
+            field_dict["objects"] = objects
+        if streams is not UNSET:
+            field_dict["streams"] = streams
         if source is not UNSET:
             field_dict["source"] = source
         if id is not UNSET:
@@ -80,12 +87,6 @@ class PluginMessage:
             field_dict["uri"] = uri
         if parameters is not UNSET:
             field_dict["parameters"] = parameters
-        if bytes_ is not UNSET:
-            field_dict["bytes"] = bytes_
-        if objects is not UNSET:
-            field_dict["objects"] = objects
-        if streams is not UNSET:
-            field_dict["streams"] = streams
         if status is not UNSET:
             field_dict["status"] = status
 
@@ -100,24 +101,6 @@ class PluginMessage:
         from ..models.plugin_message_source import PluginMessageSource
 
         d = src_dict.copy()
-        _source = d.pop("source", UNSET)
-        source: Union[Unset, PluginMessageSource]
-        if isinstance(_source, Unset):
-            source = UNSET
-        else:
-            source = PluginMessageSource.from_dict(_source)
-
-        id = d.pop("id", UNSET)
-
-        uri = d.pop("uri", UNSET)
-
-        _parameters = d.pop("parameters", UNSET)
-        parameters: Union[Unset, MapToString]
-        if isinstance(_parameters, Unset):
-            parameters = UNSET
-        else:
-            parameters = MapToString.from_dict(_parameters)
-
         _bytes_ = d.pop("bytes", UNSET)
         bytes_: Union[Unset, MapToArrayOfbyte]
         if isinstance(_bytes_, Unset):
@@ -139,16 +122,34 @@ class PluginMessage:
         else:
             streams = MapToBStreamReference.from_dict(_streams)
 
+        _source = d.pop("source", UNSET)
+        source: Union[Unset, PluginMessageSource]
+        if isinstance(_source, Unset):
+            source = UNSET
+        else:
+            source = PluginMessageSource.from_dict(_source)
+
+        id = d.pop("id", UNSET)
+
+        uri = d.pop("uri", UNSET)
+
+        _parameters = d.pop("parameters", UNSET)
+        parameters: Union[Unset, MapToString]
+        if isinstance(_parameters, Unset):
+            parameters = UNSET
+        else:
+            parameters = MapToString.from_dict(_parameters)
+
         status = d.pop("status", UNSET)
 
         plugin_message = cls(
+            bytes_=bytes_,
+            objects=objects,
+            streams=streams,
             source=source,
             id=id,
             uri=uri,
             parameters=parameters,
-            bytes_=bytes_,
-            objects=objects,
-            streams=streams,
             status=status,
         )
 

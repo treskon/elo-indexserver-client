@@ -28,7 +28,6 @@ class FindBySordHist:
             hist_keys = []
             for hist_keys_item_data in self.hist_keys:
                 hist_keys_item = hist_keys_item_data.to_dict()
-
                 hist_keys.append(hist_keys_item)
 
         field_dict: Dict[str, Any] = {}

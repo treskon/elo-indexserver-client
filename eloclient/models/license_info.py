@@ -14,46 +14,48 @@ class LicenseInfo:
     {@link IXServicePortIF#checkLicense(ClientInfo, LicenseInfo)}.
 
         Attributes:
-            customer_name (Union[Unset, str]): Customer name.
-            module_name (Union[Unset, str]): Module name.
             license_key (Union[Unset, str]): License key.
+            module_name (Union[Unset, str]): Module name.
+            customer_name (Union[Unset, str]): Customer name.
     """
 
-    customer_name: Union[Unset, str] = UNSET
-    module_name: Union[Unset, str] = UNSET
     license_key: Union[Unset, str] = UNSET
+    module_name: Union[Unset, str] = UNSET
+    customer_name: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        customer_name = self.customer_name
-        module_name = self.module_name
         license_key = self.license_key
+
+        module_name = self.module_name
+
+        customer_name = self.customer_name
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if customer_name is not UNSET:
-            field_dict["customerName"] = customer_name
-        if module_name is not UNSET:
-            field_dict["moduleName"] = module_name
         if license_key is not UNSET:
             field_dict["licenseKey"] = license_key
+        if module_name is not UNSET:
+            field_dict["moduleName"] = module_name
+        if customer_name is not UNSET:
+            field_dict["customerName"] = customer_name
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        customer_name = d.pop("customerName", UNSET)
+        license_key = d.pop("licenseKey", UNSET)
 
         module_name = d.pop("moduleName", UNSET)
 
-        license_key = d.pop("licenseKey", UNSET)
+        customer_name = d.pop("customerName", UNSET)
 
         license_info = cls(
-            customer_name=customer_name,
-            module_name=module_name,
             license_key=license_key,
+            module_name=module_name,
+            customer_name=customer_name,
         )
 
         license_info.additional_properties = d

@@ -18,16 +18,6 @@ T = TypeVar("T", bound="BRequestIXServicePortIFDeleteSubs")
 class BRequestIXServicePortIFDeleteSubs:
     """
     Attributes:
-        ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
-             <p>
-             Copyright: Copyright (c) 2004
-             </p>
-             <p>
-             Organisation: ELO Digital Office GmbH
-             </p>
-        deps (Union[Unset, List['SubsInfo']]):
         unlock_z (Union[Unset, LockZ]): This class encapsulates the constants of the LockC class.
             <p>
              Copyright: Copyright (c) 2004
@@ -35,14 +25,29 @@ class BRequestIXServicePortIFDeleteSubs:
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
+        ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
+             <p>
+             Copyright: Copyright (c) 2004
+             </p>
+             <p>
+             Organisation: ELO Digital Office GmbH
+             </p>
+        deps (Union[Unset, List['SubsInfo']]):
     """
 
+    unlock_z: Union[Unset, "LockZ"] = UNSET
     ci: Union[Unset, "ClientInfo"] = UNSET
     deps: Union[Unset, List["SubsInfo"]] = UNSET
-    unlock_z: Union[Unset, "LockZ"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        unlock_z: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.unlock_z, Unset):
+            unlock_z = self.unlock_z.to_dict()
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
@@ -52,22 +57,17 @@ class BRequestIXServicePortIFDeleteSubs:
             deps = []
             for deps_item_data in self.deps:
                 deps_item = deps_item_data.to_dict()
-
                 deps.append(deps_item)
-
-        unlock_z: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.unlock_z, Unset):
-            unlock_z = self.unlock_z.to_dict()
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
+        if unlock_z is not UNSET:
+            field_dict["unlockZ"] = unlock_z
         if ci is not UNSET:
             field_dict["ci"] = ci
         if deps is not UNSET:
             field_dict["deps"] = deps
-        if unlock_z is not UNSET:
-            field_dict["unlockZ"] = unlock_z
 
         return field_dict
 
@@ -78,6 +78,13 @@ class BRequestIXServicePortIFDeleteSubs:
         from ..models.subs_info import SubsInfo
 
         d = src_dict.copy()
+        _unlock_z = d.pop("unlockZ", UNSET)
+        unlock_z: Union[Unset, LockZ]
+        if isinstance(_unlock_z, Unset):
+            unlock_z = UNSET
+        else:
+            unlock_z = LockZ.from_dict(_unlock_z)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
@@ -92,17 +99,10 @@ class BRequestIXServicePortIFDeleteSubs:
 
             deps.append(deps_item)
 
-        _unlock_z = d.pop("unlockZ", UNSET)
-        unlock_z: Union[Unset, LockZ]
-        if isinstance(_unlock_z, Unset):
-            unlock_z = UNSET
-        else:
-            unlock_z = LockZ.from_dict(_unlock_z)
-
         b_request_ix_service_port_if_delete_subs = cls(
+            unlock_z=unlock_z,
             ci=ci,
             deps=deps,
-            unlock_z=unlock_z,
         )
 
         b_request_ix_service_port_if_delete_subs.additional_properties = d

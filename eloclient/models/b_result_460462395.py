@@ -17,11 +17,10 @@ class BResult460462395:
     """
     Attributes:
         result (Union[Unset, ESSettingsObj]): <p>
-            <b>checkoutEsSettings</b> returns the current IX instance name, a list of all available IX instances as well as
-            one
-             EsInstanceSettings object for every IX instance of the archive and one for the setting "_ALL". If there is no
-            entry
-             for a setting in the database, the default value is returned as value.
+            <b>checkoutEsSettings</b> returns the current IX instance name, a list of all available IX
+             instances as well as one EsInstanceSettings object for every IX instance of the archive and one
+             for the setting "_ALL". If there is no entry for a setting in the database, the default value is
+             returned as value.
              </p>
 
              <p>

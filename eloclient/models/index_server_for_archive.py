@@ -31,6 +31,7 @@ class IndexServerForArchive:
 
     def to_dict(self) -> Dict[str, Any]:
         arc_name = self.arc_name
+
         url = self.url
 
         field_dict: Dict[str, Any] = {}

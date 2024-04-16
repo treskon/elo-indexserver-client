@@ -15,8 +15,8 @@ class EventFilter:
     Attributes:
         bus_id (Union[Unset, str]): Event bus ID
         type (Union[Unset, str]): Event type.
-            This must be one of the predefined event types or an application defined type with a larger value than
-             EventBusC.EVENT_TYPE_MAX_SYSTEM.
+            This must be one of the predefined event types or an application defined type with
+             a larger value than EventBusC.EVENT_TYPE_MAX_SYSTEM.
         param1 (Union[Unset, str]): First event param. Optional. Depends on event type.
         param2 (Union[Unset, str]): Second event param. Optional. Depends on event type.
     """
@@ -29,8 +29,11 @@ class EventFilter:
 
     def to_dict(self) -> Dict[str, Any]:
         bus_id = self.bus_id
+
         type = self.type
+
         param1 = self.param1
+
         param2 = self.param2
 
         field_dict: Dict[str, Any] = {}

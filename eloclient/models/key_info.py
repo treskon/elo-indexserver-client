@@ -22,38 +22,39 @@ class KeyInfo:
      </p>
 
         Attributes:
-            id (Union[Unset, int]): Key ID.
             name (Union[Unset, str]): Key name.
+            id (Union[Unset, int]): Key ID.
     """
 
-    id: Union[Unset, int] = UNSET
     name: Union[Unset, str] = UNSET
+    id: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        id = self.id
         name = self.name
+
+        id = self.id
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if id is not UNSET:
-            field_dict["id"] = id
         if name is not UNSET:
             field_dict["name"] = name
+        if id is not UNSET:
+            field_dict["id"] = id
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        id = d.pop("id", UNSET)
-
         name = d.pop("name", UNSET)
 
+        id = d.pop("id", UNSET)
+
         key_info = cls(
-            id=id,
             name=name,
+            id=id,
         )
 
         key_info.additional_properties = d

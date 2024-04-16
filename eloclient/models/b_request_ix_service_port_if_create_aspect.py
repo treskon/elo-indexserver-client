@@ -18,8 +18,9 @@ class BRequestIXServicePortIFCreateAspect:
     """
     Attributes:
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
@@ -41,12 +42,12 @@ class BRequestIXServicePortIFCreateAspect:
             ci = self.ci.to_dict()
 
         name = self.name
+
         lines: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.lines, Unset):
             lines = []
             for componentsschemas_list_of_aspect_line_item_data in self.lines:
                 componentsschemas_list_of_aspect_line_item = componentsschemas_list_of_aspect_line_item_data.to_dict()
-
                 lines.append(componentsschemas_list_of_aspect_line_item)
 
         field_dict: Dict[str, Any] = {}

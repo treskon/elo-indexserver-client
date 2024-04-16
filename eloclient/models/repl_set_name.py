@@ -21,54 +21,61 @@ class ReplSetName:
         Attributes:
             t_stamp (Union[Unset, str]): Timestamp of the last change. The format is JJJJ.MM.DD.hh.mm.
                 ss
-            desc (Union[Unset, str]): Descriptive text for the replication set.
-            id (Union[Unset, int]): Identifier for the replication set.
             image (Union[Unset, int]): Image used for the replication set in list function in the client application.
+            t_stamp_sync (Union[Unset, str]): Timestamp of this object's last export by the replication.
             mobile (Union[Unset, int]): Replication set is used for archive synchronisation(ELO MOBIL).
             name (Union[Unset, str]): Name of the replication set.
-            t_stamp_sync (Union[Unset, str]): Timestamp of this object's last export by the replication.
+            id (Union[Unset, int]): Identifier for the replication set.
             priority (Union[Unset, int]): Priority of this replication set.
+            desc (Union[Unset, str]): Descriptive text for the replication set.
     """
 
     t_stamp: Union[Unset, str] = UNSET
-    desc: Union[Unset, str] = UNSET
-    id: Union[Unset, int] = UNSET
     image: Union[Unset, int] = UNSET
+    t_stamp_sync: Union[Unset, str] = UNSET
     mobile: Union[Unset, int] = UNSET
     name: Union[Unset, str] = UNSET
-    t_stamp_sync: Union[Unset, str] = UNSET
+    id: Union[Unset, int] = UNSET
     priority: Union[Unset, int] = UNSET
+    desc: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         t_stamp = self.t_stamp
-        desc = self.desc
-        id = self.id
+
         image = self.image
-        mobile = self.mobile
-        name = self.name
+
         t_stamp_sync = self.t_stamp_sync
+
+        mobile = self.mobile
+
+        name = self.name
+
+        id = self.id
+
         priority = self.priority
+
+        desc = self.desc
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if t_stamp is not UNSET:
             field_dict["TStamp"] = t_stamp
-        if desc is not UNSET:
-            field_dict["desc"] = desc
-        if id is not UNSET:
-            field_dict["id"] = id
         if image is not UNSET:
             field_dict["image"] = image
+        if t_stamp_sync is not UNSET:
+            field_dict["TStampSync"] = t_stamp_sync
         if mobile is not UNSET:
             field_dict["mobile"] = mobile
         if name is not UNSET:
             field_dict["name"] = name
-        if t_stamp_sync is not UNSET:
-            field_dict["TStampSync"] = t_stamp_sync
+        if id is not UNSET:
+            field_dict["id"] = id
         if priority is not UNSET:
             field_dict["priority"] = priority
+        if desc is not UNSET:
+            field_dict["desc"] = desc
 
         return field_dict
 
@@ -77,29 +84,29 @@ class ReplSetName:
         d = src_dict.copy()
         t_stamp = d.pop("TStamp", UNSET)
 
-        desc = d.pop("desc", UNSET)
-
-        id = d.pop("id", UNSET)
-
         image = d.pop("image", UNSET)
+
+        t_stamp_sync = d.pop("TStampSync", UNSET)
 
         mobile = d.pop("mobile", UNSET)
 
         name = d.pop("name", UNSET)
 
-        t_stamp_sync = d.pop("TStampSync", UNSET)
+        id = d.pop("id", UNSET)
 
         priority = d.pop("priority", UNSET)
 
+        desc = d.pop("desc", UNSET)
+
         repl_set_name = cls(
             t_stamp=t_stamp,
-            desc=desc,
-            id=id,
             image=image,
+            t_stamp_sync=t_stamp_sync,
             mobile=mobile,
             name=name,
-            t_stamp_sync=t_stamp_sync,
+            id=id,
             priority=priority,
+            desc=desc,
         )
 
         repl_set_name.additional_properties = d

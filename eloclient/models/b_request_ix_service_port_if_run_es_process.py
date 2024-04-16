@@ -16,41 +16,43 @@ T = TypeVar("T", bound="BRequestIXServicePortIFRunEsProcess")
 class BRequestIXServicePortIFRunEsProcess:
     """
     Attributes:
+        start_process (Union[Unset, bool]):
+        process_name (Union[Unset, str]):
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        process_name (Union[Unset, str]):
-        start_process (Union[Unset, bool]):
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
-    process_name: Union[Unset, str] = UNSET
     start_process: Union[Unset, bool] = UNSET
+    process_name: Union[Unset, str] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        start_process = self.start_process
+
+        process_name = self.process_name
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        process_name = self.process_name
-        start_process = self.start_process
-
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
-        if process_name is not UNSET:
-            field_dict["processName"] = process_name
         if start_process is not UNSET:
             field_dict["startProcess"] = start_process
+        if process_name is not UNSET:
+            field_dict["processName"] = process_name
+        if ci is not UNSET:
+            field_dict["ci"] = ci
 
         return field_dict
 
@@ -59,6 +61,10 @@ class BRequestIXServicePortIFRunEsProcess:
         from ..models.client_info import ClientInfo
 
         d = src_dict.copy()
+        start_process = d.pop("startProcess", UNSET)
+
+        process_name = d.pop("processName", UNSET)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
@@ -66,14 +72,10 @@ class BRequestIXServicePortIFRunEsProcess:
         else:
             ci = ClientInfo.from_dict(_ci)
 
-        process_name = d.pop("processName", UNSET)
-
-        start_process = d.pop("startProcess", UNSET)
-
         b_request_ix_service_port_if_run_es_process = cls(
-            ci=ci,
-            process_name=process_name,
             start_process=start_process,
+            process_name=process_name,
+            ci=ci,
         )
 
         b_request_ix_service_port_if_run_es_process.additional_properties = d

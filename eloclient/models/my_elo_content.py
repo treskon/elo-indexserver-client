@@ -24,72 +24,36 @@ T = TypeVar("T", bound="MyELOContent")
 class MyELOContent:
     """
     Attributes:
+        subscriptions (Union[Unset, MapToSubscription]):
+        hash_tags (Union[Unset, MapToHashTag]):
+        hash_tag_relations (Union[Unset, List['HashTagRelation']]):
+        feeds (Union[Unset, MapToFeed]):
         workflows (Union[Unset, List['WFDiagram']]):
-        tasks (Union[Unset, List['UserTask']]):
         sords (Union[Unset, List['Sord']]):
         actions (Union[Unset, List['Action']]):
-        feeds (Union[Unset, MapToFeed]):
-        subscriptions (Union[Unset, MapToSubscription]):
+        tasks (Union[Unset, List['UserTask']]):
         notifications (Union[Unset, MapToNotification]):
-        hash_tag_relations (Union[Unset, List['HashTagRelation']]):
-        hash_tags (Union[Unset, MapToHashTag]):
     """
 
+    subscriptions: Union[Unset, "MapToSubscription"] = UNSET
+    hash_tags: Union[Unset, "MapToHashTag"] = UNSET
+    hash_tag_relations: Union[Unset, List["HashTagRelation"]] = UNSET
+    feeds: Union[Unset, "MapToFeed"] = UNSET
     workflows: Union[Unset, List["WFDiagram"]] = UNSET
-    tasks: Union[Unset, List["UserTask"]] = UNSET
     sords: Union[Unset, List["Sord"]] = UNSET
     actions: Union[Unset, List["Action"]] = UNSET
-    feeds: Union[Unset, "MapToFeed"] = UNSET
-    subscriptions: Union[Unset, "MapToSubscription"] = UNSET
+    tasks: Union[Unset, List["UserTask"]] = UNSET
     notifications: Union[Unset, "MapToNotification"] = UNSET
-    hash_tag_relations: Union[Unset, List["HashTagRelation"]] = UNSET
-    hash_tags: Union[Unset, "MapToHashTag"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        workflows: Union[Unset, List[Dict[str, Any]]] = UNSET
-        if not isinstance(self.workflows, Unset):
-            workflows = []
-            for workflows_item_data in self.workflows:
-                workflows_item = workflows_item_data.to_dict()
-
-                workflows.append(workflows_item)
-
-        tasks: Union[Unset, List[Dict[str, Any]]] = UNSET
-        if not isinstance(self.tasks, Unset):
-            tasks = []
-            for tasks_item_data in self.tasks:
-                tasks_item = tasks_item_data.to_dict()
-
-                tasks.append(tasks_item)
-
-        sords: Union[Unset, List[Dict[str, Any]]] = UNSET
-        if not isinstance(self.sords, Unset):
-            sords = []
-            for sords_item_data in self.sords:
-                sords_item = sords_item_data.to_dict()
-
-                sords.append(sords_item)
-
-        actions: Union[Unset, List[Dict[str, Any]]] = UNSET
-        if not isinstance(self.actions, Unset):
-            actions = []
-            for actions_item_data in self.actions:
-                actions_item = actions_item_data.to_dict()
-
-                actions.append(actions_item)
-
-        feeds: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.feeds, Unset):
-            feeds = self.feeds.to_dict()
-
         subscriptions: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.subscriptions, Unset):
             subscriptions = self.subscriptions.to_dict()
 
-        notifications: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.notifications, Unset):
-            notifications = self.notifications.to_dict()
+        hash_tags: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.hash_tags, Unset):
+            hash_tags = self.hash_tags.to_dict()
 
         hash_tag_relations: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.hash_tag_relations, Unset):
@@ -98,34 +62,65 @@ class MyELOContent:
                 componentsschemas_list_of_hash_tag_relation_item = (
                     componentsschemas_list_of_hash_tag_relation_item_data.to_dict()
                 )
-
                 hash_tag_relations.append(componentsschemas_list_of_hash_tag_relation_item)
 
-        hash_tags: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.hash_tags, Unset):
-            hash_tags = self.hash_tags.to_dict()
+        feeds: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.feeds, Unset):
+            feeds = self.feeds.to_dict()
+
+        workflows: Union[Unset, List[Dict[str, Any]]] = UNSET
+        if not isinstance(self.workflows, Unset):
+            workflows = []
+            for workflows_item_data in self.workflows:
+                workflows_item = workflows_item_data.to_dict()
+                workflows.append(workflows_item)
+
+        sords: Union[Unset, List[Dict[str, Any]]] = UNSET
+        if not isinstance(self.sords, Unset):
+            sords = []
+            for sords_item_data in self.sords:
+                sords_item = sords_item_data.to_dict()
+                sords.append(sords_item)
+
+        actions: Union[Unset, List[Dict[str, Any]]] = UNSET
+        if not isinstance(self.actions, Unset):
+            actions = []
+            for actions_item_data in self.actions:
+                actions_item = actions_item_data.to_dict()
+                actions.append(actions_item)
+
+        tasks: Union[Unset, List[Dict[str, Any]]] = UNSET
+        if not isinstance(self.tasks, Unset):
+            tasks = []
+            for tasks_item_data in self.tasks:
+                tasks_item = tasks_item_data.to_dict()
+                tasks.append(tasks_item)
+
+        notifications: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.notifications, Unset):
+            notifications = self.notifications.to_dict()
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
+        if subscriptions is not UNSET:
+            field_dict["subscriptions"] = subscriptions
+        if hash_tags is not UNSET:
+            field_dict["hashTags"] = hash_tags
+        if hash_tag_relations is not UNSET:
+            field_dict["hashTagRelations"] = hash_tag_relations
+        if feeds is not UNSET:
+            field_dict["feeds"] = feeds
         if workflows is not UNSET:
             field_dict["workflows"] = workflows
-        if tasks is not UNSET:
-            field_dict["tasks"] = tasks
         if sords is not UNSET:
             field_dict["sords"] = sords
         if actions is not UNSET:
             field_dict["actions"] = actions
-        if feeds is not UNSET:
-            field_dict["feeds"] = feeds
-        if subscriptions is not UNSET:
-            field_dict["subscriptions"] = subscriptions
+        if tasks is not UNSET:
+            field_dict["tasks"] = tasks
         if notifications is not UNSET:
             field_dict["notifications"] = notifications
-        if hash_tag_relations is not UNSET:
-            field_dict["hashTagRelations"] = hash_tag_relations
-        if hash_tags is not UNSET:
-            field_dict["hashTags"] = hash_tags
 
         return field_dict
 
@@ -142,19 +137,42 @@ class MyELOContent:
         from ..models.wf_diagram import WFDiagram
 
         d = src_dict.copy()
+        _subscriptions = d.pop("subscriptions", UNSET)
+        subscriptions: Union[Unset, MapToSubscription]
+        if isinstance(_subscriptions, Unset):
+            subscriptions = UNSET
+        else:
+            subscriptions = MapToSubscription.from_dict(_subscriptions)
+
+        _hash_tags = d.pop("hashTags", UNSET)
+        hash_tags: Union[Unset, MapToHashTag]
+        if isinstance(_hash_tags, Unset):
+            hash_tags = UNSET
+        else:
+            hash_tags = MapToHashTag.from_dict(_hash_tags)
+
+        hash_tag_relations = []
+        _hash_tag_relations = d.pop("hashTagRelations", UNSET)
+        for componentsschemas_list_of_hash_tag_relation_item_data in _hash_tag_relations or []:
+            componentsschemas_list_of_hash_tag_relation_item = HashTagRelation.from_dict(
+                componentsschemas_list_of_hash_tag_relation_item_data
+            )
+
+            hash_tag_relations.append(componentsschemas_list_of_hash_tag_relation_item)
+
+        _feeds = d.pop("feeds", UNSET)
+        feeds: Union[Unset, MapToFeed]
+        if isinstance(_feeds, Unset):
+            feeds = UNSET
+        else:
+            feeds = MapToFeed.from_dict(_feeds)
+
         workflows = []
         _workflows = d.pop("workflows", UNSET)
         for workflows_item_data in _workflows or []:
             workflows_item = WFDiagram.from_dict(workflows_item_data)
 
             workflows.append(workflows_item)
-
-        tasks = []
-        _tasks = d.pop("tasks", UNSET)
-        for tasks_item_data in _tasks or []:
-            tasks_item = UserTask.from_dict(tasks_item_data)
-
-            tasks.append(tasks_item)
 
         sords = []
         _sords = d.pop("sords", UNSET)
@@ -170,19 +188,12 @@ class MyELOContent:
 
             actions.append(actions_item)
 
-        _feeds = d.pop("feeds", UNSET)
-        feeds: Union[Unset, MapToFeed]
-        if isinstance(_feeds, Unset):
-            feeds = UNSET
-        else:
-            feeds = MapToFeed.from_dict(_feeds)
+        tasks = []
+        _tasks = d.pop("tasks", UNSET)
+        for tasks_item_data in _tasks or []:
+            tasks_item = UserTask.from_dict(tasks_item_data)
 
-        _subscriptions = d.pop("subscriptions", UNSET)
-        subscriptions: Union[Unset, MapToSubscription]
-        if isinstance(_subscriptions, Unset):
-            subscriptions = UNSET
-        else:
-            subscriptions = MapToSubscription.from_dict(_subscriptions)
+            tasks.append(tasks_item)
 
         _notifications = d.pop("notifications", UNSET)
         notifications: Union[Unset, MapToNotification]
@@ -191,32 +202,16 @@ class MyELOContent:
         else:
             notifications = MapToNotification.from_dict(_notifications)
 
-        hash_tag_relations = []
-        _hash_tag_relations = d.pop("hashTagRelations", UNSET)
-        for componentsschemas_list_of_hash_tag_relation_item_data in _hash_tag_relations or []:
-            componentsschemas_list_of_hash_tag_relation_item = HashTagRelation.from_dict(
-                componentsschemas_list_of_hash_tag_relation_item_data
-            )
-
-            hash_tag_relations.append(componentsschemas_list_of_hash_tag_relation_item)
-
-        _hash_tags = d.pop("hashTags", UNSET)
-        hash_tags: Union[Unset, MapToHashTag]
-        if isinstance(_hash_tags, Unset):
-            hash_tags = UNSET
-        else:
-            hash_tags = MapToHashTag.from_dict(_hash_tags)
-
         my_elo_content = cls(
+            subscriptions=subscriptions,
+            hash_tags=hash_tags,
+            hash_tag_relations=hash_tag_relations,
+            feeds=feeds,
             workflows=workflows,
-            tasks=tasks,
             sords=sords,
             actions=actions,
-            feeds=feeds,
-            subscriptions=subscriptions,
+            tasks=tasks,
             notifications=notifications,
-            hash_tag_relations=hash_tag_relations,
-            hash_tags=hash_tags,
         )
 
         my_elo_content.additional_properties = d

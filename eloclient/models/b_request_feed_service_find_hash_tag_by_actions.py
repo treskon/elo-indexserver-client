@@ -17,32 +17,33 @@ T = TypeVar("T", bound="BRequestFeedServiceFindHashTagByActions")
 class BRequestFeedServiceFindHashTagByActions:
     """
     Attributes:
+        action_guids (Union[Unset, List[str]]):
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        action_guids (Union[Unset, List[str]]):
         hash_tag_z (Union[Unset, HashTagZ]):
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
     action_guids: Union[Unset, List[str]] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
     hash_tag_z: Union[Unset, "HashTagZ"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        ci: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.ci, Unset):
-            ci = self.ci.to_dict()
-
         action_guids: Union[Unset, List[str]] = UNSET
         if not isinstance(self.action_guids, Unset):
             action_guids = self.action_guids
+
+        ci: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.ci, Unset):
+            ci = self.ci.to_dict()
 
         hash_tag_z: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.hash_tag_z, Unset):
@@ -51,10 +52,10 @@ class BRequestFeedServiceFindHashTagByActions:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
         if action_guids is not UNSET:
             field_dict["actionGuids"] = action_guids
+        if ci is not UNSET:
+            field_dict["ci"] = ci
         if hash_tag_z is not UNSET:
             field_dict["hashTagZ"] = hash_tag_z
 
@@ -66,14 +67,14 @@ class BRequestFeedServiceFindHashTagByActions:
         from ..models.hash_tag_z import HashTagZ
 
         d = src_dict.copy()
+        action_guids = cast(List[str], d.pop("actionGuids", UNSET))
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
             ci = UNSET
         else:
             ci = ClientInfo.from_dict(_ci)
-
-        action_guids = cast(List[str], d.pop("actionGuids", UNSET))
 
         _hash_tag_z = d.pop("hashTagZ", UNSET)
         hash_tag_z: Union[Unset, HashTagZ]
@@ -83,8 +84,8 @@ class BRequestFeedServiceFindHashTagByActions:
             hash_tag_z = HashTagZ.from_dict(_hash_tag_z)
 
         b_request_feed_service_find_hash_tag_by_actions = cls(
-            ci=ci,
             action_guids=action_guids,
+            ci=ci,
             hash_tag_z=hash_tag_z,
         )
 

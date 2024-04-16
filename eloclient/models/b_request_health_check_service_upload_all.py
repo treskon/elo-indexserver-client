@@ -16,36 +16,37 @@ T = TypeVar("T", bound="BRequestHealthCheckServiceUploadAll")
 class BRequestHealthCheckServiceUploadAll:
     """
     Attributes:
+        reserved (Union[Unset, str]):
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        reserved (Union[Unset, str]):
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
     reserved: Union[Unset, str] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        reserved = self.reserved
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        reserved = self.reserved
-
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
         if reserved is not UNSET:
             field_dict["reserved"] = reserved
+        if ci is not UNSET:
+            field_dict["ci"] = ci
 
         return field_dict
 
@@ -54,6 +55,8 @@ class BRequestHealthCheckServiceUploadAll:
         from ..models.client_info import ClientInfo
 
         d = src_dict.copy()
+        reserved = d.pop("reserved", UNSET)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
@@ -61,11 +64,9 @@ class BRequestHealthCheckServiceUploadAll:
         else:
             ci = ClientInfo.from_dict(_ci)
 
-        reserved = d.pop("reserved", UNSET)
-
         b_request_health_check_service_upload_all = cls(
-            ci=ci,
             reserved=reserved,
+            ci=ci,
         )
 
         b_request_health_check_service_upload_all.additional_properties = d

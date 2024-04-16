@@ -25,7 +25,9 @@ class EloIxOpt:
 
     def to_dict(self) -> Dict[str, Any]:
         name = self.name
+
         ix_id = self.ix_id
+
         value = self.value
 
         field_dict: Dict[str, Any] = {}

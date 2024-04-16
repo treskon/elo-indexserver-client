@@ -22,6 +22,7 @@ class WClientC:
 
     def to_dict(self) -> Dict[str, Any]:
         new_version = self.new_version
+
         work_version_changed = self.work_version_changed
 
         field_dict: Dict[str, Any] = {}

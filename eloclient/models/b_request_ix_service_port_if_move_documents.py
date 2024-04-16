@@ -18,16 +18,17 @@ class BRequestIXServicePortIFMoveDocuments:
     """
     Attributes:
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        move_documents_info (Union[Unset, MoveDocumentsInfo]): Parameter class of the function {@link
-            IXServicePortIF#moveDocuments(ClientInfo, MoveDocumentsInfo)}.
+        move_documents_info (Union[Unset, MoveDocumentsInfo]): Parameter class of the function
+            {@link IXServicePortIF#moveDocuments(ClientInfo, MoveDocumentsInfo)}.
     """
 
     ci: Union[Unset, "ClientInfo"] = UNSET

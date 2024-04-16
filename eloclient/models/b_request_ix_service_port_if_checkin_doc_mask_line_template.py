@@ -21,17 +21,15 @@ class BRequestIXServicePortIFCheckinDocMaskLineTemplate:
     """
     Attributes:
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        dmlt (Union[Unset, DocMaskLineTemplate]): This class contains data for a document mask line template.
-        dmlt_z (Union[Unset, DocMaskLineTemplateZ]): This class encapsulates the constants of the DocMaskLineTemplateC
-            class.
         options (Union[Unset, CheckInDocMaskLineTemplateOptions]): Option class for the methode
             CheckInDocMaskLineTemplate
         lock_z (Union[Unset, LockZ]): This class encapsulates the constants of the LockC class.
@@ -41,27 +39,22 @@ class BRequestIXServicePortIFCheckinDocMaskLineTemplate:
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
+        dmlt_z (Union[Unset, DocMaskLineTemplateZ]): This class encapsulates the constants of the DocMaskLineTemplateC
+            class.
+        dmlt (Union[Unset, DocMaskLineTemplate]): This class contains data for a document mask line template.
     """
 
     ci: Union[Unset, "ClientInfo"] = UNSET
-    dmlt: Union[Unset, "DocMaskLineTemplate"] = UNSET
-    dmlt_z: Union[Unset, "DocMaskLineTemplateZ"] = UNSET
     options: Union[Unset, "CheckInDocMaskLineTemplateOptions"] = UNSET
     lock_z: Union[Unset, "LockZ"] = UNSET
+    dmlt_z: Union[Unset, "DocMaskLineTemplateZ"] = UNSET
+    dmlt: Union[Unset, "DocMaskLineTemplate"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
-
-        dmlt: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.dmlt, Unset):
-            dmlt = self.dmlt.to_dict()
-
-        dmlt_z: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.dmlt_z, Unset):
-            dmlt_z = self.dmlt_z.to_dict()
 
         options: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.options, Unset):
@@ -71,19 +64,27 @@ class BRequestIXServicePortIFCheckinDocMaskLineTemplate:
         if not isinstance(self.lock_z, Unset):
             lock_z = self.lock_z.to_dict()
 
+        dmlt_z: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.dmlt_z, Unset):
+            dmlt_z = self.dmlt_z.to_dict()
+
+        dmlt: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.dmlt, Unset):
+            dmlt = self.dmlt.to_dict()
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if ci is not UNSET:
             field_dict["ci"] = ci
-        if dmlt is not UNSET:
-            field_dict["dmlt"] = dmlt
-        if dmlt_z is not UNSET:
-            field_dict["dmltZ"] = dmlt_z
         if options is not UNSET:
             field_dict["options"] = options
         if lock_z is not UNSET:
             field_dict["lockZ"] = lock_z
+        if dmlt_z is not UNSET:
+            field_dict["dmltZ"] = dmlt_z
+        if dmlt is not UNSET:
+            field_dict["dmlt"] = dmlt
 
         return field_dict
 
@@ -103,20 +104,6 @@ class BRequestIXServicePortIFCheckinDocMaskLineTemplate:
         else:
             ci = ClientInfo.from_dict(_ci)
 
-        _dmlt = d.pop("dmlt", UNSET)
-        dmlt: Union[Unset, DocMaskLineTemplate]
-        if isinstance(_dmlt, Unset):
-            dmlt = UNSET
-        else:
-            dmlt = DocMaskLineTemplate.from_dict(_dmlt)
-
-        _dmlt_z = d.pop("dmltZ", UNSET)
-        dmlt_z: Union[Unset, DocMaskLineTemplateZ]
-        if isinstance(_dmlt_z, Unset):
-            dmlt_z = UNSET
-        else:
-            dmlt_z = DocMaskLineTemplateZ.from_dict(_dmlt_z)
-
         _options = d.pop("options", UNSET)
         options: Union[Unset, CheckInDocMaskLineTemplateOptions]
         if isinstance(_options, Unset):
@@ -131,12 +118,26 @@ class BRequestIXServicePortIFCheckinDocMaskLineTemplate:
         else:
             lock_z = LockZ.from_dict(_lock_z)
 
+        _dmlt_z = d.pop("dmltZ", UNSET)
+        dmlt_z: Union[Unset, DocMaskLineTemplateZ]
+        if isinstance(_dmlt_z, Unset):
+            dmlt_z = UNSET
+        else:
+            dmlt_z = DocMaskLineTemplateZ.from_dict(_dmlt_z)
+
+        _dmlt = d.pop("dmlt", UNSET)
+        dmlt: Union[Unset, DocMaskLineTemplate]
+        if isinstance(_dmlt, Unset):
+            dmlt = UNSET
+        else:
+            dmlt = DocMaskLineTemplate.from_dict(_dmlt)
+
         b_request_ix_service_port_if_checkin_doc_mask_line_template = cls(
             ci=ci,
-            dmlt=dmlt,
-            dmlt_z=dmlt_z,
             options=options,
             lock_z=lock_z,
+            dmlt_z=dmlt_z,
+            dmlt=dmlt,
         )
 
         b_request_ix_service_port_if_checkin_doc_mask_line_template.additional_properties = d

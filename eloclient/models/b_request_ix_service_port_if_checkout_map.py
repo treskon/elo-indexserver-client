@@ -18,8 +18,9 @@ class BRequestIXServicePortIFCheckoutMap:
     """
     Attributes:
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
@@ -27,8 +28,6 @@ class BRequestIXServicePortIFCheckoutMap:
              Organisation: ELO Digital Office GmbH
              </p>
         domain_name (Union[Unset, str]):
-        id (Union[Unset, str]):
-        key_names (Union[Unset, List[str]]):
         lock_z (Union[Unset, LockZ]): This class encapsulates the constants of the LockC class.
             <p>
              Copyright: Copyright (c) 2004
@@ -36,13 +35,15 @@ class BRequestIXServicePortIFCheckoutMap:
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
+        id (Union[Unset, str]):
+        key_names (Union[Unset, List[str]]):
     """
 
     ci: Union[Unset, "ClientInfo"] = UNSET
     domain_name: Union[Unset, str] = UNSET
+    lock_z: Union[Unset, "LockZ"] = UNSET
     id: Union[Unset, str] = UNSET
     key_names: Union[Unset, List[str]] = UNSET
-    lock_z: Union[Unset, "LockZ"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -51,14 +52,16 @@ class BRequestIXServicePortIFCheckoutMap:
             ci = self.ci.to_dict()
 
         domain_name = self.domain_name
-        id = self.id
-        key_names: Union[Unset, List[str]] = UNSET
-        if not isinstance(self.key_names, Unset):
-            key_names = self.key_names
 
         lock_z: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.lock_z, Unset):
             lock_z = self.lock_z.to_dict()
+
+        id = self.id
+
+        key_names: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.key_names, Unset):
+            key_names = self.key_names
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -67,12 +70,12 @@ class BRequestIXServicePortIFCheckoutMap:
             field_dict["ci"] = ci
         if domain_name is not UNSET:
             field_dict["domainName"] = domain_name
+        if lock_z is not UNSET:
+            field_dict["lockZ"] = lock_z
         if id is not UNSET:
             field_dict["id"] = id
         if key_names is not UNSET:
             field_dict["keyNames"] = key_names
-        if lock_z is not UNSET:
-            field_dict["lockZ"] = lock_z
 
         return field_dict
 
@@ -91,10 +94,6 @@ class BRequestIXServicePortIFCheckoutMap:
 
         domain_name = d.pop("domainName", UNSET)
 
-        id = d.pop("id", UNSET)
-
-        key_names = cast(List[str], d.pop("keyNames", UNSET))
-
         _lock_z = d.pop("lockZ", UNSET)
         lock_z: Union[Unset, LockZ]
         if isinstance(_lock_z, Unset):
@@ -102,12 +101,16 @@ class BRequestIXServicePortIFCheckoutMap:
         else:
             lock_z = LockZ.from_dict(_lock_z)
 
+        id = d.pop("id", UNSET)
+
+        key_names = cast(List[str], d.pop("keyNames", UNSET))
+
         b_request_ix_service_port_if_checkout_map = cls(
             ci=ci,
             domain_name=domain_name,
+            lock_z=lock_z,
             id=id,
             key_names=key_names,
-            lock_z=lock_z,
         )
 
         b_request_ix_service_port_if_checkout_map.additional_properties = d

@@ -14,53 +14,54 @@ T = TypeVar("T", bound="InvalidateCacheInfoParam")
 
 @_attrs_define
 class InvalidateCacheInfoParam:
-    """<p>
-    ParamObject for InvalidateCacheInfo.
-     </p>
-     <p>
-     <i>Up to now only used to specify updates of HashtagCountCache.</i>
-     </p>
+    """ParamObject for InvalidateCacheInfo.
 
-        Attributes:
-            guid (Union[Unset, str]): Parameter, depends on the purpose of this object.
-                <p>
-                 In case of InvalidateCacheC.HASHTAGCOUNT:
-                 <ul>
-                 <li>Related to HashtagGuid which is set according to count.
-                 <li>If guid is null or empty, the complete HashtagCountCache is rebuild from DB.
-                 </ul>
-                 </p>
-                 <p>
-                 In case of InvalidateCacheC.WORKFLOW: WFDiagram.tstamp
-                 </p>
-            flag (Union[Unset, int]): Parameter, depends on the purpose of this object. Set flag to InvalidateCacheC.
-                HASHTAGCOUNT to use for
-                 HashtagCountCache. In case of InvalidateCacheC.WORKFLOW: WFDiagram.id
-            count (Union[Unset, int]): Parameter, depends on the purpose of this object.
-                <p>
-                 In case of InvalidateCacheC.HASHTAGCOUNT:
-                 <ul>
-                 <li>Case 1: Increases count of corresponding Hashtag
-                 <li>Case -1: Decreases count of corresponding Hashtag
-                 <li>Any other number: Sets count of corresponding Hashtag this number
-                 </ul>
-                 </p>
-                 <p>
-                 In case of InvalidateCacheC.WORKFLOW: Hash code computed over WFDiagram members.
-                 </p>
-            object_value (Union[Unset, ValueClass]):
+    Attributes:
+        flag (Union[Unset, int]): Parameter, depends on the purpose of this object. Set flag to InvalidateCacheC.
+            HASHTAGCOUNT to
+             use for HashtagCountCache. In case of InvalidateCacheC.WORKFLOW: WFDiagram.id
+        count (Union[Unset, int]): Parameter, depends on the purpose of this object.
+            <p>
+             In case of InvalidateCacheC.HASHTAGCOUNT:
+             <ul>
+             <li>Case 1: Increases count of corresponding Hashtag
+             <li>Case -1: Decreases count of corresponding Hashtag
+             <li>Any other number: Sets count of corresponding Hashtag this number
+             </ul>
+             </p>
+             <p>
+             In case of InvalidateCacheC.WORKFLOW: Hash code computed over WFDiagram members.
+             </p>
+        guid (Union[Unset, str]): Parameter, depends on the purpose of this object.
+            <p>
+             In case of InvalidateCacheC.HASHTAGCOUNT:
+             <ul>
+             <li>Related to HashtagGuid which is set according to count.
+             <li>If guid is null or empty, the complete HashtagCountCache is rebuild from DB.
+             </ul>
+             </p>
+             <p>
+             In case of InvalidateCacheC.WORKFLOW: WFDiagram.tstamp
+             </p>
+             <p>
+             In case of InvalidateCacheC.TRANSLATE_TERM: TranslateTerm.guid
+             </p>
+        object_value (Union[Unset, ValueClass]):
     """
 
-    guid: Union[Unset, str] = UNSET
     flag: Union[Unset, int] = UNSET
     count: Union[Unset, int] = UNSET
+    guid: Union[Unset, str] = UNSET
     object_value: Union[Unset, "ValueClass"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        guid = self.guid
         flag = self.flag
+
         count = self.count
+
+        guid = self.guid
+
         object_value: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.object_value, Unset):
             object_value = self.object_value.to_dict()
@@ -68,12 +69,12 @@ class InvalidateCacheInfoParam:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if guid is not UNSET:
-            field_dict["guid"] = guid
         if flag is not UNSET:
             field_dict["flag"] = flag
         if count is not UNSET:
             field_dict["count"] = count
+        if guid is not UNSET:
+            field_dict["guid"] = guid
         if object_value is not UNSET:
             field_dict["objectValue"] = object_value
 
@@ -84,11 +85,11 @@ class InvalidateCacheInfoParam:
         from ..models.value_class import ValueClass
 
         d = src_dict.copy()
-        guid = d.pop("guid", UNSET)
-
         flag = d.pop("flag", UNSET)
 
         count = d.pop("count", UNSET)
+
+        guid = d.pop("guid", UNSET)
 
         _object_value = d.pop("objectValue", UNSET)
         object_value: Union[Unset, ValueClass]
@@ -98,9 +99,9 @@ class InvalidateCacheInfoParam:
             object_value = ValueClass.from_dict(_object_value)
 
         invalidate_cache_info_param = cls(
-            guid=guid,
             flag=flag,
             count=count,
+            guid=guid,
             object_value=object_value,
         )
 

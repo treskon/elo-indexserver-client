@@ -19,21 +19,22 @@ class BRequestIXServicePortIFGetEditInfoFromESW:
     """
     Attributes:
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        file_datas (Union[Unset, List['FileData']]):
         esw_options (Union[Unset, EditInfoEswOptions]): Options for reading or writing of esw-files.
+        file_datas (Union[Unset, List['FileData']]):
     """
 
     ci: Union[Unset, "ClientInfo"] = UNSET
-    file_datas: Union[Unset, List["FileData"]] = UNSET
     esw_options: Union[Unset, "EditInfoEswOptions"] = UNSET
+    file_datas: Union[Unset, List["FileData"]] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -41,27 +42,26 @@ class BRequestIXServicePortIFGetEditInfoFromESW:
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
+        esw_options: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.esw_options, Unset):
+            esw_options = self.esw_options.to_dict()
+
         file_datas: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.file_datas, Unset):
             file_datas = []
             for file_datas_item_data in self.file_datas:
                 file_datas_item = file_datas_item_data.to_dict()
-
                 file_datas.append(file_datas_item)
-
-        esw_options: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.esw_options, Unset):
-            esw_options = self.esw_options.to_dict()
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if ci is not UNSET:
             field_dict["ci"] = ci
-        if file_datas is not UNSET:
-            field_dict["fileDatas"] = file_datas
         if esw_options is not UNSET:
             field_dict["eswOptions"] = esw_options
+        if file_datas is not UNSET:
+            field_dict["fileDatas"] = file_datas
 
         return field_dict
 
@@ -79,13 +79,6 @@ class BRequestIXServicePortIFGetEditInfoFromESW:
         else:
             ci = ClientInfo.from_dict(_ci)
 
-        file_datas = []
-        _file_datas = d.pop("fileDatas", UNSET)
-        for file_datas_item_data in _file_datas or []:
-            file_datas_item = FileData.from_dict(file_datas_item_data)
-
-            file_datas.append(file_datas_item)
-
         _esw_options = d.pop("eswOptions", UNSET)
         esw_options: Union[Unset, EditInfoEswOptions]
         if isinstance(_esw_options, Unset):
@@ -93,10 +86,17 @@ class BRequestIXServicePortIFGetEditInfoFromESW:
         else:
             esw_options = EditInfoEswOptions.from_dict(_esw_options)
 
+        file_datas = []
+        _file_datas = d.pop("fileDatas", UNSET)
+        for file_datas_item_data in _file_datas or []:
+            file_datas_item = FileData.from_dict(file_datas_item_data)
+
+            file_datas.append(file_datas_item)
+
         b_request_ix_service_port_if_get_edit_info_from_esw = cls(
             ci=ci,
-            file_datas=file_datas,
             esw_options=esw_options,
+            file_datas=file_datas,
         )
 
         b_request_ix_service_port_if_get_edit_info_from_esw.additional_properties = d

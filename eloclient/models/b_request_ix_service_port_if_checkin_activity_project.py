@@ -18,9 +18,17 @@ T = TypeVar("T", bound="BRequestIXServicePortIFCheckinActivityProject")
 class BRequestIXServicePortIFCheckinActivityProject:
     """
     Attributes:
+        unlock_z (Union[Unset, LockZ]): This class encapsulates the constants of the LockC class.
+            <p>
+             Copyright: Copyright (c) 2004
+             </p>
+             <p>
+             Organisation: ELO Digital Office GmbH
+             </p>
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
@@ -29,21 +37,18 @@ class BRequestIXServicePortIFCheckinActivityProject:
              </p>
         act_proj (Union[Unset, ActivityProject]): This class represents an activity project. An activity project is a
             template for an activity.
-        unlock_z (Union[Unset, LockZ]): This class encapsulates the constants of the LockC class.
-            <p>
-             Copyright: Copyright (c) 2004
-             </p>
-             <p>
-             Organisation: ELO Digital Office GmbH
-             </p>
     """
 
+    unlock_z: Union[Unset, "LockZ"] = UNSET
     ci: Union[Unset, "ClientInfo"] = UNSET
     act_proj: Union[Unset, "ActivityProject"] = UNSET
-    unlock_z: Union[Unset, "LockZ"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        unlock_z: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.unlock_z, Unset):
+            unlock_z = self.unlock_z.to_dict()
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
@@ -52,19 +57,15 @@ class BRequestIXServicePortIFCheckinActivityProject:
         if not isinstance(self.act_proj, Unset):
             act_proj = self.act_proj.to_dict()
 
-        unlock_z: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.unlock_z, Unset):
-            unlock_z = self.unlock_z.to_dict()
-
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
+        if unlock_z is not UNSET:
+            field_dict["unlockZ"] = unlock_z
         if ci is not UNSET:
             field_dict["ci"] = ci
         if act_proj is not UNSET:
             field_dict["actProj"] = act_proj
-        if unlock_z is not UNSET:
-            field_dict["unlockZ"] = unlock_z
 
         return field_dict
 
@@ -75,6 +76,13 @@ class BRequestIXServicePortIFCheckinActivityProject:
         from ..models.lock_z import LockZ
 
         d = src_dict.copy()
+        _unlock_z = d.pop("unlockZ", UNSET)
+        unlock_z: Union[Unset, LockZ]
+        if isinstance(_unlock_z, Unset):
+            unlock_z = UNSET
+        else:
+            unlock_z = LockZ.from_dict(_unlock_z)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
@@ -89,17 +97,10 @@ class BRequestIXServicePortIFCheckinActivityProject:
         else:
             act_proj = ActivityProject.from_dict(_act_proj)
 
-        _unlock_z = d.pop("unlockZ", UNSET)
-        unlock_z: Union[Unset, LockZ]
-        if isinstance(_unlock_z, Unset):
-            unlock_z = UNSET
-        else:
-            unlock_z = LockZ.from_dict(_unlock_z)
-
         b_request_ix_service_port_if_checkin_activity_project = cls(
+            unlock_z=unlock_z,
             ci=ci,
             act_proj=act_proj,
-            unlock_z=unlock_z,
         )
 
         b_request_ix_service_port_if_checkin_activity_project.additional_properties = d

@@ -16,39 +16,41 @@ T = TypeVar("T", bound="BRequestIXServicePortIFInternalReceiveEvents")
 class BRequestIXServicePortIFInternalReceiveEvents:
     """
     Attributes:
+        subs_id (Union[Unset, str]):
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        subs_id (Union[Unset, str]):
         timeout_millis (Union[Unset, str]):
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
     subs_id: Union[Unset, str] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
     timeout_millis: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        subs_id = self.subs_id
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        subs_id = self.subs_id
         timeout_millis = self.timeout_millis
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
         if subs_id is not UNSET:
             field_dict["subsId"] = subs_id
+        if ci is not UNSET:
+            field_dict["ci"] = ci
         if timeout_millis is not UNSET:
             field_dict["timeoutMillis"] = timeout_millis
 
@@ -59,6 +61,8 @@ class BRequestIXServicePortIFInternalReceiveEvents:
         from ..models.client_info import ClientInfo
 
         d = src_dict.copy()
+        subs_id = d.pop("subsId", UNSET)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
@@ -66,13 +70,11 @@ class BRequestIXServicePortIFInternalReceiveEvents:
         else:
             ci = ClientInfo.from_dict(_ci)
 
-        subs_id = d.pop("subsId", UNSET)
-
         timeout_millis = d.pop("timeoutMillis", UNSET)
 
         b_request_ix_service_port_if_internal_receive_events = cls(
-            ci=ci,
             subs_id=subs_id,
+            ci=ci,
             timeout_millis=timeout_millis,
         )
 

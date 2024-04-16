@@ -13,29 +13,31 @@ class WorkflowNodeInfo:
     """
     Attributes:
         node_name (Union[Unset, str]): The node name
-        flags (Union[Unset, int]): Control flags for the node, a combination of WFNode.C.FLAG_* constants.
         workflow (Union[Unset, str]): The template ID of the subworkflow to start.
+        flags (Union[Unset, int]): Control flags for the node, a combination of WFNode.C.FLAG_* constants.
     """
 
     node_name: Union[Unset, str] = UNSET
-    flags: Union[Unset, int] = UNSET
     workflow: Union[Unset, str] = UNSET
+    flags: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         node_name = self.node_name
-        flags = self.flags
+
         workflow = self.workflow
+
+        flags = self.flags
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if node_name is not UNSET:
             field_dict["nodeName"] = node_name
-        if flags is not UNSET:
-            field_dict["flags"] = flags
         if workflow is not UNSET:
             field_dict["workflow"] = workflow
+        if flags is not UNSET:
+            field_dict["flags"] = flags
 
         return field_dict
 
@@ -44,14 +46,14 @@ class WorkflowNodeInfo:
         d = src_dict.copy()
         node_name = d.pop("nodeName", UNSET)
 
-        flags = d.pop("flags", UNSET)
-
         workflow = d.pop("workflow", UNSET)
+
+        flags = d.pop("flags", UNSET)
 
         workflow_node_info = cls(
             node_name=node_name,
-            flags=flags,
             workflow=workflow,
+            flags=flags,
         )
 
         workflow_node_info.additional_properties = d

@@ -23,6 +23,7 @@ class ReplSetCombination:
 
     def to_dict(self) -> Dict[str, Any]:
         guid = self.guid
+
         combi = self.combi
 
         field_dict: Dict[str, Any] = {}

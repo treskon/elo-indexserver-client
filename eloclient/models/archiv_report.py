@@ -16,43 +16,42 @@ T = TypeVar("T", bound="ArchivReport")
 class ArchivReport:
     """
     Attributes:
+        objecte (Union[Unset, List['ArchivValue']]):
         archiv_guid (Union[Unset, str]):
         elodmdocs (Union[Unset, List['ArchivValue']]):
-        objecte (Union[Unset, List['ArchivValue']]):
     """
 
+    objecte: Union[Unset, List["ArchivValue"]] = UNSET
     archiv_guid: Union[Unset, str] = UNSET
     elodmdocs: Union[Unset, List["ArchivValue"]] = UNSET
-    objecte: Union[Unset, List["ArchivValue"]] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        archiv_guid = self.archiv_guid
-        elodmdocs: Union[Unset, List[Dict[str, Any]]] = UNSET
-        if not isinstance(self.elodmdocs, Unset):
-            elodmdocs = []
-            for componentsschemas_list_of_archiv_value_item_data in self.elodmdocs:
-                componentsschemas_list_of_archiv_value_item = componentsschemas_list_of_archiv_value_item_data.to_dict()
-
-                elodmdocs.append(componentsschemas_list_of_archiv_value_item)
-
         objecte: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.objecte, Unset):
             objecte = []
             for componentsschemas_list_of_archiv_value_item_data in self.objecte:
                 componentsschemas_list_of_archiv_value_item = componentsschemas_list_of_archiv_value_item_data.to_dict()
-
                 objecte.append(componentsschemas_list_of_archiv_value_item)
+
+        archiv_guid = self.archiv_guid
+
+        elodmdocs: Union[Unset, List[Dict[str, Any]]] = UNSET
+        if not isinstance(self.elodmdocs, Unset):
+            elodmdocs = []
+            for componentsschemas_list_of_archiv_value_item_data in self.elodmdocs:
+                componentsschemas_list_of_archiv_value_item = componentsschemas_list_of_archiv_value_item_data.to_dict()
+                elodmdocs.append(componentsschemas_list_of_archiv_value_item)
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
+        if objecte is not UNSET:
+            field_dict["objecte"] = objecte
         if archiv_guid is not UNSET:
             field_dict["archivGUID"] = archiv_guid
         if elodmdocs is not UNSET:
             field_dict["elodmdocs"] = elodmdocs
-        if objecte is not UNSET:
-            field_dict["objecte"] = objecte
 
         return field_dict
 
@@ -61,6 +60,15 @@ class ArchivReport:
         from ..models.archiv_value import ArchivValue
 
         d = src_dict.copy()
+        objecte = []
+        _objecte = d.pop("objecte", UNSET)
+        for componentsschemas_list_of_archiv_value_item_data in _objecte or []:
+            componentsschemas_list_of_archiv_value_item = ArchivValue.from_dict(
+                componentsschemas_list_of_archiv_value_item_data
+            )
+
+            objecte.append(componentsschemas_list_of_archiv_value_item)
+
         archiv_guid = d.pop("archivGUID", UNSET)
 
         elodmdocs = []
@@ -72,19 +80,10 @@ class ArchivReport:
 
             elodmdocs.append(componentsschemas_list_of_archiv_value_item)
 
-        objecte = []
-        _objecte = d.pop("objecte", UNSET)
-        for componentsschemas_list_of_archiv_value_item_data in _objecte or []:
-            componentsschemas_list_of_archiv_value_item = ArchivValue.from_dict(
-                componentsschemas_list_of_archiv_value_item_data
-            )
-
-            objecte.append(componentsschemas_list_of_archiv_value_item)
-
         archiv_report = cls(
+            objecte=objecte,
             archiv_guid=archiv_guid,
             elodmdocs=elodmdocs,
-            objecte=objecte,
         )
 
         archiv_report.additional_properties = d

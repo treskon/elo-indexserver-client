@@ -10,57 +10,61 @@ T = TypeVar("T", bound="OcrRect")
 
 @_attrs_define
 class OcrRect:
-    """This class contains the coordinates of a rectangle and is used by the {@link OcrInfoRecognizeFile} class.
+    """This class contains the coordinates of a rectangle and is used by the
+    {@link OcrInfoRecognizeFile} class.
 
-    Attributes:
-        left (Union[Unset, int]):
-        top (Union[Unset, int]):
-        right (Union[Unset, int]):
-        bottom (Union[Unset, int]):
+        Attributes:
+            top (Union[Unset, int]):
+            left (Union[Unset, int]):
+            bottom (Union[Unset, int]):
+            right (Union[Unset, int]):
     """
 
-    left: Union[Unset, int] = UNSET
     top: Union[Unset, int] = UNSET
-    right: Union[Unset, int] = UNSET
+    left: Union[Unset, int] = UNSET
     bottom: Union[Unset, int] = UNSET
+    right: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        left = self.left
         top = self.top
-        right = self.right
+
+        left = self.left
+
         bottom = self.bottom
+
+        right = self.right
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if left is not UNSET:
-            field_dict["left"] = left
         if top is not UNSET:
             field_dict["top"] = top
-        if right is not UNSET:
-            field_dict["right"] = right
+        if left is not UNSET:
+            field_dict["left"] = left
         if bottom is not UNSET:
             field_dict["bottom"] = bottom
+        if right is not UNSET:
+            field_dict["right"] = right
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        left = d.pop("left", UNSET)
-
         top = d.pop("top", UNSET)
 
-        right = d.pop("right", UNSET)
+        left = d.pop("left", UNSET)
 
         bottom = d.pop("bottom", UNSET)
 
+        right = d.pop("right", UNSET)
+
         ocr_rect = cls(
-            left=left,
             top=top,
-            right=right,
+            left=left,
             bottom=bottom,
+            right=right,
         )
 
         ocr_rect.additional_properties = d

@@ -23,10 +23,17 @@ class WFTypeC:
      </p>
 
         Attributes:
-            bset_active (Union[Unset, str]):
-            bset_finished (Union[Unset, str]):
             bset_template (Union[Unset, str]):
+            bset_active (Union[Unset, str]):
             active (Union[Unset, WFTypeZ]): This class encapsulates the constants of the WFTypeC class.
+                <p>
+                 Copyright: Copyright (c) 2004
+                 </p>
+                 <p>
+                 Organisation: ELO Digital Office GmbH
+                 </p>
+            bset_finished (Union[Unset, str]):
+            template (Union[Unset, WFTypeZ]): This class encapsulates the constants of the WFTypeC class.
                 <p>
                  Copyright: Copyright (c) 2004
                  </p>
@@ -40,54 +47,50 @@ class WFTypeC:
                  <p>
                  Organisation: ELO Digital Office GmbH
                  </p>
-            template (Union[Unset, WFTypeZ]): This class encapsulates the constants of the WFTypeC class.
-                <p>
-                 Copyright: Copyright (c) 2004
-                 </p>
-                 <p>
-                 Organisation: ELO Digital Office GmbH
-                 </p>
     """
 
-    bset_active: Union[Unset, str] = UNSET
-    bset_finished: Union[Unset, str] = UNSET
     bset_template: Union[Unset, str] = UNSET
+    bset_active: Union[Unset, str] = UNSET
     active: Union[Unset, "WFTypeZ"] = UNSET
-    finished: Union[Unset, "WFTypeZ"] = UNSET
+    bset_finished: Union[Unset, str] = UNSET
     template: Union[Unset, "WFTypeZ"] = UNSET
+    finished: Union[Unset, "WFTypeZ"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        bset_active = self.bset_active
-        bset_finished = self.bset_finished
         bset_template = self.bset_template
+
+        bset_active = self.bset_active
+
         active: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.active, Unset):
             active = self.active.to_dict()
 
-        finished: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.finished, Unset):
-            finished = self.finished.to_dict()
+        bset_finished = self.bset_finished
 
         template: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.template, Unset):
             template = self.template.to_dict()
 
+        finished: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.finished, Unset):
+            finished = self.finished.to_dict()
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if bset_active is not UNSET:
-            field_dict["bsetACTIVE"] = bset_active
-        if bset_finished is not UNSET:
-            field_dict["bsetFINISHED"] = bset_finished
         if bset_template is not UNSET:
             field_dict["bsetTEMPLATE"] = bset_template
+        if bset_active is not UNSET:
+            field_dict["bsetACTIVE"] = bset_active
         if active is not UNSET:
             field_dict["ACTIVE"] = active
-        if finished is not UNSET:
-            field_dict["FINISHED"] = finished
+        if bset_finished is not UNSET:
+            field_dict["bsetFINISHED"] = bset_finished
         if template is not UNSET:
             field_dict["TEMPLATE"] = template
+        if finished is not UNSET:
+            field_dict["FINISHED"] = finished
 
         return field_dict
 
@@ -96,11 +99,9 @@ class WFTypeC:
         from ..models.wf_type_z import WFTypeZ
 
         d = src_dict.copy()
-        bset_active = d.pop("bsetACTIVE", UNSET)
-
-        bset_finished = d.pop("bsetFINISHED", UNSET)
-
         bset_template = d.pop("bsetTEMPLATE", UNSET)
+
+        bset_active = d.pop("bsetACTIVE", UNSET)
 
         _active = d.pop("ACTIVE", UNSET)
         active: Union[Unset, WFTypeZ]
@@ -109,12 +110,7 @@ class WFTypeC:
         else:
             active = WFTypeZ.from_dict(_active)
 
-        _finished = d.pop("FINISHED", UNSET)
-        finished: Union[Unset, WFTypeZ]
-        if isinstance(_finished, Unset):
-            finished = UNSET
-        else:
-            finished = WFTypeZ.from_dict(_finished)
+        bset_finished = d.pop("bsetFINISHED", UNSET)
 
         _template = d.pop("TEMPLATE", UNSET)
         template: Union[Unset, WFTypeZ]
@@ -123,13 +119,20 @@ class WFTypeC:
         else:
             template = WFTypeZ.from_dict(_template)
 
+        _finished = d.pop("FINISHED", UNSET)
+        finished: Union[Unset, WFTypeZ]
+        if isinstance(_finished, Unset):
+            finished = UNSET
+        else:
+            finished = WFTypeZ.from_dict(_finished)
+
         wf_type_c = cls(
-            bset_active=bset_active,
-            bset_finished=bset_finished,
             bset_template=bset_template,
+            bset_active=bset_active,
             active=active,
-            finished=finished,
+            bset_finished=bset_finished,
             template=template,
+            finished=finished,
         )
 
         wf_type_c.additional_properties = d

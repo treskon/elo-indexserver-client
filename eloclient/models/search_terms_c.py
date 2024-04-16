@@ -12,46 +12,48 @@ T = TypeVar("T", bound="SearchTermsC")
 class SearchTermsC:
     """
     Attributes:
+        correction (Union[Unset, int]):
         terms (Union[Unset, int]):
         synonyms (Union[Unset, int]):
-        correction (Union[Unset, int]):
     """
 
+    correction: Union[Unset, int] = UNSET
     terms: Union[Unset, int] = UNSET
     synonyms: Union[Unset, int] = UNSET
-    correction: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        terms = self.terms
-        synonyms = self.synonyms
         correction = self.correction
+
+        terms = self.terms
+
+        synonyms = self.synonyms
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
+        if correction is not UNSET:
+            field_dict["CORRECTION"] = correction
         if terms is not UNSET:
             field_dict["TERMS"] = terms
         if synonyms is not UNSET:
             field_dict["SYNONYMS"] = synonyms
-        if correction is not UNSET:
-            field_dict["CORRECTION"] = correction
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
+        correction = d.pop("CORRECTION", UNSET)
+
         terms = d.pop("TERMS", UNSET)
 
         synonyms = d.pop("SYNONYMS", UNSET)
 
-        correction = d.pop("CORRECTION", UNSET)
-
         search_terms_c = cls(
+            correction=correction,
             terms=terms,
             synonyms=synonyms,
-            correction=correction,
         )
 
         search_terms_c.additional_properties = d

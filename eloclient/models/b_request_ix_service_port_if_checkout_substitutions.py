@@ -20,9 +20,17 @@ class BRequestIXServicePortIFCheckoutSubstitutions:
     """
     Attributes:
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
+             Copyright: Copyright (c) 2004
+             </p>
+             <p>
+             Organisation: ELO Digital Office GmbH
+             </p>
+        lock_z (Union[Unset, LockZ]): This class encapsulates the constants of the LockC class.
+            <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
@@ -33,30 +41,26 @@ class BRequestIXServicePortIFCheckoutSubstitutions:
             {@link IXServicePortIF#checkoutSubstitutions}.
 
              <p>
-             The elements in one list are always search with an OR operation. If various list are provided, they are
-            connected
-             using OR (default) (set {@link #andOperator} to true to use AND operator)
+             The elements in one list are always search with an OR operation. If various list are provided,
+             they are connected using OR (default) (set {@link #andOperator} to true to use AND operator)
              </p>
         substitution_z (Union[Unset, SubstitutionZ]): This class encapsulates the constants of {@link SubstitutionC}
-        lock_z (Union[Unset, LockZ]): This class encapsulates the constants of the LockC class.
-            <p>
-             Copyright: Copyright (c) 2004
-             </p>
-             <p>
-             Organisation: ELO Digital Office GmbH
-             </p>
     """
 
     ci: Union[Unset, "ClientInfo"] = UNSET
+    lock_z: Union[Unset, "LockZ"] = UNSET
     checkout_substitutions_info: Union[Unset, "CheckoutSubstitutionsInfo"] = UNSET
     substitution_z: Union[Unset, "SubstitutionZ"] = UNSET
-    lock_z: Union[Unset, "LockZ"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
+
+        lock_z: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.lock_z, Unset):
+            lock_z = self.lock_z.to_dict()
 
         checkout_substitutions_info: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.checkout_substitutions_info, Unset):
@@ -66,21 +70,17 @@ class BRequestIXServicePortIFCheckoutSubstitutions:
         if not isinstance(self.substitution_z, Unset):
             substitution_z = self.substitution_z.to_dict()
 
-        lock_z: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.lock_z, Unset):
-            lock_z = self.lock_z.to_dict()
-
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if ci is not UNSET:
             field_dict["ci"] = ci
+        if lock_z is not UNSET:
+            field_dict["lockZ"] = lock_z
         if checkout_substitutions_info is not UNSET:
             field_dict["checkoutSubstitutionsInfo"] = checkout_substitutions_info
         if substitution_z is not UNSET:
             field_dict["substitutionZ"] = substitution_z
-        if lock_z is not UNSET:
-            field_dict["lockZ"] = lock_z
 
         return field_dict
 
@@ -99,6 +99,13 @@ class BRequestIXServicePortIFCheckoutSubstitutions:
         else:
             ci = ClientInfo.from_dict(_ci)
 
+        _lock_z = d.pop("lockZ", UNSET)
+        lock_z: Union[Unset, LockZ]
+        if isinstance(_lock_z, Unset):
+            lock_z = UNSET
+        else:
+            lock_z = LockZ.from_dict(_lock_z)
+
         _checkout_substitutions_info = d.pop("checkoutSubstitutionsInfo", UNSET)
         checkout_substitutions_info: Union[Unset, CheckoutSubstitutionsInfo]
         if isinstance(_checkout_substitutions_info, Unset):
@@ -113,18 +120,11 @@ class BRequestIXServicePortIFCheckoutSubstitutions:
         else:
             substitution_z = SubstitutionZ.from_dict(_substitution_z)
 
-        _lock_z = d.pop("lockZ", UNSET)
-        lock_z: Union[Unset, LockZ]
-        if isinstance(_lock_z, Unset):
-            lock_z = UNSET
-        else:
-            lock_z = LockZ.from_dict(_lock_z)
-
         b_request_ix_service_port_if_checkout_substitutions = cls(
             ci=ci,
+            lock_z=lock_z,
             checkout_substitutions_info=checkout_substitutions_info,
             substitution_z=substitution_z,
-            lock_z=lock_z,
         )
 
         b_request_ix_service_port_if_checkout_substitutions.additional_properties = d

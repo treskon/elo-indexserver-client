@@ -13,8 +13,9 @@ class LinkSordInfo:
     """Additional parameters for function {@link IXServicePortIF#linkSords2}
 
     Attributes:
-        link_permanent (Union[Unset, bool]): If true, Sords will be linked permanently. The new links between the
-            provided Sords cannot be deleted.
+        link_permanent (Union[Unset, bool]): If true, Sords will be linked permanently.
+            The new links between the provided Sords cannot be
+             deleted.
     """
 
     link_permanent: Union[Unset, bool] = UNSET

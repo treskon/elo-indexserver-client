@@ -19,38 +19,39 @@ class KeyValue:
      </p>
 
         Attributes:
-            key (Union[Unset, str]): Key or identifying name.
             value (Union[Unset, str]): Associated value.
+            key (Union[Unset, str]): Key or identifying name.
     """
 
-    key: Union[Unset, str] = UNSET
     value: Union[Unset, str] = UNSET
+    key: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        key = self.key
         value = self.value
+
+        key = self.key
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if key is not UNSET:
-            field_dict["key"] = key
         if value is not UNSET:
             field_dict["value"] = value
+        if key is not UNSET:
+            field_dict["key"] = key
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        key = d.pop("key", UNSET)
-
         value = d.pop("value", UNSET)
 
+        key = d.pop("key", UNSET)
+
         key_value = cls(
-            key=key,
             value=value,
+            key=key,
         )
 
         key_value.additional_properties = d

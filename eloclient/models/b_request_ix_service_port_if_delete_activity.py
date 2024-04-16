@@ -18,16 +18,6 @@ T = TypeVar("T", bound="BRequestIXServicePortIFDeleteActivity")
 class BRequestIXServicePortIFDeleteActivity:
     """
     Attributes:
-        ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
-             <p>
-             Copyright: Copyright (c) 2004
-             </p>
-             <p>
-             Organisation: ELO Digital Office GmbH
-             </p>
-        act_guid (Union[Unset, str]):
         delete_options (Union[Unset, DeleteActivityOptions]): This class defines options for the API function
             deleteActivity.
         unlock_z (Union[Unset, LockZ]): This class encapsulates the constants of the LockC class.
@@ -37,20 +27,26 @@ class BRequestIXServicePortIFDeleteActivity:
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
+        ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
+             <p>
+             Copyright: Copyright (c) 2004
+             </p>
+             <p>
+             Organisation: ELO Digital Office GmbH
+             </p>
+        act_guid (Union[Unset, str]):
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
-    act_guid: Union[Unset, str] = UNSET
     delete_options: Union[Unset, "DeleteActivityOptions"] = UNSET
     unlock_z: Union[Unset, "LockZ"] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
+    act_guid: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        ci: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.ci, Unset):
-            ci = self.ci.to_dict()
-
-        act_guid = self.act_guid
         delete_options: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.delete_options, Unset):
             delete_options = self.delete_options.to_dict()
@@ -59,17 +55,23 @@ class BRequestIXServicePortIFDeleteActivity:
         if not isinstance(self.unlock_z, Unset):
             unlock_z = self.unlock_z.to_dict()
 
+        ci: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.ci, Unset):
+            ci = self.ci.to_dict()
+
+        act_guid = self.act_guid
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
-        if act_guid is not UNSET:
-            field_dict["actGuid"] = act_guid
         if delete_options is not UNSET:
             field_dict["deleteOptions"] = delete_options
         if unlock_z is not UNSET:
             field_dict["unlockZ"] = unlock_z
+        if ci is not UNSET:
+            field_dict["ci"] = ci
+        if act_guid is not UNSET:
+            field_dict["actGuid"] = act_guid
 
         return field_dict
 
@@ -80,15 +82,6 @@ class BRequestIXServicePortIFDeleteActivity:
         from ..models.lock_z import LockZ
 
         d = src_dict.copy()
-        _ci = d.pop("ci", UNSET)
-        ci: Union[Unset, ClientInfo]
-        if isinstance(_ci, Unset):
-            ci = UNSET
-        else:
-            ci = ClientInfo.from_dict(_ci)
-
-        act_guid = d.pop("actGuid", UNSET)
-
         _delete_options = d.pop("deleteOptions", UNSET)
         delete_options: Union[Unset, DeleteActivityOptions]
         if isinstance(_delete_options, Unset):
@@ -103,11 +96,20 @@ class BRequestIXServicePortIFDeleteActivity:
         else:
             unlock_z = LockZ.from_dict(_unlock_z)
 
+        _ci = d.pop("ci", UNSET)
+        ci: Union[Unset, ClientInfo]
+        if isinstance(_ci, Unset):
+            ci = UNSET
+        else:
+            ci = ClientInfo.from_dict(_ci)
+
+        act_guid = d.pop("actGuid", UNSET)
+
         b_request_ix_service_port_if_delete_activity = cls(
-            ci=ci,
-            act_guid=act_guid,
             delete_options=delete_options,
             unlock_z=unlock_z,
+            ci=ci,
+            act_guid=act_guid,
         )
 
         b_request_ix_service_port_if_delete_activity.additional_properties = d

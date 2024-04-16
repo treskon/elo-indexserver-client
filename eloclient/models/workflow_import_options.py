@@ -15,8 +15,8 @@ class WorkflowImportOptions:
     Attributes:
         replace_missing_user_by_user_id (Union[Unset, str]): If this variable is set, the missing user is replaced by
             this user.
-            Otherwise the missing user will be created
-             using a random password.
+            Otherwise the missing user
+             will be created using a random password.
     """
 
     replace_missing_user_by_user_id: Union[Unset, str] = UNSET

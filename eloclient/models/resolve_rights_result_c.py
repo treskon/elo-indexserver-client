@@ -13,46 +13,48 @@ class ResolveRightsResultC:
     """Constants for {@link ResolveRightsResult}.
 
     Attributes:
+        substitution (Union[Unset, int]): Indicates that the user got the right by a substitution rule.
         direct (Union[Unset, int]): Indicates that the user got the right directly.
         inherited (Union[Unset, int]): Indicates that the user got the right by inheritance of a group.
-        substitution (Union[Unset, int]): Indicates that the user got the right by a substitution rule.
     """
 
+    substitution: Union[Unset, int] = UNSET
     direct: Union[Unset, int] = UNSET
     inherited: Union[Unset, int] = UNSET
-    substitution: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        direct = self.direct
-        inherited = self.inherited
         substitution = self.substitution
+
+        direct = self.direct
+
+        inherited = self.inherited
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
+        if substitution is not UNSET:
+            field_dict["SUBSTITUTION"] = substitution
         if direct is not UNSET:
             field_dict["DIRECT"] = direct
         if inherited is not UNSET:
             field_dict["INHERITED"] = inherited
-        if substitution is not UNSET:
-            field_dict["SUBSTITUTION"] = substitution
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
+        substitution = d.pop("SUBSTITUTION", UNSET)
+
         direct = d.pop("DIRECT", UNSET)
 
         inherited = d.pop("INHERITED", UNSET)
 
-        substitution = d.pop("SUBSTITUTION", UNSET)
-
         resolve_rights_result_c = cls(
+            substitution=substitution,
             direct=direct,
             inherited=inherited,
-            substitution=substitution,
         )
 
         resolve_rights_result_c.additional_properties = d

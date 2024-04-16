@@ -13,46 +13,48 @@ class WFCacheSyncInfo:
     """This class is used to synchronize the workflow cache.
 
     Attributes:
+        tstamp (Union[Unset, str]): Workflow timestamp.
         flow_id (Union[Unset, int]): Workflow ID.
         hash_ (Union[Unset, int]): Checksum on workflow data.
-        tstamp (Union[Unset, str]): Workflow timestamp.
     """
 
+    tstamp: Union[Unset, str] = UNSET
     flow_id: Union[Unset, int] = UNSET
     hash_: Union[Unset, int] = UNSET
-    tstamp: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        flow_id = self.flow_id
-        hash_ = self.hash_
         tstamp = self.tstamp
+
+        flow_id = self.flow_id
+
+        hash_ = self.hash_
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
+        if tstamp is not UNSET:
+            field_dict["tstamp"] = tstamp
         if flow_id is not UNSET:
             field_dict["flowId"] = flow_id
         if hash_ is not UNSET:
             field_dict["hash"] = hash_
-        if tstamp is not UNSET:
-            field_dict["tstamp"] = tstamp
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
+        tstamp = d.pop("tstamp", UNSET)
+
         flow_id = d.pop("flowId", UNSET)
 
         hash_ = d.pop("hash", UNSET)
 
-        tstamp = d.pop("tstamp", UNSET)
-
         wf_cache_sync_info = cls(
+            tstamp=tstamp,
             flow_id=flow_id,
             hash_=hash_,
-            tstamp=tstamp,
         )
 
         wf_cache_sync_info.additional_properties = d

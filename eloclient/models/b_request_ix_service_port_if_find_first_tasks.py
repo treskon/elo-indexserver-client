@@ -17,9 +17,11 @@ T = TypeVar("T", bound="BRequestIXServicePortIFFindFirstTasks")
 class BRequestIXServicePortIFFindFirstTasks:
     """
     Attributes:
+        max_ (Union[Unset, int]):
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
@@ -27,17 +29,18 @@ class BRequestIXServicePortIFFindFirstTasks:
              Organisation: ELO Digital Office GmbH
              </p>
         find_info (Union[Unset, FindTasksInfo]): This class contains the search criteria that are required for locating
-            a task (reminders, workflow tasks or
-            activity).
-        max_ (Union[Unset, int]):
+            a task (reminders,
+            workflow tasks or activity).
     """
 
+    max_: Union[Unset, int] = UNSET
     ci: Union[Unset, "ClientInfo"] = UNSET
     find_info: Union[Unset, "FindTasksInfo"] = UNSET
-    max_: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        max_ = self.max_
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
@@ -46,17 +49,15 @@ class BRequestIXServicePortIFFindFirstTasks:
         if not isinstance(self.find_info, Unset):
             find_info = self.find_info.to_dict()
 
-        max_ = self.max_
-
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
+        if max_ is not UNSET:
+            field_dict["max"] = max_
         if ci is not UNSET:
             field_dict["ci"] = ci
         if find_info is not UNSET:
             field_dict["findInfo"] = find_info
-        if max_ is not UNSET:
-            field_dict["max"] = max_
 
         return field_dict
 
@@ -66,6 +67,8 @@ class BRequestIXServicePortIFFindFirstTasks:
         from ..models.find_tasks_info import FindTasksInfo
 
         d = src_dict.copy()
+        max_ = d.pop("max", UNSET)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
@@ -80,12 +83,10 @@ class BRequestIXServicePortIFFindFirstTasks:
         else:
             find_info = FindTasksInfo.from_dict(_find_info)
 
-        max_ = d.pop("max", UNSET)
-
         b_request_ix_service_port_if_find_first_tasks = cls(
+            max_=max_,
             ci=ci,
             find_info=find_info,
-            max_=max_,
         )
 
         b_request_ix_service_port_if_find_first_tasks.additional_properties = d

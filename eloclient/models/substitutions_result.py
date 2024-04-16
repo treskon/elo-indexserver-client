@@ -18,34 +18,33 @@ class SubstitutionsResult:
     {@link IXServicePortIF#checkoutSubstitutions}().
 
         Attributes:
-            substitutions (Union[Unset, List['Substitution']]):
             substitution_guids (Union[Unset, List[str]]):
+            substitutions (Union[Unset, List['Substitution']]):
     """
 
-    substitutions: Union[Unset, List["Substitution"]] = UNSET
     substitution_guids: Union[Unset, List[str]] = UNSET
+    substitutions: Union[Unset, List["Substitution"]] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        substitution_guids: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.substitution_guids, Unset):
+            substitution_guids = self.substitution_guids
+
         substitutions: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.substitutions, Unset):
             substitutions = []
             for componentsschemas_list_of_substitution_item_data in self.substitutions:
                 componentsschemas_list_of_substitution_item = componentsschemas_list_of_substitution_item_data.to_dict()
-
                 substitutions.append(componentsschemas_list_of_substitution_item)
-
-        substitution_guids: Union[Unset, List[str]] = UNSET
-        if not isinstance(self.substitution_guids, Unset):
-            substitution_guids = self.substitution_guids
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if substitutions is not UNSET:
-            field_dict["substitutions"] = substitutions
         if substitution_guids is not UNSET:
             field_dict["substitutionGuids"] = substitution_guids
+        if substitutions is not UNSET:
+            field_dict["substitutions"] = substitutions
 
         return field_dict
 
@@ -54,6 +53,8 @@ class SubstitutionsResult:
         from ..models.substitution import Substitution
 
         d = src_dict.copy()
+        substitution_guids = cast(List[str], d.pop("substitutionGuids", UNSET))
+
         substitutions = []
         _substitutions = d.pop("substitutions", UNSET)
         for componentsschemas_list_of_substitution_item_data in _substitutions or []:
@@ -63,11 +64,9 @@ class SubstitutionsResult:
 
             substitutions.append(componentsschemas_list_of_substitution_item)
 
-        substitution_guids = cast(List[str], d.pop("substitutionGuids", UNSET))
-
         substitutions_result = cls(
-            substitutions=substitutions,
             substitution_guids=substitution_guids,
+            substitutions=substitutions,
         )
 
         substitutions_result.additional_properties = d

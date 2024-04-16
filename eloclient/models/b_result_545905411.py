@@ -18,7 +18,8 @@ class BResult545905411:
     Attributes:
         result (Union[Unset, LicenseResult]): Result of license check.
             An object of this class is returned by
-             {@link IXServicePortIF#checkLicense(ClientInfo, LicenseInfo)} if the given license information is valid.
+             {@link IXServicePortIF#checkLicense(ClientInfo, LicenseInfo)} if the given license information is
+             valid.
         exception (Union[Unset, str]): Error message
     """
 

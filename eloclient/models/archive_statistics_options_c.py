@@ -23,6 +23,7 @@ class ArchiveStatisticsOptionsC:
 
     def to_dict(self) -> Dict[str, Any]:
         mb_max_doc_id = self.mb_max_doc_id
+
         mb_max_obj_id = self.mb_max_obj_id
 
         field_dict: Dict[str, Any] = {}

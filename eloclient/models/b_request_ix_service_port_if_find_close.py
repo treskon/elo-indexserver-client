@@ -16,36 +16,37 @@ T = TypeVar("T", bound="BRequestIXServicePortIFFindClose")
 class BRequestIXServicePortIFFindClose:
     """
     Attributes:
+        search_id (Union[Unset, str]):
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        search_id (Union[Unset, str]):
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
     search_id: Union[Unset, str] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        search_id = self.search_id
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        search_id = self.search_id
-
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
         if search_id is not UNSET:
             field_dict["searchId"] = search_id
+        if ci is not UNSET:
+            field_dict["ci"] = ci
 
         return field_dict
 
@@ -54,6 +55,8 @@ class BRequestIXServicePortIFFindClose:
         from ..models.client_info import ClientInfo
 
         d = src_dict.copy()
+        search_id = d.pop("searchId", UNSET)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
@@ -61,11 +64,9 @@ class BRequestIXServicePortIFFindClose:
         else:
             ci = ClientInfo.from_dict(_ci)
 
-        search_id = d.pop("searchId", UNSET)
-
         b_request_ix_service_port_if_find_close = cls(
-            ci=ci,
             search_id=search_id,
+            ci=ci,
         )
 
         b_request_ix_service_port_if_find_close.additional_properties = d

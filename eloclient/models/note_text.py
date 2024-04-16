@@ -15,15 +15,14 @@ T = TypeVar("T", bound="NoteText")
 @_attrs_define
 class NoteText:
     """This class conatins additional information for textual notes.
-    NoteText objects can be used in NoteTemplate and Note
-     objects.
+    NoteText objects can be used in
+     NoteTemplate and Note objects.
 
         Attributes:
             font_info (Union[Unset, FontInfo]): This class describes a font.
-            text (Union[Unset, str]): Stamp text. The maximum length is NoteDataC.lnDesc - 50, if the NoteText object is
-                used in a Note object.
-                The
-                 length for a text of a NoteTemplate object is defined by NoteTemplateC.lnText
+            text (Union[Unset, str]): Stamp text. The maximum length is NoteDataC.
+                lnDesc - 50, if the NoteText object is used in a
+                 Note object. The length for a text of a NoteTemplate object is defined by NoteTemplateC.lnText
     """
 
     font_info: Union[Unset, "FontInfo"] = UNSET

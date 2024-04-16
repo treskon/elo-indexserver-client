@@ -18,17 +18,6 @@ T = TypeVar("T", bound="BRequestIXServicePortIFForwardWorkflowNode")
 class BRequestIXServicePortIFForwardWorkflowNode:
     """
     Attributes:
-        ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
-             <p>
-             Copyright: Copyright (c) 2004
-             </p>
-             <p>
-             Organisation: ELO Digital Office GmbH
-             </p>
-        flow_id (Union[Unset, int]):
-        node_id (Union[Unset, int]):
         fwd_info (Union[Unset, ForwardWorkflowNodeInfo]): This class controls workflow node forwarding in
             {@link IXServicePortIF#forwardWorkflowNode(ClientInfo, int, int, ForwardWorkflowNodeInfo, LockZ)}.
         unlock_z (Union[Unset, LockZ]): This class encapsulates the constants of the LockC class.
@@ -38,22 +27,28 @@ class BRequestIXServicePortIFForwardWorkflowNode:
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
+        ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
+             <p>
+             Copyright: Copyright (c) 2004
+             </p>
+             <p>
+             Organisation: ELO Digital Office GmbH
+             </p>
+        flow_id (Union[Unset, int]):
+        node_id (Union[Unset, int]):
     """
 
+    fwd_info: Union[Unset, "ForwardWorkflowNodeInfo"] = UNSET
+    unlock_z: Union[Unset, "LockZ"] = UNSET
     ci: Union[Unset, "ClientInfo"] = UNSET
     flow_id: Union[Unset, int] = UNSET
     node_id: Union[Unset, int] = UNSET
-    fwd_info: Union[Unset, "ForwardWorkflowNodeInfo"] = UNSET
-    unlock_z: Union[Unset, "LockZ"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        ci: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.ci, Unset):
-            ci = self.ci.to_dict()
-
-        flow_id = self.flow_id
-        node_id = self.node_id
         fwd_info: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.fwd_info, Unset):
             fwd_info = self.fwd_info.to_dict()
@@ -62,19 +57,27 @@ class BRequestIXServicePortIFForwardWorkflowNode:
         if not isinstance(self.unlock_z, Unset):
             unlock_z = self.unlock_z.to_dict()
 
+        ci: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.ci, Unset):
+            ci = self.ci.to_dict()
+
+        flow_id = self.flow_id
+
+        node_id = self.node_id
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
+        if fwd_info is not UNSET:
+            field_dict["fwdInfo"] = fwd_info
+        if unlock_z is not UNSET:
+            field_dict["unlockZ"] = unlock_z
         if ci is not UNSET:
             field_dict["ci"] = ci
         if flow_id is not UNSET:
             field_dict["flowId"] = flow_id
         if node_id is not UNSET:
             field_dict["nodeId"] = node_id
-        if fwd_info is not UNSET:
-            field_dict["fwdInfo"] = fwd_info
-        if unlock_z is not UNSET:
-            field_dict["unlockZ"] = unlock_z
 
         return field_dict
 
@@ -85,17 +88,6 @@ class BRequestIXServicePortIFForwardWorkflowNode:
         from ..models.lock_z import LockZ
 
         d = src_dict.copy()
-        _ci = d.pop("ci", UNSET)
-        ci: Union[Unset, ClientInfo]
-        if isinstance(_ci, Unset):
-            ci = UNSET
-        else:
-            ci = ClientInfo.from_dict(_ci)
-
-        flow_id = d.pop("flowId", UNSET)
-
-        node_id = d.pop("nodeId", UNSET)
-
         _fwd_info = d.pop("fwdInfo", UNSET)
         fwd_info: Union[Unset, ForwardWorkflowNodeInfo]
         if isinstance(_fwd_info, Unset):
@@ -110,12 +102,23 @@ class BRequestIXServicePortIFForwardWorkflowNode:
         else:
             unlock_z = LockZ.from_dict(_unlock_z)
 
+        _ci = d.pop("ci", UNSET)
+        ci: Union[Unset, ClientInfo]
+        if isinstance(_ci, Unset):
+            ci = UNSET
+        else:
+            ci = ClientInfo.from_dict(_ci)
+
+        flow_id = d.pop("flowId", UNSET)
+
+        node_id = d.pop("nodeId", UNSET)
+
         b_request_ix_service_port_if_forward_workflow_node = cls(
+            fwd_info=fwd_info,
+            unlock_z=unlock_z,
             ci=ci,
             flow_id=flow_id,
             node_id=node_id,
-            fwd_info=fwd_info,
-            unlock_z=unlock_z,
         )
 
         b_request_ix_service_port_if_forward_workflow_node.additional_properties = d

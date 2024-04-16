@@ -10,23 +10,23 @@ T = TypeVar("T", bound="SubstitutionStatus")
 
 @_attrs_define
 class SubstitutionStatus:
-    """The substitution status is used to inform if a substitution is currently deactivated or activated.
-    If activated, it
-     also informs how it was activated (either by a {@link SubstitutionPeriod} or manually)
+    """The substitution status is used to inform if a substitution is currently deactivated or
+    activated. If activated, it also informs how it was activated (either by a
+     {@link SubstitutionPeriod} or manually)
 
         Attributes:
             deactivated (Union[Unset, SubstitutionStatus]): The substitution status is used to inform if a substitution is
-                currently deactivated or activated.
-                If activated, it
-                 also informs how it was activated (either by a {@link SubstitutionPeriod} or manually)
+                currently deactivated or
+                activated. If activated, it also informs how it was activated (either by a
+                 {@link SubstitutionPeriod} or manually)
             activated_by_period (Union[Unset, SubstitutionStatus]): The substitution status is used to inform if a
-                substitution is currently deactivated or activated.
-                If activated, it
-                 also informs how it was activated (either by a {@link SubstitutionPeriod} or manually)
+                substitution is currently deactivated or
+                activated. If activated, it also informs how it was activated (either by a
+                 {@link SubstitutionPeriod} or manually)
             activated_manually (Union[Unset, SubstitutionStatus]): The substitution status is used to inform if a
-                substitution is currently deactivated or activated.
-                If activated, it
-                 also informs how it was activated (either by a {@link SubstitutionPeriod} or manually)
+                substitution is currently deactivated or
+                activated. If activated, it also informs how it was activated (either by a
+                 {@link SubstitutionPeriod} or manually)
     """
 
     deactivated: Union[Unset, "SubstitutionStatus"] = UNSET

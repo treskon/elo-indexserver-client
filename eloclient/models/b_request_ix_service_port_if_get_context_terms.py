@@ -17,9 +17,12 @@ T = TypeVar("T", bound="BRequestIXServicePortIFGetContextTerms")
 class BRequestIXServicePortIFGetContextTerms:
     """
     Attributes:
+        field (Union[Unset, str]):
+        max_ (Union[Unset, int]):
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
@@ -33,17 +36,19 @@ class BRequestIXServicePortIFGetContextTerms:
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        field (Union[Unset, str]):
-        max_ (Union[Unset, int]):
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
-    find_info: Union[Unset, "FindInfo"] = UNSET
     field: Union[Unset, str] = UNSET
     max_: Union[Unset, int] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
+    find_info: Union[Unset, "FindInfo"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        field = self.field
+
+        max_ = self.max_
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
@@ -52,20 +57,17 @@ class BRequestIXServicePortIFGetContextTerms:
         if not isinstance(self.find_info, Unset):
             find_info = self.find_info.to_dict()
 
-        field = self.field
-        max_ = self.max_
-
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
-        if find_info is not UNSET:
-            field_dict["findInfo"] = find_info
         if field is not UNSET:
             field_dict["field"] = field
         if max_ is not UNSET:
             field_dict["max"] = max_
+        if ci is not UNSET:
+            field_dict["ci"] = ci
+        if find_info is not UNSET:
+            field_dict["findInfo"] = find_info
 
         return field_dict
 
@@ -75,6 +77,10 @@ class BRequestIXServicePortIFGetContextTerms:
         from ..models.find_info import FindInfo
 
         d = src_dict.copy()
+        field = d.pop("field", UNSET)
+
+        max_ = d.pop("max", UNSET)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
@@ -89,15 +95,11 @@ class BRequestIXServicePortIFGetContextTerms:
         else:
             find_info = FindInfo.from_dict(_find_info)
 
-        field = d.pop("field", UNSET)
-
-        max_ = d.pop("max", UNSET)
-
         b_request_ix_service_port_if_get_context_terms = cls(
-            ci=ci,
-            find_info=find_info,
             field=field,
             max_=max_,
+            ci=ci,
+            find_info=find_info,
         )
 
         b_request_ix_service_port_if_get_context_terms.additional_properties = d

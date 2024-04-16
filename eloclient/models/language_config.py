@@ -32,9 +32,13 @@ class LanguageConfig:
 
     def to_dict(self) -> Dict[str, Any]:
         languages = self.languages
+
         allowed_langs = self.allowed_langs
+
         nb_of_langs = self.nb_of_langs
+
         archive_lang = self.archive_lang
+
         map_language_names: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.map_language_names, Unset):
             map_language_names = self.map_language_names.to_dict()
