@@ -1,4 +1,7 @@
 import logging
+import base64
+
+
 
 from eloclient import Client
 from eloclient.api.ix_service_port_if import ix_service_port_if_checkin_map
@@ -20,12 +23,17 @@ def _convert_map_value(key: str, value: str, content_type) -> MapValue:
 
     file_data = FileData()
     file_data.content_type = content_type
-    file_data.data = value  # according to docs 'File data as byte array.'
+    file_data.data = to_base64(value)  # according to docs 'File data as byte array.'
     map_value.blob_value = file_data
     return map_value
 
 
-def too_large_for_string(fields:dict):
+def to_base64(value: str):
+    base64_bytes = base64.b64encode(value.encode("utf-8"))
+    return base64_bytes.decode("utf-8")
+
+
+def too_large_for_string(fields: dict):
     for key, value in fields.items():
         if len(key) > 255 or len(value) > 255:
             logging.warning(f"Key or value too large for string: {key} {value}")
