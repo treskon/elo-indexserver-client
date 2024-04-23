@@ -18,16 +18,10 @@ class LicenseCounter:
     """License counters of a user.
 
     Attributes:
-        java_client (Union[Unset, int]):
-        winwos_client (Union[Unset, int]):
-        full_user (Union[Unset, int]):
-        ix_user (Union[Unset, int]):
         deleted_user (Union[Unset, int]):
-        free_user (Union[Unset, int]):
         user_info (Union[Unset, UserInfo]): <p>
-            Data class containing the user information data for the user logged in to the Index server. User information
-            includes
-             ID, name, rights, parent, etc.
+            Data class containing the user information data for the user logged in to the Index server. User
+             information includes ID, name, rights, parent, etc.
              </p>
              <p>
              Copyright: Copyright (c) 2004
@@ -35,69 +29,82 @@ class LicenseCounter:
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        access_map (Union[Unset, HashMapToInteger]):
+        winwos_client (Union[Unset, int]):
         sum_access (Union[Unset, int]):
+        access_map (Union[Unset, HashMapToInteger]):
+        java_client (Union[Unset, int]):
+        ix_user (Union[Unset, int]):
         disabled (Union[Unset, bool]): True, if the user has been inactive for 30 days.
+        free_user (Union[Unset, int]):
         count_type (Union[Unset, int]):
+        full_user (Union[Unset, int]):
     """
 
-    java_client: Union[Unset, int] = UNSET
-    winwos_client: Union[Unset, int] = UNSET
-    full_user: Union[Unset, int] = UNSET
-    ix_user: Union[Unset, int] = UNSET
     deleted_user: Union[Unset, int] = UNSET
-    free_user: Union[Unset, int] = UNSET
     user_info: Union[Unset, "UserInfo"] = UNSET
-    access_map: Union[Unset, "HashMapToInteger"] = UNSET
+    winwos_client: Union[Unset, int] = UNSET
     sum_access: Union[Unset, int] = UNSET
+    access_map: Union[Unset, "HashMapToInteger"] = UNSET
+    java_client: Union[Unset, int] = UNSET
+    ix_user: Union[Unset, int] = UNSET
     disabled: Union[Unset, bool] = UNSET
+    free_user: Union[Unset, int] = UNSET
     count_type: Union[Unset, int] = UNSET
+    full_user: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        java_client = self.java_client
-        winwos_client = self.winwos_client
-        full_user = self.full_user
-        ix_user = self.ix_user
         deleted_user = self.deleted_user
-        free_user = self.free_user
+
         user_info: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.user_info, Unset):
             user_info = self.user_info.to_dict()
+
+        winwos_client = self.winwos_client
+
+        sum_access = self.sum_access
 
         access_map: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.access_map, Unset):
             access_map = self.access_map.to_dict()
 
-        sum_access = self.sum_access
+        java_client = self.java_client
+
+        ix_user = self.ix_user
+
         disabled = self.disabled
+
+        free_user = self.free_user
+
         count_type = self.count_type
+
+        full_user = self.full_user
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if java_client is not UNSET:
-            field_dict["JAVA_CLIENT"] = java_client
-        if winwos_client is not UNSET:
-            field_dict["WINWOS_CLIENT"] = winwos_client
-        if full_user is not UNSET:
-            field_dict["FULL_USER"] = full_user
-        if ix_user is not UNSET:
-            field_dict["IX_USER"] = ix_user
         if deleted_user is not UNSET:
             field_dict["DELETED_USER"] = deleted_user
-        if free_user is not UNSET:
-            field_dict["FREE_USER"] = free_user
         if user_info is not UNSET:
             field_dict["userInfo"] = user_info
-        if access_map is not UNSET:
-            field_dict["accessMap"] = access_map
+        if winwos_client is not UNSET:
+            field_dict["WINWOS_CLIENT"] = winwos_client
         if sum_access is not UNSET:
             field_dict["sumAccess"] = sum_access
+        if access_map is not UNSET:
+            field_dict["accessMap"] = access_map
+        if java_client is not UNSET:
+            field_dict["JAVA_CLIENT"] = java_client
+        if ix_user is not UNSET:
+            field_dict["IX_USER"] = ix_user
         if disabled is not UNSET:
             field_dict["disabled"] = disabled
+        if free_user is not UNSET:
+            field_dict["FREE_USER"] = free_user
         if count_type is not UNSET:
             field_dict["countType"] = count_type
+        if full_user is not UNSET:
+            field_dict["FULL_USER"] = full_user
 
         return field_dict
 
@@ -107,17 +114,7 @@ class LicenseCounter:
         from ..models.user_info import UserInfo
 
         d = src_dict.copy()
-        java_client = d.pop("JAVA_CLIENT", UNSET)
-
-        winwos_client = d.pop("WINWOS_CLIENT", UNSET)
-
-        full_user = d.pop("FULL_USER", UNSET)
-
-        ix_user = d.pop("IX_USER", UNSET)
-
         deleted_user = d.pop("DELETED_USER", UNSET)
-
-        free_user = d.pop("FREE_USER", UNSET)
 
         _user_info = d.pop("userInfo", UNSET)
         user_info: Union[Unset, UserInfo]
@@ -126,6 +123,10 @@ class LicenseCounter:
         else:
             user_info = UserInfo.from_dict(_user_info)
 
+        winwos_client = d.pop("WINWOS_CLIENT", UNSET)
+
+        sum_access = d.pop("sumAccess", UNSET)
+
         _access_map = d.pop("accessMap", UNSET)
         access_map: Union[Unset, HashMapToInteger]
         if isinstance(_access_map, Unset):
@@ -133,24 +134,30 @@ class LicenseCounter:
         else:
             access_map = HashMapToInteger.from_dict(_access_map)
 
-        sum_access = d.pop("sumAccess", UNSET)
+        java_client = d.pop("JAVA_CLIENT", UNSET)
+
+        ix_user = d.pop("IX_USER", UNSET)
 
         disabled = d.pop("disabled", UNSET)
 
+        free_user = d.pop("FREE_USER", UNSET)
+
         count_type = d.pop("countType", UNSET)
 
+        full_user = d.pop("FULL_USER", UNSET)
+
         license_counter = cls(
-            java_client=java_client,
-            winwos_client=winwos_client,
-            full_user=full_user,
-            ix_user=ix_user,
             deleted_user=deleted_user,
-            free_user=free_user,
             user_info=user_info,
-            access_map=access_map,
+            winwos_client=winwos_client,
             sum_access=sum_access,
+            access_map=access_map,
+            java_client=java_client,
+            ix_user=ix_user,
             disabled=disabled,
+            free_user=free_user,
             count_type=count_type,
+            full_user=full_user,
         )
 
         license_counter.additional_properties = d

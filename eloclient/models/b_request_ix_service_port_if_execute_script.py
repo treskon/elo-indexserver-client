@@ -18,8 +18,9 @@ class BRequestIXServicePortIFExecuteScript:
     """
     Attributes:
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
@@ -28,8 +29,8 @@ class BRequestIXServicePortIFExecuteScript:
              </p>
         params (Union[Unset, ExecuteScriptParams]): This class is used to specify which script has to be executed in
             function executeScript.
-            The script has to be an ELO
-             Windows CLIENT OLE-Automation script.
+            The
+             script has to be an ELO Windows CLIENT OLE-Automation script.
     """
 
     ci: Union[Unset, "ClientInfo"] = UNSET

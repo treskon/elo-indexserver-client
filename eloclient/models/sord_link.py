@@ -19,47 +19,49 @@ class SordLink:
      </p>
 
         Attributes:
-            id (Union[Unset, str]): Numerical ID or GUID of referenced Sord.
             link_id (Union[Unset, str]): Link ID.
             permanent (Union[Unset, bool]): True, if this SordLink is permanent. Permanent links between Sords cannot be
                 deleted.
+            id (Union[Unset, str]): Numerical ID or GUID of referenced Sord.
     """
 
-    id: Union[Unset, str] = UNSET
     link_id: Union[Unset, str] = UNSET
     permanent: Union[Unset, bool] = UNSET
+    id: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        id = self.id
         link_id = self.link_id
+
         permanent = self.permanent
+
+        id = self.id
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if id is not UNSET:
-            field_dict["id"] = id
         if link_id is not UNSET:
             field_dict["linkId"] = link_id
         if permanent is not UNSET:
             field_dict["permanent"] = permanent
+        if id is not UNSET:
+            field_dict["id"] = id
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        id = d.pop("id", UNSET)
-
         link_id = d.pop("linkId", UNSET)
 
         permanent = d.pop("permanent", UNSET)
 
+        id = d.pop("id", UNSET)
+
         sord_link = cls(
-            id=id,
             link_id=link_id,
             permanent=permanent,
+            id=id,
         )
 
         sord_link.additional_properties = d

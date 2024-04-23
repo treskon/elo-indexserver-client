@@ -16,36 +16,37 @@ T = TypeVar("T", bound="BRequestIXServicePortIFAdminMode")
 class BRequestIXServicePortIFAdminMode:
     """
     Attributes:
+        mode (Union[Unset, int]):
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        mode (Union[Unset, int]):
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
     mode: Union[Unset, int] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        mode = self.mode
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        mode = self.mode
-
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
         if mode is not UNSET:
             field_dict["mode"] = mode
+        if ci is not UNSET:
+            field_dict["ci"] = ci
 
         return field_dict
 
@@ -54,6 +55,8 @@ class BRequestIXServicePortIFAdminMode:
         from ..models.client_info import ClientInfo
 
         d = src_dict.copy()
+        mode = d.pop("mode", UNSET)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
@@ -61,11 +64,9 @@ class BRequestIXServicePortIFAdminMode:
         else:
             ci = ClientInfo.from_dict(_ci)
 
-        mode = d.pop("mode", UNSET)
-
         b_request_ix_service_port_if_admin_mode = cls(
-            ci=ci,
             mode=mode,
+            ci=ci,
         )
 
         b_request_ix_service_port_if_admin_mode.additional_properties = d

@@ -18,8 +18,9 @@ class BRequestIXServicePortIFConfigureBackup:
     """
     Attributes:
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
@@ -43,7 +44,6 @@ class BRequestIXServicePortIFConfigureBackup:
             backup_profiles = []
             for backup_profiles_item_data in self.backup_profiles:
                 backup_profiles_item = backup_profiles_item_data.to_dict()
-
                 backup_profiles.append(backup_profiles_item)
 
         field_dict: Dict[str, Any] = {}

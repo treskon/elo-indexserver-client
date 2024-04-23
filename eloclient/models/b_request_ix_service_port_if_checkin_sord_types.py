@@ -18,16 +18,6 @@ T = TypeVar("T", bound="BRequestIXServicePortIFCheckinSordTypes")
 class BRequestIXServicePortIFCheckinSordTypes:
     """
     Attributes:
-        ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
-             <p>
-             Copyright: Copyright (c) 2004
-             </p>
-             <p>
-             Organisation: ELO Digital Office GmbH
-             </p>
-        sord_types (Union[Unset, List['SordType']]):
         unlock_z (Union[Unset, LockZ]): This class encapsulates the constants of the LockC class.
             <p>
              Copyright: Copyright (c) 2004
@@ -35,14 +25,29 @@ class BRequestIXServicePortIFCheckinSordTypes:
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
+        ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
+             <p>
+             Copyright: Copyright (c) 2004
+             </p>
+             <p>
+             Organisation: ELO Digital Office GmbH
+             </p>
+        sord_types (Union[Unset, List['SordType']]):
     """
 
+    unlock_z: Union[Unset, "LockZ"] = UNSET
     ci: Union[Unset, "ClientInfo"] = UNSET
     sord_types: Union[Unset, List["SordType"]] = UNSET
-    unlock_z: Union[Unset, "LockZ"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        unlock_z: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.unlock_z, Unset):
+            unlock_z = self.unlock_z.to_dict()
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
@@ -52,22 +57,17 @@ class BRequestIXServicePortIFCheckinSordTypes:
             sord_types = []
             for sord_types_item_data in self.sord_types:
                 sord_types_item = sord_types_item_data.to_dict()
-
                 sord_types.append(sord_types_item)
-
-        unlock_z: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.unlock_z, Unset):
-            unlock_z = self.unlock_z.to_dict()
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
+        if unlock_z is not UNSET:
+            field_dict["unlockZ"] = unlock_z
         if ci is not UNSET:
             field_dict["ci"] = ci
         if sord_types is not UNSET:
             field_dict["sordTypes"] = sord_types
-        if unlock_z is not UNSET:
-            field_dict["unlockZ"] = unlock_z
 
         return field_dict
 
@@ -78,6 +78,13 @@ class BRequestIXServicePortIFCheckinSordTypes:
         from ..models.sord_type import SordType
 
         d = src_dict.copy()
+        _unlock_z = d.pop("unlockZ", UNSET)
+        unlock_z: Union[Unset, LockZ]
+        if isinstance(_unlock_z, Unset):
+            unlock_z = UNSET
+        else:
+            unlock_z = LockZ.from_dict(_unlock_z)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
@@ -92,17 +99,10 @@ class BRequestIXServicePortIFCheckinSordTypes:
 
             sord_types.append(sord_types_item)
 
-        _unlock_z = d.pop("unlockZ", UNSET)
-        unlock_z: Union[Unset, LockZ]
-        if isinstance(_unlock_z, Unset):
-            unlock_z = UNSET
-        else:
-            unlock_z = LockZ.from_dict(_unlock_z)
-
         b_request_ix_service_port_if_checkin_sord_types = cls(
+            unlock_z=unlock_z,
             ci=ci,
             sord_types=sord_types,
-            unlock_z=unlock_z,
         )
 
         b_request_ix_service_port_if_checkin_sord_types.additional_properties = d

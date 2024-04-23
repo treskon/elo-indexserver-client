@@ -18,21 +18,19 @@ class BResult460199434:
     Attributes:
         result (Union[Unset, Activity]): This class represents an activity.
             <p>
-             An activity is a task delegated to an instance outside the ELO system. It is created when the task is sent to
-            the
-             instance and deleted, if it is received back. An activity defines a date for expecting the response,
-             <code>dueDateIso</code>. At this date, the activity appears in the task list of the initiator. If the task is
-             finished, the initiator sets the <code>backAt</code> member and the activity is closed.
+             An activity is a task delegated to an instance outside the ELO system. It is created when the
+             task is sent to the instance and deleted, if it is received back. An activity defines a date for
+             expecting the response, <code>dueDateIso</code>. At this date, the activity appears in the task
+             list of the initiator. If the task is finished, the initiator sets the <code>backAt</code> member
+             and the activity is closed.
              </p>
              <p>
-             Activities can be used to observe a document or a folder. For each modification, a ELO_NOTIFY activity is
-            created and
-             displayed in the task list of the user that wants to observe the object.
+             Activities can be used to observe a document or a folder. For each modification, a ELO_NOTIFY
+             activity is created and displayed in the task list of the user that wants to observe the object.
              </p>
              <p>
-             An activity object is an instance on an activity project. The project defines the properties the user can edit
-            or
-             select to provide more information to the task.
+             An activity object is an instance on an activity project. The project defines the properties the
+             user can edit or select to provide more information to the task.
              </p>
         exception (Union[Unset, str]): Error message
     """

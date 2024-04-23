@@ -10,15 +10,9 @@ T = TypeVar("T", bound="PhysDelDocsC")
 
 @_attrs_define
 class PhysDelDocsC:
-    """<p>
-    Bit constants for members of PhysDelDocs
-     </p>
-     <p>
-     Copyright: Copyright (c) 2003
-     </p>
-     <p>
-     Organisation: ELO Digital Office GmbH
-     </p>
+    """<p>Bit constants for members of PhysDelDocs</p>
+    <p>Copyright: Copyright (c) 2003</p>
+     <p>Organisation: ELO Digital Office GmbH</p>
 
         Attributes:
             mb_obj_id (Union[Unset, str]): DB column: objid
@@ -31,6 +25,7 @@ class PhysDelDocsC:
 
     def to_dict(self) -> Dict[str, Any]:
         mb_obj_id = self.mb_obj_id
+
         mb_all_members = self.mb_all_members
 
         field_dict: Dict[str, Any] = {}

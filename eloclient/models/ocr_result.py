@@ -18,12 +18,11 @@ class OcrResult:
     """This class contains the informations about an OCR result.
 
     Attributes:
-        event_id (Union[Unset, str]): Event ID. The same value as submitted in {@link OcrInfo#eventId}.
         exception (Union[Unset, str]): Error message. Null or empty, if no error has occurred.
-            This value is used only in asynchronous processing in order
-             to inform the client application, that an error has occured. In synchronous processing, the error is thrown as
-            an
-             exception.
+            This value is used only in asynchronous
+             processing in order to inform the client application, that an error has occured. In synchronous
+             processing, the error is thrown as an exception.
+        event_id (Union[Unset, str]): Event ID. The same value as submitted in {@link OcrInfo#eventId}.
         exception_id (Union[Unset, int]): Error id.
             0, if no error has occurred
         recognize_file (Union[Unset, OcrResultRecognizeFile]): This class contains the result of an OCR analysis.
@@ -31,17 +30,20 @@ class OcrResult:
             OcrInfoQueryLanguages request.
     """
 
-    event_id: Union[Unset, str] = UNSET
     exception: Union[Unset, str] = UNSET
+    event_id: Union[Unset, str] = UNSET
     exception_id: Union[Unset, int] = UNSET
     recognize_file: Union[Unset, "OcrResultRecognizeFile"] = UNSET
     query_languages: Union[Unset, "OcrResultQueryLanguages"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        event_id = self.event_id
         exception = self.exception
+
+        event_id = self.event_id
+
         exception_id = self.exception_id
+
         recognize_file: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.recognize_file, Unset):
             recognize_file = self.recognize_file.to_dict()
@@ -53,10 +55,10 @@ class OcrResult:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if event_id is not UNSET:
-            field_dict["eventId"] = event_id
         if exception is not UNSET:
             field_dict["exception"] = exception
+        if event_id is not UNSET:
+            field_dict["eventId"] = event_id
         if exception_id is not UNSET:
             field_dict["exceptionID"] = exception_id
         if recognize_file is not UNSET:
@@ -72,9 +74,9 @@ class OcrResult:
         from ..models.ocr_result_recognize_file import OcrResultRecognizeFile
 
         d = src_dict.copy()
-        event_id = d.pop("eventId", UNSET)
-
         exception = d.pop("exception", UNSET)
+
+        event_id = d.pop("eventId", UNSET)
 
         exception_id = d.pop("exceptionID", UNSET)
 
@@ -93,8 +95,8 @@ class OcrResult:
             query_languages = OcrResultQueryLanguages.from_dict(_query_languages)
 
         ocr_result = cls(
-            event_id=event_id,
             exception=exception,
+            event_id=event_id,
             exception_id=exception_id,
             recognize_file=recognize_file,
             query_languages=query_languages,

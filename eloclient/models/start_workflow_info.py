@@ -26,7 +26,9 @@ class StartWorkflowInfo:
 
     def to_dict(self) -> Dict[str, Any]:
         templ_flow_id = self.templ_flow_id
+
         flow_name = self.flow_name
+
         flow_owner = self.flow_owner
 
         field_dict: Dict[str, Any] = {}

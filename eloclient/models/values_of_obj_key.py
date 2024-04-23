@@ -13,34 +13,34 @@ class ValuesOfObjKey:
     """Objects of this class contain the returned data from IXServicePortIF.getDistinctValuesOfObjKey.
 
     Attributes:
-        values (Union[Unset, List[str]]):
         usage_counts (Union[Unset, List[int]]):
+        values (Union[Unset, List[str]]):
         total_count (Union[Unset, int]): The sum of all usageCounts.
     """
 
-    values: Union[Unset, List[str]] = UNSET
     usage_counts: Union[Unset, List[int]] = UNSET
+    values: Union[Unset, List[str]] = UNSET
     total_count: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        values: Union[Unset, List[str]] = UNSET
-        if not isinstance(self.values, Unset):
-            values = self.values
-
         usage_counts: Union[Unset, List[int]] = UNSET
         if not isinstance(self.usage_counts, Unset):
             usage_counts = self.usage_counts
+
+        values: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.values, Unset):
+            values = self.values
 
         total_count = self.total_count
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if values is not UNSET:
-            field_dict["values"] = values
         if usage_counts is not UNSET:
             field_dict["usageCounts"] = usage_counts
+        if values is not UNSET:
+            field_dict["values"] = values
         if total_count is not UNSET:
             field_dict["totalCount"] = total_count
 
@@ -49,15 +49,15 @@ class ValuesOfObjKey:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        values = cast(List[str], d.pop("values", UNSET))
-
         usage_counts = cast(List[int], d.pop("usageCounts", UNSET))
+
+        values = cast(List[str], d.pop("values", UNSET))
 
         total_count = d.pop("totalCount", UNSET)
 
         values_of_obj_key = cls(
-            values=values,
             usage_counts=usage_counts,
+            values=values,
             total_count=total_count,
         )
 

@@ -17,22 +17,22 @@ T = TypeVar("T", bound="BRequestIXServicePortIFProcessFindResult")
 class BRequestIXServicePortIFProcessFindResult:
     """
     Attributes:
+        search_id (Union[Unset, str]):
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        search_id (Union[Unset, str]):
         proc_info (Union[Unset, ProcessInfo]): Specific processing information for each node of processTrees(...) or
             processFindResults(...).
-            The operations will be
-             for existence (not null) in order of their appearance in ProcessInfo. Some of the underlying structures may
-            allow
-             toggling between prefix and postfix processing when used with processTrees.
+            The operations will be for existence (not null) in order of their appearance in ProcessInfo. Some
+             of the underlying structures may allow toggling between prefix and postfix processing when used
+             with processTrees.
 
              <p>
              Copyright: Copyright (c) 2004
@@ -42,17 +42,18 @@ class BRequestIXServicePortIFProcessFindResult:
              </p>
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
     search_id: Union[Unset, str] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
     proc_info: Union[Unset, "ProcessInfo"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        search_id = self.search_id
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        search_id = self.search_id
         proc_info: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.proc_info, Unset):
             proc_info = self.proc_info.to_dict()
@@ -60,10 +61,10 @@ class BRequestIXServicePortIFProcessFindResult:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
         if search_id is not UNSET:
             field_dict["searchId"] = search_id
+        if ci is not UNSET:
+            field_dict["ci"] = ci
         if proc_info is not UNSET:
             field_dict["procInfo"] = proc_info
 
@@ -75,14 +76,14 @@ class BRequestIXServicePortIFProcessFindResult:
         from ..models.process_info import ProcessInfo
 
         d = src_dict.copy()
+        search_id = d.pop("searchId", UNSET)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
             ci = UNSET
         else:
             ci = ClientInfo.from_dict(_ci)
-
-        search_id = d.pop("searchId", UNSET)
 
         _proc_info = d.pop("procInfo", UNSET)
         proc_info: Union[Unset, ProcessInfo]
@@ -92,8 +93,8 @@ class BRequestIXServicePortIFProcessFindResult:
             proc_info = ProcessInfo.from_dict(_proc_info)
 
         b_request_ix_service_port_if_process_find_result = cls(
-            ci=ci,
             search_id=search_id,
+            ci=ci,
             proc_info=proc_info,
         )
 

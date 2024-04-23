@@ -18,21 +18,22 @@ class BRequestRawStreamServiceUpload:
     """
     Attributes:
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        params (Union[Unset, List[str]]):
         is_ (Union[Unset, BStreamReference]):
+        params (Union[Unset, List[str]]):
     """
 
     ci: Union[Unset, "ClientInfo"] = UNSET
-    params: Union[Unset, List[str]] = UNSET
     is_: Union[Unset, "BStreamReference"] = UNSET
+    params: Union[Unset, List[str]] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -40,23 +41,23 @@ class BRequestRawStreamServiceUpload:
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        params: Union[Unset, List[str]] = UNSET
-        if not isinstance(self.params, Unset):
-            params = self.params
-
         is_: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.is_, Unset):
             is_ = self.is_.to_dict()
+
+        params: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.params, Unset):
+            params = self.params
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if ci is not UNSET:
             field_dict["ci"] = ci
-        if params is not UNSET:
-            field_dict["params"] = params
         if is_ is not UNSET:
             field_dict["is"] = is_
+        if params is not UNSET:
+            field_dict["params"] = params
 
         return field_dict
 
@@ -73,8 +74,6 @@ class BRequestRawStreamServiceUpload:
         else:
             ci = ClientInfo.from_dict(_ci)
 
-        params = cast(List[str], d.pop("params", UNSET))
-
         _is_ = d.pop("is", UNSET)
         is_: Union[Unset, BStreamReference]
         if isinstance(_is_, Unset):
@@ -82,10 +81,12 @@ class BRequestRawStreamServiceUpload:
         else:
             is_ = BStreamReference.from_dict(_is_)
 
+        params = cast(List[str], d.pop("params", UNSET))
+
         b_request_raw_stream_service_upload = cls(
             ci=ci,
-            params=params,
             is_=is_,
+            params=params,
         )
 
         b_request_raw_stream_service_upload.additional_properties = d

@@ -17,8 +17,8 @@ class BResult1696936442:
     """
     Attributes:
         result (Union[Unset, AspectAssoc]): This class defines an aspect association.
-            An AspectAssoc defines a reference to a keywording {@link Aspect} in
-             {@link DocMask#aspectAssocs}.
+            An AspectAssoc defines a reference to a keywording
+             {@link Aspect} in {@link DocMask#aspectAssocs}.
         exception (Union[Unset, str]): Error message
     """
 

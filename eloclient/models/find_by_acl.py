@@ -13,44 +13,44 @@ class FindByAcl:
     """Find objects by ACL
 
     Attributes:
-        distinct_acl (Union[Unset, bool]): Return a list of unique ACL entries.
-            The ACL entries are wrapped in arbitary Sord objects which are returned in
-             FindResult.sords. This functionality can be combinded with a FindChildren object to return all ACLs used in a
-            sub
-             tree.
         acls (Union[Unset, List[str]]):
+        distinct_acl (Union[Unset, bool]): Return a list of unique ACL entries.
+            The ACL entries are wrapped in arbitary Sord objects which
+             are returned in FindResult.sords. This functionality can be combinded with a FindChildren
+             object to return all ACLs used in a sub tree.
     """
 
-    distinct_acl: Union[Unset, bool] = UNSET
     acls: Union[Unset, List[str]] = UNSET
+    distinct_acl: Union[Unset, bool] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        distinct_acl = self.distinct_acl
         acls: Union[Unset, List[str]] = UNSET
         if not isinstance(self.acls, Unset):
             acls = self.acls
 
+        distinct_acl = self.distinct_acl
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if distinct_acl is not UNSET:
-            field_dict["distinctAcl"] = distinct_acl
         if acls is not UNSET:
             field_dict["acls"] = acls
+        if distinct_acl is not UNSET:
+            field_dict["distinctAcl"] = distinct_acl
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        distinct_acl = d.pop("distinctAcl", UNSET)
-
         acls = cast(List[str], d.pop("acls", UNSET))
 
+        distinct_acl = d.pop("distinctAcl", UNSET)
+
         find_by_acl = cls(
-            distinct_acl=distinct_acl,
             acls=acls,
+            distinct_acl=distinct_acl,
         )
 
         find_by_acl.additional_properties = d

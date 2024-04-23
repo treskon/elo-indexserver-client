@@ -17,8 +17,8 @@ class BResult937420667:
     """
     Attributes:
         result (Union[Unset, Note]): <p>
-            This helper class inherits all members from <code>NoteData</code> and adds a static member to access the bit
-             constants for the <code>NoteData</code> members.
+            This helper class inherits all members from <code>NoteData</code> and adds a static member to
+             access the bit constants for the <code>NoteData</code> members.
              </p>
         exception (Union[Unset, str]): Error message
     """

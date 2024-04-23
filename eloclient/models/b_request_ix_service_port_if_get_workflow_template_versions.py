@@ -17,21 +17,22 @@ class BRequestIXServicePortIFGetWorkflowTemplateVersions:
     """
     Attributes:
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        flow_id (Union[Unset, str]):
         only_deleted (Union[Unset, bool]):
+        flow_id (Union[Unset, str]):
     """
 
     ci: Union[Unset, "ClientInfo"] = UNSET
-    flow_id: Union[Unset, str] = UNSET
     only_deleted: Union[Unset, bool] = UNSET
+    flow_id: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -39,18 +40,19 @@ class BRequestIXServicePortIFGetWorkflowTemplateVersions:
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        flow_id = self.flow_id
         only_deleted = self.only_deleted
+
+        flow_id = self.flow_id
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if ci is not UNSET:
             field_dict["ci"] = ci
-        if flow_id is not UNSET:
-            field_dict["flowId"] = flow_id
         if only_deleted is not UNSET:
             field_dict["onlyDeleted"] = only_deleted
+        if flow_id is not UNSET:
+            field_dict["flowId"] = flow_id
 
         return field_dict
 
@@ -66,14 +68,14 @@ class BRequestIXServicePortIFGetWorkflowTemplateVersions:
         else:
             ci = ClientInfo.from_dict(_ci)
 
-        flow_id = d.pop("flowId", UNSET)
-
         only_deleted = d.pop("onlyDeleted", UNSET)
+
+        flow_id = d.pop("flowId", UNSET)
 
         b_request_ix_service_port_if_get_workflow_template_versions = cls(
             ci=ci,
-            flow_id=flow_id,
             only_deleted=only_deleted,
+            flow_id=flow_id,
         )
 
         b_request_ix_service_port_if_get_workflow_template_versions.additional_properties = d

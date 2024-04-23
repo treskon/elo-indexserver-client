@@ -10,9 +10,9 @@ T = TypeVar("T", bound="ObjKey")
 
 @_attrs_define
 class ObjKey:
-    """This class wraps the ObjKeyData class to provide a convenient way to access the index lines that have multiple
-    columns. Unlike ObjKeyData the getData and setData functions work with String arrays inspite of single String
-     objects.
+    """This class wraps the ObjKeyData class to provide a convenient way to access the index lines that
+    have multiple columns. Unlike ObjKeyData the getData and setData functions work with String
+     arrays inspite of single String objects.
 
      <p>
      Copyright: Copyright (c) 2004
@@ -23,17 +23,17 @@ class ObjKey:
 
         Attributes:
             data (Union[Unset, List[str]]):
-            display_data (Union[Unset, List[str]]):
-            id (Union[Unset, int]): ID of the index line
             name (Union[Unset, str]): The group name of the index line
             obj_id (Union[Unset, int]): The ELO object ID this object belongs to
+            display_data (Union[Unset, List[str]]):
+            id (Union[Unset, int]): ID of the index line
     """
 
     data: Union[Unset, List[str]] = UNSET
-    display_data: Union[Unset, List[str]] = UNSET
-    id: Union[Unset, int] = UNSET
     name: Union[Unset, str] = UNSET
     obj_id: Union[Unset, int] = UNSET
+    display_data: Union[Unset, List[str]] = UNSET
+    id: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -41,27 +41,29 @@ class ObjKey:
         if not isinstance(self.data, Unset):
             data = self.data
 
+        name = self.name
+
+        obj_id = self.obj_id
+
         display_data: Union[Unset, List[str]] = UNSET
         if not isinstance(self.display_data, Unset):
             display_data = self.display_data
 
         id = self.id
-        name = self.name
-        obj_id = self.obj_id
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if data is not UNSET:
             field_dict["data"] = data
-        if display_data is not UNSET:
-            field_dict["displayData"] = display_data
-        if id is not UNSET:
-            field_dict["id"] = id
         if name is not UNSET:
             field_dict["name"] = name
         if obj_id is not UNSET:
             field_dict["objId"] = obj_id
+        if display_data is not UNSET:
+            field_dict["displayData"] = display_data
+        if id is not UNSET:
+            field_dict["id"] = id
 
         return field_dict
 
@@ -70,20 +72,20 @@ class ObjKey:
         d = src_dict.copy()
         data = cast(List[str], d.pop("data", UNSET))
 
-        display_data = cast(List[str], d.pop("displayData", UNSET))
-
-        id = d.pop("id", UNSET)
-
         name = d.pop("name", UNSET)
 
         obj_id = d.pop("objId", UNSET)
 
+        display_data = cast(List[str], d.pop("displayData", UNSET))
+
+        id = d.pop("id", UNSET)
+
         obj_key = cls(
             data=data,
-            display_data=display_data,
-            id=id,
             name=name,
             obj_id=obj_id,
+            display_data=display_data,
+            id=id,
         )
 
         obj_key.additional_properties = d

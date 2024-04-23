@@ -15,23 +15,20 @@ class FindByFulltext:
      </p>
 
      <p>
-     The fulltext search is performed via iSearch. Therefore, use {@link de.elo.ix.client.esearch.FindByESearch}
-    instead.
-     The {@link #term} should be replaces by the actual query term and additional filters (e.g. DocMask) should be
-     submitted by {@link de.elo.ix.client.esearch.ESearchParams#queryOperator}. The areas in which should be search
-    should
-     be set in {@link de.elo.ix.client.esearch.ESearchParams#searchIn}.<br>
-     Searches using this class are still executed but internally mapped to {@link
-    de.elo.ix.client.esearch.FindByESearch}
-     objects and some values might be ignored.
+     The fulltext search is performed via iSearch. Therefore, use
+     {@link de.elo.ix.client.esearch.FindByESearch} instead. The {@link #term} should be replaces by
+     the actual query term and additional filters (e.g. DocMask) should be submitted by
+     {@link de.elo.ix.client.esearch.ESearchParams#queryOperator}. The areas in which should be search
+     should be set in {@link de.elo.ix.client.esearch.ESearchParams#searchIn}.<br>
+     Searches using this class are still executed but internally mapped to
+     {@link de.elo.ix.client.esearch.FindByESearch} objects and some values might be ignored.
      </p>
 
         Attributes:
             term (Union[Unset, str]): Search term to be located in the fulltext database. Can be a single word or a number
                 of words.
-                Wildcard * is
-                 allowed, it matches any number of characters. Term is interpreted based on the options given by FindOptions in
-                 FindInfo. Exception: FindOptionsC.ONE_TERM is not supported.
+                Wildcard * is allowed, it matches any number of characters. Term is interpreted based on the
+                 options given by FindOptions in FindInfo. Exception: FindOptionsC.ONE_TERM is not supported.
     """
 
     term: Union[Unset, str] = UNSET

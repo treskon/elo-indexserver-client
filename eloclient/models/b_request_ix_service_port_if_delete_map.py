@@ -17,9 +17,17 @@ T = TypeVar("T", bound="BRequestIXServicePortIFDeleteMap")
 class BRequestIXServicePortIFDeleteMap:
     """
     Attributes:
+        unlock_z (Union[Unset, LockZ]): This class encapsulates the constants of the LockC class.
+            <p>
+             Copyright: Copyright (c) 2004
+             </p>
+             <p>
+             Organisation: ELO Digital Office GmbH
+             </p>
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
@@ -29,40 +37,37 @@ class BRequestIXServicePortIFDeleteMap:
         domain_name (Union[Unset, str]):
         id (Union[Unset, str]):
         key_names (Union[Unset, List[str]]):
-        unlock_z (Union[Unset, LockZ]): This class encapsulates the constants of the LockC class.
-            <p>
-             Copyright: Copyright (c) 2004
-             </p>
-             <p>
-             Organisation: ELO Digital Office GmbH
-             </p>
     """
 
+    unlock_z: Union[Unset, "LockZ"] = UNSET
     ci: Union[Unset, "ClientInfo"] = UNSET
     domain_name: Union[Unset, str] = UNSET
     id: Union[Unset, str] = UNSET
     key_names: Union[Unset, List[str]] = UNSET
-    unlock_z: Union[Unset, "LockZ"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        unlock_z: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.unlock_z, Unset):
+            unlock_z = self.unlock_z.to_dict()
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
         domain_name = self.domain_name
+
         id = self.id
+
         key_names: Union[Unset, List[str]] = UNSET
         if not isinstance(self.key_names, Unset):
             key_names = self.key_names
 
-        unlock_z: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.unlock_z, Unset):
-            unlock_z = self.unlock_z.to_dict()
-
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
+        if unlock_z is not UNSET:
+            field_dict["unlockZ"] = unlock_z
         if ci is not UNSET:
             field_dict["ci"] = ci
         if domain_name is not UNSET:
@@ -71,8 +76,6 @@ class BRequestIXServicePortIFDeleteMap:
             field_dict["id"] = id
         if key_names is not UNSET:
             field_dict["keyNames"] = key_names
-        if unlock_z is not UNSET:
-            field_dict["unlockZ"] = unlock_z
 
         return field_dict
 
@@ -82,6 +85,13 @@ class BRequestIXServicePortIFDeleteMap:
         from ..models.lock_z import LockZ
 
         d = src_dict.copy()
+        _unlock_z = d.pop("unlockZ", UNSET)
+        unlock_z: Union[Unset, LockZ]
+        if isinstance(_unlock_z, Unset):
+            unlock_z = UNSET
+        else:
+            unlock_z = LockZ.from_dict(_unlock_z)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
@@ -95,19 +105,12 @@ class BRequestIXServicePortIFDeleteMap:
 
         key_names = cast(List[str], d.pop("keyNames", UNSET))
 
-        _unlock_z = d.pop("unlockZ", UNSET)
-        unlock_z: Union[Unset, LockZ]
-        if isinstance(_unlock_z, Unset):
-            unlock_z = UNSET
-        else:
-            unlock_z = LockZ.from_dict(_unlock_z)
-
         b_request_ix_service_port_if_delete_map = cls(
+            unlock_z=unlock_z,
             ci=ci,
             domain_name=domain_name,
             id=id,
             key_names=key_names,
-            unlock_z=unlock_z,
         )
 
         b_request_ix_service_port_if_delete_map.additional_properties = d

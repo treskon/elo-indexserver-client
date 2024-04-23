@@ -31,7 +31,9 @@ class ProcessScript:
 
     def to_dict(self) -> Dict[str, Any]:
         name = self.name
+
         process_postfix = self.process_postfix
+
         tag = self.tag
 
         field_dict: Dict[str, Any] = {}

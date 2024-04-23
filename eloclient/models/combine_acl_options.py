@@ -13,38 +13,39 @@ class CombineAclOptions:
     """This class specifies additional options for compareAcl.
 
     Attributes:
-        lhs_acl_str (Union[Unset, str]): Left operand for ACL operation in String representation.
         rhs_acl_str (Union[Unset, str]): Right operand for ACL operation in String representation.
+        lhs_acl_str (Union[Unset, str]): Left operand for ACL operation in String representation.
     """
 
-    lhs_acl_str: Union[Unset, str] = UNSET
     rhs_acl_str: Union[Unset, str] = UNSET
+    lhs_acl_str: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        lhs_acl_str = self.lhs_acl_str
         rhs_acl_str = self.rhs_acl_str
+
+        lhs_acl_str = self.lhs_acl_str
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if lhs_acl_str is not UNSET:
-            field_dict["lhsAclStr"] = lhs_acl_str
         if rhs_acl_str is not UNSET:
             field_dict["rhsAclStr"] = rhs_acl_str
+        if lhs_acl_str is not UNSET:
+            field_dict["lhsAclStr"] = lhs_acl_str
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        lhs_acl_str = d.pop("lhsAclStr", UNSET)
-
         rhs_acl_str = d.pop("rhsAclStr", UNSET)
 
+        lhs_acl_str = d.pop("lhsAclStr", UNSET)
+
         combine_acl_options = cls(
-            lhs_acl_str=lhs_acl_str,
             rhs_acl_str=rhs_acl_str,
+            lhs_acl_str=lhs_acl_str,
         )
 
         combine_acl_options.additional_properties = d

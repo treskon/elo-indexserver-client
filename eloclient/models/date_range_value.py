@@ -23,9 +23,10 @@ class DateRangeValue:
      <ul>
      <li>If from contains a value for roundTo, it is always rounded down by roundTo.</li>
      <li>If to contains a value for roundTo, it is always rounded up by roundTo.</li>
-     <li>If one of from or to is of type DateNowValue and contains a value for relative, it is always ignored for range
-     queries.</li>
-     <li>To perform an open range query (e.g. from now to infinite), only submit either a value for from or to</li>
+     <li>If one of from or to is of type DateNowValue and contains a value for relative, it is always
+     ignored for range queries.</li>
+     <li>To perform an open range query (e.g. from now to infinite), only submit either a value for
+     from or to</li>
      </ul>
      </p>
 

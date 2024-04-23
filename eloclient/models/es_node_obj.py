@@ -14,33 +14,36 @@ class ESNodeObj:
     </i></b>
 
         Attributes:
-            ip (Union[Unset, str]):
-            port (Union[Unset, int]):
             status (Union[Unset, str]):
+            port (Union[Unset, int]):
+            ip (Union[Unset, str]):
             disc_space_usage (Union[Unset, str]):
     """
 
-    ip: Union[Unset, str] = UNSET
-    port: Union[Unset, int] = UNSET
     status: Union[Unset, str] = UNSET
+    port: Union[Unset, int] = UNSET
+    ip: Union[Unset, str] = UNSET
     disc_space_usage: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        ip = self.ip
-        port = self.port
         status = self.status
+
+        port = self.port
+
+        ip = self.ip
+
         disc_space_usage = self.disc_space_usage
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ip is not UNSET:
-            field_dict["ip"] = ip
-        if port is not UNSET:
-            field_dict["port"] = port
         if status is not UNSET:
             field_dict["Status"] = status
+        if port is not UNSET:
+            field_dict["port"] = port
+        if ip is not UNSET:
+            field_dict["ip"] = ip
         if disc_space_usage is not UNSET:
             field_dict["discSpaceUsage"] = disc_space_usage
 
@@ -49,18 +52,18 @@ class ESNodeObj:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        ip = d.pop("ip", UNSET)
+        status = d.pop("Status", UNSET)
 
         port = d.pop("port", UNSET)
 
-        status = d.pop("Status", UNSET)
+        ip = d.pop("ip", UNSET)
 
         disc_space_usage = d.pop("discSpaceUsage", UNSET)
 
         es_node_obj = cls(
-            ip=ip,
-            port=port,
             status=status,
+            port=port,
+            ip=ip,
             disc_space_usage=disc_space_usage,
         )
 

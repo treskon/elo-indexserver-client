@@ -26,45 +26,48 @@ class AclItem:
 
         Attributes:
             access (Union[Unset, int]): Access mode. Bitset of LUR_*.
-            id (Union[Unset, int]): ID of user, group, key.
             name (Union[Unset, str]): Name of user, group, key.
-            type (Union[Unset, int]): Item type: user, group, key, ...
             and_groups (Union[Unset, List['IdName']]):
+            id (Union[Unset, int]): ID of user, group, key.
+            type (Union[Unset, int]): Item type: user, group, key, ...
     """
 
     access: Union[Unset, int] = UNSET
-    id: Union[Unset, int] = UNSET
     name: Union[Unset, str] = UNSET
-    type: Union[Unset, int] = UNSET
     and_groups: Union[Unset, List["IdName"]] = UNSET
+    id: Union[Unset, int] = UNSET
+    type: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         access = self.access
-        id = self.id
+
         name = self.name
-        type = self.type
+
         and_groups: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.and_groups, Unset):
             and_groups = []
             for and_groups_item_data in self.and_groups:
                 and_groups_item = and_groups_item_data.to_dict()
-
                 and_groups.append(and_groups_item)
+
+        id = self.id
+
+        type = self.type
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if access is not UNSET:
             field_dict["access"] = access
-        if id is not UNSET:
-            field_dict["id"] = id
         if name is not UNSET:
             field_dict["name"] = name
-        if type is not UNSET:
-            field_dict["type"] = type
         if and_groups is not UNSET:
             field_dict["andGroups"] = and_groups
+        if id is not UNSET:
+            field_dict["id"] = id
+        if type is not UNSET:
+            field_dict["type"] = type
 
         return field_dict
 
@@ -75,11 +78,7 @@ class AclItem:
         d = src_dict.copy()
         access = d.pop("access", UNSET)
 
-        id = d.pop("id", UNSET)
-
         name = d.pop("name", UNSET)
-
-        type = d.pop("type", UNSET)
 
         and_groups = []
         _and_groups = d.pop("andGroups", UNSET)
@@ -88,12 +87,16 @@ class AclItem:
 
             and_groups.append(and_groups_item)
 
+        id = d.pop("id", UNSET)
+
+        type = d.pop("type", UNSET)
+
         acl_item = cls(
             access=access,
-            id=id,
             name=name,
-            type=type,
             and_groups=and_groups,
+            id=id,
+            type=type,
         )
 
         acl_item.additional_properties = d

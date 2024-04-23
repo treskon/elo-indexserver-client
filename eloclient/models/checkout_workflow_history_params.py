@@ -23,6 +23,7 @@ class CheckoutWorkflowHistoryParams:
 
     def to_dict(self) -> Dict[str, Any]:
         flow_id = self.flow_id
+
         node_id = self.node_id
 
         field_dict: Dict[str, Any] = {}

@@ -19,7 +19,8 @@ class IntRangeValue:
      </p>
 
      <p>
-     To perform an open range query (e.g. from now to infinite), only submit either a value for from or to
+     To perform an open range query (e.g. from now to infinite), only submit either a value for from
+     or to
      </p>
 
         Attributes:

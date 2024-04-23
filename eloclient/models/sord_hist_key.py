@@ -20,27 +20,32 @@ class SordHistKey:
 
         Attributes:
             hist_guid (Union[Unset, str]): GUID of the assigned SordHist object.
-            key_data (Union[Unset, str]): Value of dat of the attribute.
-            key_name (Union[Unset, str]): Name of the attribute.
             key_no (Union[Unset, int]): ID of the attribute.
+            key_data (Union[Unset, str]): Value of dat of the attribute.
             key_index (Union[Unset, int]): Index of the attribute within an array of attributes.
+            key_name (Union[Unset, str]): Name of the attribute.
             key_id (Union[Unset, int]): External ID of the attribute, serves as an identifier for keyNames.
     """
 
     hist_guid: Union[Unset, str] = UNSET
-    key_data: Union[Unset, str] = UNSET
-    key_name: Union[Unset, str] = UNSET
     key_no: Union[Unset, int] = UNSET
+    key_data: Union[Unset, str] = UNSET
     key_index: Union[Unset, int] = UNSET
+    key_name: Union[Unset, str] = UNSET
     key_id: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         hist_guid = self.hist_guid
-        key_data = self.key_data
-        key_name = self.key_name
+
         key_no = self.key_no
+
+        key_data = self.key_data
+
         key_index = self.key_index
+
+        key_name = self.key_name
+
         key_id = self.key_id
 
         field_dict: Dict[str, Any] = {}
@@ -48,14 +53,14 @@ class SordHistKey:
         field_dict.update({})
         if hist_guid is not UNSET:
             field_dict["histGuid"] = hist_guid
-        if key_data is not UNSET:
-            field_dict["keyData"] = key_data
-        if key_name is not UNSET:
-            field_dict["keyName"] = key_name
         if key_no is not UNSET:
             field_dict["keyNo"] = key_no
+        if key_data is not UNSET:
+            field_dict["keyData"] = key_data
         if key_index is not UNSET:
             field_dict["keyIndex"] = key_index
+        if key_name is not UNSET:
+            field_dict["keyName"] = key_name
         if key_id is not UNSET:
             field_dict["keyId"] = key_id
 
@@ -66,22 +71,22 @@ class SordHistKey:
         d = src_dict.copy()
         hist_guid = d.pop("histGuid", UNSET)
 
-        key_data = d.pop("keyData", UNSET)
-
-        key_name = d.pop("keyName", UNSET)
-
         key_no = d.pop("keyNo", UNSET)
 
+        key_data = d.pop("keyData", UNSET)
+
         key_index = d.pop("keyIndex", UNSET)
+
+        key_name = d.pop("keyName", UNSET)
 
         key_id = d.pop("keyId", UNSET)
 
         sord_hist_key = cls(
             hist_guid=hist_guid,
-            key_data=key_data,
-            key_name=key_name,
             key_no=key_no,
+            key_data=key_data,
             key_index=key_index,
+            key_name=key_name,
             key_id=key_id,
         )
 

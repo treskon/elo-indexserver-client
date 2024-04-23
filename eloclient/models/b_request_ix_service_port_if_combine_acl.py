@@ -19,8 +19,9 @@ class BRequestIXServicePortIFCombineAcl:
     """
     Attributes:
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
@@ -28,14 +29,14 @@ class BRequestIXServicePortIFCombineAcl:
              Organisation: ELO Digital Office GmbH
              </p>
         lhs (Union[Unset, List['AclItem']]):
-        rhs (Union[Unset, List['AclItem']]):
         options (Union[Unset, CombineAclOptions]): This class specifies additional options for compareAcl.
+        rhs (Union[Unset, List['AclItem']]):
     """
 
     ci: Union[Unset, "ClientInfo"] = UNSET
     lhs: Union[Unset, List["AclItem"]] = UNSET
-    rhs: Union[Unset, List["AclItem"]] = UNSET
     options: Union[Unset, "CombineAclOptions"] = UNSET
+    rhs: Union[Unset, List["AclItem"]] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -48,20 +49,18 @@ class BRequestIXServicePortIFCombineAcl:
             lhs = []
             for lhs_item_data in self.lhs:
                 lhs_item = lhs_item_data.to_dict()
-
                 lhs.append(lhs_item)
+
+        options: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.options, Unset):
+            options = self.options.to_dict()
 
         rhs: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.rhs, Unset):
             rhs = []
             for rhs_item_data in self.rhs:
                 rhs_item = rhs_item_data.to_dict()
-
                 rhs.append(rhs_item)
-
-        options: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.options, Unset):
-            options = self.options.to_dict()
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -70,10 +69,10 @@ class BRequestIXServicePortIFCombineAcl:
             field_dict["ci"] = ci
         if lhs is not UNSET:
             field_dict["lhs"] = lhs
-        if rhs is not UNSET:
-            field_dict["rhs"] = rhs
         if options is not UNSET:
             field_dict["options"] = options
+        if rhs is not UNSET:
+            field_dict["rhs"] = rhs
 
         return field_dict
 
@@ -98,13 +97,6 @@ class BRequestIXServicePortIFCombineAcl:
 
             lhs.append(lhs_item)
 
-        rhs = []
-        _rhs = d.pop("rhs", UNSET)
-        for rhs_item_data in _rhs or []:
-            rhs_item = AclItem.from_dict(rhs_item_data)
-
-            rhs.append(rhs_item)
-
         _options = d.pop("options", UNSET)
         options: Union[Unset, CombineAclOptions]
         if isinstance(_options, Unset):
@@ -112,11 +104,18 @@ class BRequestIXServicePortIFCombineAcl:
         else:
             options = CombineAclOptions.from_dict(_options)
 
+        rhs = []
+        _rhs = d.pop("rhs", UNSET)
+        for rhs_item_data in _rhs or []:
+            rhs_item = AclItem.from_dict(rhs_item_data)
+
+            rhs.append(rhs_item)
+
         b_request_ix_service_port_if_combine_acl = cls(
             ci=ci,
             lhs=lhs,
-            rhs=rhs,
             options=options,
+            rhs=rhs,
         )
 
         b_request_ix_service_port_if_combine_acl.additional_properties = d

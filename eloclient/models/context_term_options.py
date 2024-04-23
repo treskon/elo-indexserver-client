@@ -22,17 +22,16 @@ class ContextTermOptions:
      </p>
      <p>
      Submit a list of ContextTermQuerys to retrieve context terms for each of them.<br>
-     For every ContextTermQuerys, context terms are returned by adding all other ContextTermQuerys to the query but
-     itself.<br>
-     This means, if you want have various values for one index field, use one ContextTermQuery with a ValueList to
-    submit
-     the values instead of one ContextTermQuery for each value.<br>
-     If a QueryFilter.value == null, it is not used to restrict the query. Context terms for this ContextTermQuery are
-     returned.<br>
+     For every ContextTermQuerys, context terms are returned by adding all other ContextTermQuerys to
+     the query but itself.<br>
+     This means, if you want have various values for one index field, use one ContextTermQuery with a
+     ValueList to submit the values instead of one ContextTermQuery for each value.<br>
+     If a QueryFilter.value == null, it is not used to restrict the query. Context terms for this
+     ContextTermQuery are returned.<br>
      </p>
      <p>
-     The resulting list {@link ContextTermResults#contextTerms} is provided in the same order as the submitted list
-     contextTermQueries
+     The resulting list {@link ContextTermResults#contextTerms} is provided in the same order as the
+     submitted list contextTermQueries
      </p>
      </p>
 
@@ -51,7 +50,6 @@ class ContextTermOptions:
                 componentsschemas_list_of_context_term_query_item = (
                     componentsschemas_list_of_context_term_query_item_data.to_dict()
                 )
-
                 context_term_queries.append(componentsschemas_list_of_context_term_query_item)
 
         field_dict: Dict[str, Any] = {}

@@ -21,70 +21,75 @@ class UserName:
      </p>
 
         Attributes:
-            id (Union[Unset, int]): User ID
-            name (Union[Unset, str]): User name.
-            guid (Union[Unset, str]): User GUID.
-            type (Union[Unset, int]): User type.
-            flags (Union[Unset, int]): User rights. To detect a suspended user, test bit AccessC.FLAG_NOLOGIN.
             flags2 (Union[Unset, int]): User rights, second set. This member is a bit set of AccessC.FLAGS2_* constants.
+            name (Union[Unset, str]): User name.
+            flags (Union[Unset, int]): User rights. To detect a suspended user, test bit AccessC.FLAG_NOLOGIN.
+            guid (Union[Unset, str]): User GUID.
+            id (Union[Unset, int]): User ID
+            type (Union[Unset, int]): User type.
     """
 
-    id: Union[Unset, int] = UNSET
-    name: Union[Unset, str] = UNSET
-    guid: Union[Unset, str] = UNSET
-    type: Union[Unset, int] = UNSET
-    flags: Union[Unset, int] = UNSET
     flags2: Union[Unset, int] = UNSET
+    name: Union[Unset, str] = UNSET
+    flags: Union[Unset, int] = UNSET
+    guid: Union[Unset, str] = UNSET
+    id: Union[Unset, int] = UNSET
+    type: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        id = self.id
-        name = self.name
-        guid = self.guid
-        type = self.type
-        flags = self.flags
         flags2 = self.flags2
+
+        name = self.name
+
+        flags = self.flags
+
+        guid = self.guid
+
+        id = self.id
+
+        type = self.type
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if id is not UNSET:
-            field_dict["id"] = id
-        if name is not UNSET:
-            field_dict["name"] = name
-        if guid is not UNSET:
-            field_dict["guid"] = guid
-        if type is not UNSET:
-            field_dict["type"] = type
-        if flags is not UNSET:
-            field_dict["flags"] = flags
         if flags2 is not UNSET:
             field_dict["flags2"] = flags2
+        if name is not UNSET:
+            field_dict["name"] = name
+        if flags is not UNSET:
+            field_dict["flags"] = flags
+        if guid is not UNSET:
+            field_dict["guid"] = guid
+        if id is not UNSET:
+            field_dict["id"] = id
+        if type is not UNSET:
+            field_dict["type"] = type
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        id = d.pop("id", UNSET)
+        flags2 = d.pop("flags2", UNSET)
 
         name = d.pop("name", UNSET)
 
+        flags = d.pop("flags", UNSET)
+
         guid = d.pop("guid", UNSET)
+
+        id = d.pop("id", UNSET)
 
         type = d.pop("type", UNSET)
 
-        flags = d.pop("flags", UNSET)
-
-        flags2 = d.pop("flags2", UNSET)
-
         user_name = cls(
-            id=id,
-            name=name,
-            guid=guid,
-            type=type,
-            flags=flags,
             flags2=flags2,
+            name=name,
+            flags=flags,
+            guid=guid,
+            id=id,
+            type=type,
         )
 
         user_name.additional_properties = d

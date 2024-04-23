@@ -10,8 +10,8 @@ T = TypeVar("T", bound="FindByVersion")
 
 @_attrs_define
 class FindByVersion:
-    """This class holds additional information for FindInfo, in order to restrict a search using the document history
-    (version).
+    """This class holds additional information for FindInfo, in order to restrict a search using the
+    document history (version).
 
      <p>
      Copyright: Copyright (c) 2004
@@ -21,11 +21,13 @@ class FindByVersion:
      </p>
 
         Attributes:
-            version_comment (Union[Unset, str]): User defined version description. The wildcard * is allowed, it matches any
-                number of characters.
+            version_comment (Union[Unset, str]): User defined version description.
+                The wildcard * is allowed, it matches any number of
+                 characters.
             version_md5 (Union[Unset, str]): The md5 Hash value for the file.
-            version_number (Union[Unset, str]): User defined version number or version id. The wildcard * is allowed, it
-                matches any number of characters.
+            version_number (Union[Unset, str]): User defined version number or version id.
+                The wildcard * is allowed, it matches any number of
+                 characters.
             work_version_only (Union[Unset, bool]): Optional flag to restrict the search to active versions only.
     """
 
@@ -37,8 +39,11 @@ class FindByVersion:
 
     def to_dict(self) -> Dict[str, Any]:
         version_comment = self.version_comment
+
         version_md5 = self.version_md5
+
         version_number = self.version_number
+
         work_version_only = self.work_version_only
 
         field_dict: Dict[str, Any] = {}

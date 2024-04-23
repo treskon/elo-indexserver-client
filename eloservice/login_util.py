@@ -1,6 +1,7 @@
 import base64
 import logging
 
+import httpx
 from attrs import define as define
 
 from eloclient import Client
@@ -19,7 +20,7 @@ class EloConnection:
     password: str
 
 
-def _log_http_response(response):
+def _log_http_response(response: httpx.Response):
     request = response.request
     logging.debug(f"Response event hook: {request.method} {request.url} - Status {response.status_code}")
 

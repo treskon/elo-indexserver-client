@@ -22,6 +22,7 @@ class BStreamReference:
 
     def to_dict(self) -> Dict[str, Any]:
         stream_id = self.stream_id
+
         url = self.url
 
         field_dict: Dict[str, Any] = {}

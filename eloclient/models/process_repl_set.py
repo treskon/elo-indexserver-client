@@ -15,8 +15,8 @@ T = TypeVar("T", bound="ProcessReplSet")
 @_attrs_define
 class ProcessReplSet:
     """Replication sets to be added to/removed from an object.
-    The replication set parameter must refer to existing objects
-     that may contain empty lists. Null values are not allowed.
+    The replication set parameter must refer
+     to existing objects that may contain empty lists. Null values are not allowed.
 
      <p>
      Copyright: Copyright (c) 2004
@@ -27,14 +27,14 @@ class ProcessReplSet:
 
         Attributes:
             add_repl_sets (Union[Unset, List['IdName']]):
-            and_repl_sets (Union[Unset, List['IdName']]):
             set_repl_sets (Union[Unset, List['IdName']]):
+            and_repl_sets (Union[Unset, List['IdName']]):
             sub_repl_sets (Union[Unset, List['IdName']]):
     """
 
     add_repl_sets: Union[Unset, List["IdName"]] = UNSET
-    and_repl_sets: Union[Unset, List["IdName"]] = UNSET
     set_repl_sets: Union[Unset, List["IdName"]] = UNSET
+    and_repl_sets: Union[Unset, List["IdName"]] = UNSET
     sub_repl_sets: Union[Unset, List["IdName"]] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -44,31 +44,27 @@ class ProcessReplSet:
             add_repl_sets = []
             for add_repl_sets_item_data in self.add_repl_sets:
                 add_repl_sets_item = add_repl_sets_item_data.to_dict()
-
                 add_repl_sets.append(add_repl_sets_item)
-
-        and_repl_sets: Union[Unset, List[Dict[str, Any]]] = UNSET
-        if not isinstance(self.and_repl_sets, Unset):
-            and_repl_sets = []
-            for and_repl_sets_item_data in self.and_repl_sets:
-                and_repl_sets_item = and_repl_sets_item_data.to_dict()
-
-                and_repl_sets.append(and_repl_sets_item)
 
         set_repl_sets: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.set_repl_sets, Unset):
             set_repl_sets = []
             for set_repl_sets_item_data in self.set_repl_sets:
                 set_repl_sets_item = set_repl_sets_item_data.to_dict()
-
                 set_repl_sets.append(set_repl_sets_item)
+
+        and_repl_sets: Union[Unset, List[Dict[str, Any]]] = UNSET
+        if not isinstance(self.and_repl_sets, Unset):
+            and_repl_sets = []
+            for and_repl_sets_item_data in self.and_repl_sets:
+                and_repl_sets_item = and_repl_sets_item_data.to_dict()
+                and_repl_sets.append(and_repl_sets_item)
 
         sub_repl_sets: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.sub_repl_sets, Unset):
             sub_repl_sets = []
             for sub_repl_sets_item_data in self.sub_repl_sets:
                 sub_repl_sets_item = sub_repl_sets_item_data.to_dict()
-
                 sub_repl_sets.append(sub_repl_sets_item)
 
         field_dict: Dict[str, Any] = {}
@@ -76,10 +72,10 @@ class ProcessReplSet:
         field_dict.update({})
         if add_repl_sets is not UNSET:
             field_dict["addReplSets"] = add_repl_sets
-        if and_repl_sets is not UNSET:
-            field_dict["andReplSets"] = and_repl_sets
         if set_repl_sets is not UNSET:
             field_dict["setReplSets"] = set_repl_sets
+        if and_repl_sets is not UNSET:
+            field_dict["andReplSets"] = and_repl_sets
         if sub_repl_sets is not UNSET:
             field_dict["subReplSets"] = sub_repl_sets
 
@@ -97,19 +93,19 @@ class ProcessReplSet:
 
             add_repl_sets.append(add_repl_sets_item)
 
-        and_repl_sets = []
-        _and_repl_sets = d.pop("andReplSets", UNSET)
-        for and_repl_sets_item_data in _and_repl_sets or []:
-            and_repl_sets_item = IdName.from_dict(and_repl_sets_item_data)
-
-            and_repl_sets.append(and_repl_sets_item)
-
         set_repl_sets = []
         _set_repl_sets = d.pop("setReplSets", UNSET)
         for set_repl_sets_item_data in _set_repl_sets or []:
             set_repl_sets_item = IdName.from_dict(set_repl_sets_item_data)
 
             set_repl_sets.append(set_repl_sets_item)
+
+        and_repl_sets = []
+        _and_repl_sets = d.pop("andReplSets", UNSET)
+        for and_repl_sets_item_data in _and_repl_sets or []:
+            and_repl_sets_item = IdName.from_dict(and_repl_sets_item_data)
+
+            and_repl_sets.append(and_repl_sets_item)
 
         sub_repl_sets = []
         _sub_repl_sets = d.pop("subReplSets", UNSET)
@@ -120,8 +116,8 @@ class ProcessReplSet:
 
         process_repl_set = cls(
             add_repl_sets=add_repl_sets,
-            and_repl_sets=and_repl_sets,
             set_repl_sets=set_repl_sets,
+            and_repl_sets=and_repl_sets,
             sub_repl_sets=sub_repl_sets,
         )
 

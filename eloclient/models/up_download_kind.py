@@ -10,33 +10,35 @@ T = TypeVar("T", bound="UpDownloadKind")
 
 @_attrs_define
 class UpDownloadKind:
-    """This enum defines constants to distinguish between different kinds of file data assigned to a document.
+    """This enum defines constants to distinguish between different kinds of file data assigned to a
+    document.
 
-    Attributes:
-        version (Union[Unset, UpDownloadKind]): This enum defines constants to distinguish between different kinds of
-            file data assigned to a document.
-        attachment (Union[Unset, UpDownloadKind]): This enum defines constants to distinguish between different kinds of
-            file data assigned to a document.
-        fulltext (Union[Unset, UpDownloadKind]): This enum defines constants to distinguish between different kinds of
-            file data assigned to a document.
-        preview (Union[Unset, UpDownloadKind]): This enum defines constants to distinguish between different kinds of
-            file data assigned to a document.
-        signature (Union[Unset, UpDownloadKind]): This enum defines constants to distinguish between different kinds of
-            file data assigned to a document.
+        Attributes:
+            attachment (Union[Unset, UpDownloadKind]): This enum defines constants to distinguish between different kinds of
+                file data assigned to a
+                document.
+            fulltext (Union[Unset, UpDownloadKind]): This enum defines constants to distinguish between different kinds of
+                file data assigned to a
+                document.
+            version (Union[Unset, UpDownloadKind]): This enum defines constants to distinguish between different kinds of
+                file data assigned to a
+                document.
+            preview (Union[Unset, UpDownloadKind]): This enum defines constants to distinguish between different kinds of
+                file data assigned to a
+                document.
+            signature (Union[Unset, UpDownloadKind]): This enum defines constants to distinguish between different kinds of
+                file data assigned to a
+                document.
     """
 
-    version: Union[Unset, "UpDownloadKind"] = UNSET
     attachment: Union[Unset, "UpDownloadKind"] = UNSET
     fulltext: Union[Unset, "UpDownloadKind"] = UNSET
+    version: Union[Unset, "UpDownloadKind"] = UNSET
     preview: Union[Unset, "UpDownloadKind"] = UNSET
     signature: Union[Unset, "UpDownloadKind"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        version: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.version, Unset):
-            version = self.version.to_dict()
-
         attachment: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.attachment, Unset):
             attachment = self.attachment.to_dict()
@@ -44,6 +46,10 @@ class UpDownloadKind:
         fulltext: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.fulltext, Unset):
             fulltext = self.fulltext.to_dict()
+
+        version: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.version, Unset):
+            version = self.version.to_dict()
 
         preview: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.preview, Unset):
@@ -56,12 +62,12 @@ class UpDownloadKind:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if version is not UNSET:
-            field_dict["VERSION"] = version
         if attachment is not UNSET:
             field_dict["ATTACHMENT"] = attachment
         if fulltext is not UNSET:
             field_dict["FULLTEXT"] = fulltext
+        if version is not UNSET:
+            field_dict["VERSION"] = version
         if preview is not UNSET:
             field_dict["PREVIEW"] = preview
         if signature is not UNSET:
@@ -72,13 +78,6 @@ class UpDownloadKind:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        _version = d.pop("VERSION", UNSET)
-        version: Union[Unset, UpDownloadKind]
-        if isinstance(_version, Unset):
-            version = UNSET
-        else:
-            version = UpDownloadKind.from_dict(_version)
-
         _attachment = d.pop("ATTACHMENT", UNSET)
         attachment: Union[Unset, UpDownloadKind]
         if isinstance(_attachment, Unset):
@@ -92,6 +91,13 @@ class UpDownloadKind:
             fulltext = UNSET
         else:
             fulltext = UpDownloadKind.from_dict(_fulltext)
+
+        _version = d.pop("VERSION", UNSET)
+        version: Union[Unset, UpDownloadKind]
+        if isinstance(_version, Unset):
+            version = UNSET
+        else:
+            version = UpDownloadKind.from_dict(_version)
 
         _preview = d.pop("PREVIEW", UNSET)
         preview: Union[Unset, UpDownloadKind]
@@ -108,9 +114,9 @@ class UpDownloadKind:
             signature = UpDownloadKind.from_dict(_signature)
 
         up_download_kind = cls(
-            version=version,
             attachment=attachment,
             fulltext=fulltext,
+            version=version,
             preview=preview,
             signature=signature,
         )

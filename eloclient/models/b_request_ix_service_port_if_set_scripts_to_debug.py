@@ -16,36 +16,37 @@ T = TypeVar("T", bound="BRequestIXServicePortIFSetScriptsToDebug")
 class BRequestIXServicePortIFSetScriptsToDebug:
     """
     Attributes:
+        scripts_to_debug (Union[Unset, str]):
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        scripts_to_debug (Union[Unset, str]):
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
     scripts_to_debug: Union[Unset, str] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        scripts_to_debug = self.scripts_to_debug
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        scripts_to_debug = self.scripts_to_debug
-
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
         if scripts_to_debug is not UNSET:
             field_dict["scriptsToDebug"] = scripts_to_debug
+        if ci is not UNSET:
+            field_dict["ci"] = ci
 
         return field_dict
 
@@ -54,6 +55,8 @@ class BRequestIXServicePortIFSetScriptsToDebug:
         from ..models.client_info import ClientInfo
 
         d = src_dict.copy()
+        scripts_to_debug = d.pop("scriptsToDebug", UNSET)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
@@ -61,11 +64,9 @@ class BRequestIXServicePortIFSetScriptsToDebug:
         else:
             ci = ClientInfo.from_dict(_ci)
 
-        scripts_to_debug = d.pop("scriptsToDebug", UNSET)
-
         b_request_ix_service_port_if_set_scripts_to_debug = cls(
-            ci=ci,
             scripts_to_debug=scripts_to_debug,
+            ci=ci,
         )
 
         b_request_ix_service_port_if_set_scripts_to_debug.additional_properties = d

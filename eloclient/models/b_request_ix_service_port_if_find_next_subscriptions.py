@@ -17,36 +17,40 @@ T = TypeVar("T", bound="BRequestIXServicePortIFFindNextSubscriptions")
 class BRequestIXServicePortIFFindNextSubscriptions:
     """
     Attributes:
+        search_id (Union[Unset, str]):
+        max_ (Union[Unset, int]):
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        search_id (Union[Unset, str]):
         idx (Union[Unset, int]):
-        max_ (Union[Unset, int]):
         subs_z (Union[Unset, SubscriptionZ]):
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
     search_id: Union[Unset, str] = UNSET
-    idx: Union[Unset, int] = UNSET
     max_: Union[Unset, int] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
+    idx: Union[Unset, int] = UNSET
     subs_z: Union[Unset, "SubscriptionZ"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        search_id = self.search_id
+
+        max_ = self.max_
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        search_id = self.search_id
         idx = self.idx
-        max_ = self.max_
+
         subs_z: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.subs_z, Unset):
             subs_z = self.subs_z.to_dict()
@@ -54,14 +58,14 @@ class BRequestIXServicePortIFFindNextSubscriptions:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
         if search_id is not UNSET:
             field_dict["searchId"] = search_id
-        if idx is not UNSET:
-            field_dict["idx"] = idx
         if max_ is not UNSET:
             field_dict["max"] = max_
+        if ci is not UNSET:
+            field_dict["ci"] = ci
+        if idx is not UNSET:
+            field_dict["idx"] = idx
         if subs_z is not UNSET:
             field_dict["subsZ"] = subs_z
 
@@ -73,6 +77,10 @@ class BRequestIXServicePortIFFindNextSubscriptions:
         from ..models.subscription_z import SubscriptionZ
 
         d = src_dict.copy()
+        search_id = d.pop("searchId", UNSET)
+
+        max_ = d.pop("max", UNSET)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
@@ -80,11 +88,7 @@ class BRequestIXServicePortIFFindNextSubscriptions:
         else:
             ci = ClientInfo.from_dict(_ci)
 
-        search_id = d.pop("searchId", UNSET)
-
         idx = d.pop("idx", UNSET)
-
-        max_ = d.pop("max", UNSET)
 
         _subs_z = d.pop("subsZ", UNSET)
         subs_z: Union[Unset, SubscriptionZ]
@@ -94,10 +98,10 @@ class BRequestIXServicePortIFFindNextSubscriptions:
             subs_z = SubscriptionZ.from_dict(_subs_z)
 
         b_request_ix_service_port_if_find_next_subscriptions = cls(
-            ci=ci,
             search_id=search_id,
-            idx=idx,
             max_=max_,
+            ci=ci,
+            idx=idx,
             subs_z=subs_z,
         )
 

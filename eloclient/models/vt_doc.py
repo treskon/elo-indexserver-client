@@ -13,46 +13,48 @@ class VtDoc:
     """Internal class.
 
     Attributes:
-        obj_id (Union[Unset, int]): DB column: objid
-        doc_id (Union[Unset, int]): DB column: objdoc
         code (Union[Unset, int]): DB column: vtcode
+        doc_id (Union[Unset, int]): DB column: objdoc
+        obj_id (Union[Unset, int]): DB column: objid
     """
 
-    obj_id: Union[Unset, int] = UNSET
-    doc_id: Union[Unset, int] = UNSET
     code: Union[Unset, int] = UNSET
+    doc_id: Union[Unset, int] = UNSET
+    obj_id: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        obj_id = self.obj_id
-        doc_id = self.doc_id
         code = self.code
+
+        doc_id = self.doc_id
+
+        obj_id = self.obj_id
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if obj_id is not UNSET:
-            field_dict["objId"] = obj_id
-        if doc_id is not UNSET:
-            field_dict["docId"] = doc_id
         if code is not UNSET:
             field_dict["code"] = code
+        if doc_id is not UNSET:
+            field_dict["docId"] = doc_id
+        if obj_id is not UNSET:
+            field_dict["objId"] = obj_id
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        obj_id = d.pop("objId", UNSET)
+        code = d.pop("code", UNSET)
 
         doc_id = d.pop("docId", UNSET)
 
-        code = d.pop("code", UNSET)
+        obj_id = d.pop("objId", UNSET)
 
         vt_doc = cls(
-            obj_id=obj_id,
-            doc_id=doc_id,
             code=code,
+            doc_id=doc_id,
+            obj_id=obj_id,
         )
 
         vt_doc.additional_properties = d

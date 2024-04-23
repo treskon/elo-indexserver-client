@@ -17,17 +17,17 @@ T = TypeVar("T", bound="BRequestIXServicePortIFCheckoutCounters")
 class BRequestIXServicePortIFCheckoutCounters:
     """
     Attributes:
+        increment_counters (Union[Unset, bool]):
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        counter_names (Union[Unset, List[str]]):
-        increment_counters (Union[Unset, bool]):
         lock_z (Union[Unset, LockZ]): This class encapsulates the constants of the LockC class.
             <p>
              Copyright: Copyright (c) 2004
@@ -35,39 +35,41 @@ class BRequestIXServicePortIFCheckoutCounters:
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
+        counter_names (Union[Unset, List[str]]):
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
-    counter_names: Union[Unset, List[str]] = UNSET
     increment_counters: Union[Unset, bool] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
     lock_z: Union[Unset, "LockZ"] = UNSET
+    counter_names: Union[Unset, List[str]] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        increment_counters = self.increment_counters
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
+
+        lock_z: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.lock_z, Unset):
+            lock_z = self.lock_z.to_dict()
 
         counter_names: Union[Unset, List[str]] = UNSET
         if not isinstance(self.counter_names, Unset):
             counter_names = self.counter_names
 
-        increment_counters = self.increment_counters
-        lock_z: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.lock_z, Unset):
-            lock_z = self.lock_z.to_dict()
-
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
-        if counter_names is not UNSET:
-            field_dict["counterNames"] = counter_names
         if increment_counters is not UNSET:
             field_dict["incrementCounters"] = increment_counters
+        if ci is not UNSET:
+            field_dict["ci"] = ci
         if lock_z is not UNSET:
             field_dict["lockZ"] = lock_z
+        if counter_names is not UNSET:
+            field_dict["counterNames"] = counter_names
 
         return field_dict
 
@@ -77,16 +79,14 @@ class BRequestIXServicePortIFCheckoutCounters:
         from ..models.lock_z import LockZ
 
         d = src_dict.copy()
+        increment_counters = d.pop("incrementCounters", UNSET)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
             ci = UNSET
         else:
             ci = ClientInfo.from_dict(_ci)
-
-        counter_names = cast(List[str], d.pop("counterNames", UNSET))
-
-        increment_counters = d.pop("incrementCounters", UNSET)
 
         _lock_z = d.pop("lockZ", UNSET)
         lock_z: Union[Unset, LockZ]
@@ -95,11 +95,13 @@ class BRequestIXServicePortIFCheckoutCounters:
         else:
             lock_z = LockZ.from_dict(_lock_z)
 
+        counter_names = cast(List[str], d.pop("counterNames", UNSET))
+
         b_request_ix_service_port_if_checkout_counters = cls(
-            ci=ci,
-            counter_names=counter_names,
             increment_counters=increment_counters,
+            ci=ci,
             lock_z=lock_z,
+            counter_names=counter_names,
         )
 
         b_request_ix_service_port_if_checkout_counters.additional_properties = d

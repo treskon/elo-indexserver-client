@@ -17,21 +17,22 @@ class BRequestIXServicePortIFCreateActivity:
     """
     Attributes:
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        project_name (Union[Unset, str]):
         obj_id (Union[Unset, str]):
+        project_name (Union[Unset, str]):
     """
 
     ci: Union[Unset, "ClientInfo"] = UNSET
-    project_name: Union[Unset, str] = UNSET
     obj_id: Union[Unset, str] = UNSET
+    project_name: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -39,18 +40,19 @@ class BRequestIXServicePortIFCreateActivity:
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        project_name = self.project_name
         obj_id = self.obj_id
+
+        project_name = self.project_name
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if ci is not UNSET:
             field_dict["ci"] = ci
-        if project_name is not UNSET:
-            field_dict["projectName"] = project_name
         if obj_id is not UNSET:
             field_dict["objId"] = obj_id
+        if project_name is not UNSET:
+            field_dict["projectName"] = project_name
 
         return field_dict
 
@@ -66,14 +68,14 @@ class BRequestIXServicePortIFCreateActivity:
         else:
             ci = ClientInfo.from_dict(_ci)
 
-        project_name = d.pop("projectName", UNSET)
-
         obj_id = d.pop("objId", UNSET)
+
+        project_name = d.pop("projectName", UNSET)
 
         b_request_ix_service_port_if_create_activity = cls(
             ci=ci,
-            project_name=project_name,
             obj_id=obj_id,
+            project_name=project_name,
         )
 
         b_request_ix_service_port_if_create_activity.additional_properties = d

@@ -39,6 +39,7 @@ class CreateSuperiorSubstitutionInfo:
 
     def to_dict(self) -> Dict[str, Any]:
         user_to_substitute_id = self.user_to_substitute_id
+
         user_to_substitute_name = self.user_to_substitute_name
 
         field_dict: Dict[str, Any] = {}

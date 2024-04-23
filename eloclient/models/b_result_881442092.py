@@ -32,7 +32,6 @@ class BResult881442092:
                 componentsschemas_list_of_public_download_item = (
                     componentsschemas_list_of_public_download_item_data.to_dict()
                 )
-
                 result.append(componentsschemas_list_of_public_download_item)
 
         exception = self.exception

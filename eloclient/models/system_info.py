@@ -19,44 +19,48 @@ class SystemInfo:
      {@link SystemInformation#userReport(de.elo.ix.client.ClientInfo, SystemInfo)}.
 
         Attributes:
-            store_path_id (Union[Unset, int]): ID of the {@link StoreInfo} where the documents should be counted.
-            start_date (Union[Unset, str]): Select documents created on or after this date. This is an ISODate in UTC.
             end_date (Union[Unset, str]): Select documents created before or on this date. This is an ISODate in UTC.
             user_report_mode (Union[Unset, str]):
+            store_path_id (Union[Unset, int]): ID of the {@link StoreInfo} where the documents should be counted.
             report_mode (Union[Unset, UserReportZ]): <p>
                 This class encapsulates the constants of <code>UserReportC</code>
                  </p>
+            start_date (Union[Unset, str]): Select documents created on or after this date. This is an ISODate in UTC.
     """
 
-    store_path_id: Union[Unset, int] = UNSET
-    start_date: Union[Unset, str] = UNSET
     end_date: Union[Unset, str] = UNSET
     user_report_mode: Union[Unset, str] = UNSET
+    store_path_id: Union[Unset, int] = UNSET
     report_mode: Union[Unset, "UserReportZ"] = UNSET
+    start_date: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        store_path_id = self.store_path_id
-        start_date = self.start_date
         end_date = self.end_date
+
         user_report_mode = self.user_report_mode
+
+        store_path_id = self.store_path_id
+
         report_mode: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.report_mode, Unset):
             report_mode = self.report_mode.to_dict()
 
+        start_date = self.start_date
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if store_path_id is not UNSET:
-            field_dict["storePathID"] = store_path_id
-        if start_date is not UNSET:
-            field_dict["startDate"] = start_date
         if end_date is not UNSET:
             field_dict["endDate"] = end_date
         if user_report_mode is not UNSET:
             field_dict["userReportMode"] = user_report_mode
+        if store_path_id is not UNSET:
+            field_dict["storePathID"] = store_path_id
         if report_mode is not UNSET:
             field_dict["reportMode"] = report_mode
+        if start_date is not UNSET:
+            field_dict["startDate"] = start_date
 
         return field_dict
 
@@ -65,13 +69,11 @@ class SystemInfo:
         from ..models.user_report_z import UserReportZ
 
         d = src_dict.copy()
-        store_path_id = d.pop("storePathID", UNSET)
-
-        start_date = d.pop("startDate", UNSET)
-
         end_date = d.pop("endDate", UNSET)
 
         user_report_mode = d.pop("userReportMode", UNSET)
+
+        store_path_id = d.pop("storePathID", UNSET)
 
         _report_mode = d.pop("reportMode", UNSET)
         report_mode: Union[Unset, UserReportZ]
@@ -80,12 +82,14 @@ class SystemInfo:
         else:
             report_mode = UserReportZ.from_dict(_report_mode)
 
+        start_date = d.pop("startDate", UNSET)
+
         system_info = cls(
-            store_path_id=store_path_id,
-            start_date=start_date,
             end_date=end_date,
             user_report_mode=user_report_mode,
+            store_path_id=store_path_id,
             report_mode=report_mode,
+            start_date=start_date,
         )
 
         system_info.additional_properties = d

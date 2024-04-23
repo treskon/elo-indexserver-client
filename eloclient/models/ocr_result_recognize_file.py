@@ -17,6 +17,8 @@ class OcrResultRecognizeFile:
     """This class contains the result of an OCR analysis.
 
     Attributes:
+        skew_angle (Union[Unset, float]): Skew angle. Only valid if a single page was analyzed, see {@link
+            OcrInfoRecognizeFile#pageNo}.
         text_data (Union[Unset, FileData]): Class for the data contained in a file.
             <p>
              Copyright: Copyright (c) 2004
@@ -24,44 +26,46 @@ class OcrResultRecognizeFile:
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        text (Union[Unset, str]): Recognized text. This member is set, if {@link OcrInfoRecognizeFile#outputFormat} was
-            set to {@link OcrInfoC#TEXT}.
-        skew_angle (Union[Unset, float]): Skew angle. Only valid if a single page was analyzed, see {@link
-            OcrInfoRecognizeFile#pageNo}.
         width (Union[Unset, int]): Page width. Only valid if a single page was analyzed, see {@link
             OcrInfoRecognizeFile#pageNo}.
+        text (Union[Unset, str]): Recognized text.
+            This member is set, if {@link OcrInfoRecognizeFile#outputFormat} was set to
+             {@link OcrInfoC#TEXT}.
         height (Union[Unset, int]): Page height. Only valid if a single page was analyzed, see {@link
             OcrInfoRecognizeFile#pageNo}.
     """
 
-    text_data: Union[Unset, "FileData"] = UNSET
-    text: Union[Unset, str] = UNSET
     skew_angle: Union[Unset, float] = UNSET
+    text_data: Union[Unset, "FileData"] = UNSET
     width: Union[Unset, int] = UNSET
+    text: Union[Unset, str] = UNSET
     height: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        skew_angle = self.skew_angle
+
         text_data: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.text_data, Unset):
             text_data = self.text_data.to_dict()
 
-        text = self.text
-        skew_angle = self.skew_angle
         width = self.width
+
+        text = self.text
+
         height = self.height
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if text_data is not UNSET:
-            field_dict["textData"] = text_data
-        if text is not UNSET:
-            field_dict["text"] = text
         if skew_angle is not UNSET:
             field_dict["skewAngle"] = skew_angle
+        if text_data is not UNSET:
+            field_dict["textData"] = text_data
         if width is not UNSET:
             field_dict["width"] = width
+        if text is not UNSET:
+            field_dict["text"] = text
         if height is not UNSET:
             field_dict["height"] = height
 
@@ -72,6 +76,8 @@ class OcrResultRecognizeFile:
         from ..models.file_data import FileData
 
         d = src_dict.copy()
+        skew_angle = d.pop("skewAngle", UNSET)
+
         _text_data = d.pop("textData", UNSET)
         text_data: Union[Unset, FileData]
         if isinstance(_text_data, Unset):
@@ -79,19 +85,17 @@ class OcrResultRecognizeFile:
         else:
             text_data = FileData.from_dict(_text_data)
 
-        text = d.pop("text", UNSET)
-
-        skew_angle = d.pop("skewAngle", UNSET)
-
         width = d.pop("width", UNSET)
+
+        text = d.pop("text", UNSET)
 
         height = d.pop("height", UNSET)
 
         ocr_result_recognize_file = cls(
-            text_data=text_data,
-            text=text,
             skew_angle=skew_angle,
+            text_data=text_data,
             width=width,
+            text=text,
             height=height,
         )
 

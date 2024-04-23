@@ -18,12 +18,11 @@ class BResult323351719:
     Attributes:
         result (Union[Unset, Subscription]): This class describes a subscription. A user can subscribe for changes to an
             object.
-            Currently, the only supported
-             object type is a document feed. If the feed receives new comments, notification information is inserted into
-            the
-             database for the user. By calling FeedService.findFirstActions and setting
-            FindActionsInfo.findNotifications=true,
-             the user can search for her notifications.
+            Currently,
+             the only supported object type is a document feed. If the feed receives new comments,
+             notification information is inserted into the database for the user. By calling
+             FeedService.findFirstActions and setting FindActionsInfo.findNotifications=true, the user can
+             search for her notifications.
         exception (Union[Unset, str]): Error message
     """
 

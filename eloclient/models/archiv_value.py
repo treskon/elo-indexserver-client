@@ -22,6 +22,7 @@ class ArchivValue:
 
     def to_dict(self) -> Dict[str, Any]:
         year = self.year
+
         count = self.count
 
         field_dict: Dict[str, Any] = {}

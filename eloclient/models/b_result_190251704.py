@@ -17,8 +17,8 @@ class BResult190251704:
     """
     Attributes:
         result (Union[Unset, ContentStream]): This class contains information about a document related stream.
-            Such a stream might be a document version,
-             attachment, preview content, fulltext content or signature.
+            Such a stream might be a
+             document version, attachment, preview content, fulltext content or signature.
         exception (Union[Unset, str]): Error message
     """
 

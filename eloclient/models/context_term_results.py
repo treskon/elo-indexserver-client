@@ -28,7 +28,6 @@ class ContextTermResults:
             context_terms = []
             for componentsschemas_list_of_context_term_item_data in self.context_terms:
                 componentsschemas_list_of_context_term_item = componentsschemas_list_of_context_term_item_data.to_dict()
-
                 context_terms.append(componentsschemas_list_of_context_term_item)
 
         field_dict: Dict[str, Any] = {}

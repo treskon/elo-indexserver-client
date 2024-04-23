@@ -15,8 +15,10 @@ T = TypeVar("T", bound="OrOperator")
 @_attrs_define
 class OrOperator:
     """This operator contains a list of QueryObjects and concatenates them with an "OR" operation.
-    This means, a document is
-     returned if at least one of the QueryObjects is present in the document.
+    This
+     means, a document is returned if at least one of the QueryObjects is present in the document. For
+     REST calls, use class QueryOperator and set the operator type in
+     {@link QueryOperator#operatorType}.
 
         Attributes:
             query_object_list (Union[Unset, List['QueryObject']]):
@@ -31,7 +33,6 @@ class OrOperator:
             query_object_list = []
             for componentsschemas_list_of_query_object_item_data in self.query_object_list:
                 componentsschemas_list_of_query_object_item = componentsschemas_list_of_query_object_item_data.to_dict()
-
                 query_object_list.append(componentsschemas_list_of_query_object_item)
 
         field_dict: Dict[str, Any] = {}

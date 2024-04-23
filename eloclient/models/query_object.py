@@ -12,9 +12,8 @@ class QueryObject:
     A QueryObject is used to build a search query.
      </p>
      <p>
-     It can either be a QueryOperator, which is a either a list of concatenated QueryObjects or a negated QueryObject,
-    or
-     a QueryFilter which describes an actual value of a document.
+     It can either be a QueryOperator, which is a either a list of concatenated QueryObjects or a
+     negated QueryObject, or a QueryFilter which describes an actual value of a document.
      </p>
 
     """
@@ -24,7 +23,6 @@ class QueryObject:
     def to_dict(self) -> Dict[str, Any]:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update({})
 
         return field_dict
 

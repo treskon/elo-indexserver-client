@@ -17,27 +17,24 @@ T = TypeVar("T", bound="BRequestHealthCheckServiceUpdateAll")
 class BRequestHealthCheckServiceUpdateAll:
     """
     Attributes:
+        hcis (Union[Unset, List['HealthCheckInfo']]):
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        hcis (Union[Unset, List['HealthCheckInfo']]):
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
     hcis: Union[Unset, List["HealthCheckInfo"]] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        ci: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.ci, Unset):
-            ci = self.ci.to_dict()
-
         hcis: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.hcis, Unset):
             hcis = []
@@ -45,16 +42,19 @@ class BRequestHealthCheckServiceUpdateAll:
                 componentsschemas_list_of_health_check_info_item = (
                     componentsschemas_list_of_health_check_info_item_data.to_dict()
                 )
-
                 hcis.append(componentsschemas_list_of_health_check_info_item)
+
+        ci: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.ci, Unset):
+            ci = self.ci.to_dict()
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
         if hcis is not UNSET:
             field_dict["hcis"] = hcis
+        if ci is not UNSET:
+            field_dict["ci"] = ci
 
         return field_dict
 
@@ -64,13 +64,6 @@ class BRequestHealthCheckServiceUpdateAll:
         from ..models.health_check_info import HealthCheckInfo
 
         d = src_dict.copy()
-        _ci = d.pop("ci", UNSET)
-        ci: Union[Unset, ClientInfo]
-        if isinstance(_ci, Unset):
-            ci = UNSET
-        else:
-            ci = ClientInfo.from_dict(_ci)
-
         hcis = []
         _hcis = d.pop("hcis", UNSET)
         for componentsschemas_list_of_health_check_info_item_data in _hcis or []:
@@ -80,9 +73,16 @@ class BRequestHealthCheckServiceUpdateAll:
 
             hcis.append(componentsschemas_list_of_health_check_info_item)
 
+        _ci = d.pop("ci", UNSET)
+        ci: Union[Unset, ClientInfo]
+        if isinstance(_ci, Unset):
+            ci = UNSET
+        else:
+            ci = ClientInfo.from_dict(_ci)
+
         b_request_health_check_service_update_all = cls(
-            ci=ci,
             hcis=hcis,
+            ci=ci,
         )
 
         b_request_health_check_service_update_all.additional_properties = d

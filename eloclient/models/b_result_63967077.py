@@ -17,7 +17,8 @@ class BResult63967077:
     """
     Attributes:
         result (Union[Unset, ExecuteScriptResult]): The function executeScript returns an object of this class to
-            provide returned information or error information.
+            provide returned information or
+            error information.
         exception (Union[Unset, str]): Error message
     """
 

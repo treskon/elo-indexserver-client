@@ -17,23 +17,24 @@ class BRequestIXServicePortIFStartWorkFlow:
     """
     Attributes:
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
+        obj_id (Union[Unset, str]):
         templ_flow_id (Union[Unset, str]):
         flow_name (Union[Unset, str]):
-        obj_id (Union[Unset, str]):
     """
 
     ci: Union[Unset, "ClientInfo"] = UNSET
+    obj_id: Union[Unset, str] = UNSET
     templ_flow_id: Union[Unset, str] = UNSET
     flow_name: Union[Unset, str] = UNSET
-    obj_id: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -41,21 +42,23 @@ class BRequestIXServicePortIFStartWorkFlow:
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        templ_flow_id = self.templ_flow_id
-        flow_name = self.flow_name
         obj_id = self.obj_id
+
+        templ_flow_id = self.templ_flow_id
+
+        flow_name = self.flow_name
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if ci is not UNSET:
             field_dict["ci"] = ci
+        if obj_id is not UNSET:
+            field_dict["objId"] = obj_id
         if templ_flow_id is not UNSET:
             field_dict["templFlowId"] = templ_flow_id
         if flow_name is not UNSET:
             field_dict["flowName"] = flow_name
-        if obj_id is not UNSET:
-            field_dict["objId"] = obj_id
 
         return field_dict
 
@@ -71,17 +74,17 @@ class BRequestIXServicePortIFStartWorkFlow:
         else:
             ci = ClientInfo.from_dict(_ci)
 
+        obj_id = d.pop("objId", UNSET)
+
         templ_flow_id = d.pop("templFlowId", UNSET)
 
         flow_name = d.pop("flowName", UNSET)
 
-        obj_id = d.pop("objId", UNSET)
-
         b_request_ix_service_port_if_start_work_flow = cls(
             ci=ci,
+            obj_id=obj_id,
             templ_flow_id=templ_flow_id,
             flow_name=flow_name,
-            obj_id=obj_id,
         )
 
         b_request_ix_service_port_if_start_work_flow.additional_properties = d

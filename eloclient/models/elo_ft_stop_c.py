@@ -10,57 +10,53 @@ T = TypeVar("T", bound="EloFtStopC")
 
 @_attrs_define
 class EloFtStopC:
-    """<p>
-    Bit constants for members of EloFtStop
-     </p>
-     <p>
-     Copyright: Copyright (c) 2003
-     </p>
-     <p>
-     Organisation: ELO Digital Office GmbH
-     </p>
+    """<p>Bit constants for members of EloFtStop</p>
+    <p>Copyright: Copyright (c) 2003</p>
+     <p>Organisation: ELO Digital Office GmbH</p>
 
         Attributes:
+            mb_all_members (Union[Unset, str]): All valid member bits.
             mb_stopword (Union[Unset, str]): DB column: stopword
             ln_stopword (Union[Unset, int]): DB column: stopword
-            mb_all_members (Union[Unset, str]): All valid member bits.
     """
 
+    mb_all_members: Union[Unset, str] = UNSET
     mb_stopword: Union[Unset, str] = UNSET
     ln_stopword: Union[Unset, int] = UNSET
-    mb_all_members: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        mb_stopword = self.mb_stopword
-        ln_stopword = self.ln_stopword
         mb_all_members = self.mb_all_members
+
+        mb_stopword = self.mb_stopword
+
+        ln_stopword = self.ln_stopword
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
+        if mb_all_members is not UNSET:
+            field_dict["mbAllMembers"] = mb_all_members
         if mb_stopword is not UNSET:
             field_dict["mbStopword"] = mb_stopword
         if ln_stopword is not UNSET:
             field_dict["lnStopword"] = ln_stopword
-        if mb_all_members is not UNSET:
-            field_dict["mbAllMembers"] = mb_all_members
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
+        mb_all_members = d.pop("mbAllMembers", UNSET)
+
         mb_stopword = d.pop("mbStopword", UNSET)
 
         ln_stopword = d.pop("lnStopword", UNSET)
 
-        mb_all_members = d.pop("mbAllMembers", UNSET)
-
         elo_ft_stop_c = cls(
+            mb_all_members=mb_all_members,
             mb_stopword=mb_stopword,
             ln_stopword=ln_stopword,
-            mb_all_members=mb_all_members,
         )
 
         elo_ft_stop_c.additional_properties = d

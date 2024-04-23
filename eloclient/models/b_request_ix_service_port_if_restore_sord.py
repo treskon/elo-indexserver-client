@@ -18,8 +18,9 @@ class BRequestIXServicePortIFRestoreSord:
     """
     Attributes:
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
@@ -49,6 +50,7 @@ class BRequestIXServicePortIFRestoreSord:
             ci = self.ci.to_dict()
 
         obj_id = self.obj_id
+
         restore_options: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.restore_options, Unset):
             restore_options = self.restore_options.to_dict()

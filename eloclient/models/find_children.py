@@ -19,50 +19,52 @@ class FindChildren:
      </p>
 
         Attributes:
-            main_parent (Union[Unset, bool]): Include only main parent relations.
             parent_id (Union[Unset, str]): Search child objects of the parent entry with this object ID or GUID.
             end_level (Union[Unset, int]): Search child objects up to this level below parentId.
-                A value of 0 or 1 means, that only the sub entries directly
-                 under the parent are included. Set this value to -1, to search over all levels. In this case the level is
-                 internally constrained to 32 to avoid an endless loop, if the tree under the parent contains recursive
-                references.
+                A value of 0 or 1 means, that only the
+                 sub entries directly under the parent are included. Set this value to -1, to search over all
+                 levels. In this case the level is internally constrained to 32 to avoid an endless loop, if the
+                 tree under the parent contains recursive references.
+            main_parent (Union[Unset, bool]): Include only main parent relations.
     """
 
-    main_parent: Union[Unset, bool] = UNSET
     parent_id: Union[Unset, str] = UNSET
     end_level: Union[Unset, int] = UNSET
+    main_parent: Union[Unset, bool] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        main_parent = self.main_parent
         parent_id = self.parent_id
+
         end_level = self.end_level
+
+        main_parent = self.main_parent
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if main_parent is not UNSET:
-            field_dict["mainParent"] = main_parent
         if parent_id is not UNSET:
             field_dict["parentId"] = parent_id
         if end_level is not UNSET:
             field_dict["endLevel"] = end_level
+        if main_parent is not UNSET:
+            field_dict["mainParent"] = main_parent
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        main_parent = d.pop("mainParent", UNSET)
-
         parent_id = d.pop("parentId", UNSET)
 
         end_level = d.pop("endLevel", UNSET)
 
+        main_parent = d.pop("mainParent", UNSET)
+
         find_children = cls(
-            main_parent=main_parent,
             parent_id=parent_id,
             end_level=end_level,
+            main_parent=main_parent,
         )
 
         find_children.additional_properties = d

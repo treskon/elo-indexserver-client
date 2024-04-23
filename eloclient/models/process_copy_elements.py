@@ -24,6 +24,10 @@ class ProcessCopyElements:
      </p>
 
         Attributes:
+            create_mapping (Union[Unset, bool]): If createMapping is true, at the copyResult, the maps source-id to copy-id
+                will be filled.
+                Defaults to false.
+            copy_result (Union[Unset, CopyResult]): Results of a {@link ProcessCopyElements}-Operation.
             copy_options (Union[Unset, CopyOptions]): Structure for the options for the copy-process.
                 <p>
                  Copyright: Copyright (c) 2009
@@ -31,35 +35,33 @@ class ProcessCopyElements:
                  <p>
                  Organisation: ELO Digital Office GmbH
                  </p>
-            create_mapping (Union[Unset, bool]): If createMapping is true, at the copyResult, the maps source-id to copy-id
-                will be filled. Defaults to false.
-            copy_result (Union[Unset, CopyResult]): Results of a {@link ProcessCopyElements}-Operation.
     """
 
-    copy_options: Union[Unset, "CopyOptions"] = UNSET
     create_mapping: Union[Unset, bool] = UNSET
     copy_result: Union[Unset, "CopyResult"] = UNSET
+    copy_options: Union[Unset, "CopyOptions"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        copy_options: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.copy_options, Unset):
-            copy_options = self.copy_options.to_dict()
-
         create_mapping = self.create_mapping
+
         copy_result: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.copy_result, Unset):
             copy_result = self.copy_result.to_dict()
 
+        copy_options: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.copy_options, Unset):
+            copy_options = self.copy_options.to_dict()
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if copy_options is not UNSET:
-            field_dict["copyOptions"] = copy_options
         if create_mapping is not UNSET:
             field_dict["createMapping"] = create_mapping
         if copy_result is not UNSET:
             field_dict["copyResult"] = copy_result
+        if copy_options is not UNSET:
+            field_dict["copyOptions"] = copy_options
 
         return field_dict
 
@@ -69,13 +71,6 @@ class ProcessCopyElements:
         from ..models.copy_result import CopyResult
 
         d = src_dict.copy()
-        _copy_options = d.pop("copyOptions", UNSET)
-        copy_options: Union[Unset, CopyOptions]
-        if isinstance(_copy_options, Unset):
-            copy_options = UNSET
-        else:
-            copy_options = CopyOptions.from_dict(_copy_options)
-
         create_mapping = d.pop("createMapping", UNSET)
 
         _copy_result = d.pop("copyResult", UNSET)
@@ -85,10 +80,17 @@ class ProcessCopyElements:
         else:
             copy_result = CopyResult.from_dict(_copy_result)
 
+        _copy_options = d.pop("copyOptions", UNSET)
+        copy_options: Union[Unset, CopyOptions]
+        if isinstance(_copy_options, Unset):
+            copy_options = UNSET
+        else:
+            copy_options = CopyOptions.from_dict(_copy_options)
+
         process_copy_elements = cls(
-            copy_options=copy_options,
             create_mapping=create_mapping,
             copy_result=copy_result,
+            copy_options=copy_options,
         )
 
         process_copy_elements.additional_properties = d

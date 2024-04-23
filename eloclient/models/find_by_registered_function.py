@@ -16,29 +16,30 @@ T = TypeVar("T", bound="FindByRegisteredFunction")
 class FindByRegisteredFunction:
     """
     Attributes:
-        function_name (Union[Unset, str]):
         args (Union[Unset, Any]): This class is a container for one value of a serializable type.
+        function_name (Union[Unset, str]):
     """
 
-    function_name: Union[Unset, str] = UNSET
     args: Union[Unset, "Any"] = UNSET
+    function_name: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         from ..models.any_ import Any
 
-        function_name = self.function_name
         args: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.args, Unset):
             args = self.args.to_dict()
 
+        function_name = self.function_name
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if function_name is not UNSET:
-            field_dict["functionName"] = function_name
         if args is not UNSET:
             field_dict["args"] = args
+        if function_name is not UNSET:
+            field_dict["functionName"] = function_name
 
         return field_dict
 
@@ -47,8 +48,6 @@ class FindByRegisteredFunction:
         from ..models.any_ import Any
 
         d = src_dict.copy()
-        function_name = d.pop("functionName", UNSET)
-
         _args = d.pop("args", UNSET)
         args: Union[Unset, Any]
         if isinstance(_args, Unset):
@@ -56,9 +55,11 @@ class FindByRegisteredFunction:
         else:
             args = Any.from_dict(_args)
 
+        function_name = d.pop("functionName", UNSET)
+
         find_by_registered_function = cls(
-            function_name=function_name,
             args=args,
+            function_name=function_name,
         )
 
         find_by_registered_function.additional_properties = d

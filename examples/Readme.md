@@ -43,3 +43,19 @@ Build and run:
 docker-compose up --build dataimport
 ```
 
+
+## Common issues
+
+### 500 error without any message
+
+This could be due to the wrong URL. Make sure to use the URL for the rest API not the generic URL which is used in the 
+elo client.
+
+wrong: `http://localhost:8080/ix-Archive/ix`
+correct: `http://localhost:8080/ix-Archive/rest`
+
+This would result in the following error message on the server:
+```log
+http-nio-9090-exec-1 http-7298485 (IXServlet.java:611)       - Exception 
+java.io.IOException: org.json.JSONException: JSONObject["clazz"] not found.
+```

@@ -17,8 +17,8 @@ class BResult202623104:
     """
     Attributes:
         result (Union[Unset, ESStatusObj]): Calling checkoutEsStatus returns this object to inform about the current
-            status of connection to Elasticsearch and
-            running processes.
+            status of connection to
+            Elasticsearch and running processes.
         exception (Union[Unset, str]): Error message
     """
 

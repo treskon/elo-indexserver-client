@@ -10,7 +10,8 @@ T = TypeVar("T", bound="LicenseResult")
 class LicenseResult:
     """Result of license check.
     An object of this class is returned by
-     {@link IXServicePortIF#checkLicense(ClientInfo, LicenseInfo)} if the given license information is valid.
+     {@link IXServicePortIF#checkLicense(ClientInfo, LicenseInfo)} if the given license information is
+     valid.
 
     """
 
@@ -19,7 +20,6 @@ class LicenseResult:
     def to_dict(self) -> Dict[str, Any]:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update({})
 
         return field_dict
 

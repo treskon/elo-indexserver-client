@@ -23,6 +23,7 @@ class PluginHistory:
 
     def to_dict(self) -> Dict[str, Any]:
         plain_text = self.plain_text
+
         json_text = self.json_text
 
         field_dict: Dict[str, Any] = {}

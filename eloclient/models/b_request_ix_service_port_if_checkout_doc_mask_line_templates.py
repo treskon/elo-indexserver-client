@@ -19,8 +19,9 @@ class BRequestIXServicePortIFCheckoutDocMaskLineTemplates:
     """
     Attributes:
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
@@ -28,8 +29,6 @@ class BRequestIXServicePortIFCheckoutDocMaskLineTemplates:
              Organisation: ELO Digital Office GmbH
              </p>
         groups (Union[Unset, List[str]]):
-        dmlt_z (Union[Unset, DocMaskLineTemplateZ]): This class encapsulates the constants of the DocMaskLineTemplateC
-            class.
         lock_z (Union[Unset, LockZ]): This class encapsulates the constants of the LockC class.
             <p>
              Copyright: Copyright (c) 2004
@@ -37,12 +36,14 @@ class BRequestIXServicePortIFCheckoutDocMaskLineTemplates:
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
+        dmlt_z (Union[Unset, DocMaskLineTemplateZ]): This class encapsulates the constants of the DocMaskLineTemplateC
+            class.
     """
 
     ci: Union[Unset, "ClientInfo"] = UNSET
     groups: Union[Unset, List[str]] = UNSET
-    dmlt_z: Union[Unset, "DocMaskLineTemplateZ"] = UNSET
     lock_z: Union[Unset, "LockZ"] = UNSET
+    dmlt_z: Union[Unset, "DocMaskLineTemplateZ"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -54,13 +55,13 @@ class BRequestIXServicePortIFCheckoutDocMaskLineTemplates:
         if not isinstance(self.groups, Unset):
             groups = self.groups
 
-        dmlt_z: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.dmlt_z, Unset):
-            dmlt_z = self.dmlt_z.to_dict()
-
         lock_z: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.lock_z, Unset):
             lock_z = self.lock_z.to_dict()
+
+        dmlt_z: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.dmlt_z, Unset):
+            dmlt_z = self.dmlt_z.to_dict()
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -69,10 +70,10 @@ class BRequestIXServicePortIFCheckoutDocMaskLineTemplates:
             field_dict["ci"] = ci
         if groups is not UNSET:
             field_dict["groups"] = groups
-        if dmlt_z is not UNSET:
-            field_dict["dmltZ"] = dmlt_z
         if lock_z is not UNSET:
             field_dict["lockZ"] = lock_z
+        if dmlt_z is not UNSET:
+            field_dict["dmltZ"] = dmlt_z
 
         return field_dict
 
@@ -92,13 +93,6 @@ class BRequestIXServicePortIFCheckoutDocMaskLineTemplates:
 
         groups = cast(List[str], d.pop("groups", UNSET))
 
-        _dmlt_z = d.pop("dmltZ", UNSET)
-        dmlt_z: Union[Unset, DocMaskLineTemplateZ]
-        if isinstance(_dmlt_z, Unset):
-            dmlt_z = UNSET
-        else:
-            dmlt_z = DocMaskLineTemplateZ.from_dict(_dmlt_z)
-
         _lock_z = d.pop("lockZ", UNSET)
         lock_z: Union[Unset, LockZ]
         if isinstance(_lock_z, Unset):
@@ -106,11 +100,18 @@ class BRequestIXServicePortIFCheckoutDocMaskLineTemplates:
         else:
             lock_z = LockZ.from_dict(_lock_z)
 
+        _dmlt_z = d.pop("dmltZ", UNSET)
+        dmlt_z: Union[Unset, DocMaskLineTemplateZ]
+        if isinstance(_dmlt_z, Unset):
+            dmlt_z = UNSET
+        else:
+            dmlt_z = DocMaskLineTemplateZ.from_dict(_dmlt_z)
+
         b_request_ix_service_port_if_checkout_doc_mask_line_templates = cls(
             ci=ci,
             groups=groups,
-            dmlt_z=dmlt_z,
             lock_z=lock_z,
+            dmlt_z=dmlt_z,
         )
 
         b_request_ix_service_port_if_checkout_doc_mask_line_templates.additional_properties = d

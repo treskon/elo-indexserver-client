@@ -29,7 +29,6 @@ class EventListener:
             filters = []
             for filters_item_data in self.filters:
                 filters_item = filters_item_data.to_dict()
-
                 filters.append(filters_item)
 
         field_dict: Dict[str, Any] = {}

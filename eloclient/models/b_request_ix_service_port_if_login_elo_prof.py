@@ -16,46 +16,49 @@ T = TypeVar("T", bound="BRequestIXServicePortIFLoginEloProf")
 class BRequestIXServicePortIFLoginEloProf:
     """
     Attributes:
+        client_computer (Union[Unset, str]):
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        user_id (Union[Unset, int]):
         certificate (Union[Unset, str]):
-        client_computer (Union[Unset, str]):
+        user_id (Union[Unset, int]):
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
-    user_id: Union[Unset, int] = UNSET
-    certificate: Union[Unset, str] = UNSET
     client_computer: Union[Unset, str] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
+    certificate: Union[Unset, str] = UNSET
+    user_id: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        client_computer = self.client_computer
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        user_id = self.user_id
         certificate = self.certificate
-        client_computer = self.client_computer
+
+        user_id = self.user_id
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
-        if user_id is not UNSET:
-            field_dict["userId"] = user_id
-        if certificate is not UNSET:
-            field_dict["certificate"] = certificate
         if client_computer is not UNSET:
             field_dict["clientComputer"] = client_computer
+        if ci is not UNSET:
+            field_dict["ci"] = ci
+        if certificate is not UNSET:
+            field_dict["certificate"] = certificate
+        if user_id is not UNSET:
+            field_dict["userId"] = user_id
 
         return field_dict
 
@@ -64,6 +67,8 @@ class BRequestIXServicePortIFLoginEloProf:
         from ..models.client_info import ClientInfo
 
         d = src_dict.copy()
+        client_computer = d.pop("clientComputer", UNSET)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
@@ -71,17 +76,15 @@ class BRequestIXServicePortIFLoginEloProf:
         else:
             ci = ClientInfo.from_dict(_ci)
 
-        user_id = d.pop("userId", UNSET)
-
         certificate = d.pop("certificate", UNSET)
 
-        client_computer = d.pop("clientComputer", UNSET)
+        user_id = d.pop("userId", UNSET)
 
         b_request_ix_service_port_if_login_elo_prof = cls(
-            ci=ci,
-            user_id=user_id,
-            certificate=certificate,
             client_computer=client_computer,
+            ci=ci,
+            certificate=certificate,
+            user_id=user_id,
         )
 
         b_request_ix_service_port_if_login_elo_prof.additional_properties = d

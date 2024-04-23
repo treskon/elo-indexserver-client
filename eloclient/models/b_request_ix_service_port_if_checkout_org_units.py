@@ -18,15 +18,6 @@ T = TypeVar("T", bound="BRequestIXServicePortIFCheckoutOrgUnits")
 class BRequestIXServicePortIFCheckoutOrgUnits:
     """
     Attributes:
-        ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
-             <p>
-             Copyright: Copyright (c) 2004
-             </p>
-             <p>
-             Organisation: ELO Digital Office GmbH
-             </p>
         reserved (Union[Unset, CheckoutOrgUnitInfo]): Objects of this class specify the selection criteria for
             <code>checkoutOrgUnits</code>.
             </p>
@@ -34,6 +25,16 @@ class BRequestIXServicePortIFCheckoutOrgUnits:
 
              <p>
              Copyright: Copyright (c) 2013
+             </p>
+             <p>
+             Organisation: ELO Digital Office GmbH
+             </p>
+        ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
+             <p>
+             Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
@@ -47,19 +48,19 @@ class BRequestIXServicePortIFCheckoutOrgUnits:
              </p>
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
     reserved: Union[Unset, "CheckoutOrgUnitInfo"] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
     lock_z: Union[Unset, "LockZ"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        ci: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.ci, Unset):
-            ci = self.ci.to_dict()
-
         reserved: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.reserved, Unset):
             reserved = self.reserved.to_dict()
+
+        ci: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.ci, Unset):
+            ci = self.ci.to_dict()
 
         lock_z: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.lock_z, Unset):
@@ -68,10 +69,10 @@ class BRequestIXServicePortIFCheckoutOrgUnits:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
         if reserved is not UNSET:
             field_dict["reserved"] = reserved
+        if ci is not UNSET:
+            field_dict["ci"] = ci
         if lock_z is not UNSET:
             field_dict["lockZ"] = lock_z
 
@@ -84,19 +85,19 @@ class BRequestIXServicePortIFCheckoutOrgUnits:
         from ..models.lock_z import LockZ
 
         d = src_dict.copy()
-        _ci = d.pop("ci", UNSET)
-        ci: Union[Unset, ClientInfo]
-        if isinstance(_ci, Unset):
-            ci = UNSET
-        else:
-            ci = ClientInfo.from_dict(_ci)
-
         _reserved = d.pop("reserved", UNSET)
         reserved: Union[Unset, CheckoutOrgUnitInfo]
         if isinstance(_reserved, Unset):
             reserved = UNSET
         else:
             reserved = CheckoutOrgUnitInfo.from_dict(_reserved)
+
+        _ci = d.pop("ci", UNSET)
+        ci: Union[Unset, ClientInfo]
+        if isinstance(_ci, Unset):
+            ci = UNSET
+        else:
+            ci = ClientInfo.from_dict(_ci)
 
         _lock_z = d.pop("lockZ", UNSET)
         lock_z: Union[Unset, LockZ]
@@ -106,8 +107,8 @@ class BRequestIXServicePortIFCheckoutOrgUnits:
             lock_z = LockZ.from_dict(_lock_z)
 
         b_request_ix_service_port_if_checkout_org_units = cls(
-            ci=ci,
             reserved=reserved,
+            ci=ci,
             lock_z=lock_z,
         )
 

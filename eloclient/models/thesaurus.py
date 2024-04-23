@@ -13,62 +13,66 @@ class Thesaurus:
     """Internal class.
 
     Attributes:
+        list_id (Union[Unset, int]): DB column: listid
+        compare (Union[Unset, str]): DB column: compare
+        data (Union[Unset, str]): DB column: data
         group_id (Union[Unset, int]): DB column: groupid
         prio (Union[Unset, int]): DB column: prio
-        data (Union[Unset, str]): DB column: data
-        compare (Union[Unset, str]): DB column: compare
-        list_id (Union[Unset, int]): DB column: listid
     """
 
+    list_id: Union[Unset, int] = UNSET
+    compare: Union[Unset, str] = UNSET
+    data: Union[Unset, str] = UNSET
     group_id: Union[Unset, int] = UNSET
     prio: Union[Unset, int] = UNSET
-    data: Union[Unset, str] = UNSET
-    compare: Union[Unset, str] = UNSET
-    list_id: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        group_id = self.group_id
-        prio = self.prio
-        data = self.data
-        compare = self.compare
         list_id = self.list_id
+
+        compare = self.compare
+
+        data = self.data
+
+        group_id = self.group_id
+
+        prio = self.prio
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
+        if list_id is not UNSET:
+            field_dict["listId"] = list_id
+        if compare is not UNSET:
+            field_dict["compare"] = compare
+        if data is not UNSET:
+            field_dict["data"] = data
         if group_id is not UNSET:
             field_dict["groupId"] = group_id
         if prio is not UNSET:
             field_dict["prio"] = prio
-        if data is not UNSET:
-            field_dict["data"] = data
-        if compare is not UNSET:
-            field_dict["compare"] = compare
-        if list_id is not UNSET:
-            field_dict["listId"] = list_id
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
+        list_id = d.pop("listId", UNSET)
+
+        compare = d.pop("compare", UNSET)
+
+        data = d.pop("data", UNSET)
+
         group_id = d.pop("groupId", UNSET)
 
         prio = d.pop("prio", UNSET)
 
-        data = d.pop("data", UNSET)
-
-        compare = d.pop("compare", UNSET)
-
-        list_id = d.pop("listId", UNSET)
-
         thesaurus = cls(
+            list_id=list_id,
+            compare=compare,
+            data=data,
             group_id=group_id,
             prio=prio,
-            data=data,
-            compare=compare,
-            list_id=list_id,
         )
 
         thesaurus.additional_properties = d

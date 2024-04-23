@@ -19,18 +19,9 @@ class BRequestIXServicePortIFProcessTrees:
     """
     Attributes:
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
-             <p>
-             Copyright: Copyright (c) 2004
-             </p>
-             <p>
-             Organisation: ELO Digital Office GmbH
-             </p>
-        navigation_info (Union[Unset, NavigationInfo]): NavigationInfo is used as traversal information for structured
-            bulk operations restricting specific processsing, e.g.
-            pooled jobs, to scalable amounts. It provides parameters controlling the traversal.
-
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
@@ -39,10 +30,20 @@ class BRequestIXServicePortIFProcessTrees:
              </p>
         proc_info (Union[Unset, ProcessInfo]): Specific processing information for each node of processTrees(...) or
             processFindResults(...).
-            The operations will be
-             for existence (not null) in order of their appearance in ProcessInfo. Some of the underlying structures may
-            allow
-             toggling between prefix and postfix processing when used with processTrees.
+            The operations will be for existence (not null) in order of their appearance in ProcessInfo. Some
+             of the underlying structures may allow toggling between prefix and postfix processing when used
+             with processTrees.
+
+             <p>
+             Copyright: Copyright (c) 2004
+             </p>
+             <p>
+             Organisation: ELO Digital Office GmbH
+             </p>
+        navigation_info (Union[Unset, NavigationInfo]): NavigationInfo is used as traversal information for structured
+            bulk operations restricting
+            specific processsing, e.g. pooled jobs, to scalable amounts. It provides parameters controlling
+             the traversal.
 
              <p>
              Copyright: Copyright (c) 2004
@@ -53,8 +54,8 @@ class BRequestIXServicePortIFProcessTrees:
     """
 
     ci: Union[Unset, "ClientInfo"] = UNSET
-    navigation_info: Union[Unset, "NavigationInfo"] = UNSET
     proc_info: Union[Unset, "ProcessInfo"] = UNSET
+    navigation_info: Union[Unset, "NavigationInfo"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -62,23 +63,23 @@ class BRequestIXServicePortIFProcessTrees:
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        navigation_info: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.navigation_info, Unset):
-            navigation_info = self.navigation_info.to_dict()
-
         proc_info: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.proc_info, Unset):
             proc_info = self.proc_info.to_dict()
+
+        navigation_info: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.navigation_info, Unset):
+            navigation_info = self.navigation_info.to_dict()
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if ci is not UNSET:
             field_dict["ci"] = ci
-        if navigation_info is not UNSET:
-            field_dict["navigationInfo"] = navigation_info
         if proc_info is not UNSET:
             field_dict["procInfo"] = proc_info
+        if navigation_info is not UNSET:
+            field_dict["navigationInfo"] = navigation_info
 
         return field_dict
 
@@ -96,13 +97,6 @@ class BRequestIXServicePortIFProcessTrees:
         else:
             ci = ClientInfo.from_dict(_ci)
 
-        _navigation_info = d.pop("navigationInfo", UNSET)
-        navigation_info: Union[Unset, NavigationInfo]
-        if isinstance(_navigation_info, Unset):
-            navigation_info = UNSET
-        else:
-            navigation_info = NavigationInfo.from_dict(_navigation_info)
-
         _proc_info = d.pop("procInfo", UNSET)
         proc_info: Union[Unset, ProcessInfo]
         if isinstance(_proc_info, Unset):
@@ -110,10 +104,17 @@ class BRequestIXServicePortIFProcessTrees:
         else:
             proc_info = ProcessInfo.from_dict(_proc_info)
 
+        _navigation_info = d.pop("navigationInfo", UNSET)
+        navigation_info: Union[Unset, NavigationInfo]
+        if isinstance(_navigation_info, Unset):
+            navigation_info = UNSET
+        else:
+            navigation_info = NavigationInfo.from_dict(_navigation_info)
+
         b_request_ix_service_port_if_process_trees = cls(
             ci=ci,
-            navigation_info=navigation_info,
             proc_info=proc_info,
+            navigation_info=navigation_info,
         )
 
         b_request_ix_service_port_if_process_trees.additional_properties = d

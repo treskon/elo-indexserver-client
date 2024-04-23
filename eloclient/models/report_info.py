@@ -19,23 +19,24 @@ class ReportInfo:
      </p>
 
         Attributes:
-            act_time (Union[Unset, int]): Reserved - internal function.
-            action_no (Union[Unset, int]): Action number in numeric form.
-            extra1 (Union[Unset, int]): Reserved - internal, dependant on actionNo.
             extra2 (Union[Unset, int]): Reserved - internal, dependant on actionNo
-            id (Union[Unset, str]): Identifier
-            obj_id (Union[Unset, int]): Id of the object for which the action is entered in the protocoll.
+            act_time (Union[Unset, int]): Reserved - internal function.
+            extra3 (Union[Unset, str]): Reserved.
+            extra1 (Union[Unset, int]): Reserved - internal, dependant on actionNo.
+            user_name (Union[Unset, str]): Name of the user who carried out the action.
             session_no (Union[Unset, int]): Id of the session which carried out the action.
-            text (Union[Unset, str]): Reserved - internal, dependant on actionNo
             user_id (Union[Unset, int]): Id of the user who carried out the action.
-            act_time_iso (Union[Unset, str]): Time of the action in ISO format.
+            obj_id (Union[Unset, int]): Id of the object for which the action is entered in the protocoll.
             action (Union[Unset, str]): ActionNo as name.
             comment (Union[Unset, str]): Descriptive text or details.
-            user_name (Union[Unset, str]): Name of the user who carried out the action.
-            extra3 (Union[Unset, str]): Reserved.
+            id (Union[Unset, str]): Identifier
+            text (Union[Unset, str]): Reserved - internal, dependant on actionNo
+            act_time_iso (Union[Unset, str]): Time of the action in ISO format.
+            action_no (Union[Unset, int]): Action number in numeric form.
             extra_info (Union[Unset, str]): Extra information.
-                This member is always null for report entries written by Windows-Client or by ELOix versions
-                 older than 9.00.016. The type of data depends on {@link #actionNo} as shown in the following table:
+                This member is always null for report entries written by Windows-Client or
+                 by ELOix versions older than 9.00.016. The type of data depends on {@link #actionNo} as shown
+                 in the following table:
                  <table>
                  <tr>
                  <td>ReportInfoC.ACT_LOGIN_IX</td>
@@ -51,78 +52,91 @@ class ReportInfo:
                  </tr>
                  <tr>
                  <td>ReportInfoC.ACT_IX_CHECKIN_USER</td>
-                 <td>{@link ReportInfoUserModified} object, member newProps is set to the modified values. Member oldProps is
-                set to
-                 the values before modification.</td>
+                 <td>{@link ReportInfoUserModified} object, member newProps is set to the modified values.
+                 Member oldProps is set to the values before modification.</td>
                  </tr>
                  </table>
     """
 
-    act_time: Union[Unset, int] = UNSET
-    action_no: Union[Unset, int] = UNSET
-    extra1: Union[Unset, int] = UNSET
     extra2: Union[Unset, int] = UNSET
-    id: Union[Unset, str] = UNSET
-    obj_id: Union[Unset, int] = UNSET
+    act_time: Union[Unset, int] = UNSET
+    extra3: Union[Unset, str] = UNSET
+    extra1: Union[Unset, int] = UNSET
+    user_name: Union[Unset, str] = UNSET
     session_no: Union[Unset, int] = UNSET
-    text: Union[Unset, str] = UNSET
     user_id: Union[Unset, int] = UNSET
-    act_time_iso: Union[Unset, str] = UNSET
+    obj_id: Union[Unset, int] = UNSET
     action: Union[Unset, str] = UNSET
     comment: Union[Unset, str] = UNSET
-    user_name: Union[Unset, str] = UNSET
-    extra3: Union[Unset, str] = UNSET
+    id: Union[Unset, str] = UNSET
+    text: Union[Unset, str] = UNSET
+    act_time_iso: Union[Unset, str] = UNSET
+    action_no: Union[Unset, int] = UNSET
     extra_info: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        act_time = self.act_time
-        action_no = self.action_no
-        extra1 = self.extra1
         extra2 = self.extra2
-        id = self.id
-        obj_id = self.obj_id
-        session_no = self.session_no
-        text = self.text
-        user_id = self.user_id
-        act_time_iso = self.act_time_iso
-        action = self.action
-        comment = self.comment
-        user_name = self.user_name
+
+        act_time = self.act_time
+
         extra3 = self.extra3
+
+        extra1 = self.extra1
+
+        user_name = self.user_name
+
+        session_no = self.session_no
+
+        user_id = self.user_id
+
+        obj_id = self.obj_id
+
+        action = self.action
+
+        comment = self.comment
+
+        id = self.id
+
+        text = self.text
+
+        act_time_iso = self.act_time_iso
+
+        action_no = self.action_no
+
         extra_info = self.extra_info
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if act_time is not UNSET:
-            field_dict["actTime"] = act_time
-        if action_no is not UNSET:
-            field_dict["actionNo"] = action_no
-        if extra1 is not UNSET:
-            field_dict["extra1"] = extra1
         if extra2 is not UNSET:
             field_dict["extra2"] = extra2
-        if id is not UNSET:
-            field_dict["id"] = id
-        if obj_id is not UNSET:
-            field_dict["objId"] = obj_id
+        if act_time is not UNSET:
+            field_dict["actTime"] = act_time
+        if extra3 is not UNSET:
+            field_dict["extra3"] = extra3
+        if extra1 is not UNSET:
+            field_dict["extra1"] = extra1
+        if user_name is not UNSET:
+            field_dict["userName"] = user_name
         if session_no is not UNSET:
             field_dict["sessionNo"] = session_no
-        if text is not UNSET:
-            field_dict["text"] = text
         if user_id is not UNSET:
             field_dict["userId"] = user_id
-        if act_time_iso is not UNSET:
-            field_dict["actTimeISO"] = act_time_iso
+        if obj_id is not UNSET:
+            field_dict["objId"] = obj_id
         if action is not UNSET:
             field_dict["action"] = action
         if comment is not UNSET:
             field_dict["comment"] = comment
-        if user_name is not UNSET:
-            field_dict["userName"] = user_name
-        if extra3 is not UNSET:
-            field_dict["extra3"] = extra3
+        if id is not UNSET:
+            field_dict["id"] = id
+        if text is not UNSET:
+            field_dict["text"] = text
+        if act_time_iso is not UNSET:
+            field_dict["actTimeISO"] = act_time_iso
+        if action_no is not UNSET:
+            field_dict["actionNo"] = action_no
         if extra_info is not UNSET:
             field_dict["extraInfo"] = extra_info
 
@@ -131,51 +145,51 @@ class ReportInfo:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
+        extra2 = d.pop("extra2", UNSET)
+
         act_time = d.pop("actTime", UNSET)
 
-        action_no = d.pop("actionNo", UNSET)
+        extra3 = d.pop("extra3", UNSET)
 
         extra1 = d.pop("extra1", UNSET)
 
-        extra2 = d.pop("extra2", UNSET)
-
-        id = d.pop("id", UNSET)
-
-        obj_id = d.pop("objId", UNSET)
+        user_name = d.pop("userName", UNSET)
 
         session_no = d.pop("sessionNo", UNSET)
 
-        text = d.pop("text", UNSET)
-
         user_id = d.pop("userId", UNSET)
 
-        act_time_iso = d.pop("actTimeISO", UNSET)
+        obj_id = d.pop("objId", UNSET)
 
         action = d.pop("action", UNSET)
 
         comment = d.pop("comment", UNSET)
 
-        user_name = d.pop("userName", UNSET)
+        id = d.pop("id", UNSET)
 
-        extra3 = d.pop("extra3", UNSET)
+        text = d.pop("text", UNSET)
+
+        act_time_iso = d.pop("actTimeISO", UNSET)
+
+        action_no = d.pop("actionNo", UNSET)
 
         extra_info = d.pop("extraInfo", UNSET)
 
         report_info = cls(
-            act_time=act_time,
-            action_no=action_no,
-            extra1=extra1,
             extra2=extra2,
-            id=id,
-            obj_id=obj_id,
+            act_time=act_time,
+            extra3=extra3,
+            extra1=extra1,
+            user_name=user_name,
             session_no=session_no,
-            text=text,
             user_id=user_id,
-            act_time_iso=act_time_iso,
+            obj_id=obj_id,
             action=action,
             comment=comment,
-            user_name=user_name,
-            extra3=extra3,
+            id=id,
+            text=text,
+            act_time_iso=act_time_iso,
+            action_no=action_no,
             extra_info=extra_info,
         )
 

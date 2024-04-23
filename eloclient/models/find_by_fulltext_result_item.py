@@ -18,11 +18,9 @@ class FindByFulltextResultItem:
     """Additional information for an item found by fulltext search.
 
     Attributes:
-        relevance (Union[Unset, int]): Relevance in per mill.
-        summary_fulltext (Union[Unset, str]): Textpart from document.
-        summary_desc (Union[Unset, str]): Textpart from memo text.
-        field_names (Union[Unset, List[str]]):
         result_fields (Union[Unset, List['SearchFieldE']]):
+        field_names (Union[Unset, List[str]]):
+        summary_desc (Union[Unset, str]): Textpart from memo text.
         sord (Union[Unset, Sord]): <p>
             Indexing information of an archive entry.
              </p>
@@ -32,24 +30,19 @@ class FindByFulltextResultItem:
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
+        summary_fulltext (Union[Unset, str]): Textpart from document.
+        relevance (Union[Unset, int]): Relevance in per mill.
     """
 
-    relevance: Union[Unset, int] = UNSET
-    summary_fulltext: Union[Unset, str] = UNSET
-    summary_desc: Union[Unset, str] = UNSET
-    field_names: Union[Unset, List[str]] = UNSET
     result_fields: Union[Unset, List["SearchFieldE"]] = UNSET
+    field_names: Union[Unset, List[str]] = UNSET
+    summary_desc: Union[Unset, str] = UNSET
     sord: Union[Unset, "Sord"] = UNSET
+    summary_fulltext: Union[Unset, str] = UNSET
+    relevance: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        relevance = self.relevance
-        summary_fulltext = self.summary_fulltext
-        summary_desc = self.summary_desc
-        field_names: Union[Unset, List[str]] = UNSET
-        if not isinstance(self.field_names, Unset):
-            field_names = self.field_names
-
         result_fields: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.result_fields, Unset):
             result_fields = []
@@ -57,28 +50,37 @@ class FindByFulltextResultItem:
                 componentsschemas_array_list_of_search_field_e_item = (
                     componentsschemas_array_list_of_search_field_e_item_data.to_dict()
                 )
-
                 result_fields.append(componentsschemas_array_list_of_search_field_e_item)
+
+        field_names: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.field_names, Unset):
+            field_names = self.field_names
+
+        summary_desc = self.summary_desc
 
         sord: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.sord, Unset):
             sord = self.sord.to_dict()
 
+        summary_fulltext = self.summary_fulltext
+
+        relevance = self.relevance
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if relevance is not UNSET:
-            field_dict["relevance"] = relevance
-        if summary_fulltext is not UNSET:
-            field_dict["summaryFulltext"] = summary_fulltext
-        if summary_desc is not UNSET:
-            field_dict["summaryDesc"] = summary_desc
-        if field_names is not UNSET:
-            field_dict["fieldNames"] = field_names
         if result_fields is not UNSET:
             field_dict["resultFields"] = result_fields
+        if field_names is not UNSET:
+            field_dict["fieldNames"] = field_names
+        if summary_desc is not UNSET:
+            field_dict["summaryDesc"] = summary_desc
         if sord is not UNSET:
             field_dict["sord"] = sord
+        if summary_fulltext is not UNSET:
+            field_dict["summaryFulltext"] = summary_fulltext
+        if relevance is not UNSET:
+            field_dict["relevance"] = relevance
 
         return field_dict
 
@@ -88,14 +90,6 @@ class FindByFulltextResultItem:
         from ..models.sord import Sord
 
         d = src_dict.copy()
-        relevance = d.pop("relevance", UNSET)
-
-        summary_fulltext = d.pop("summaryFulltext", UNSET)
-
-        summary_desc = d.pop("summaryDesc", UNSET)
-
-        field_names = cast(List[str], d.pop("fieldNames", UNSET))
-
         result_fields = []
         _result_fields = d.pop("resultFields", UNSET)
         for componentsschemas_array_list_of_search_field_e_item_data in _result_fields or []:
@@ -105,6 +99,10 @@ class FindByFulltextResultItem:
 
             result_fields.append(componentsschemas_array_list_of_search_field_e_item)
 
+        field_names = cast(List[str], d.pop("fieldNames", UNSET))
+
+        summary_desc = d.pop("summaryDesc", UNSET)
+
         _sord = d.pop("sord", UNSET)
         sord: Union[Unset, Sord]
         if isinstance(_sord, Unset):
@@ -112,13 +110,17 @@ class FindByFulltextResultItem:
         else:
             sord = Sord.from_dict(_sord)
 
+        summary_fulltext = d.pop("summaryFulltext", UNSET)
+
+        relevance = d.pop("relevance", UNSET)
+
         find_by_fulltext_result_item = cls(
-            relevance=relevance,
-            summary_fulltext=summary_fulltext,
-            summary_desc=summary_desc,
-            field_names=field_names,
             result_fields=result_fields,
+            field_names=field_names,
+            summary_desc=summary_desc,
             sord=sord,
+            summary_fulltext=summary_fulltext,
+            relevance=relevance,
         )
 
         find_by_fulltext_result_item.additional_properties = d

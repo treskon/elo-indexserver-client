@@ -53,7 +53,9 @@ class ESearchParams:
 
     def to_dict(self) -> Dict[str, Any]:
         query = self.query
+
         search_in = self.search_in
+
         query_operator: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.query_operator, Unset):
             query_operator = self.query_operator.to_dict()

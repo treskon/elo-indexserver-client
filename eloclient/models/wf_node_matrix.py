@@ -18,7 +18,8 @@ class WFNodeMatrix:
     Stores the relationship between workflow nodes
      </p>
      <p>
-     Administers the bridges(connections) in a workflow diagram. These are objects of type WorkFlowNodeAssoc.
+     Administers the bridges(connections) in a workflow diagram. These are objects of type
+     WorkFlowNodeAssoc.
      </p>
      <p>
      Copyright: Copyright (c) 2004
@@ -40,7 +41,6 @@ class WFNodeMatrix:
             assocs = []
             for assocs_item_data in self.assocs:
                 assocs_item = assocs_item_data.to_dict()
-
                 assocs.append(assocs_item)
 
         field_dict: Dict[str, Any] = {}

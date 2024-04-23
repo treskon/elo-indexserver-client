@@ -18,8 +18,9 @@ class BRequestIXServicePortIFCheckoutMapHistory:
     """
     Attributes:
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
@@ -43,7 +44,9 @@ class BRequestIXServicePortIFCheckoutMapHistory:
             ci = self.ci.to_dict()
 
         domain_name = self.domain_name
+
         map_id = self.map_id
+
         members_z: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.members_z, Unset):
             members_z = self.members_z.to_dict()

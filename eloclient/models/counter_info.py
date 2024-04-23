@@ -29,6 +29,7 @@ class CounterInfo:
 
     def to_dict(self) -> Dict[str, Any]:
         name = self.name
+
         value = self.value
 
         field_dict: Dict[str, Any] = {}

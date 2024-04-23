@@ -19,33 +19,36 @@ class ReportErpCode:
      </p>
 
         Attributes:
-            id (Union[Unset, int]): ERP code
             limited (Union[Unset, bool]): This code is wirtten in limited report
             name (Union[Unset, str]): ERP name
+            id (Union[Unset, int]): ERP code
             verbose (Union[Unset, bool]): This code is written in verbose report
     """
 
-    id: Union[Unset, int] = UNSET
     limited: Union[Unset, bool] = UNSET
     name: Union[Unset, str] = UNSET
+    id: Union[Unset, int] = UNSET
     verbose: Union[Unset, bool] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        id = self.id
         limited = self.limited
+
         name = self.name
+
+        id = self.id
+
         verbose = self.verbose
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if id is not UNSET:
-            field_dict["id"] = id
         if limited is not UNSET:
             field_dict["limited"] = limited
         if name is not UNSET:
             field_dict["name"] = name
+        if id is not UNSET:
+            field_dict["id"] = id
         if verbose is not UNSET:
             field_dict["verbose"] = verbose
 
@@ -54,18 +57,18 @@ class ReportErpCode:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        id = d.pop("id", UNSET)
-
         limited = d.pop("limited", UNSET)
 
         name = d.pop("name", UNSET)
 
+        id = d.pop("id", UNSET)
+
         verbose = d.pop("verbose", UNSET)
 
         report_erp_code = cls(
-            id=id,
             limited=limited,
             name=name,
+            id=id,
             verbose=verbose,
         )
 

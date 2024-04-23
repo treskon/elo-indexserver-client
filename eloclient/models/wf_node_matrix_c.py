@@ -19,61 +19,63 @@ class WFNodeMatrixC:
      </p>
 
         Attributes:
-            always (Union[Unset, int]): Connection type for non-decision nodes. The connection will always be utilised to
-                reach the next node.
-                No
-                 conditions have to be fulfilled.
-            if_false (Union[Unset, int]): This connection is the FALSE connection following a decision node.
-                This connection will be utilised when the IF
-                 requirement is not fulfilled.
             if_true (Union[Unset, int]): This connection is the TRUE connection following a decision node.
-                This connection will be utilised when the IF
-                 requirement is fulfilled.
+                This connection will be
+                 utilised when the IF requirement is fulfilled.
             if_overtime (Union[Unset, int]): This connection is only for the case of overtime.
+            always (Union[Unset, int]): Connection type for non-decision nodes.
+                The connection will always be utilised to reach the
+                 next node. No conditions have to be fulfilled.
+            if_false (Union[Unset, int]): This connection is the FALSE connection following a decision node.
+                This connection will be
+                 utilised when the IF requirement is not fulfilled.
     """
 
-    always: Union[Unset, int] = UNSET
-    if_false: Union[Unset, int] = UNSET
     if_true: Union[Unset, int] = UNSET
     if_overtime: Union[Unset, int] = UNSET
+    always: Union[Unset, int] = UNSET
+    if_false: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        always = self.always
-        if_false = self.if_false
         if_true = self.if_true
+
         if_overtime = self.if_overtime
+
+        always = self.always
+
+        if_false = self.if_false
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if always is not UNSET:
-            field_dict["ALWAYS"] = always
-        if if_false is not UNSET:
-            field_dict["IF_FALSE"] = if_false
         if if_true is not UNSET:
             field_dict["IF_TRUE"] = if_true
         if if_overtime is not UNSET:
             field_dict["IF_OVERTIME"] = if_overtime
+        if always is not UNSET:
+            field_dict["ALWAYS"] = always
+        if if_false is not UNSET:
+            field_dict["IF_FALSE"] = if_false
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        always = d.pop("ALWAYS", UNSET)
-
-        if_false = d.pop("IF_FALSE", UNSET)
-
         if_true = d.pop("IF_TRUE", UNSET)
 
         if_overtime = d.pop("IF_OVERTIME", UNSET)
 
+        always = d.pop("ALWAYS", UNSET)
+
+        if_false = d.pop("IF_FALSE", UNSET)
+
         wf_node_matrix_c = cls(
-            always=always,
-            if_false=if_false,
             if_true=if_true,
             if_overtime=if_overtime,
+            always=always,
+            if_false=if_false,
         )
 
         wf_node_matrix_c.additional_properties = d

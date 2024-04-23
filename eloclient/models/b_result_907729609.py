@@ -32,7 +32,6 @@ class BResult907729609:
                 componentsschemas_list_of_resolve_rights_result_item = (
                     componentsschemas_list_of_resolve_rights_result_item_data.to_dict()
                 )
-
                 result.append(componentsschemas_list_of_resolve_rights_result_item)
 
         exception = self.exception

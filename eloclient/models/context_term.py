@@ -12,38 +12,39 @@ T = TypeVar("T", bound="ContextTerm")
 class ContextTerm:
     """
     Attributes:
-        term (Union[Unset, str]):
         doc_num (Union[Unset, int]):
+        term (Union[Unset, str]):
     """
 
-    term: Union[Unset, str] = UNSET
     doc_num: Union[Unset, int] = UNSET
+    term: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        term = self.term
         doc_num = self.doc_num
+
+        term = self.term
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if term is not UNSET:
-            field_dict["term"] = term
         if doc_num is not UNSET:
             field_dict["docNum"] = doc_num
+        if term is not UNSET:
+            field_dict["term"] = term
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        term = d.pop("term", UNSET)
-
         doc_num = d.pop("docNum", UNSET)
 
+        term = d.pop("term", UNSET)
+
         context_term = cls(
-            term=term,
             doc_num=doc_num,
+            term=term,
         )
 
         context_term.additional_properties = d

@@ -13,28 +13,30 @@ class ServerState:
     """Internal class.
 
     Attributes:
-        action_id (Union[Unset, int]): DB column: actionid
         sub_key (Union[Unset, int]): DB column: subkey
+        action_id (Union[Unset, int]): DB column: actionid
         action (Union[Unset, str]): DB column: action
     """
 
-    action_id: Union[Unset, int] = UNSET
     sub_key: Union[Unset, int] = UNSET
+    action_id: Union[Unset, int] = UNSET
     action: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        action_id = self.action_id
         sub_key = self.sub_key
+
+        action_id = self.action_id
+
         action = self.action
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if action_id is not UNSET:
-            field_dict["actionId"] = action_id
         if sub_key is not UNSET:
             field_dict["subKey"] = sub_key
+        if action_id is not UNSET:
+            field_dict["actionId"] = action_id
         if action is not UNSET:
             field_dict["action"] = action
 
@@ -43,15 +45,15 @@ class ServerState:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        action_id = d.pop("actionId", UNSET)
-
         sub_key = d.pop("subKey", UNSET)
+
+        action_id = d.pop("actionId", UNSET)
 
         action = d.pop("action", UNSET)
 
         server_state = cls(
-            action_id=action_id,
             sub_key=sub_key,
+            action_id=action_id,
             action=action,
         )
 

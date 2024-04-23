@@ -17,19 +17,19 @@ T = TypeVar("T", bound="BRequestIXServicePortIFTakeWorkFlowNode")
 class BRequestIXServicePortIFTakeWorkFlowNode:
     """
     Attributes:
+        n_flow_id (Union[Unset, int]):
+        s_user_id (Union[Unset, str]):
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        n_flow_id (Union[Unset, int]):
         n_node_id (Union[Unset, int]):
-        s_user_id (Union[Unset, str]):
-        n_flags (Union[Unset, int]):
         lock_z (Union[Unset, LockZ]): This class encapsulates the constants of the LockC class.
             <p>
              Copyright: Copyright (c) 2004
@@ -37,44 +37,49 @@ class BRequestIXServicePortIFTakeWorkFlowNode:
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
+        n_flags (Union[Unset, int]):
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
     n_flow_id: Union[Unset, int] = UNSET
-    n_node_id: Union[Unset, int] = UNSET
     s_user_id: Union[Unset, str] = UNSET
-    n_flags: Union[Unset, int] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
+    n_node_id: Union[Unset, int] = UNSET
     lock_z: Union[Unset, "LockZ"] = UNSET
+    n_flags: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        n_flow_id = self.n_flow_id
+
+        s_user_id = self.s_user_id
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        n_flow_id = self.n_flow_id
         n_node_id = self.n_node_id
-        s_user_id = self.s_user_id
-        n_flags = self.n_flags
+
         lock_z: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.lock_z, Unset):
             lock_z = self.lock_z.to_dict()
 
+        n_flags = self.n_flags
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
         if n_flow_id is not UNSET:
             field_dict["nFlowId"] = n_flow_id
-        if n_node_id is not UNSET:
-            field_dict["nNodeId"] = n_node_id
         if s_user_id is not UNSET:
             field_dict["sUserId"] = s_user_id
-        if n_flags is not UNSET:
-            field_dict["nFlags"] = n_flags
+        if ci is not UNSET:
+            field_dict["ci"] = ci
+        if n_node_id is not UNSET:
+            field_dict["nNodeId"] = n_node_id
         if lock_z is not UNSET:
             field_dict["lockZ"] = lock_z
+        if n_flags is not UNSET:
+            field_dict["nFlags"] = n_flags
 
         return field_dict
 
@@ -84,6 +89,10 @@ class BRequestIXServicePortIFTakeWorkFlowNode:
         from ..models.lock_z import LockZ
 
         d = src_dict.copy()
+        n_flow_id = d.pop("nFlowId", UNSET)
+
+        s_user_id = d.pop("sUserId", UNSET)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
@@ -91,13 +100,7 @@ class BRequestIXServicePortIFTakeWorkFlowNode:
         else:
             ci = ClientInfo.from_dict(_ci)
 
-        n_flow_id = d.pop("nFlowId", UNSET)
-
         n_node_id = d.pop("nNodeId", UNSET)
-
-        s_user_id = d.pop("sUserId", UNSET)
-
-        n_flags = d.pop("nFlags", UNSET)
 
         _lock_z = d.pop("lockZ", UNSET)
         lock_z: Union[Unset, LockZ]
@@ -106,13 +109,15 @@ class BRequestIXServicePortIFTakeWorkFlowNode:
         else:
             lock_z = LockZ.from_dict(_lock_z)
 
+        n_flags = d.pop("nFlags", UNSET)
+
         b_request_ix_service_port_if_take_work_flow_node = cls(
-            ci=ci,
             n_flow_id=n_flow_id,
-            n_node_id=n_node_id,
             s_user_id=s_user_id,
-            n_flags=n_flags,
+            ci=ci,
+            n_node_id=n_node_id,
             lock_z=lock_z,
+            n_flags=n_flags,
         )
 
         b_request_ix_service_port_if_take_work_flow_node.additional_properties = d

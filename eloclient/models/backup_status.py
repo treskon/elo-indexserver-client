@@ -13,35 +13,39 @@ class BackupStatus:
     """This class represents the status of the ELOdm backup task
 
     Attributes:
-        is_running (Union[Unset, bool]): if the ELOdm backup task is running (the purge task can only run in combination
-            with the backup task)
-        number_of_docs_copied (Union[Unset, int]): number of copied documents since start of the backup task
         seconds_until_next_check (Union[Unset, int]): waiting time in seconds until the next proccessing (when the
             backup profiles are traversed)
+        is_running (Union[Unset, bool]): if the ELOdm backup task is running (the purge task can only run in combination
+            with the backup
+            task)
+        number_of_docs_copied (Union[Unset, int]): number of copied documents since start of the backup task
         error_message (Union[Unset, str]): an error message, if an error occured, else an empty String
     """
 
+    seconds_until_next_check: Union[Unset, int] = UNSET
     is_running: Union[Unset, bool] = UNSET
     number_of_docs_copied: Union[Unset, int] = UNSET
-    seconds_until_next_check: Union[Unset, int] = UNSET
     error_message: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        is_running = self.is_running
-        number_of_docs_copied = self.number_of_docs_copied
         seconds_until_next_check = self.seconds_until_next_check
+
+        is_running = self.is_running
+
+        number_of_docs_copied = self.number_of_docs_copied
+
         error_message = self.error_message
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
+        if seconds_until_next_check is not UNSET:
+            field_dict["secondsUntilNextCheck"] = seconds_until_next_check
         if is_running is not UNSET:
             field_dict["isRunning"] = is_running
         if number_of_docs_copied is not UNSET:
             field_dict["numberOfDocsCopied"] = number_of_docs_copied
-        if seconds_until_next_check is not UNSET:
-            field_dict["secondsUntilNextCheck"] = seconds_until_next_check
         if error_message is not UNSET:
             field_dict["errorMessage"] = error_message
 
@@ -50,18 +54,18 @@ class BackupStatus:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
+        seconds_until_next_check = d.pop("secondsUntilNextCheck", UNSET)
+
         is_running = d.pop("isRunning", UNSET)
 
         number_of_docs_copied = d.pop("numberOfDocsCopied", UNSET)
 
-        seconds_until_next_check = d.pop("secondsUntilNextCheck", UNSET)
-
         error_message = d.pop("errorMessage", UNSET)
 
         backup_status = cls(
+            seconds_until_next_check=seconds_until_next_check,
             is_running=is_running,
             number_of_docs_copied=number_of_docs_copied,
-            seconds_until_next_check=seconds_until_next_check,
             error_message=error_message,
         )
 

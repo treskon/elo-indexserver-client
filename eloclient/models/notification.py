@@ -13,62 +13,66 @@ class Notification:
     """Objects of this class represent a change notification. This class is used internally.
 
     Attributes:
-        user_guid (Union[Unset, str]): GUID of user who should receive this notification.
-        watch_guid (Union[Unset, str]): GUID of changed Object.
-        create_date_iso (Union[Unset, str]): Create date of the notification.
-        prio (Union[Unset, int]): Indicates if the Notification is marked as important
         what (Union[Unset, int]): Indicates the type of the watched Element. 0 - Action. 1 - HashTag.
+        create_date_iso (Union[Unset, str]): Create date of the notification.
+        watch_guid (Union[Unset, str]): GUID of changed Object.
+        user_guid (Union[Unset, str]): GUID of user who should receive this notification.
+        prio (Union[Unset, int]): Indicates if the Notification is marked as important
     """
 
-    user_guid: Union[Unset, str] = UNSET
-    watch_guid: Union[Unset, str] = UNSET
-    create_date_iso: Union[Unset, str] = UNSET
-    prio: Union[Unset, int] = UNSET
     what: Union[Unset, int] = UNSET
+    create_date_iso: Union[Unset, str] = UNSET
+    watch_guid: Union[Unset, str] = UNSET
+    user_guid: Union[Unset, str] = UNSET
+    prio: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        user_guid = self.user_guid
-        watch_guid = self.watch_guid
-        create_date_iso = self.create_date_iso
-        prio = self.prio
         what = self.what
+
+        create_date_iso = self.create_date_iso
+
+        watch_guid = self.watch_guid
+
+        user_guid = self.user_guid
+
+        prio = self.prio
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if user_guid is not UNSET:
-            field_dict["userGuid"] = user_guid
-        if watch_guid is not UNSET:
-            field_dict["watchGuid"] = watch_guid
-        if create_date_iso is not UNSET:
-            field_dict["createDateIso"] = create_date_iso
-        if prio is not UNSET:
-            field_dict["prio"] = prio
         if what is not UNSET:
             field_dict["what"] = what
+        if create_date_iso is not UNSET:
+            field_dict["createDateIso"] = create_date_iso
+        if watch_guid is not UNSET:
+            field_dict["watchGuid"] = watch_guid
+        if user_guid is not UNSET:
+            field_dict["userGuid"] = user_guid
+        if prio is not UNSET:
+            field_dict["prio"] = prio
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        user_guid = d.pop("userGuid", UNSET)
-
-        watch_guid = d.pop("watchGuid", UNSET)
+        what = d.pop("what", UNSET)
 
         create_date_iso = d.pop("createDateIso", UNSET)
 
+        watch_guid = d.pop("watchGuid", UNSET)
+
+        user_guid = d.pop("userGuid", UNSET)
+
         prio = d.pop("prio", UNSET)
 
-        what = d.pop("what", UNSET)
-
         notification = cls(
-            user_guid=user_guid,
-            watch_guid=watch_guid,
-            create_date_iso=create_date_iso,
-            prio=prio,
             what=what,
+            create_date_iso=create_date_iso,
+            watch_guid=watch_guid,
+            user_guid=user_guid,
+            prio=prio,
         )
 
         notification.additional_properties = d

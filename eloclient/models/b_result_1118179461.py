@@ -30,7 +30,6 @@ class BResult1118179461:
             result = []
             for componentsschemas_list_of_plugin_info_item_data in self.result:
                 componentsschemas_list_of_plugin_info_item = componentsschemas_list_of_plugin_info_item_data.to_dict()
-
                 result.append(componentsschemas_list_of_plugin_info_item)
 
         exception = self.exception

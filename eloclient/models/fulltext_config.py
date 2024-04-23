@@ -17,37 +17,40 @@ class FulltextConfig:
     """This class provides information about the configuration of the fulltext database.
 
     Attributes:
-        source (Union[Unset, int]): One of the FulltextConfigC.SOURCE_* constants.
-        flags (Union[Unset, int]): A combination of FulltextConfigC.FLAG_* constants.
         knowlege_map_url (Union[Unset, str]): URL of the Knowlege Map service. Only valid for iSearch.
         indexer_config (Union[Unset, SearchIndexerConfig]):
+        flags (Union[Unset, int]): A combination of FulltextConfigC.FLAG_* constants.
+        source (Union[Unset, int]): One of the FulltextConfigC.SOURCE_* constants.
     """
 
-    source: Union[Unset, int] = UNSET
-    flags: Union[Unset, int] = UNSET
     knowlege_map_url: Union[Unset, str] = UNSET
     indexer_config: Union[Unset, "SearchIndexerConfig"] = UNSET
+    flags: Union[Unset, int] = UNSET
+    source: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        source = self.source
-        flags = self.flags
         knowlege_map_url = self.knowlege_map_url
+
         indexer_config: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.indexer_config, Unset):
             indexer_config = self.indexer_config.to_dict()
 
+        flags = self.flags
+
+        source = self.source
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if source is not UNSET:
-            field_dict["source"] = source
-        if flags is not UNSET:
-            field_dict["flags"] = flags
         if knowlege_map_url is not UNSET:
             field_dict["knowlegeMapUrl"] = knowlege_map_url
         if indexer_config is not UNSET:
             field_dict["indexerConfig"] = indexer_config
+        if flags is not UNSET:
+            field_dict["flags"] = flags
+        if source is not UNSET:
+            field_dict["source"] = source
 
         return field_dict
 
@@ -56,10 +59,6 @@ class FulltextConfig:
         from ..models.search_indexer_config import SearchIndexerConfig
 
         d = src_dict.copy()
-        source = d.pop("source", UNSET)
-
-        flags = d.pop("flags", UNSET)
-
         knowlege_map_url = d.pop("knowlegeMapUrl", UNSET)
 
         _indexer_config = d.pop("indexerConfig", UNSET)
@@ -69,11 +68,15 @@ class FulltextConfig:
         else:
             indexer_config = SearchIndexerConfig.from_dict(_indexer_config)
 
+        flags = d.pop("flags", UNSET)
+
+        source = d.pop("source", UNSET)
+
         fulltext_config = cls(
-            source=source,
-            flags=flags,
             knowlege_map_url=knowlege_map_url,
             indexer_config=indexer_config,
+            flags=flags,
+            source=source,
         )
 
         fulltext_config.additional_properties = d

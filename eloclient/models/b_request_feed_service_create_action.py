@@ -18,21 +18,22 @@ class BRequestFeedServiceCreateAction:
     """
     Attributes:
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        type (Union[Unset, EActionType]): Types of document feed entries.
         parent_guid (Union[Unset, str]):
+        type (Union[Unset, EActionType]): Types of document feed entries.
     """
 
     ci: Union[Unset, "ClientInfo"] = UNSET
-    type: Union[Unset, "EActionType"] = UNSET
     parent_guid: Union[Unset, str] = UNSET
+    type: Union[Unset, "EActionType"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -40,21 +41,21 @@ class BRequestFeedServiceCreateAction:
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
+        parent_guid = self.parent_guid
+
         type: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.type, Unset):
             type = self.type.to_dict()
-
-        parent_guid = self.parent_guid
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if ci is not UNSET:
             field_dict["ci"] = ci
-        if type is not UNSET:
-            field_dict["type"] = type
         if parent_guid is not UNSET:
             field_dict["parentGuid"] = parent_guid
+        if type is not UNSET:
+            field_dict["type"] = type
 
         return field_dict
 
@@ -71,6 +72,8 @@ class BRequestFeedServiceCreateAction:
         else:
             ci = ClientInfo.from_dict(_ci)
 
+        parent_guid = d.pop("parentGuid", UNSET)
+
         _type = d.pop("type", UNSET)
         type: Union[Unset, EActionType]
         if isinstance(_type, Unset):
@@ -78,12 +81,10 @@ class BRequestFeedServiceCreateAction:
         else:
             type = EActionType.from_dict(_type)
 
-        parent_guid = d.pop("parentGuid", UNSET)
-
         b_request_feed_service_create_action = cls(
             ci=ci,
-            type=type,
             parent_guid=parent_guid,
+            type=type,
         )
 
         b_request_feed_service_create_action.additional_properties = d

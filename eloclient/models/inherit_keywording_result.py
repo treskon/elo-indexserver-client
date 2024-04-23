@@ -13,27 +13,27 @@ class InheritKeywordingResult:
     """Return values for server event {@link IXServerEvents#onInheritKeywording}.
 
     Attributes:
-        nothing (Union[Unset, InheritKeywordingResult]): Return values for server event {@link
-            IXServerEvents#onInheritKeywording}.
         apply_default (Union[Unset, InheritKeywordingResult]): Return values for server event {@link
+            IXServerEvents#onInheritKeywording}.
+        nothing (Union[Unset, InheritKeywordingResult]): Return values for server event {@link
             IXServerEvents#onInheritKeywording}.
         inherited (Union[Unset, InheritKeywordingResult]): Return values for server event {@link
             IXServerEvents#onInheritKeywording}.
     """
 
-    nothing: Union[Unset, "InheritKeywordingResult"] = UNSET
     apply_default: Union[Unset, "InheritKeywordingResult"] = UNSET
+    nothing: Union[Unset, "InheritKeywordingResult"] = UNSET
     inherited: Union[Unset, "InheritKeywordingResult"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        nothing: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.nothing, Unset):
-            nothing = self.nothing.to_dict()
-
         apply_default: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.apply_default, Unset):
             apply_default = self.apply_default.to_dict()
+
+        nothing: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.nothing, Unset):
+            nothing = self.nothing.to_dict()
 
         inherited: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.inherited, Unset):
@@ -42,10 +42,10 @@ class InheritKeywordingResult:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if nothing is not UNSET:
-            field_dict["NOTHING"] = nothing
         if apply_default is not UNSET:
             field_dict["APPLY_DEFAULT"] = apply_default
+        if nothing is not UNSET:
+            field_dict["NOTHING"] = nothing
         if inherited is not UNSET:
             field_dict["INHERITED"] = inherited
 
@@ -54,19 +54,19 @@ class InheritKeywordingResult:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        _nothing = d.pop("NOTHING", UNSET)
-        nothing: Union[Unset, InheritKeywordingResult]
-        if isinstance(_nothing, Unset):
-            nothing = UNSET
-        else:
-            nothing = InheritKeywordingResult.from_dict(_nothing)
-
         _apply_default = d.pop("APPLY_DEFAULT", UNSET)
         apply_default: Union[Unset, InheritKeywordingResult]
         if isinstance(_apply_default, Unset):
             apply_default = UNSET
         else:
             apply_default = InheritKeywordingResult.from_dict(_apply_default)
+
+        _nothing = d.pop("NOTHING", UNSET)
+        nothing: Union[Unset, InheritKeywordingResult]
+        if isinstance(_nothing, Unset):
+            nothing = UNSET
+        else:
+            nothing = InheritKeywordingResult.from_dict(_nothing)
 
         _inherited = d.pop("INHERITED", UNSET)
         inherited: Union[Unset, InheritKeywordingResult]
@@ -76,8 +76,8 @@ class InheritKeywordingResult:
             inherited = InheritKeywordingResult.from_dict(_inherited)
 
         inherit_keywording_result = cls(
-            nothing=nothing,
             apply_default=apply_default,
+            nothing=nothing,
             inherited=inherited,
         )
 

@@ -53,7 +53,7 @@ class SearchUtil:
             sord_z=SordZ(SordC().mb_only_id)
         )
 
-        res = ix_service_port_if_find_first_sords.sync_detailed(client=self.elo_client, json_body=body)
+        res = ix_service_port_if_find_first_sords.sync_detailed(client=self.elo_client, body=body)
         if (res.parsed is None) or (res.parsed.result is None) or isinstance(res.parsed.result, Unset):
             logging.warning(f"No results found got exception {res.content}")
             return []

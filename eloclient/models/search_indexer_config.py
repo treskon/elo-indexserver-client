@@ -19,23 +19,19 @@ T = TypeVar("T", bound="SearchIndexerConfig")
 class SearchIndexerConfig:
     """
     Attributes:
-        updater_config (Union[Unset, UpdaterConfig]): Configuration and status of updater process.
         optimizer_config (Union[Unset, OptimizerConfig]): Configuration and status of optimizer process.
         reindexer_config (Union[Unset, ReindexerConfig]): Configuration and status of Re-indexer process.
         language_config (Union[Unset, LanguageConfig]):
+        updater_config (Union[Unset, UpdaterConfig]): Configuration and status of updater process.
     """
 
-    updater_config: Union[Unset, "UpdaterConfig"] = UNSET
     optimizer_config: Union[Unset, "OptimizerConfig"] = UNSET
     reindexer_config: Union[Unset, "ReindexerConfig"] = UNSET
     language_config: Union[Unset, "LanguageConfig"] = UNSET
+    updater_config: Union[Unset, "UpdaterConfig"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        updater_config: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.updater_config, Unset):
-            updater_config = self.updater_config.to_dict()
-
         optimizer_config: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.optimizer_config, Unset):
             optimizer_config = self.optimizer_config.to_dict()
@@ -48,17 +44,21 @@ class SearchIndexerConfig:
         if not isinstance(self.language_config, Unset):
             language_config = self.language_config.to_dict()
 
+        updater_config: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.updater_config, Unset):
+            updater_config = self.updater_config.to_dict()
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if updater_config is not UNSET:
-            field_dict["updaterConfig"] = updater_config
         if optimizer_config is not UNSET:
             field_dict["optimizerConfig"] = optimizer_config
         if reindexer_config is not UNSET:
             field_dict["reindexerConfig"] = reindexer_config
         if language_config is not UNSET:
             field_dict["languageConfig"] = language_config
+        if updater_config is not UNSET:
+            field_dict["updaterConfig"] = updater_config
 
         return field_dict
 
@@ -70,13 +70,6 @@ class SearchIndexerConfig:
         from ..models.updater_config import UpdaterConfig
 
         d = src_dict.copy()
-        _updater_config = d.pop("updaterConfig", UNSET)
-        updater_config: Union[Unset, UpdaterConfig]
-        if isinstance(_updater_config, Unset):
-            updater_config = UNSET
-        else:
-            updater_config = UpdaterConfig.from_dict(_updater_config)
-
         _optimizer_config = d.pop("optimizerConfig", UNSET)
         optimizer_config: Union[Unset, OptimizerConfig]
         if isinstance(_optimizer_config, Unset):
@@ -98,11 +91,18 @@ class SearchIndexerConfig:
         else:
             language_config = LanguageConfig.from_dict(_language_config)
 
+        _updater_config = d.pop("updaterConfig", UNSET)
+        updater_config: Union[Unset, UpdaterConfig]
+        if isinstance(_updater_config, Unset):
+            updater_config = UNSET
+        else:
+            updater_config = UpdaterConfig.from_dict(_updater_config)
+
         search_indexer_config = cls(
-            updater_config=updater_config,
             optimizer_config=optimizer_config,
             reindexer_config=reindexer_config,
             language_config=language_config,
+            updater_config=updater_config,
         )
 
         search_indexer_config.additional_properties = d

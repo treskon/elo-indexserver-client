@@ -19,15 +19,15 @@ class BRequestIXServicePortIFCheckoutUser:
     """
     Attributes:
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        id (Union[Unset, str]):
         checkout_users_z (Union[Unset, CheckoutUsersZ]): This class encapsulates the constants of CheckoutUsersC.
             <p>
              Copyright: Copyright (c) 2004
@@ -42,12 +42,13 @@ class BRequestIXServicePortIFCheckoutUser:
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
+        id (Union[Unset, str]):
     """
 
     ci: Union[Unset, "ClientInfo"] = UNSET
-    id: Union[Unset, str] = UNSET
     checkout_users_z: Union[Unset, "CheckoutUsersZ"] = UNSET
     lock_z: Union[Unset, "LockZ"] = UNSET
+    id: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -55,7 +56,6 @@ class BRequestIXServicePortIFCheckoutUser:
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        id = self.id
         checkout_users_z: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.checkout_users_z, Unset):
             checkout_users_z = self.checkout_users_z.to_dict()
@@ -64,17 +64,19 @@ class BRequestIXServicePortIFCheckoutUser:
         if not isinstance(self.lock_z, Unset):
             lock_z = self.lock_z.to_dict()
 
+        id = self.id
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if ci is not UNSET:
             field_dict["ci"] = ci
-        if id is not UNSET:
-            field_dict["id"] = id
         if checkout_users_z is not UNSET:
             field_dict["checkoutUsersZ"] = checkout_users_z
         if lock_z is not UNSET:
             field_dict["lockZ"] = lock_z
+        if id is not UNSET:
+            field_dict["id"] = id
 
         return field_dict
 
@@ -92,8 +94,6 @@ class BRequestIXServicePortIFCheckoutUser:
         else:
             ci = ClientInfo.from_dict(_ci)
 
-        id = d.pop("id", UNSET)
-
         _checkout_users_z = d.pop("checkoutUsersZ", UNSET)
         checkout_users_z: Union[Unset, CheckoutUsersZ]
         if isinstance(_checkout_users_z, Unset):
@@ -108,11 +108,13 @@ class BRequestIXServicePortIFCheckoutUser:
         else:
             lock_z = LockZ.from_dict(_lock_z)
 
+        id = d.pop("id", UNSET)
+
         b_request_ix_service_port_if_checkout_user = cls(
             ci=ci,
-            id=id,
             checkout_users_z=checkout_users_z,
             lock_z=lock_z,
+            id=id,
         )
 
         b_request_ix_service_port_if_checkout_user.additional_properties = d

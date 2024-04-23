@@ -23,6 +23,7 @@ class WFVersionC:
 
     def to_dict(self) -> Dict[str, Any]:
         ln_comment = self.ln_comment
+
         ln_version = self.ln_version
 
         field_dict: Dict[str, Any] = {}

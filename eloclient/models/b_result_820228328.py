@@ -17,8 +17,9 @@ class BResult820228328:
     """
     Attributes:
         result (Union[Unset, EditInfo]): Contains data to edit the indexing information.
-            Therfore it provides storage mask names, storage path names, marker
-             names, document template names, replication set names, document version information, etc.
+            Therfore it provides storage mask names, storage
+             path names, marker names, document template names, replication set names, document version
+             information, etc.
 
              <p>
              Copyright: Copyright (c) 2004

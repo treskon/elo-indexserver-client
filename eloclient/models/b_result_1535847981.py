@@ -30,7 +30,6 @@ class BResult1535847981:
             result = []
             for componentsschemas_hash_set_of_hash_tag_item_data in self.result:
                 componentsschemas_hash_set_of_hash_tag_item = componentsschemas_hash_set_of_hash_tag_item_data.to_dict()
-
                 result.append(componentsschemas_hash_set_of_hash_tag_item)
 
         exception = self.exception

@@ -30,7 +30,6 @@ class BResult2013723887:
             result = []
             for componentsschemas_list_of_action_item_data in self.result:
                 componentsschemas_list_of_action_item = componentsschemas_list_of_action_item_data.to_dict()
-
                 result.append(componentsschemas_list_of_action_item)
 
         exception = self.exception

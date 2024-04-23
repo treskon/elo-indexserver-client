@@ -17,8 +17,8 @@ T = TypeVar("T", bound="LoginResult")
 @_attrs_define
 class LoginResult:
     """<p>
-    Object returned when logging in to the IX. This class contains the information required after the login has been
-     carried out.
+    Object returned when logging in to the IX. This class contains the information required after the
+     login has been carried out.
      </p>
 
      <p>
@@ -30,8 +30,9 @@ class LoginResult:
 
         Attributes:
             client_info (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-                Each Indexserver interface function, except the
-                 login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+                Each Indexserver interface
+                 function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+                 session ticket.
                  <p>
                  Copyright: Copyright (c) 2004
                  </p>
@@ -39,12 +40,13 @@ class LoginResult:
                  Organisation: ELO Digital Office GmbH
                  </p>
             ticket_lifetime (Union[Unset, int]): <p>
-                Contains the lifetime of the ticket in seconds. The connection is terminated once this lifetime has expired.
+                Contains the lifetime of the ticket in seconds. The connection is terminated once this lifetime
+                 has expired.
                  </p>
+            active_substitutions (Union[Unset, List['Substitution']]):
             user (Union[Unset, UserInfo]): <p>
-                Data class containing the user information data for the user logged in to the Index server. User information
-                includes
-                 ID, name, rights, parent, etc.
+                Data class containing the user information data for the user logged in to the Index server. User
+                 information includes ID, name, rights, parent, etc.
                  </p>
                  <p>
                  Copyright: Copyright (c) 2004
@@ -52,13 +54,12 @@ class LoginResult:
                  <p>
                  Organisation: ELO Digital Office GmbH
                  </p>
-            active_substitutions (Union[Unset, List['Substitution']]):
     """
 
     client_info: Union[Unset, "ClientInfo"] = UNSET
     ticket_lifetime: Union[Unset, int] = UNSET
-    user: Union[Unset, "UserInfo"] = UNSET
     active_substitutions: Union[Unset, List["Substitution"]] = UNSET
+    user: Union[Unset, "UserInfo"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -67,17 +68,17 @@ class LoginResult:
             client_info = self.client_info.to_dict()
 
         ticket_lifetime = self.ticket_lifetime
-        user: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.user, Unset):
-            user = self.user.to_dict()
 
         active_substitutions: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.active_substitutions, Unset):
             active_substitutions = []
             for componentsschemas_list_of_substitution_item_data in self.active_substitutions:
                 componentsschemas_list_of_substitution_item = componentsschemas_list_of_substitution_item_data.to_dict()
-
                 active_substitutions.append(componentsschemas_list_of_substitution_item)
+
+        user: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.user, Unset):
+            user = self.user.to_dict()
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -86,10 +87,10 @@ class LoginResult:
             field_dict["clientInfo"] = client_info
         if ticket_lifetime is not UNSET:
             field_dict["ticketLifetime"] = ticket_lifetime
-        if user is not UNSET:
-            field_dict["user"] = user
         if active_substitutions is not UNSET:
             field_dict["activeSubstitutions"] = active_substitutions
+        if user is not UNSET:
+            field_dict["user"] = user
 
         return field_dict
 
@@ -109,13 +110,6 @@ class LoginResult:
 
         ticket_lifetime = d.pop("ticketLifetime", UNSET)
 
-        _user = d.pop("user", UNSET)
-        user: Union[Unset, UserInfo]
-        if isinstance(_user, Unset):
-            user = UNSET
-        else:
-            user = UserInfo.from_dict(_user)
-
         active_substitutions = []
         _active_substitutions = d.pop("activeSubstitutions", UNSET)
         for componentsschemas_list_of_substitution_item_data in _active_substitutions or []:
@@ -125,11 +119,18 @@ class LoginResult:
 
             active_substitutions.append(componentsschemas_list_of_substitution_item)
 
+        _user = d.pop("user", UNSET)
+        user: Union[Unset, UserInfo]
+        if isinstance(_user, Unset):
+            user = UNSET
+        else:
+            user = UserInfo.from_dict(_user)
+
         login_result = cls(
             client_info=client_info,
             ticket_lifetime=ticket_lifetime,
-            user=user,
             active_substitutions=active_substitutions,
+            user=user,
         )
 
         login_result.additional_properties = d

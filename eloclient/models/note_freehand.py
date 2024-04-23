@@ -18,41 +18,42 @@ class NoteFreehand:
 
     Attributes:
         width (Union[Unset, int]): Line width.
-        points (Union[Unset, List['PointInfo']]):
-        strikeout_width (Union[Unset, int]): Line width for strikeout pen (only TYPE_ANNOTATION_STRIKEOUT).
         strikeout_color (Union[Unset, int]): Color for strikeout pen (only TYPE_ANNOTATION_STRIKEOUT).
+        strikeout_width (Union[Unset, int]): Line width for strikeout pen (only TYPE_ANNOTATION_STRIKEOUT).
+        points (Union[Unset, List['PointInfo']]):
     """
 
     width: Union[Unset, int] = UNSET
-    points: Union[Unset, List["PointInfo"]] = UNSET
-    strikeout_width: Union[Unset, int] = UNSET
     strikeout_color: Union[Unset, int] = UNSET
+    strikeout_width: Union[Unset, int] = UNSET
+    points: Union[Unset, List["PointInfo"]] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         width = self.width
+
+        strikeout_color = self.strikeout_color
+
+        strikeout_width = self.strikeout_width
+
         points: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.points, Unset):
             points = []
             for points_item_data in self.points:
                 points_item = points_item_data.to_dict()
-
                 points.append(points_item)
-
-        strikeout_width = self.strikeout_width
-        strikeout_color = self.strikeout_color
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if width is not UNSET:
             field_dict["width"] = width
-        if points is not UNSET:
-            field_dict["points"] = points
-        if strikeout_width is not UNSET:
-            field_dict["strikeoutWidth"] = strikeout_width
         if strikeout_color is not UNSET:
             field_dict["strikeoutColor"] = strikeout_color
+        if strikeout_width is not UNSET:
+            field_dict["strikeoutWidth"] = strikeout_width
+        if points is not UNSET:
+            field_dict["points"] = points
 
         return field_dict
 
@@ -63,6 +64,10 @@ class NoteFreehand:
         d = src_dict.copy()
         width = d.pop("width", UNSET)
 
+        strikeout_color = d.pop("strikeoutColor", UNSET)
+
+        strikeout_width = d.pop("strikeoutWidth", UNSET)
+
         points = []
         _points = d.pop("points", UNSET)
         for points_item_data in _points or []:
@@ -70,15 +75,11 @@ class NoteFreehand:
 
             points.append(points_item)
 
-        strikeout_width = d.pop("strikeoutWidth", UNSET)
-
-        strikeout_color = d.pop("strikeoutColor", UNSET)
-
         note_freehand = cls(
             width=width,
-            points=points,
-            strikeout_width=strikeout_width,
             strikeout_color=strikeout_color,
+            strikeout_width=strikeout_width,
+            points=points,
         )
 
         note_freehand.additional_properties = d

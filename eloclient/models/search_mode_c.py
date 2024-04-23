@@ -26,19 +26,6 @@ class SearchModeC:
 
         Attributes:
             bset_and (Union[Unset, str]):
-            bset_or (Union[Unset, str]):
-            bset_one_term (Union[Unset, str]):
-            bset_expression (Union[Unset, str]):
-            and_ (Union[Unset, SearchModeZ]): <p>
-                This class encapsulates the constants of <code>SearchModeC</code>
-                 </p>
-
-                 <p>
-                 Copyright: Copyright (c) 2004
-                 </p>
-                 <p>
-                 Organisation: ELO Digital Office GmbH
-                 </p>
             or_ (Union[Unset, SearchModeZ]): <p>
                 This class encapsulates the constants of <code>SearchModeC</code>
                  </p>
@@ -59,6 +46,19 @@ class SearchModeC:
                  <p>
                  Organisation: ELO Digital Office GmbH
                  </p>
+            bset_expression (Union[Unset, str]):
+            and_ (Union[Unset, SearchModeZ]): <p>
+                This class encapsulates the constants of <code>SearchModeC</code>
+                 </p>
+
+                 <p>
+                 Copyright: Copyright (c) 2004
+                 </p>
+                 <p>
+                 Organisation: ELO Digital Office GmbH
+                 </p>
+            bset_one_term (Union[Unset, str]):
+            bset_or (Union[Unset, str]):
             expression (Union[Unset, SearchModeZ]): <p>
                 This class encapsulates the constants of <code>SearchModeC</code>
                  </p>
@@ -72,23 +72,17 @@ class SearchModeC:
     """
 
     bset_and: Union[Unset, str] = UNSET
-    bset_or: Union[Unset, str] = UNSET
-    bset_one_term: Union[Unset, str] = UNSET
-    bset_expression: Union[Unset, str] = UNSET
-    and_: Union[Unset, "SearchModeZ"] = UNSET
     or_: Union[Unset, "SearchModeZ"] = UNSET
     one_term: Union[Unset, "SearchModeZ"] = UNSET
+    bset_expression: Union[Unset, str] = UNSET
+    and_: Union[Unset, "SearchModeZ"] = UNSET
+    bset_one_term: Union[Unset, str] = UNSET
+    bset_or: Union[Unset, str] = UNSET
     expression: Union[Unset, "SearchModeZ"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         bset_and = self.bset_and
-        bset_or = self.bset_or
-        bset_one_term = self.bset_one_term
-        bset_expression = self.bset_expression
-        and_: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.and_, Unset):
-            and_ = self.and_.to_dict()
 
         or_: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.or_, Unset):
@@ -97,6 +91,16 @@ class SearchModeC:
         one_term: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.one_term, Unset):
             one_term = self.one_term.to_dict()
+
+        bset_expression = self.bset_expression
+
+        and_: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.and_, Unset):
+            and_ = self.and_.to_dict()
+
+        bset_one_term = self.bset_one_term
+
+        bset_or = self.bset_or
 
         expression: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.expression, Unset):
@@ -107,18 +111,18 @@ class SearchModeC:
         field_dict.update({})
         if bset_and is not UNSET:
             field_dict["bsetAND"] = bset_and
-        if bset_or is not UNSET:
-            field_dict["bsetOR"] = bset_or
-        if bset_one_term is not UNSET:
-            field_dict["bsetONE_TERM"] = bset_one_term
-        if bset_expression is not UNSET:
-            field_dict["bsetEXPRESSION"] = bset_expression
-        if and_ is not UNSET:
-            field_dict["AND"] = and_
         if or_ is not UNSET:
             field_dict["OR"] = or_
         if one_term is not UNSET:
             field_dict["ONE_TERM"] = one_term
+        if bset_expression is not UNSET:
+            field_dict["bsetEXPRESSION"] = bset_expression
+        if and_ is not UNSET:
+            field_dict["AND"] = and_
+        if bset_one_term is not UNSET:
+            field_dict["bsetONE_TERM"] = bset_one_term
+        if bset_or is not UNSET:
+            field_dict["bsetOR"] = bset_or
         if expression is not UNSET:
             field_dict["EXPRESSION"] = expression
 
@@ -130,19 +134,6 @@ class SearchModeC:
 
         d = src_dict.copy()
         bset_and = d.pop("bsetAND", UNSET)
-
-        bset_or = d.pop("bsetOR", UNSET)
-
-        bset_one_term = d.pop("bsetONE_TERM", UNSET)
-
-        bset_expression = d.pop("bsetEXPRESSION", UNSET)
-
-        _and_ = d.pop("AND", UNSET)
-        and_: Union[Unset, SearchModeZ]
-        if isinstance(_and_, Unset):
-            and_ = UNSET
-        else:
-            and_ = SearchModeZ.from_dict(_and_)
 
         _or_ = d.pop("OR", UNSET)
         or_: Union[Unset, SearchModeZ]
@@ -158,6 +149,19 @@ class SearchModeC:
         else:
             one_term = SearchModeZ.from_dict(_one_term)
 
+        bset_expression = d.pop("bsetEXPRESSION", UNSET)
+
+        _and_ = d.pop("AND", UNSET)
+        and_: Union[Unset, SearchModeZ]
+        if isinstance(_and_, Unset):
+            and_ = UNSET
+        else:
+            and_ = SearchModeZ.from_dict(_and_)
+
+        bset_one_term = d.pop("bsetONE_TERM", UNSET)
+
+        bset_or = d.pop("bsetOR", UNSET)
+
         _expression = d.pop("EXPRESSION", UNSET)
         expression: Union[Unset, SearchModeZ]
         if isinstance(_expression, Unset):
@@ -167,12 +171,12 @@ class SearchModeC:
 
         search_mode_c = cls(
             bset_and=bset_and,
-            bset_or=bset_or,
-            bset_one_term=bset_one_term,
-            bset_expression=bset_expression,
-            and_=and_,
             or_=or_,
             one_term=one_term,
+            bset_expression=bset_expression,
+            and_=and_,
+            bset_one_term=bset_one_term,
+            bset_or=bset_or,
             expression=expression,
         )
 

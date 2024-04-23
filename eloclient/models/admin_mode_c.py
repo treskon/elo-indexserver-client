@@ -13,46 +13,48 @@ class AdminModeC:
     """Constants for the administration mode.
 
     Attributes:
-        on (Union[Unset, int]): Administration mode is active
-        off (Union[Unset, int]): Administration mode is inactive
         query (Union[Unset, int]): Query administration mode
+        off (Union[Unset, int]): Administration mode is inactive
+        on (Union[Unset, int]): Administration mode is active
     """
 
-    on: Union[Unset, int] = UNSET
-    off: Union[Unset, int] = UNSET
     query: Union[Unset, int] = UNSET
+    off: Union[Unset, int] = UNSET
+    on: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        on = self.on
-        off = self.off
         query = self.query
+
+        off = self.off
+
+        on = self.on
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if on is not UNSET:
-            field_dict["ON"] = on
-        if off is not UNSET:
-            field_dict["OFF"] = off
         if query is not UNSET:
             field_dict["QUERY"] = query
+        if off is not UNSET:
+            field_dict["OFF"] = off
+        if on is not UNSET:
+            field_dict["ON"] = on
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        on = d.pop("ON", UNSET)
+        query = d.pop("QUERY", UNSET)
 
         off = d.pop("OFF", UNSET)
 
-        query = d.pop("QUERY", UNSET)
+        on = d.pop("ON", UNSET)
 
         admin_mode_c = cls(
-            on=on,
-            off=off,
             query=query,
+            off=off,
+            on=on,
         )
 
         admin_mode_c.additional_properties = d

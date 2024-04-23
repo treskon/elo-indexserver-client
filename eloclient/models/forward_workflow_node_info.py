@@ -19,9 +19,8 @@ class ForwardWorkflowNodeInfo:
 
         Attributes:
             terminate_workflow (Union[Unset, bool]): Terminate the workflow instead of forwarding.
-                If this member is true, {@link #successorNodesToActivate} and
-                 {@link #node} are ignored.
-            successor_nodes_to_activate (Union[Unset, List[int]]):
+                If this member is true,
+                 {@link #successorNodesToActivate} and {@link #node} are ignored.
             node (Union[Unset, WFNode]): <p>
                 Objects of this class represent a workflow node.
                  </p>
@@ -32,32 +31,34 @@ class ForwardWorkflowNodeInfo:
                  <p>
                  Organisation: ELO Digital Office GmbH
                  </p>
+            successor_nodes_to_activate (Union[Unset, List[int]]):
     """
 
     terminate_workflow: Union[Unset, bool] = UNSET
-    successor_nodes_to_activate: Union[Unset, List[int]] = UNSET
     node: Union[Unset, "WFNode"] = UNSET
+    successor_nodes_to_activate: Union[Unset, List[int]] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         terminate_workflow = self.terminate_workflow
-        successor_nodes_to_activate: Union[Unset, List[int]] = UNSET
-        if not isinstance(self.successor_nodes_to_activate, Unset):
-            successor_nodes_to_activate = self.successor_nodes_to_activate
 
         node: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.node, Unset):
             node = self.node.to_dict()
+
+        successor_nodes_to_activate: Union[Unset, List[int]] = UNSET
+        if not isinstance(self.successor_nodes_to_activate, Unset):
+            successor_nodes_to_activate = self.successor_nodes_to_activate
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if terminate_workflow is not UNSET:
             field_dict["terminateWorkflow"] = terminate_workflow
-        if successor_nodes_to_activate is not UNSET:
-            field_dict["successorNodesToActivate"] = successor_nodes_to_activate
         if node is not UNSET:
             field_dict["node"] = node
+        if successor_nodes_to_activate is not UNSET:
+            field_dict["successorNodesToActivate"] = successor_nodes_to_activate
 
         return field_dict
 
@@ -68,8 +69,6 @@ class ForwardWorkflowNodeInfo:
         d = src_dict.copy()
         terminate_workflow = d.pop("terminateWorkflow", UNSET)
 
-        successor_nodes_to_activate = cast(List[int], d.pop("successorNodesToActivate", UNSET))
-
         _node = d.pop("node", UNSET)
         node: Union[Unset, WFNode]
         if isinstance(_node, Unset):
@@ -77,10 +76,12 @@ class ForwardWorkflowNodeInfo:
         else:
             node = WFNode.from_dict(_node)
 
+        successor_nodes_to_activate = cast(List[int], d.pop("successorNodesToActivate", UNSET))
+
         forward_workflow_node_info = cls(
             terminate_workflow=terminate_workflow,
-            successor_nodes_to_activate=successor_nodes_to_activate,
             node=node,
+            successor_nodes_to_activate=successor_nodes_to_activate,
         )
 
         forward_workflow_node_info.additional_properties = d

@@ -16,9 +16,8 @@ T = TypeVar("T", bound="CheckinSubstitutionsInfo")
 class CheckinSubstitutionsInfo:
     """Object to define substitutions to be checked in.
     <p>
-     Substitutions which do not have a {@link Substitution#guid} are new substitutions. If a {@link Substitution#guid}
-    is
-     set, the corresponding substitution is updated.
+     Substitutions which do not have a {@link Substitution#guid} are new substitutions. If a
+     {@link Substitution#guid} is set, the corresponding substitution is updated.
      </p>
 
         Attributes:
@@ -34,7 +33,6 @@ class CheckinSubstitutionsInfo:
             substitutions = []
             for componentsschemas_list_of_substitution_item_data in self.substitutions:
                 componentsschemas_list_of_substitution_item = componentsschemas_list_of_substitution_item_data.to_dict()
-
                 substitutions.append(componentsschemas_list_of_substitution_item)
 
         field_dict: Dict[str, Any] = {}

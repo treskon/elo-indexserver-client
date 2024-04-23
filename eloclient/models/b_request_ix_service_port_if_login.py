@@ -16,51 +16,55 @@ T = TypeVar("T", bound="BRequestIXServicePortIFLogin")
 class BRequestIXServicePortIFLogin:
     """
     Attributes:
+        run_as_user (Union[Unset, str]):
+        client_computer (Union[Unset, str]):
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        user_name (Union[Unset, str]):
         user_pwd (Union[Unset, str]):
-        client_computer (Union[Unset, str]):
-        run_as_user (Union[Unset, str]):
+        user_name (Union[Unset, str]):
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
-    user_name: Union[Unset, str] = UNSET
-    user_pwd: Union[Unset, str] = UNSET
-    client_computer: Union[Unset, str] = UNSET
     run_as_user: Union[Unset, str] = UNSET
+    client_computer: Union[Unset, str] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
+    user_pwd: Union[Unset, str] = UNSET
+    user_name: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        run_as_user = self.run_as_user
+
+        client_computer = self.client_computer
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        user_name = self.user_name
         user_pwd = self.user_pwd
-        client_computer = self.client_computer
-        run_as_user = self.run_as_user
+
+        user_name = self.user_name
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
-        if user_name is not UNSET:
-            field_dict["userName"] = user_name
-        if user_pwd is not UNSET:
-            field_dict["userPwd"] = user_pwd
-        if client_computer is not UNSET:
-            field_dict["clientComputer"] = client_computer
         if run_as_user is not UNSET:
             field_dict["runAsUser"] = run_as_user
+        if client_computer is not UNSET:
+            field_dict["clientComputer"] = client_computer
+        if ci is not UNSET:
+            field_dict["ci"] = ci
+        if user_pwd is not UNSET:
+            field_dict["userPwd"] = user_pwd
+        if user_name is not UNSET:
+            field_dict["userName"] = user_name
 
         return field_dict
 
@@ -69,6 +73,10 @@ class BRequestIXServicePortIFLogin:
         from ..models.client_info import ClientInfo
 
         d = src_dict.copy()
+        run_as_user = d.pop("runAsUser", UNSET)
+
+        client_computer = d.pop("clientComputer", UNSET)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
@@ -76,20 +84,16 @@ class BRequestIXServicePortIFLogin:
         else:
             ci = ClientInfo.from_dict(_ci)
 
-        user_name = d.pop("userName", UNSET)
-
         user_pwd = d.pop("userPwd", UNSET)
 
-        client_computer = d.pop("clientComputer", UNSET)
-
-        run_as_user = d.pop("runAsUser", UNSET)
+        user_name = d.pop("userName", UNSET)
 
         b_request_ix_service_port_if_login = cls(
-            ci=ci,
-            user_name=user_name,
-            user_pwd=user_pwd,
-            client_computer=client_computer,
             run_as_user=run_as_user,
+            client_computer=client_computer,
+            ci=ci,
+            user_pwd=user_pwd,
+            user_name=user_name,
         )
 
         b_request_ix_service_port_if_login.additional_properties = d

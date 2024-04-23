@@ -13,62 +13,66 @@ class ActivityProjectC:
     """Constants for class ActivityProject.
 
     Attributes:
-        mb_options (Union[Unset, str]):
         system (Union[Unset, str]): Reserved. This name is used internally only. Do not use this name in your code.
-        default (Union[Unset, str]): Default project name.
-        request (Union[Unset, str]): Activity for observing documents and folders.
         notify (Union[Unset, str]): Activity used to notify about a new document version or new sub-item.
+        request (Union[Unset, str]): Activity for observing documents and folders.
+        mb_options (Union[Unset, str]):
+        default (Union[Unset, str]): Default project name.
     """
 
-    mb_options: Union[Unset, str] = UNSET
     system: Union[Unset, str] = UNSET
-    default: Union[Unset, str] = UNSET
-    request: Union[Unset, str] = UNSET
     notify: Union[Unset, str] = UNSET
+    request: Union[Unset, str] = UNSET
+    mb_options: Union[Unset, str] = UNSET
+    default: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        mb_options = self.mb_options
         system = self.system
-        default = self.default
-        request = self.request
+
         notify = self.notify
+
+        request = self.request
+
+        mb_options = self.mb_options
+
+        default = self.default
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if mb_options is not UNSET:
-            field_dict["mbOptions"] = mb_options
         if system is not UNSET:
             field_dict["SYSTEM"] = system
-        if default is not UNSET:
-            field_dict["DEFAULT"] = default
-        if request is not UNSET:
-            field_dict["REQUEST"] = request
         if notify is not UNSET:
             field_dict["NOTIFY"] = notify
+        if request is not UNSET:
+            field_dict["REQUEST"] = request
+        if mb_options is not UNSET:
+            field_dict["mbOptions"] = mb_options
+        if default is not UNSET:
+            field_dict["DEFAULT"] = default
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        mb_options = d.pop("mbOptions", UNSET)
-
         system = d.pop("SYSTEM", UNSET)
-
-        default = d.pop("DEFAULT", UNSET)
-
-        request = d.pop("REQUEST", UNSET)
 
         notify = d.pop("NOTIFY", UNSET)
 
+        request = d.pop("REQUEST", UNSET)
+
+        mb_options = d.pop("mbOptions", UNSET)
+
+        default = d.pop("DEFAULT", UNSET)
+
         activity_project_c = cls(
-            mb_options=mb_options,
             system=system,
-            default=default,
-            request=request,
             notify=notify,
+            request=request,
+            mb_options=mb_options,
+            default=default,
         )
 
         activity_project_c.additional_properties = d

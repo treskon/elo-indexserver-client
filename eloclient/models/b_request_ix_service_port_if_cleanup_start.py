@@ -17,15 +17,6 @@ T = TypeVar("T", bound="BRequestIXServicePortIFCleanupStart")
 class BRequestIXServicePortIFCleanupStart:
     """
     Attributes:
-        ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
-             <p>
-             Copyright: Copyright (c) 2004
-             </p>
-             <p>
-             Organisation: ELO Digital Office GmbH
-             </p>
         delete_options (Union[Unset, DeleteOptions]): This class contains options for deleting archive SORDs using the
             deleteSord function.
             <p>
@@ -34,28 +25,38 @@ class BRequestIXServicePortIFCleanupStart:
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
+        ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
+             <p>
+             Copyright: Copyright (c) 2004
+             </p>
+             <p>
+             Organisation: ELO Digital Office GmbH
+             </p>
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
     delete_options: Union[Unset, "DeleteOptions"] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        ci: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.ci, Unset):
-            ci = self.ci.to_dict()
-
         delete_options: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.delete_options, Unset):
             delete_options = self.delete_options.to_dict()
 
+        ci: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.ci, Unset):
+            ci = self.ci.to_dict()
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
         if delete_options is not UNSET:
             field_dict["deleteOptions"] = delete_options
+        if ci is not UNSET:
+            field_dict["ci"] = ci
 
         return field_dict
 
@@ -65,13 +66,6 @@ class BRequestIXServicePortIFCleanupStart:
         from ..models.delete_options import DeleteOptions
 
         d = src_dict.copy()
-        _ci = d.pop("ci", UNSET)
-        ci: Union[Unset, ClientInfo]
-        if isinstance(_ci, Unset):
-            ci = UNSET
-        else:
-            ci = ClientInfo.from_dict(_ci)
-
         _delete_options = d.pop("deleteOptions", UNSET)
         delete_options: Union[Unset, DeleteOptions]
         if isinstance(_delete_options, Unset):
@@ -79,9 +73,16 @@ class BRequestIXServicePortIFCleanupStart:
         else:
             delete_options = DeleteOptions.from_dict(_delete_options)
 
+        _ci = d.pop("ci", UNSET)
+        ci: Union[Unset, ClientInfo]
+        if isinstance(_ci, Unset):
+            ci = UNSET
+        else:
+            ci = ClientInfo.from_dict(_ci)
+
         b_request_ix_service_port_if_cleanup_start = cls(
-            ci=ci,
             delete_options=delete_options,
+            ci=ci,
         )
 
         b_request_ix_service_port_if_cleanup_start.additional_properties = d

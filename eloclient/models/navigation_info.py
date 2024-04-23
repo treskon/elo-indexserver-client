@@ -14,9 +14,9 @@ T = TypeVar("T", bound="NavigationInfo")
 
 @_attrs_define
 class NavigationInfo:
-    """NavigationInfo is used as traversal information for structured bulk operations restricting specific processsing,
-    e.g.
-    pooled jobs, to scalable amounts. It provides parameters controlling the traversal.
+    """NavigationInfo is used as traversal information for structured bulk operations restricting
+    specific processsing, e.g. pooled jobs, to scalable amounts. It provides parameters controlling
+     the traversal.
 
      <p>
      Copyright: Copyright (c) 2004
@@ -26,18 +26,11 @@ class NavigationInfo:
      </p>
 
         Attributes:
-            ignore_documents (Union[Unset, bool]): ignore the navigation of documents
-            max_count (Union[Unset, int]): maxCount is the overall maximum amount of visited nodes and is independent of
-                successful processing.
-                maxCount does
-                 not depend on successful processing to be incremented, and it can stop the traversal before any of the other
-                limits
-                 have been reached. Passing maxCount &lt; 1 will turn off this limit.
             max_depth (Union[Unset, int]): The maximum depth of the tree walk. Passing maxDepth &lt; 1 turns off this limit.
             max_siblings (Union[Unset, int]): The maximum number of siblings for one tree level.
-                This limit is most useful for ignoring the contents of large
-                 folders. Passing maxSiblings &lt; 1 will turn the limit off.
-            start_i_ds (Union[Unset, List[str]]):
+                This limit is most useful for ignoring the
+                 contents of large folders. Passing maxSiblings &lt; 1 will turn the limit off.
+            ignore_documents (Union[Unset, bool]): ignore the navigation of documents
             find_info (Union[Unset, FindInfo]): This class controls the search function findFirstSords.
                 <p>
                  Copyright: Copyright (c) 2004
@@ -45,44 +38,54 @@ class NavigationInfo:
                  <p>
                  Organisation: ELO Digital Office GmbH
                  </p>
+            start_i_ds (Union[Unset, List[str]]):
+            max_count (Union[Unset, int]): maxCount is the overall maximum amount of visited nodes and is independent of
+                successful
+                processing. maxCount does not depend on successful processing to be incremented, and it can
+                 stop the traversal before any of the other limits have been reached. Passing maxCount &lt; 1
+                 will turn off this limit.
     """
 
-    ignore_documents: Union[Unset, bool] = UNSET
-    max_count: Union[Unset, int] = UNSET
     max_depth: Union[Unset, int] = UNSET
     max_siblings: Union[Unset, int] = UNSET
-    start_i_ds: Union[Unset, List[str]] = UNSET
+    ignore_documents: Union[Unset, bool] = UNSET
     find_info: Union[Unset, "FindInfo"] = UNSET
+    start_i_ds: Union[Unset, List[str]] = UNSET
+    max_count: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        ignore_documents = self.ignore_documents
-        max_count = self.max_count
         max_depth = self.max_depth
+
         max_siblings = self.max_siblings
-        start_i_ds: Union[Unset, List[str]] = UNSET
-        if not isinstance(self.start_i_ds, Unset):
-            start_i_ds = self.start_i_ds
+
+        ignore_documents = self.ignore_documents
 
         find_info: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.find_info, Unset):
             find_info = self.find_info.to_dict()
 
+        start_i_ds: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.start_i_ds, Unset):
+            start_i_ds = self.start_i_ds
+
+        max_count = self.max_count
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ignore_documents is not UNSET:
-            field_dict["ignoreDocuments"] = ignore_documents
-        if max_count is not UNSET:
-            field_dict["maxCount"] = max_count
         if max_depth is not UNSET:
             field_dict["maxDepth"] = max_depth
         if max_siblings is not UNSET:
             field_dict["maxSiblings"] = max_siblings
-        if start_i_ds is not UNSET:
-            field_dict["startIDs"] = start_i_ds
+        if ignore_documents is not UNSET:
+            field_dict["ignoreDocuments"] = ignore_documents
         if find_info is not UNSET:
             field_dict["findInfo"] = find_info
+        if start_i_ds is not UNSET:
+            field_dict["startIDs"] = start_i_ds
+        if max_count is not UNSET:
+            field_dict["maxCount"] = max_count
 
         return field_dict
 
@@ -91,15 +94,11 @@ class NavigationInfo:
         from ..models.find_info import FindInfo
 
         d = src_dict.copy()
-        ignore_documents = d.pop("ignoreDocuments", UNSET)
-
-        max_count = d.pop("maxCount", UNSET)
-
         max_depth = d.pop("maxDepth", UNSET)
 
         max_siblings = d.pop("maxSiblings", UNSET)
 
-        start_i_ds = cast(List[str], d.pop("startIDs", UNSET))
+        ignore_documents = d.pop("ignoreDocuments", UNSET)
 
         _find_info = d.pop("findInfo", UNSET)
         find_info: Union[Unset, FindInfo]
@@ -108,13 +107,17 @@ class NavigationInfo:
         else:
             find_info = FindInfo.from_dict(_find_info)
 
+        start_i_ds = cast(List[str], d.pop("startIDs", UNSET))
+
+        max_count = d.pop("maxCount", UNSET)
+
         navigation_info = cls(
-            ignore_documents=ignore_documents,
-            max_count=max_count,
             max_depth=max_depth,
             max_siblings=max_siblings,
-            start_i_ds=start_i_ds,
+            ignore_documents=ignore_documents,
             find_info=find_info,
+            start_i_ds=start_i_ds,
+            max_count=max_count,
         )
 
         navigation_info.additional_properties = d

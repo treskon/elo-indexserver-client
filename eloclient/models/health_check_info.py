@@ -18,13 +18,8 @@ class HealthCheckInfo:
     """This class represents one value for health check evaluation.
 
     Attributes:
-        name (Union[Unset, str]): Value name.
         time_stamp (Union[Unset, str]):
         string_value (Union[Unset, str]): String value. Either this or {@link #doubleValue} has to be set.
-        double_value (Union[Unset, float]): Numeric value. Either this value or {@link #stringValue} has to be set.
-        sample_size (Union[Unset, str]): Sample size for mean values.
-            If {@link #doubleValue} is a arithmetic mean, this value gives the number of the
-             underlying samples. If {@link #stringValue} is set, this value has to be 0.
         min_value (Union[Unset, str]): Minimaler Wert für mean values.
             <p>
              EIX-1408
@@ -33,59 +28,73 @@ class HealthCheckInfo:
             <p>
              EIX-1408
              </p>
-        operation (Union[Unset, HealthCheckValueOperation]): Defines the operation to process when updating a value.
+        name (Union[Unset, str]): Value name.
+        double_value (Union[Unset, float]): Numeric value. Either this value or {@link #stringValue} has to be set.
+        sample_size (Union[Unset, str]): Sample size for mean values.
+            If {@link #doubleValue} is a arithmetic mean, this value gives the
+             number of the underlying samples. If {@link #stringValue} is set, this value has to be 0.
         type (Union[Unset, HealthCheckInfoType]): Defines the type of the HealthCheck values. Depending on the type the
-            evaluation differs. Either MMA, CNT or MSG.
+            evaluation differs.
+            Either
+             MMA, CNT or MSG.
+        operation (Union[Unset, HealthCheckValueOperation]): Defines the operation to process when updating a value.
     """
 
-    name: Union[Unset, str] = UNSET
     time_stamp: Union[Unset, str] = UNSET
     string_value: Union[Unset, str] = UNSET
-    double_value: Union[Unset, float] = UNSET
-    sample_size: Union[Unset, str] = UNSET
     min_value: Union[Unset, str] = UNSET
     max_value: Union[Unset, str] = UNSET
-    operation: Union[Unset, "HealthCheckValueOperation"] = UNSET
+    name: Union[Unset, str] = UNSET
+    double_value: Union[Unset, float] = UNSET
+    sample_size: Union[Unset, str] = UNSET
     type: Union[Unset, "HealthCheckInfoType"] = UNSET
+    operation: Union[Unset, "HealthCheckValueOperation"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        name = self.name
         time_stamp = self.time_stamp
+
         string_value = self.string_value
-        double_value = self.double_value
-        sample_size = self.sample_size
+
         min_value = self.min_value
+
         max_value = self.max_value
-        operation: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.operation, Unset):
-            operation = self.operation.to_dict()
+
+        name = self.name
+
+        double_value = self.double_value
+
+        sample_size = self.sample_size
 
         type: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.type, Unset):
             type = self.type.to_dict()
 
+        operation: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.operation, Unset):
+            operation = self.operation.to_dict()
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if name is not UNSET:
-            field_dict["name"] = name
         if time_stamp is not UNSET:
             field_dict["timeStamp"] = time_stamp
         if string_value is not UNSET:
             field_dict["stringValue"] = string_value
-        if double_value is not UNSET:
-            field_dict["doubleValue"] = double_value
-        if sample_size is not UNSET:
-            field_dict["sampleSize"] = sample_size
         if min_value is not UNSET:
             field_dict["minValue"] = min_value
         if max_value is not UNSET:
             field_dict["maxValue"] = max_value
-        if operation is not UNSET:
-            field_dict["operation"] = operation
+        if name is not UNSET:
+            field_dict["name"] = name
+        if double_value is not UNSET:
+            field_dict["doubleValue"] = double_value
+        if sample_size is not UNSET:
+            field_dict["sampleSize"] = sample_size
         if type is not UNSET:
             field_dict["type"] = type
+        if operation is not UNSET:
+            field_dict["operation"] = operation
 
         return field_dict
 
@@ -95,26 +104,19 @@ class HealthCheckInfo:
         from ..models.health_check_value_operation import HealthCheckValueOperation
 
         d = src_dict.copy()
-        name = d.pop("name", UNSET)
-
         time_stamp = d.pop("timeStamp", UNSET)
 
         string_value = d.pop("stringValue", UNSET)
-
-        double_value = d.pop("doubleValue", UNSET)
-
-        sample_size = d.pop("sampleSize", UNSET)
 
         min_value = d.pop("minValue", UNSET)
 
         max_value = d.pop("maxValue", UNSET)
 
-        _operation = d.pop("operation", UNSET)
-        operation: Union[Unset, HealthCheckValueOperation]
-        if isinstance(_operation, Unset):
-            operation = UNSET
-        else:
-            operation = HealthCheckValueOperation.from_dict(_operation)
+        name = d.pop("name", UNSET)
+
+        double_value = d.pop("doubleValue", UNSET)
+
+        sample_size = d.pop("sampleSize", UNSET)
 
         _type = d.pop("type", UNSET)
         type: Union[Unset, HealthCheckInfoType]
@@ -123,16 +125,23 @@ class HealthCheckInfo:
         else:
             type = HealthCheckInfoType.from_dict(_type)
 
+        _operation = d.pop("operation", UNSET)
+        operation: Union[Unset, HealthCheckValueOperation]
+        if isinstance(_operation, Unset):
+            operation = UNSET
+        else:
+            operation = HealthCheckValueOperation.from_dict(_operation)
+
         health_check_info = cls(
-            name=name,
             time_stamp=time_stamp,
             string_value=string_value,
-            double_value=double_value,
-            sample_size=sample_size,
             min_value=min_value,
             max_value=max_value,
-            operation=operation,
+            name=name,
+            double_value=double_value,
+            sample_size=sample_size,
             type=type,
+            operation=operation,
         )
 
         health_check_info.additional_properties = d

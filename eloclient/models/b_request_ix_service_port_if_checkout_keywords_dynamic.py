@@ -18,8 +18,9 @@ class BRequestIXServicePortIFCheckoutKeywordsDynamic:
     """
     Attributes:
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
@@ -29,19 +30,15 @@ class BRequestIXServicePortIFCheckoutKeywordsDynamic:
         keywords_dynamic_info (Union[Unset, KeywordsDynamicInfo]): This Class contains parameters for the IX call
             {@link IXServicePortIF#checkoutKeywordsDynamic(ClientInfo, KeywordsDynamicInfo)} .
              <p>
-             There are two ways to execute the script for dynamic keyword lists. According to the parameter in this class,
-            the one
-             way or the other is chosen. The first way is to specify {@link KeywordsDynamicInfo#sord} and
-             {@link KeywordsDynamicInfo#maskLineFocus}. Then, the IX passes these parameters to the script via the script-
-            function
-             open(ec, sord, fieldName). The other parameters will be overwritten by <code>null</code> and completely
-            ignored. The
-             other way is to set the fields {@link KeywordsDynamicInfo#mapData}, {@link KeywordsDynamicInfo#mapLineFocus}
-            and
-             {@link KeywordsDynamicInfo#mapScriptName}. In this case, the IX passes these parameters to the scripting
-            function
-             openMap(ec, data, fieldName). To achieve this, <code>sord</code> as well as <code>maskLineFocus</code> must be
-             <code>null</code>.
+             There are two ways to execute the script for dynamic keyword lists. According to the parameter in
+             this class, the one way or the other is chosen. The first way is to specify
+             {@link KeywordsDynamicInfo#sord} and {@link KeywordsDynamicInfo#maskLineFocus}. Then, the IX
+             passes these parameters to the script via the script-function open(ec, sord, fieldName). The
+             other parameters will be overwritten by <code>null</code> and completely ignored. The other way
+             is to set the fields {@link KeywordsDynamicInfo#mapData},
+             {@link KeywordsDynamicInfo#mapLineFocus} and {@link KeywordsDynamicInfo#mapScriptName}. In this
+             case, the IX passes these parameters to the scripting function openMap(ec, data, fieldName). To
+             achieve this, <code>sord</code> as well as <code>maskLineFocus</code> must be <code>null</code>.
              </p>
     """
 

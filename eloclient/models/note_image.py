@@ -33,6 +33,7 @@ class NoteImage:
 
     def to_dict(self) -> Dict[str, Any]:
         file_name = self.file_name
+
         file_data: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.file_data, Unset):
             file_data = self.file_data.to_dict()

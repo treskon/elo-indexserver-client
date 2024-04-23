@@ -18,17 +18,18 @@ T = TypeVar("T", bound="BRequestIXServicePortIFCheckinNotification")
 class BRequestIXServicePortIFCheckinNotification:
     """
     Attributes:
+        notif (Union[Unset, Notification]): Objects of this class represent a change notification. This class is used
+            internally.
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        notif (Union[Unset, Notification]): Objects of this class represent a change notification. This class is used
-            internally.
         noti_z (Union[Unset, NotificationZ]): <p>
             This class encapsulates the constants of <code>NotificationC</code>
              </p>
@@ -41,19 +42,19 @@ class BRequestIXServicePortIFCheckinNotification:
              </p>
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
     notif: Union[Unset, "Notification"] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
     noti_z: Union[Unset, "NotificationZ"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        ci: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.ci, Unset):
-            ci = self.ci.to_dict()
-
         notif: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.notif, Unset):
             notif = self.notif.to_dict()
+
+        ci: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.ci, Unset):
+            ci = self.ci.to_dict()
 
         noti_z: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.noti_z, Unset):
@@ -62,10 +63,10 @@ class BRequestIXServicePortIFCheckinNotification:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
         if notif is not UNSET:
             field_dict["notif"] = notif
+        if ci is not UNSET:
+            field_dict["ci"] = ci
         if noti_z is not UNSET:
             field_dict["notiZ"] = noti_z
 
@@ -78,19 +79,19 @@ class BRequestIXServicePortIFCheckinNotification:
         from ..models.notification_z import NotificationZ
 
         d = src_dict.copy()
-        _ci = d.pop("ci", UNSET)
-        ci: Union[Unset, ClientInfo]
-        if isinstance(_ci, Unset):
-            ci = UNSET
-        else:
-            ci = ClientInfo.from_dict(_ci)
-
         _notif = d.pop("notif", UNSET)
         notif: Union[Unset, Notification]
         if isinstance(_notif, Unset):
             notif = UNSET
         else:
             notif = Notification.from_dict(_notif)
+
+        _ci = d.pop("ci", UNSET)
+        ci: Union[Unset, ClientInfo]
+        if isinstance(_ci, Unset):
+            ci = UNSET
+        else:
+            ci = ClientInfo.from_dict(_ci)
 
         _noti_z = d.pop("notiZ", UNSET)
         noti_z: Union[Unset, NotificationZ]
@@ -100,8 +101,8 @@ class BRequestIXServicePortIFCheckinNotification:
             noti_z = NotificationZ.from_dict(_noti_z)
 
         b_request_ix_service_port_if_checkin_notification = cls(
-            ci=ci,
             notif=notif,
+            ci=ci,
             noti_z=noti_z,
         )
 

@@ -23,32 +23,34 @@ class FileData:
      </p>
 
         Attributes:
-            content_type (Union[Unset, str]): MIME-Type/document extension, for example text/xml or image/tiff or txt.
             data (Union[Unset, str]): File data as byte array.
             stream (Union[Unset, BStreamReference]):
+            content_type (Union[Unset, str]): MIME-Type/document extension, for example text/xml or image/tiff or txt.
     """
 
-    content_type: Union[Unset, str] = UNSET
     data: Union[Unset, str] = UNSET
     stream: Union[Unset, "BStreamReference"] = UNSET
+    content_type: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        content_type = self.content_type
         data = self.data
+
         stream: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.stream, Unset):
             stream = self.stream.to_dict()
 
+        content_type = self.content_type
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if content_type is not UNSET:
-            field_dict["contentType"] = content_type
         if data is not UNSET:
             field_dict["data"] = data
         if stream is not UNSET:
             field_dict["stream"] = stream
+        if content_type is not UNSET:
+            field_dict["contentType"] = content_type
 
         return field_dict
 
@@ -57,8 +59,6 @@ class FileData:
         from ..models.b_stream_reference import BStreamReference
 
         d = src_dict.copy()
-        content_type = d.pop("contentType", UNSET)
-
         data = d.pop("data", UNSET)
 
         _stream = d.pop("stream", UNSET)
@@ -68,10 +68,12 @@ class FileData:
         else:
             stream = BStreamReference.from_dict(_stream)
 
+        content_type = d.pop("contentType", UNSET)
+
         file_data = cls(
-            content_type=content_type,
             data=data,
             stream=stream,
+            content_type=content_type,
         )
 
         file_data.additional_properties = d

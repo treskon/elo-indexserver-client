@@ -18,9 +18,11 @@ T = TypeVar("T", bound="BRequestIXServicePortIFFindFirstWorkflows")
 class BRequestIXServicePortIFFindFirstWorkflows:
     """
     Attributes:
+        max_ (Union[Unset, int]):
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
@@ -34,7 +36,6 @@ class BRequestIXServicePortIFFindFirstWorkflows:
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        max_ (Union[Unset, int]):
         wf_diagram_z (Union[Unset, WFDiagramZ]): This class encapsulates the constants of the WFDiagramC class.
             <p>
              Copyright: Copyright (c) 2004
@@ -44,13 +45,15 @@ class BRequestIXServicePortIFFindFirstWorkflows:
              </p>
     """
 
+    max_: Union[Unset, int] = UNSET
     ci: Union[Unset, "ClientInfo"] = UNSET
     find_info: Union[Unset, "FindWorkflowInfo"] = UNSET
-    max_: Union[Unset, int] = UNSET
     wf_diagram_z: Union[Unset, "WFDiagramZ"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        max_ = self.max_
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
@@ -59,7 +62,6 @@ class BRequestIXServicePortIFFindFirstWorkflows:
         if not isinstance(self.find_info, Unset):
             find_info = self.find_info.to_dict()
 
-        max_ = self.max_
         wf_diagram_z: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.wf_diagram_z, Unset):
             wf_diagram_z = self.wf_diagram_z.to_dict()
@@ -67,12 +69,12 @@ class BRequestIXServicePortIFFindFirstWorkflows:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
+        if max_ is not UNSET:
+            field_dict["max"] = max_
         if ci is not UNSET:
             field_dict["ci"] = ci
         if find_info is not UNSET:
             field_dict["findInfo"] = find_info
-        if max_ is not UNSET:
-            field_dict["max"] = max_
         if wf_diagram_z is not UNSET:
             field_dict["wfDiagramZ"] = wf_diagram_z
 
@@ -85,6 +87,8 @@ class BRequestIXServicePortIFFindFirstWorkflows:
         from ..models.wf_diagram_z import WFDiagramZ
 
         d = src_dict.copy()
+        max_ = d.pop("max", UNSET)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
@@ -99,8 +103,6 @@ class BRequestIXServicePortIFFindFirstWorkflows:
         else:
             find_info = FindWorkflowInfo.from_dict(_find_info)
 
-        max_ = d.pop("max", UNSET)
-
         _wf_diagram_z = d.pop("wfDiagramZ", UNSET)
         wf_diagram_z: Union[Unset, WFDiagramZ]
         if isinstance(_wf_diagram_z, Unset):
@@ -109,9 +111,9 @@ class BRequestIXServicePortIFFindFirstWorkflows:
             wf_diagram_z = WFDiagramZ.from_dict(_wf_diagram_z)
 
         b_request_ix_service_port_if_find_first_workflows = cls(
+            max_=max_,
             ci=ci,
             find_info=find_info,
-            max_=max_,
             wf_diagram_z=wf_diagram_z,
         )
 

@@ -18,8 +18,9 @@ class BRequestIXServicePortIFStartAdHocWorkFlow3:
     """
     Attributes:
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
@@ -44,7 +45,9 @@ class BRequestIXServicePortIFStartAdHocWorkFlow3:
             ci = self.ci.to_dict()
 
         name = self.name
+
         obj_id = self.obj_id
+
         start_wf_info: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.start_wf_info, Unset):
             start_wf_info = self.start_wf_info.to_dict()

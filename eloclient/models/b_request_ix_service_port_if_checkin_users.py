@@ -19,23 +19,6 @@ T = TypeVar("T", bound="BRequestIXServicePortIFCheckinUsers")
 class BRequestIXServicePortIFCheckinUsers:
     """
     Attributes:
-        ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
-             <p>
-             Copyright: Copyright (c) 2004
-             </p>
-             <p>
-             Organisation: ELO Digital Office GmbH
-             </p>
-        user_infos (Union[Unset, List['UserInfo']]):
-        checkin_users_z (Union[Unset, CheckinUsersZ]): This class encapsulates the constants of CheckinUsersC.
-            <p>
-             Copyright: Copyright (c) 2004
-             </p>
-             <p>
-             Organisation: ELO Digital Office GmbH
-             </p>
         unlock_z (Union[Unset, LockZ]): This class encapsulates the constants of the LockC class.
             <p>
              Copyright: Copyright (c) 2004
@@ -43,15 +26,41 @@ class BRequestIXServicePortIFCheckinUsers:
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
+        checkin_users_z (Union[Unset, CheckinUsersZ]): This class encapsulates the constants of CheckinUsersC.
+            <p>
+             Copyright: Copyright (c) 2004
+             </p>
+             <p>
+             Organisation: ELO Digital Office GmbH
+             </p>
+        ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
+             <p>
+             Copyright: Copyright (c) 2004
+             </p>
+             <p>
+             Organisation: ELO Digital Office GmbH
+             </p>
+        user_infos (Union[Unset, List['UserInfo']]):
     """
 
+    unlock_z: Union[Unset, "LockZ"] = UNSET
+    checkin_users_z: Union[Unset, "CheckinUsersZ"] = UNSET
     ci: Union[Unset, "ClientInfo"] = UNSET
     user_infos: Union[Unset, List["UserInfo"]] = UNSET
-    checkin_users_z: Union[Unset, "CheckinUsersZ"] = UNSET
-    unlock_z: Union[Unset, "LockZ"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        unlock_z: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.unlock_z, Unset):
+            unlock_z = self.unlock_z.to_dict()
+
+        checkin_users_z: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.checkin_users_z, Unset):
+            checkin_users_z = self.checkin_users_z.to_dict()
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
@@ -61,28 +70,19 @@ class BRequestIXServicePortIFCheckinUsers:
             user_infos = []
             for user_infos_item_data in self.user_infos:
                 user_infos_item = user_infos_item_data.to_dict()
-
                 user_infos.append(user_infos_item)
-
-        checkin_users_z: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.checkin_users_z, Unset):
-            checkin_users_z = self.checkin_users_z.to_dict()
-
-        unlock_z: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.unlock_z, Unset):
-            unlock_z = self.unlock_z.to_dict()
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
+        if unlock_z is not UNSET:
+            field_dict["unlockZ"] = unlock_z
+        if checkin_users_z is not UNSET:
+            field_dict["checkinUsersZ"] = checkin_users_z
         if ci is not UNSET:
             field_dict["ci"] = ci
         if user_infos is not UNSET:
             field_dict["userInfos"] = user_infos
-        if checkin_users_z is not UNSET:
-            field_dict["checkinUsersZ"] = checkin_users_z
-        if unlock_z is not UNSET:
-            field_dict["unlockZ"] = unlock_z
 
         return field_dict
 
@@ -94,6 +94,20 @@ class BRequestIXServicePortIFCheckinUsers:
         from ..models.user_info import UserInfo
 
         d = src_dict.copy()
+        _unlock_z = d.pop("unlockZ", UNSET)
+        unlock_z: Union[Unset, LockZ]
+        if isinstance(_unlock_z, Unset):
+            unlock_z = UNSET
+        else:
+            unlock_z = LockZ.from_dict(_unlock_z)
+
+        _checkin_users_z = d.pop("checkinUsersZ", UNSET)
+        checkin_users_z: Union[Unset, CheckinUsersZ]
+        if isinstance(_checkin_users_z, Unset):
+            checkin_users_z = UNSET
+        else:
+            checkin_users_z = CheckinUsersZ.from_dict(_checkin_users_z)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
@@ -108,25 +122,11 @@ class BRequestIXServicePortIFCheckinUsers:
 
             user_infos.append(user_infos_item)
 
-        _checkin_users_z = d.pop("checkinUsersZ", UNSET)
-        checkin_users_z: Union[Unset, CheckinUsersZ]
-        if isinstance(_checkin_users_z, Unset):
-            checkin_users_z = UNSET
-        else:
-            checkin_users_z = CheckinUsersZ.from_dict(_checkin_users_z)
-
-        _unlock_z = d.pop("unlockZ", UNSET)
-        unlock_z: Union[Unset, LockZ]
-        if isinstance(_unlock_z, Unset):
-            unlock_z = UNSET
-        else:
-            unlock_z = LockZ.from_dict(_unlock_z)
-
         b_request_ix_service_port_if_checkin_users = cls(
+            unlock_z=unlock_z,
+            checkin_users_z=checkin_users_z,
             ci=ci,
             user_infos=user_infos,
-            checkin_users_z=checkin_users_z,
-            unlock_z=unlock_z,
         )
 
         b_request_ix_service_port_if_checkin_users.additional_properties = d

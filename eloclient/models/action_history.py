@@ -14,11 +14,12 @@ class ActionHistory:
     Attributes:
         action_guid (Union[Unset, str]): Action GUID. Unique identifier.
         create_date_iso (Union[Unset, str]): Create date.
-            This element is the ISO formatted create date of the action in the time zone of the client
-             application. In order to convert this value into a date object, invoke function
+            This element is the ISO formatted create date of the action in the time zone of
+             the client application. In order to convert this value into a date object, invoke function
              {@link de.elo.ix.client.IXConnection#isoToDate}.
-        text (Union[Unset, str]): Comment text. This element is only valid for {@link EActionType#UserComment}, and
-            {@link EActionType#AutoComment}.
+        text (Union[Unset, str]): Comment text.
+            This element is only valid for {@link EActionType#UserComment}, and
+             {@link EActionType#AutoComment}.
     """
 
     action_guid: Union[Unset, str] = UNSET
@@ -28,7 +29,9 @@ class ActionHistory:
 
     def to_dict(self) -> Dict[str, Any]:
         action_guid = self.action_guid
+
         create_date_iso = self.create_date_iso
+
         text = self.text
 
         field_dict: Dict[str, Any] = {}

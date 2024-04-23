@@ -17,21 +17,22 @@ class BRequestIXServicePortIFStartExport:
     """
     Attributes:
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        top_level_i_ds (Union[Unset, List[str]]):
         options (Union[Unset, str]):
+        top_level_i_ds (Union[Unset, List[str]]):
     """
 
     ci: Union[Unset, "ClientInfo"] = UNSET
-    top_level_i_ds: Union[Unset, List[str]] = UNSET
     options: Union[Unset, str] = UNSET
+    top_level_i_ds: Union[Unset, List[str]] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -39,21 +40,21 @@ class BRequestIXServicePortIFStartExport:
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
+        options = self.options
+
         top_level_i_ds: Union[Unset, List[str]] = UNSET
         if not isinstance(self.top_level_i_ds, Unset):
             top_level_i_ds = self.top_level_i_ds
-
-        options = self.options
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if ci is not UNSET:
             field_dict["ci"] = ci
-        if top_level_i_ds is not UNSET:
-            field_dict["topLevelIDs"] = top_level_i_ds
         if options is not UNSET:
             field_dict["options"] = options
+        if top_level_i_ds is not UNSET:
+            field_dict["topLevelIDs"] = top_level_i_ds
 
         return field_dict
 
@@ -69,14 +70,14 @@ class BRequestIXServicePortIFStartExport:
         else:
             ci = ClientInfo.from_dict(_ci)
 
-        top_level_i_ds = cast(List[str], d.pop("topLevelIDs", UNSET))
-
         options = d.pop("options", UNSET)
+
+        top_level_i_ds = cast(List[str], d.pop("topLevelIDs", UNSET))
 
         b_request_ix_service_port_if_start_export = cls(
             ci=ci,
-            top_level_i_ds=top_level_i_ds,
             options=options,
+            top_level_i_ds=top_level_i_ds,
         )
 
         b_request_ix_service_port_if_start_export.additional_properties = d

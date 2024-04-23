@@ -11,9 +11,9 @@ T = TypeVar("T", bound="ProcessMoveDocumentsToStoragePath")
 @_attrs_define
 class ProcessMoveDocumentsToStoragePath:
     """This class specifies the options for moving a document into another storage path.
-    It is used as member in
-     <code>ProcessInfo</code> and is interpreted in the functions <code>processFindResult</code> and
-     <code>processTrees</code>.
+    It is used as
+     member in <code>ProcessInfo</code> and is interpreted in the functions
+     <code>processFindResult</code> and <code>processTrees</code>.
 
         Attributes:
             path_id (Union[Unset, str]): Name or ID of the storage path

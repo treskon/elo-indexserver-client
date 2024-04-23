@@ -15,9 +15,10 @@ class ServerInfoDM:
     Attributes:
         basis_store_ids (Union[Unset, List[int]]):
         backup_store_ids (Union[Unset, List[int]]):
-        restore_store_id (Union[Unset, int]): ID of restore path.
         store_mode (Union[Unset, int]): Mode to be used to fill the filing paths. This value is a bitset of the
             ServerInfoDMC.STOREMODE_* constants.
+        blackening_enabled (Union[Unset, bool]): DM is enabled for blackening of document parts.
+        restore_store_id (Union[Unset, int]): ID of restore path.
         proxy_mode (Union[Unset, int]): DM proxy mode. Read-only.
             <table>
              <tr>
@@ -33,15 +34,14 @@ class ServerInfoDM:
              <td>Branch instance</td>
              </tr>
              </table>
-        blackening_enabled (Union[Unset, bool]): DM is enabled for blackening of document parts.
     """
 
     basis_store_ids: Union[Unset, List[int]] = UNSET
     backup_store_ids: Union[Unset, List[int]] = UNSET
-    restore_store_id: Union[Unset, int] = UNSET
     store_mode: Union[Unset, int] = UNSET
-    proxy_mode: Union[Unset, int] = UNSET
     blackening_enabled: Union[Unset, bool] = UNSET
+    restore_store_id: Union[Unset, int] = UNSET
+    proxy_mode: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -53,10 +53,13 @@ class ServerInfoDM:
         if not isinstance(self.backup_store_ids, Unset):
             backup_store_ids = self.backup_store_ids
 
-        restore_store_id = self.restore_store_id
         store_mode = self.store_mode
-        proxy_mode = self.proxy_mode
+
         blackening_enabled = self.blackening_enabled
+
+        restore_store_id = self.restore_store_id
+
+        proxy_mode = self.proxy_mode
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -65,14 +68,14 @@ class ServerInfoDM:
             field_dict["basisStoreIds"] = basis_store_ids
         if backup_store_ids is not UNSET:
             field_dict["backupStoreIds"] = backup_store_ids
-        if restore_store_id is not UNSET:
-            field_dict["restoreStoreId"] = restore_store_id
         if store_mode is not UNSET:
             field_dict["storeMode"] = store_mode
-        if proxy_mode is not UNSET:
-            field_dict["proxyMode"] = proxy_mode
         if blackening_enabled is not UNSET:
             field_dict["blackeningEnabled"] = blackening_enabled
+        if restore_store_id is not UNSET:
+            field_dict["restoreStoreId"] = restore_store_id
+        if proxy_mode is not UNSET:
+            field_dict["proxyMode"] = proxy_mode
 
         return field_dict
 
@@ -83,21 +86,21 @@ class ServerInfoDM:
 
         backup_store_ids = cast(List[int], d.pop("backupStoreIds", UNSET))
 
-        restore_store_id = d.pop("restoreStoreId", UNSET)
-
         store_mode = d.pop("storeMode", UNSET)
 
-        proxy_mode = d.pop("proxyMode", UNSET)
-
         blackening_enabled = d.pop("blackeningEnabled", UNSET)
+
+        restore_store_id = d.pop("restoreStoreId", UNSET)
+
+        proxy_mode = d.pop("proxyMode", UNSET)
 
         server_info_dm = cls(
             basis_store_ids=basis_store_ids,
             backup_store_ids=backup_store_ids,
-            restore_store_id=restore_store_id,
             store_mode=store_mode,
-            proxy_mode=proxy_mode,
             blackening_enabled=blackening_enabled,
+            restore_store_id=restore_store_id,
+            proxy_mode=proxy_mode,
         )
 
         server_info_dm.additional_properties = d

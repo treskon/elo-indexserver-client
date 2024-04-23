@@ -23,6 +23,7 @@ class WorkflowExportOptionsC:
 
     def to_dict(self) -> Dict[str, Any]:
         format_json = self.format_json
+
         format_plain_table = self.format_plain_table
 
         field_dict: Dict[str, Any] = {}

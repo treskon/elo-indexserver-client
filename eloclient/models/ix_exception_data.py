@@ -10,8 +10,10 @@ T = TypeVar("T", bound="IXExceptionData")
 
 @_attrs_define
 class IXExceptionData:
-    """This class describes an exception that can occur during the execution of an Index server function.
-    <p>
+    """This class describes an exception that can occur during the execution of an Index server
+    function.
+
+     <p>
      Copyright: Copyright (c) 2004
      </p>
      <p>
@@ -20,42 +22,46 @@ class IXExceptionData:
 
         Attributes:
             call_id (Union[Unset, str]): String containing the ClientInfo.callId for the ClientInfo object.
-                This is given to the function which
-                 triggered/caused the error.
-            details (Union[Unset, str]): Detail text for the exception.
+                This is given to the
+                 function which triggered/caused the error.
             exception_type (Union[Unset, int]): This is the type of exception. This is one of the constants from
                 IXExceptionC.
-            message (Union[Unset, str]): The error message text for the exception.
             ticket (Union[Unset, str]): Ticket given to the function.
+            details (Union[Unset, str]): Detail text for the exception.
+            message (Union[Unset, str]): The error message text for the exception.
     """
 
     call_id: Union[Unset, str] = UNSET
-    details: Union[Unset, str] = UNSET
     exception_type: Union[Unset, int] = UNSET
-    message: Union[Unset, str] = UNSET
     ticket: Union[Unset, str] = UNSET
+    details: Union[Unset, str] = UNSET
+    message: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         call_id = self.call_id
-        details = self.details
+
         exception_type = self.exception_type
-        message = self.message
+
         ticket = self.ticket
+
+        details = self.details
+
+        message = self.message
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if call_id is not UNSET:
             field_dict["callId"] = call_id
-        if details is not UNSET:
-            field_dict["details"] = details
         if exception_type is not UNSET:
             field_dict["exceptionType"] = exception_type
-        if message is not UNSET:
-            field_dict["message"] = message
         if ticket is not UNSET:
             field_dict["ticket"] = ticket
+        if details is not UNSET:
+            field_dict["details"] = details
+        if message is not UNSET:
+            field_dict["message"] = message
 
         return field_dict
 
@@ -64,20 +70,20 @@ class IXExceptionData:
         d = src_dict.copy()
         call_id = d.pop("callId", UNSET)
 
-        details = d.pop("details", UNSET)
-
         exception_type = d.pop("exceptionType", UNSET)
-
-        message = d.pop("message", UNSET)
 
         ticket = d.pop("ticket", UNSET)
 
+        details = d.pop("details", UNSET)
+
+        message = d.pop("message", UNSET)
+
         ix_exception_data = cls(
             call_id=call_id,
-            details=details,
             exception_type=exception_type,
-            message=message,
             ticket=ticket,
+            details=details,
+            message=message,
         )
 
         ix_exception_data.additional_properties = d

@@ -15,11 +15,17 @@ T = TypeVar("T", bound="DoubleRangeValue")
 @_attrs_define
 class DoubleRangeValue:
     """<p>
-    Class to commit a range filter of double values.
+    Class to commit a range filter of double values or specify a range aggregation.
      </p>
 
      <p>
-     To perform an open range query (e.g. from now to infinite), only submit either a value for from or to
+     To perform an open range query (e.g. from now to infinite), only submit either a value for from
+     or to
+     </p>
+     <p>
+     To perform a range aggregation, submit both from/to or at least from or to for each requested
+     bucket (e.g. [from 3.14 to 6.28] or [from 3.14 to infinite]). Note that this aggregation includes
+     the "from"-value and excludes the "to"-value for each range.
      </p>
 
         Attributes:

@@ -18,9 +18,21 @@ T = TypeVar("T", bound="BRequestIXServicePortIFFindFirstSords")
 class BRequestIXServicePortIFFindFirstSords:
     """
     Attributes:
+        sord_z (Union[Unset, SordZ]): <p>
+            This class encapsulates the constants of <code>SordC</code>
+             </p>
+
+             <p>
+             Copyright: Copyright (c) 2004
+             </p>
+             <p>
+             Organisation: ELO Digital Office GmbH
+             </p>
+        max_ (Union[Unset, int]):
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
@@ -34,26 +46,21 @@ class BRequestIXServicePortIFFindFirstSords:
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        max_ (Union[Unset, int]):
-        sord_z (Union[Unset, SordZ]): <p>
-            This class encapsulates the constants of <code>SordC</code>
-             </p>
-
-             <p>
-             Copyright: Copyright (c) 2004
-             </p>
-             <p>
-             Organisation: ELO Digital Office GmbH
-             </p>
     """
 
+    sord_z: Union[Unset, "SordZ"] = UNSET
+    max_: Union[Unset, int] = UNSET
     ci: Union[Unset, "ClientInfo"] = UNSET
     find_info: Union[Unset, "FindInfo"] = UNSET
-    max_: Union[Unset, int] = UNSET
-    sord_z: Union[Unset, "SordZ"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        sord_z: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.sord_z, Unset):
+            sord_z = self.sord_z.to_dict()
+
+        max_ = self.max_
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
@@ -62,22 +69,17 @@ class BRequestIXServicePortIFFindFirstSords:
         if not isinstance(self.find_info, Unset):
             find_info = self.find_info.to_dict()
 
-        max_ = self.max_
-        sord_z: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.sord_z, Unset):
-            sord_z = self.sord_z.to_dict()
-
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
+        if sord_z is not UNSET:
+            field_dict["sordZ"] = sord_z
+        if max_ is not UNSET:
+            field_dict["max"] = max_
         if ci is not UNSET:
             field_dict["ci"] = ci
         if find_info is not UNSET:
             field_dict["findInfo"] = find_info
-        if max_ is not UNSET:
-            field_dict["max"] = max_
-        if sord_z is not UNSET:
-            field_dict["sordZ"] = sord_z
 
         return field_dict
 
@@ -88,6 +90,15 @@ class BRequestIXServicePortIFFindFirstSords:
         from ..models.sord_z import SordZ
 
         d = src_dict.copy()
+        _sord_z = d.pop("sordZ", UNSET)
+        sord_z: Union[Unset, SordZ]
+        if isinstance(_sord_z, Unset):
+            sord_z = UNSET
+        else:
+            sord_z = SordZ.from_dict(_sord_z)
+
+        max_ = d.pop("max", UNSET)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
@@ -102,20 +113,11 @@ class BRequestIXServicePortIFFindFirstSords:
         else:
             find_info = FindInfo.from_dict(_find_info)
 
-        max_ = d.pop("max", UNSET)
-
-        _sord_z = d.pop("sordZ", UNSET)
-        sord_z: Union[Unset, SordZ]
-        if isinstance(_sord_z, Unset):
-            sord_z = UNSET
-        else:
-            sord_z = SordZ.from_dict(_sord_z)
-
         b_request_ix_service_port_if_find_first_sords = cls(
+            sord_z=sord_z,
+            max_=max_,
             ci=ci,
             find_info=find_info,
-            max_=max_,
-            sord_z=sord_z,
         )
 
         b_request_ix_service_port_if_find_first_sords.additional_properties = d

@@ -17,9 +17,11 @@ T = TypeVar("T", bound="BRequestFeedServiceCheckoutHashTag")
 class BRequestFeedServiceCheckoutHashTag:
     """
     Attributes:
+        hstg_z (Union[Unset, HashTagZ]):
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
@@ -27,33 +29,33 @@ class BRequestFeedServiceCheckoutHashTag:
              Organisation: ELO Digital Office GmbH
              </p>
         hashtag_guid_or_name (Union[Unset, str]):
-        hstg_z (Union[Unset, HashTagZ]):
     """
 
+    hstg_z: Union[Unset, "HashTagZ"] = UNSET
     ci: Union[Unset, "ClientInfo"] = UNSET
     hashtag_guid_or_name: Union[Unset, str] = UNSET
-    hstg_z: Union[Unset, "HashTagZ"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        hstg_z: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.hstg_z, Unset):
+            hstg_z = self.hstg_z.to_dict()
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
         hashtag_guid_or_name = self.hashtag_guid_or_name
-        hstg_z: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.hstg_z, Unset):
-            hstg_z = self.hstg_z.to_dict()
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
+        if hstg_z is not UNSET:
+            field_dict["hstgZ"] = hstg_z
         if ci is not UNSET:
             field_dict["ci"] = ci
         if hashtag_guid_or_name is not UNSET:
             field_dict["hashtagGuidOrName"] = hashtag_guid_or_name
-        if hstg_z is not UNSET:
-            field_dict["hstgZ"] = hstg_z
 
         return field_dict
 
@@ -63,6 +65,13 @@ class BRequestFeedServiceCheckoutHashTag:
         from ..models.hash_tag_z import HashTagZ
 
         d = src_dict.copy()
+        _hstg_z = d.pop("hstgZ", UNSET)
+        hstg_z: Union[Unset, HashTagZ]
+        if isinstance(_hstg_z, Unset):
+            hstg_z = UNSET
+        else:
+            hstg_z = HashTagZ.from_dict(_hstg_z)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
@@ -72,17 +81,10 @@ class BRequestFeedServiceCheckoutHashTag:
 
         hashtag_guid_or_name = d.pop("hashtagGuidOrName", UNSET)
 
-        _hstg_z = d.pop("hstgZ", UNSET)
-        hstg_z: Union[Unset, HashTagZ]
-        if isinstance(_hstg_z, Unset):
-            hstg_z = UNSET
-        else:
-            hstg_z = HashTagZ.from_dict(_hstg_z)
-
         b_request_feed_service_checkout_hash_tag = cls(
+            hstg_z=hstg_z,
             ci=ci,
             hashtag_guid_or_name=hashtag_guid_or_name,
-            hstg_z=hstg_z,
         )
 
         b_request_feed_service_checkout_hash_tag.additional_properties = d

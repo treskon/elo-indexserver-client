@@ -19,16 +19,15 @@ class BRequestIXServicePortIFLinkSords2:
     """
     Attributes:
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        from_id (Union[Unset, str]):
-        to_ids (Union[Unset, List[str]]):
         link_sord_z (Union[Unset, LinkSordZ]): This class encapsulates the constants of LinkSordC.
             <p>
              Copyright: Copyright (c) 2004
@@ -36,14 +35,16 @@ class BRequestIXServicePortIFLinkSords2:
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
+        to_ids (Union[Unset, List[str]]):
+        from_id (Union[Unset, str]):
         link_sord_info (Union[Unset, LinkSordInfo]): Additional parameters for function {@link
             IXServicePortIF#linkSords2}
     """
 
     ci: Union[Unset, "ClientInfo"] = UNSET
-    from_id: Union[Unset, str] = UNSET
-    to_ids: Union[Unset, List[str]] = UNSET
     link_sord_z: Union[Unset, "LinkSordZ"] = UNSET
+    to_ids: Union[Unset, List[str]] = UNSET
+    from_id: Union[Unset, str] = UNSET
     link_sord_info: Union[Unset, "LinkSordInfo"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -52,14 +53,15 @@ class BRequestIXServicePortIFLinkSords2:
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        from_id = self.from_id
+        link_sord_z: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.link_sord_z, Unset):
+            link_sord_z = self.link_sord_z.to_dict()
+
         to_ids: Union[Unset, List[str]] = UNSET
         if not isinstance(self.to_ids, Unset):
             to_ids = self.to_ids
 
-        link_sord_z: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.link_sord_z, Unset):
-            link_sord_z = self.link_sord_z.to_dict()
+        from_id = self.from_id
 
         link_sord_info: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.link_sord_info, Unset):
@@ -70,12 +72,12 @@ class BRequestIXServicePortIFLinkSords2:
         field_dict.update({})
         if ci is not UNSET:
             field_dict["ci"] = ci
-        if from_id is not UNSET:
-            field_dict["fromId"] = from_id
-        if to_ids is not UNSET:
-            field_dict["toIds"] = to_ids
         if link_sord_z is not UNSET:
             field_dict["linkSordZ"] = link_sord_z
+        if to_ids is not UNSET:
+            field_dict["toIds"] = to_ids
+        if from_id is not UNSET:
+            field_dict["fromId"] = from_id
         if link_sord_info is not UNSET:
             field_dict["linkSordInfo"] = link_sord_info
 
@@ -95,16 +97,16 @@ class BRequestIXServicePortIFLinkSords2:
         else:
             ci = ClientInfo.from_dict(_ci)
 
-        from_id = d.pop("fromId", UNSET)
-
-        to_ids = cast(List[str], d.pop("toIds", UNSET))
-
         _link_sord_z = d.pop("linkSordZ", UNSET)
         link_sord_z: Union[Unset, LinkSordZ]
         if isinstance(_link_sord_z, Unset):
             link_sord_z = UNSET
         else:
             link_sord_z = LinkSordZ.from_dict(_link_sord_z)
+
+        to_ids = cast(List[str], d.pop("toIds", UNSET))
+
+        from_id = d.pop("fromId", UNSET)
 
         _link_sord_info = d.pop("linkSordInfo", UNSET)
         link_sord_info: Union[Unset, LinkSordInfo]
@@ -115,9 +117,9 @@ class BRequestIXServicePortIFLinkSords2:
 
         b_request_ix_service_port_if_link_sords_2 = cls(
             ci=ci,
-            from_id=from_id,
-            to_ids=to_ids,
             link_sord_z=link_sord_z,
+            to_ids=to_ids,
+            from_id=from_id,
             link_sord_info=link_sord_info,
         )
 

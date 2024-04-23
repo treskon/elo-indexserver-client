@@ -16,36 +16,37 @@ T = TypeVar("T", bound="BRequestIXServicePortIFGetArchiveStatistics")
 class BRequestIXServicePortIFGetArchiveStatistics:
     """
     Attributes:
+        opts (Union[Unset, str]):
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        opts (Union[Unset, str]):
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
     opts: Union[Unset, str] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        opts = self.opts
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        opts = self.opts
-
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
         if opts is not UNSET:
             field_dict["opts"] = opts
+        if ci is not UNSET:
+            field_dict["ci"] = ci
 
         return field_dict
 
@@ -54,6 +55,8 @@ class BRequestIXServicePortIFGetArchiveStatistics:
         from ..models.client_info import ClientInfo
 
         d = src_dict.copy()
+        opts = d.pop("opts", UNSET)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
@@ -61,11 +64,9 @@ class BRequestIXServicePortIFGetArchiveStatistics:
         else:
             ci = ClientInfo.from_dict(_ci)
 
-        opts = d.pop("opts", UNSET)
-
         b_request_ix_service_port_if_get_archive_statistics = cls(
-            ci=ci,
             opts=opts,
+            ci=ci,
         )
 
         b_request_ix_service_port_if_get_archive_statistics.additional_properties = d

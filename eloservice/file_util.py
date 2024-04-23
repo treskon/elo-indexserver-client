@@ -63,7 +63,7 @@ class FileUtil:
             edit_info_z=elo_const.EDIT_INFO_Z_MB_ALL,
             lock_z=LockZ(LockC().bset_no)
         )
-        res = ix_service_port_if_checkout_sord.sync_detailed(client=self.elo_client, json_body=body)
+        res = ix_service_port_if_checkout_sord.sync_detailed(client=self.elo_client, body=body)
         _check_response(res)
         if type(res.parsed.result.sord) is not Sord:
             raise ValueError(f"Sord with ID {sord_id} not found")
@@ -96,7 +96,7 @@ class FileUtil:
             unlock_z=LockZ(LockC().bset_yes),
             document=document
         )
-        res = ix_service_port_if_checkin_doc_end.sync_detailed(client=self.elo_client, json_body=body)
+        res = ix_service_port_if_checkin_doc_end.sync_detailed(client=self.elo_client, body=body)
         _check_response(res)
         return res.parsed.result.obj_id
 
@@ -118,7 +118,7 @@ class FileUtil:
             mask_id=filemask_id,
             edit_info_z=elo_const.EDIT_INFO_Z_MB_ALL
         )
-        res = ix_service_port_if_create_doc.sync_detailed(client=self.elo_client, json_body=body)
+        res = ix_service_port_if_create_doc.sync_detailed(client=self.elo_client, body=body)
         _check_response(res)
         document_sord = res.parsed.result.sord
         return document_sord

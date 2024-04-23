@@ -17,40 +17,41 @@ T = TypeVar("T", bound="BRequestIXServicePortIFNotifyServer")
 class BRequestIXServicePortIFNotifyServer:
     """
     Attributes:
+        msg (Union[Unset, NotifyServerInfo]): This class is used in IXServicePortIF.
+            notifyServer to describe which operation(s) has (have) been
+             processed by the client application.
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        msg (Union[Unset, NotifyServerInfo]): This class is used in IXServicePortIF.
-            notifyServer to describe which operation(s) has (have) been processed by the
-             client application.
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
     msg: Union[Unset, "NotifyServerInfo"] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        ci: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.ci, Unset):
-            ci = self.ci.to_dict()
-
         msg: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.msg, Unset):
             msg = self.msg.to_dict()
 
+        ci: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.ci, Unset):
+            ci = self.ci.to_dict()
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
         if msg is not UNSET:
             field_dict["msg"] = msg
+        if ci is not UNSET:
+            field_dict["ci"] = ci
 
         return field_dict
 
@@ -60,13 +61,6 @@ class BRequestIXServicePortIFNotifyServer:
         from ..models.notify_server_info import NotifyServerInfo
 
         d = src_dict.copy()
-        _ci = d.pop("ci", UNSET)
-        ci: Union[Unset, ClientInfo]
-        if isinstance(_ci, Unset):
-            ci = UNSET
-        else:
-            ci = ClientInfo.from_dict(_ci)
-
         _msg = d.pop("msg", UNSET)
         msg: Union[Unset, NotifyServerInfo]
         if isinstance(_msg, Unset):
@@ -74,9 +68,16 @@ class BRequestIXServicePortIFNotifyServer:
         else:
             msg = NotifyServerInfo.from_dict(_msg)
 
+        _ci = d.pop("ci", UNSET)
+        ci: Union[Unset, ClientInfo]
+        if isinstance(_ci, Unset):
+            ci = UNSET
+        else:
+            ci = ClientInfo.from_dict(_ci)
+
         b_request_ix_service_port_if_notify_server = cls(
-            ci=ci,
             msg=msg,
+            ci=ci,
         )
 
         b_request_ix_service_port_if_notify_server.additional_properties = d

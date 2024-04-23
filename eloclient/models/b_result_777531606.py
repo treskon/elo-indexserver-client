@@ -17,8 +17,8 @@ class BResult777531606:
     """
     Attributes:
         result (Union[Unset, LoginResult]): <p>
-            Object returned when logging in to the IX. This class contains the information required after the login has been
-             carried out.
+            Object returned when logging in to the IX. This class contains the information required after the
+             login has been carried out.
              </p>
 
              <p>

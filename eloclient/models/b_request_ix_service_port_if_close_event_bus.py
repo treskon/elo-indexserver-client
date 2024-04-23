@@ -16,36 +16,37 @@ T = TypeVar("T", bound="BRequestIXServicePortIFCloseEventBus")
 class BRequestIXServicePortIFCloseEventBus:
     """
     Attributes:
+        bus_id (Union[Unset, str]):
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        bus_id (Union[Unset, str]):
     """
 
-    ci: Union[Unset, "ClientInfo"] = UNSET
     bus_id: Union[Unset, str] = UNSET
+    ci: Union[Unset, "ClientInfo"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        bus_id = self.bus_id
+
         ci: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        bus_id = self.bus_id
-
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ci is not UNSET:
-            field_dict["ci"] = ci
         if bus_id is not UNSET:
             field_dict["busId"] = bus_id
+        if ci is not UNSET:
+            field_dict["ci"] = ci
 
         return field_dict
 
@@ -54,6 +55,8 @@ class BRequestIXServicePortIFCloseEventBus:
         from ..models.client_info import ClientInfo
 
         d = src_dict.copy()
+        bus_id = d.pop("busId", UNSET)
+
         _ci = d.pop("ci", UNSET)
         ci: Union[Unset, ClientInfo]
         if isinstance(_ci, Unset):
@@ -61,11 +64,9 @@ class BRequestIXServicePortIFCloseEventBus:
         else:
             ci = ClientInfo.from_dict(_ci)
 
-        bus_id = d.pop("busId", UNSET)
-
         b_request_ix_service_port_if_close_event_bus = cls(
-            ci=ci,
             bus_id=bus_id,
+            ci=ci,
         )
 
         b_request_ix_service_port_if_close_event_bus.additional_properties = d

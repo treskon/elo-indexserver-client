@@ -18,8 +18,9 @@ class BRequestIXServicePortIFOpenEventBus:
     """
     Attributes:
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
@@ -27,8 +28,8 @@ class BRequestIXServicePortIFOpenEventBus:
              Organisation: ELO Digital Office GmbH
              </p>
         params (Union[Unset, EventBusParams]): This class supplies params to control the creation of an event bus ID.
-            Only one of the members ticket, userId and
-             channelId should be set.
+            Only one of the members
+             ticket, userId and channelId should be set.
     """
 
     ci: Union[Unset, "ClientInfo"] = UNSET

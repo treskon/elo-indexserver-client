@@ -11,54 +11,58 @@ T = TypeVar("T", bound="Subscription")
 @_attrs_define
 class Subscription:
     """This class describes a subscription. A user can subscribe for changes to an object.
-    Currently, the only supported
-     object type is a document feed. If the feed receives new comments, notification information is inserted into the
-     database for the user. By calling FeedService.findFirstActions and setting FindActionsInfo.findNotifications=true,
-     the user can search for her notifications.
+    Currently,
+     the only supported object type is a document feed. If the feed receives new comments,
+     notification information is inserted into the database for the user. By calling
+     FeedService.findFirstActions and setting FindActionsInfo.findNotifications=true, the user can
+     search for her notifications.
 
         Attributes:
-            user_guid (Union[Unset, str]): GUID of user who registered the subscription.
-            watch_guid (Union[Unset, str]): GUID of Object to be watched.
-                This is either a {@link de.elo.ix.client.feed.Feed#getGuid()}, {@link de.elo.ix.client.feed.Action#getGuid()} or
-                 {@link de.elo.ix.client.feed.HashTag#getHstgGuid()}.
             create_date_iso (Union[Unset, str]): Create date of the subscription.
+            watch_guid (Union[Unset, str]): GUID of Object to be watched.
+                This is either a {@link de.elo.ix.client.feed.Feed#getGuid()},
+                 {@link de.elo.ix.client.feed.Action#getGuid()} or
+                 {@link de.elo.ix.client.feed.HashTag#getHstgGuid()}.
+            user_guid (Union[Unset, str]): GUID of user who registered the subscription.
     """
 
-    user_guid: Union[Unset, str] = UNSET
-    watch_guid: Union[Unset, str] = UNSET
     create_date_iso: Union[Unset, str] = UNSET
+    watch_guid: Union[Unset, str] = UNSET
+    user_guid: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        user_guid = self.user_guid
-        watch_guid = self.watch_guid
         create_date_iso = self.create_date_iso
+
+        watch_guid = self.watch_guid
+
+        user_guid = self.user_guid
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if user_guid is not UNSET:
-            field_dict["userGuid"] = user_guid
-        if watch_guid is not UNSET:
-            field_dict["watchGuid"] = watch_guid
         if create_date_iso is not UNSET:
             field_dict["createDateIso"] = create_date_iso
+        if watch_guid is not UNSET:
+            field_dict["watchGuid"] = watch_guid
+        if user_guid is not UNSET:
+            field_dict["userGuid"] = user_guid
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        user_guid = d.pop("userGuid", UNSET)
+        create_date_iso = d.pop("createDateIso", UNSET)
 
         watch_guid = d.pop("watchGuid", UNSET)
 
-        create_date_iso = d.pop("createDateIso", UNSET)
+        user_guid = d.pop("userGuid", UNSET)
 
         subscription = cls(
-            user_guid=user_guid,
-            watch_guid=watch_guid,
             create_date_iso=create_date_iso,
+            watch_guid=watch_guid,
+            user_guid=user_guid,
         )
 
         subscription.additional_properties = d

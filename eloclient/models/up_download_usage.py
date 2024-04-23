@@ -10,48 +10,44 @@ T = TypeVar("T", bound="UpDownloadUsage")
 
 @_attrs_define
 class UpDownloadUsage:
-    """This enumeration defines constants that describe, from where an event in {@link DocumentEvents} is called.
+    """This enumeration defines constants that describe, from where an event in {@link DocumentEvents}
+    is called.
 
-    Attributes:
-        api (Union[Unset, UpDownloadUsage]): This enumeration defines constants that describe, from where an event in
-            {@link DocumentEvents} is called.
-        intern (Union[Unset, UpDownloadUsage]): This enumeration defines constants that describe, from where an event in
-            {@link DocumentEvents} is called.
+        Attributes:
+            intern (Union[Unset, UpDownloadUsage]): This enumeration defines constants that describe, from where an event in
+                {@link DocumentEvents}
+                is called.
+            api (Union[Unset, UpDownloadUsage]): This enumeration defines constants that describe, from where an event in
+                {@link DocumentEvents}
+                is called.
     """
 
-    api: Union[Unset, "UpDownloadUsage"] = UNSET
     intern: Union[Unset, "UpDownloadUsage"] = UNSET
+    api: Union[Unset, "UpDownloadUsage"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        api: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.api, Unset):
-            api = self.api.to_dict()
-
         intern: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.intern, Unset):
             intern = self.intern.to_dict()
 
+        api: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.api, Unset):
+            api = self.api.to_dict()
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if api is not UNSET:
-            field_dict["API"] = api
         if intern is not UNSET:
             field_dict["INTERN"] = intern
+        if api is not UNSET:
+            field_dict["API"] = api
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        _api = d.pop("API", UNSET)
-        api: Union[Unset, UpDownloadUsage]
-        if isinstance(_api, Unset):
-            api = UNSET
-        else:
-            api = UpDownloadUsage.from_dict(_api)
-
         _intern = d.pop("INTERN", UNSET)
         intern: Union[Unset, UpDownloadUsage]
         if isinstance(_intern, Unset):
@@ -59,9 +55,16 @@ class UpDownloadUsage:
         else:
             intern = UpDownloadUsage.from_dict(_intern)
 
+        _api = d.pop("API", UNSET)
+        api: Union[Unset, UpDownloadUsage]
+        if isinstance(_api, Unset):
+            api = UNSET
+        else:
+            api = UpDownloadUsage.from_dict(_api)
+
         up_download_usage = cls(
-            api=api,
             intern=intern,
+            api=api,
         )
 
         up_download_usage.additional_properties = d

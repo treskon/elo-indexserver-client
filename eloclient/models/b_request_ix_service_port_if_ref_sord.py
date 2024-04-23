@@ -17,24 +17,25 @@ class BRequestIXServicePortIFRefSord:
     """
     Attributes:
         ci (Union[Unset, ClientInfo]): Contains the session ticket and the users language and country.
-            Each Indexserver interface function, except the
-             login, requires a <code>ClientInfo</code> object as parameter with a valid session ticket.
+            Each Indexserver interface
+             function, except the login, requires a <code>ClientInfo</code> object as parameter with a valid
+             session ticket.
              <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>
              Organisation: ELO Digital Office GmbH
              </p>
-        old_parent_id (Union[Unset, str]):
         new_parent_id (Union[Unset, str]):
         obj_id (Union[Unset, str]):
+        old_parent_id (Union[Unset, str]):
         man_sort_idx (Union[Unset, int]):
     """
 
     ci: Union[Unset, "ClientInfo"] = UNSET
-    old_parent_id: Union[Unset, str] = UNSET
     new_parent_id: Union[Unset, str] = UNSET
     obj_id: Union[Unset, str] = UNSET
+    old_parent_id: Union[Unset, str] = UNSET
     man_sort_idx: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -43,9 +44,12 @@ class BRequestIXServicePortIFRefSord:
         if not isinstance(self.ci, Unset):
             ci = self.ci.to_dict()
 
-        old_parent_id = self.old_parent_id
         new_parent_id = self.new_parent_id
+
         obj_id = self.obj_id
+
+        old_parent_id = self.old_parent_id
+
         man_sort_idx = self.man_sort_idx
 
         field_dict: Dict[str, Any] = {}
@@ -53,12 +57,12 @@ class BRequestIXServicePortIFRefSord:
         field_dict.update({})
         if ci is not UNSET:
             field_dict["ci"] = ci
-        if old_parent_id is not UNSET:
-            field_dict["oldParentId"] = old_parent_id
         if new_parent_id is not UNSET:
             field_dict["newParentId"] = new_parent_id
         if obj_id is not UNSET:
             field_dict["objId"] = obj_id
+        if old_parent_id is not UNSET:
+            field_dict["oldParentId"] = old_parent_id
         if man_sort_idx is not UNSET:
             field_dict["manSortIdx"] = man_sort_idx
 
@@ -76,19 +80,19 @@ class BRequestIXServicePortIFRefSord:
         else:
             ci = ClientInfo.from_dict(_ci)
 
-        old_parent_id = d.pop("oldParentId", UNSET)
-
         new_parent_id = d.pop("newParentId", UNSET)
 
         obj_id = d.pop("objId", UNSET)
+
+        old_parent_id = d.pop("oldParentId", UNSET)
 
         man_sort_idx = d.pop("manSortIdx", UNSET)
 
         b_request_ix_service_port_if_ref_sord = cls(
             ci=ci,
-            old_parent_id=old_parent_id,
             new_parent_id=new_parent_id,
             obj_id=obj_id,
+            old_parent_id=old_parent_id,
             man_sort_idx=man_sort_idx,
         )
 

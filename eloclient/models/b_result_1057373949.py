@@ -17,8 +17,10 @@ class BResult1057373949:
     """
     Attributes:
         result (Union[Unset, ReportOptions]): This class contains the codes for the activities/processes that are to be
-            protocolled in a report.
-            <p>
+            protocolled in a
+            report.
+
+             <p>
              Copyright: Copyright (c) 2004
              </p>
              <p>

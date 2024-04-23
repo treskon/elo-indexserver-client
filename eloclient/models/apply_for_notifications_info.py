@@ -24,6 +24,7 @@ class ApplyForNotificationsInfo:
 
     def to_dict(self) -> Dict[str, Any]:
         admin_mode = self.admin_mode
+
         user_task = self.user_task
 
         field_dict: Dict[str, Any] = {}

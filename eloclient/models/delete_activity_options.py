@@ -13,10 +13,9 @@ class DeleteActivityOptions:
     """This class defines options for the API function deleteActivity.
 
     Attributes:
-        delete_finally (Union[Unset, bool]): Delete activity finally. The database information for the activity is
-            deleted, if this member is true.
-            Otherwise
-             the Activity.backAt is set to the current date.
+        delete_finally (Union[Unset, bool]): Delete activity finally.
+            The database information for the activity is deleted, if this member
+             is true. Otherwise the Activity.backAt is set to the current date.
     """
 
     delete_finally: Union[Unset, bool] = UNSET

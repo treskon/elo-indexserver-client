@@ -23,6 +23,7 @@ class FindByNotes:
 
     def to_dict(self) -> Dict[str, Any]:
         term = self.term
+
         type = self.type
 
         field_dict: Dict[str, Any] = {}

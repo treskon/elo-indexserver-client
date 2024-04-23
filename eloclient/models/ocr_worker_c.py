@@ -12,38 +12,42 @@ T = TypeVar("T", bound="OcrWorkerC")
 class OcrWorkerC:
     """
     Attributes:
-        registered (Union[Unset, int]):
         unregistered (Union[Unset, int]):
         busy (Union[Unset, int]):
         idle (Union[Unset, int]):
+        registered (Union[Unset, int]):
         dead (Union[Unset, int]):
     """
 
-    registered: Union[Unset, int] = UNSET
     unregistered: Union[Unset, int] = UNSET
     busy: Union[Unset, int] = UNSET
     idle: Union[Unset, int] = UNSET
+    registered: Union[Unset, int] = UNSET
     dead: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        registered = self.registered
         unregistered = self.unregistered
+
         busy = self.busy
+
         idle = self.idle
+
+        registered = self.registered
+
         dead = self.dead
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if registered is not UNSET:
-            field_dict["REGISTERED"] = registered
         if unregistered is not UNSET:
             field_dict["UNREGISTERED"] = unregistered
         if busy is not UNSET:
             field_dict["BUSY"] = busy
         if idle is not UNSET:
             field_dict["IDLE"] = idle
+        if registered is not UNSET:
+            field_dict["REGISTERED"] = registered
         if dead is not UNSET:
             field_dict["DEAD"] = dead
 
@@ -52,21 +56,21 @@ class OcrWorkerC:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        registered = d.pop("REGISTERED", UNSET)
-
         unregistered = d.pop("UNREGISTERED", UNSET)
 
         busy = d.pop("BUSY", UNSET)
 
         idle = d.pop("IDLE", UNSET)
 
+        registered = d.pop("REGISTERED", UNSET)
+
         dead = d.pop("DEAD", UNSET)
 
         ocr_worker_c = cls(
-            registered=registered,
             unregistered=unregistered,
             busy=busy,
             idle=idle,
+            registered=registered,
             dead=dead,
         )
 
