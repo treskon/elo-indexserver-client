@@ -4,6 +4,7 @@ import unittest
 from eloservice import elo_service
 from eloservice.login_util import LoginUtil
 from eloservice.map_util import MapUtil
+from test import TEST_ROOT_DIR
 
 
 class TestService(unittest.TestCase):
@@ -68,7 +69,7 @@ class TestService(unittest.TestCase):
         folderid = service.create_folder(path="¶Alpha AG¶IntegrationTests¶test",
                                          separator="¶")
 
-        filepath = "resources/testFile.png"
+        filepath = TEST_ROOT_DIR + "/resources/testFile.png"
         util.write_map_fields(sord_id=folderid,
                               fields={"testFileBlobPath": filepath},
                               content_type="image/png",
@@ -83,7 +84,7 @@ class TestService(unittest.TestCase):
         folderid = service.create_folder(path="¶Alpha AG¶IntegrationTests¶test",
                                          separator="¶")
 
-        filepath = "resources/testFile.png"
+        filepath = TEST_ROOT_DIR + "/resources/testFile.png"
         value_bytes = open(filepath, "rb").read()
 
         util.write_map_fields(sord_id=folderid,
