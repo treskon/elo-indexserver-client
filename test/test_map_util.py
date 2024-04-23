@@ -59,3 +59,35 @@ class TestService(unittest.TestCase):
 
                               , map_domain="Objekte",
                               value_type=MapUtil.ValueType.blob_string)
+
+    def test_write_map_fields_blob_file_withFilepath(self):
+        elo_connection, elo_client = self._login()
+        service = elo_service.EloService(self.url, self.user, self.password)
+        util = MapUtil(elo_client, elo_connection)
+
+        folderid = service.create_folder(path="¶Alpha AG¶IntegrationTests¶test",
+                                         separator="¶")
+
+        filepath = "resources/testFile.png"
+        util.write_map_fields(sord_id=folderid,
+                              fields={"testFileBlobPath": filepath},
+                              content_type="image/png",
+                              map_domain="Objekte",
+                              value_type=MapUtil.ValueType.blob_file)
+
+    def test_write_map_fields_blob_file_withBytes(self):
+        elo_connection, elo_client = self._login()
+        service = elo_service.EloService(self.url, self.user, self.password)
+        util = MapUtil(elo_client, elo_connection)
+
+        folderid = service.create_folder(path="¶Alpha AG¶IntegrationTests¶test",
+                                         separator="¶")
+
+        filepath = "resources/testFile.png"
+        value_bytes = open(filepath, "rb").read()
+
+        util.write_map_fields(sord_id=folderid,
+                              fields={"testFileBlobBytes": value_bytes},
+                              content_type="image/png",
+                              map_domain="Objekte",
+                              value_type=MapUtil.ValueType.blob_file)

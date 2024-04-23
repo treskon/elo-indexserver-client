@@ -1,7 +1,5 @@
-import logging
 import base64
-
-
+import logging
 
 from eloclient import Client
 from eloclient.api.ix_service_port_if import ix_service_port_if_checkin_map
@@ -28,11 +26,35 @@ def _convert_map_value(key: str, value: str, content_type) -> MapValue:
     return map_value
 
 
+def _convert_map_value_blob(key: str, value: object, content_type) -> MapValue:
+    # detect if value is a filepath or bytes
+    if isinstance(value, str):
+        with open(value, "rb") as file:
+            value_bytes: bytes = file.read()
+    elif isinstance(value, bytes):
+        value_bytes: bytes = value
+    else:
+        raise ValueError("Value must be a either a string (filepath) or bytes")
+
+    map_value = MapValue()
+    map_value.key = key
+
+    file_data = FileData()
+    file_data.content_type = content_type
+    file_data.data = to_base64_bytes(value_bytes)  # according to docs 'File data as byte array.'
+    map_value.blob_value = file_data
+    return map_value
+
+
 def to_base64(value: str):
+    return to_base64_bytes(value.encode("ISO_8859_1"))
+
+
+def to_base64_bytes(value: bytes):
     # We have to encode toBase64 according to
     # https://github.com/wolfgangimig/byps/blob/7521b79e39df2e577821c6fa37487c24757385e7/java/bypshttp/src/byps/http/rest/BytesSerializer.java#L29
     # and in Java 'Base64.getDecoder().decode(base64) uses 'ISO_8859_1'
-    base64_bytes = base64.b64encode(value.encode("ISO_8859_1"))
+    base64_bytes = base64.b64encode(value)
     return base64_bytes.decode("ISO_8859_1")
 
 
@@ -69,7 +91,7 @@ class MapUtil:
         elif value_type == MapUtil.ValueType.blob_string:
             self._write_map_field_blob_string(sord_id, map_domain, fields, content_type)
         else:
-            raise NotImplementedError(f"Value type {value_type} not implemented")
+            self._write_map_field_blob_file(sord_id, map_domain, fields, content_type)
 
     def _write_map_field_string(self, sord_id, map_domain, fields: dict):
 
@@ -88,6 +110,16 @@ class MapUtil:
             id=sord_id,
             obj_id=sord_id,
             data=[_convert_map_value(key, value, content_type) for key, value in fields.items()]
+        )
+        res = ix_service_port_if_checkin_map.sync_detailed(client=self.elo_client, body=body)
+        _check_response(res)
+
+    def _write_map_field_blob_file(self, sord_id, map_domain, fields, content_type):
+        body = BRequestIXServicePortIFCheckinMap(
+            domain_name=map_domain,
+            id=sord_id,
+            obj_id=sord_id,
+            data=[_convert_map_value_blob(key, value, content_type) for key, value in fields.items()]
         )
         res = ix_service_port_if_checkin_map.sync_detailed(client=self.elo_client, body=body)
         _check_response(res)

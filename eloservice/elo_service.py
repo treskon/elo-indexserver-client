@@ -107,7 +107,6 @@ class EloService:
         :param map_domain: The map domain in ELO (default = "Objekte")
         :param value_type: The value type of the fields (default = MapUtil.ValueType.string)
         :param content_type: The content type of the blob (default = "text/plain; charset=ISO_8859_1")
-        :return:
         """
         self.map_util.write_map_fields(sord_id, fields, map_domain, value_type, content_type)
 
