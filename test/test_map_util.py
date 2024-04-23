@@ -1,21 +1,26 @@
 import os
-import string
 import unittest
-import random
 
 from eloservice import elo_service
 from eloservice.login_util import LoginUtil
 from eloservice.map_util import MapUtil
 
 
-def rand_text(n_chars):
-    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=n_chars))
-
-
 class TestService(unittest.TestCase):
     url = os.environ["TEST_ELO_IX_URL"]
     user = os.environ["TEST_ELO_IX_USER"]
     password = os.environ["TEST_ELO_IX_PASSWORD"]
+
+    lorem = ("ÄÖÜLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut "
+             "labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et "
+             "ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem "
+             "ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et "
+             "dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. "
+             "Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor "
+             "sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna "
+             "aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita "
+             "kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Duis autem vel eum iriure dolor "
+             "in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu f")
 
     if __name__ == '__main__':
         unittest.main()
@@ -24,7 +29,7 @@ class TestService(unittest.TestCase):
         login_util = LoginUtil(self.url, self.user, self.password)
         return login_util.elo_connection, login_util.elo_client
 
-    def test_get_all_masks_string(self):
+    def test_write_map_fields_string(self):
         elo_connection, elo_client = self._login()
         service = elo_service.EloService(self.url, self.user, self.password)
         util = MapUtil(elo_client, elo_connection)
@@ -39,7 +44,7 @@ class TestService(unittest.TestCase):
                               , map_domain="Objekte",
                               value_type=MapUtil.ValueType.string)
 
-    def test_get_all_masks_blob_string(self):
+    def test_write_map_fields_blob_string(self):
         elo_connection, elo_client = self._login()
         service = elo_service.EloService(self.url, self.user, self.password)
         util = MapUtil(elo_client, elo_connection)
@@ -48,7 +53,7 @@ class TestService(unittest.TestCase):
                                          separator="¶")
 
         util.write_map_fields(sord_id=folderid, fields={"testBlob": "testBlob",
-                                                        "500CharBlob": rand_text(500),
+                                                        "500CharBlob": self.lorem
                                                         # bigger than ELO 255 char limit
                                                         }
 

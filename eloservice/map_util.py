@@ -29,8 +29,11 @@ def _convert_map_value(key: str, value: str, content_type) -> MapValue:
 
 
 def to_base64(value: str):
-    base64_bytes = base64.b64encode(value.encode("utf-8"))
-    return base64_bytes.decode("utf-8")
+    # We have to encode toBase64 according to
+    # https://github.com/wolfgangimig/byps/blob/7521b79e39df2e577821c6fa37487c24757385e7/java/bypshttp/src/byps/http/rest/BytesSerializer.java#L29
+    # and in Java 'Base64.getDecoder().decode(base64) uses 'ISO_8859_1'
+    base64_bytes = base64.b64encode(value.encode("ISO_8859_1"))
+    return base64_bytes.decode("ISO_8859_1")
 
 
 def too_large_for_string(fields: dict):
@@ -56,7 +59,7 @@ class MapUtil:
 
     def write_map_fields(self, sord_id: str, fields: dict, map_domain: str = "Objekte",
                          value_type: ValueType = ValueType.string,
-                         content_type="text/plain"):
+                         content_type="text/plain; charset=ISO_8859_1"):
         if value_type == MapUtil.ValueType.string and too_large_for_string(fields):
             logging.warning("Fields too large for string, using blob_string instead")
             value_type = MapUtil.ValueType.blob_string
