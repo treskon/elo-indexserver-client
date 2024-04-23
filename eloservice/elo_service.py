@@ -8,6 +8,7 @@ from eloservice.eloconstants import COPY_SORD_C_MOVE
 from eloservice.error_handler import _check_response
 from eloservice.file_util import FileUtil
 from eloservice.login_util import LoginUtil
+from eloservice.map_util import MapUtil
 from eloservice.mask_util import MaskUtil
 from eloservice.search_util import SearchUtil
 
@@ -20,6 +21,7 @@ class EloService:
     login_util: LoginUtil
     elo_connection = None
     mask_util = None
+    map_util = None
     file_util = None
     search_util = None
 
@@ -31,6 +33,7 @@ class EloService:
         self.elo_client = self.login_util.elo_client
         self.elo_connection = self.login_util.elo_connection
         self.mask_util = MaskUtil(self.elo_client, self.elo_connection)
+        self.map_util = MapUtil(self.elo_client, self.elo_connection)
         self.file_util = FileUtil(self.elo_client, self.elo_connection)
         self.search_util = SearchUtil(self.elo_client, self.elo_connection)
 
@@ -50,7 +53,7 @@ class EloService:
         sords = self._split_path_elements(path, separator)
 
         body = BRequestIXServicePortIFCheckinSordPath(
-           
+
             parent_id=parent_id,
             sords=sords,
             sord_z=SordZ(SordC().mb_all)
@@ -73,6 +76,42 @@ class EloService:
         """
         self.mask_util.overwrite_mask_fields(sord_id, mask_name, metadata)
 
+    def write_map_fields(self, sord_id: str, fields: dict, map_domain: str = "Objekte",
+                         value_type: MapUtil.ValueType = MapUtil.ValueType.string,
+                         content_type="text/plain; charset=ISO_8859_1"):
+        """
+        This function writes map fields to a sord in ELO.
+
+        Existing map fields are overwritten when writing the same key. Old map fields which are not overwritten will
+        remain.
+
+        There are three different value types:
+        * string: The value is stored as a string. The value is limited to 255 characters.
+        * blob_string: The value is stored as a blob. The value is unlimited in size.
+        * blob_file: The value is stored as a blob. The value is unlimited in size. The param content_type should be
+        used to specify the content type of the blob.
+
+        Map Fields in ELO are defined as follows:
+        * the map_domain specifies the database table in which the map fields are stored. There are two common ones
+        'objekte' and 'formdata'. Furthermore, there can also be special map domains unique to each server.
+        * The fields are a key value pair, unique to that domain. That are assigned to a SORD object.
+
+        Implementation details:
+        The key is a string. The value can either be a string (limited to 255 characters) or a blob (unlimited size).
+        The value_type specifies the type of the value. Internally the string value is stored as varchar(255) and the
+        blob value is stored as varchar(*). Therefore, if a string value is larger than
+        255 characters, the value is stored as a blob.
+
+        :param sord_id: The sordID of the sord in ELO
+        :param fields: The fields that should be written
+        :param map_domain: The map domain in ELO (default = "Objekte")
+        :param value_type: The value type of the fields (default = MapUtil.ValueType.string)
+        :param content_type: The content type of the blob (default = "text/plain; charset=ISO_8859_1")
+        :return:
+        """
+        self.map_util.write_map_fields(sord_id, fields, map_domain, value_type, content_type)
+
+
     def upload_file(self, file_path: str, parent_id: str, filemask_id="0", filename="") -> str:
         """
         This function uploads a file to ELO
@@ -84,7 +123,8 @@ class EloService:
 
         :return: The sordID of the uploaded file
         """
-        return self.file_util.upload_file(file_path=file_path, parent_id=parent_id, filemask_id=filemask_id, filename=filename)
+        return self.file_util.upload_file(file_path=file_path, parent_id=parent_id, filemask_id=filemask_id,
+                                          filename=filename)
 
     def update_file(self, sord_id: str, file_path: str, filename=""):
         """
@@ -162,7 +202,7 @@ class EloService:
         :return: The sordId of the moved sord
         """
         body = BRequestIXServicePortIFCopySord(
-           
+
             new_parent_id=new_parent_id,
             obj_id=source_sord_id,
             copy_sord_z=COPY_SORD_C_MOVE
