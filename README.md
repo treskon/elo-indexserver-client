@@ -39,6 +39,8 @@ rest_password = "elo"
 elo_service = EloService(url=rest_baseurl, user=rest_user, password=rest_password)
 ```
 
+**Known issue: Due to encoding issues the user and password should not contain special characters.**
+
 Then you can use the service to access the Index server REST API.
 Here are often examples:
 

@@ -55,6 +55,7 @@ class LoginUtil:
 
     def __init__(self, url: str, user: str, password: str):
         """
+        Known issue: Due to encoding issues the user and password should not contain special characters.
         :param url: The URL to the ELO IX server rest endpoint e.g. http://eloserver.com:6056/ix-Archive/rest/
         :param user: The user for the ELO IX server e.g. Administrator
         :param password: The password for the ELO IX server user e.g. secret

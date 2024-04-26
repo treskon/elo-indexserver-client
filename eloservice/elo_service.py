@@ -26,6 +26,12 @@ class EloService:
     search_util = None
 
     def __init__(self, url: str, user: str, password: str):
+        """
+        Known issue: Due to encoding issues the user and password should not contain special characters.
+        :param url:  The URL to the ELO IX server rest endpoint e.g. http://eloserver.com:6056/ix-Archive/rest/
+        :param user:  The user for the ELO IX server e.g. Administrator
+        :param password:  The password for the ELO IX server user e.g. secret
+        """
         self.login_util = LoginUtil(url, user, password)
         self._update_utils()
 
@@ -104,6 +110,12 @@ class EloService:
 
         :param sord_id: The sordID of the sord in ELO
         :param fields: The fields that should be written
+                key: The key of the map field: str
+                value: The value of the map field. The type of the value depends on the value_type parameter.
+                For value_type = MapUtil.ValueType.string: str
+                For value_type = MapUtil.ValueType.blob_string: str
+                For value_type = MapUtil.ValueType.blob_file. It can either be a str which is interpreted as a file path
+                or bytes which is interpreted as the content blob.
         :param map_domain: The map domain in ELO (default = "Objekte")
         :param value_type: The value type of the fields (default = MapUtil.ValueType.string)
         :param content_type: The content type of the blob (default = "text/plain; charset=ISO_8859_1")
