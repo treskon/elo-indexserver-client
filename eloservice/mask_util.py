@@ -9,6 +9,7 @@ from eloclient.models import MaskName, DocMask, EditInfoC, EditInfoZ, SordZ, Sor
 from eloservice import eloconstants as elo_const
 from eloservice.error_handler import _check_response
 from eloservice.login_util import EloConnection
+from cachetools import cached, TTLCache
 
 
 class MaskUtil:
@@ -19,6 +20,8 @@ class MaskUtil:
         self.elo_connection = elo_connection
         self.elo_client = elo_client
 
+    # Cache the mask names for 10 minutes
+    @cached(cache=TTLCache(maxsize=128, ttl=600))
     def get_all_masks_names(self) -> [MaskName]:
         # When creating a new Sord, the mask names are returned in the response, as we do not checkin the sord
         # afterward, nothing is saved. This is a workaround to get the mask names from ELO IX server
@@ -48,9 +51,12 @@ class MaskUtil:
                 return line.id
         raise ValueError(f"Could not find key '{key}' in mask '{doc_mask.name}'")
 
+    # Cache the mask details for 10 minutes
+    @cached(cache=TTLCache(maxsize=128, ttl=600))
     def get_mask_detail(self, mask_id) -> DocMask:
         # When creating a new Sord, with the correct mask_id we get the DocMask Object as a result.
         # This is a workaround to get the mask details from ELO IX server
+        logging.debug(f"Getting mask details for mask_id {mask_id}")
         body = BRequestIXServicePortIFCreateSord(
            
             parent_id="0",  # "0" (--> root folder in ELO)
