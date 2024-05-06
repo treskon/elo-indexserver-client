@@ -17,7 +17,7 @@ class TestPerformance(unittest.TestCase):
         login_util = LoginUtil(self.url, self.user, self.password)
         return login_util.elo_connection, login_util.elo_client
 
-    def test_set_metadata_on_sord_1000(self):
+    def test_set_metadata_on_sord_500(self):
         # "/Alpha AG/temp rechnungen/test1"
         elo_connection, elo_client = self._login()
         util = MaskUtil(elo_client, elo_connection)
@@ -25,7 +25,8 @@ class TestPerformance(unittest.TestCase):
 
         startTime = datetime.now()
         i = 0
-        for i in range(100):
+        __stop = 500
+        for i in range(__stop):
             if i % 10 == 0:
                 print("Iteration: ", i)
             erg = util.overwrite_mask_fields(
@@ -39,6 +40,6 @@ class TestPerformance(unittest.TestCase):
             )
             i += 1
         endTime = datetime.now()
-        print("Time taken for 100 iterations: ", endTime - startTime)
+        print(f"Time taken for {__stop} iterations: ", endTime - startTime)
 
 
