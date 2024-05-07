@@ -43,30 +43,24 @@ class EloService:
         self.file_util = FileUtil(self.elo_client, self.elo_connection)
         self.search_util = SearchUtil(self.elo_client, self.elo_connection)
 
-    def create_folder(self, path: str, separator="¶", mask_name: str = None, metadata: dict = None) -> str:
+    def create_folder(self, path: str, separator="¶") -> str:
         """
         This function creates new folder in ELO
 
         Depending on the given path it is possible to create 1 or multiple folders. If the folder already exists,
         nothing is changed and the sordID of the existing folder is returned.
 
-        :param mask_name: The name of the mask in ELO, default is None (--> ELO default folder mask).
-                          The given mask should be a folder mask otherwise an error is thrown.
-        :param metadata: The metadata which should be set for the created folder (default = None)
         :param path: The path in ELO to the needed folder/ doc (e.g. = ¶Alpha AG¶Eingangsrechnungen¶2023¶November¶20¶)
         :param separator: The separator which should be used to split the path (default = "¶")
-
         :return: The sordID of the created folder
+
+        Note: a mask and metadata can not directly be assigned consistently to the folder in the same call. As they
+        would only be assigned if the folder did not exist before. If the folder already exists, the mask and metadata
+        would not be written. To write the mask and metadata, use the method :func:`overwrite_mask_fields` after the
+        folder was created.
         """
-        if metadata is None:
-            metadata = {}
         parent_id = "1"  # the parent ID of the root element
         sords: list[Sord] = self._split_path_elements(path, separator)
-        if mask_name is not None:
-            metadata_sord = self.mask_util.create_local_sord(mask_name, metadata if metadata is not None else {},
-                                                             sords[-1].id)
-            metadata_sord.name = sords[-1].name
-            sords[-1] = metadata_sord
 
         body = BRequestIXServicePortIFCheckinSordPath(
             parent_id=parent_id,

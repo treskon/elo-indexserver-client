@@ -61,16 +61,3 @@ class TestService(unittest.TestCase):
         id_elo = service.create_folder(path="¶EIWECK_INTEGRATION_TEST¶PythonAPI¶test_elo_service¶testRemove",
                                        separator="¶")
         service.remove(id_elo)
-
-    def test_create_folder_with_metdata(self):
-        service = elo_service.EloService(self.url, self.user, self.password)
-        folderid = service.create_folder(
-            path="¶EIWECK_INTEGRATION_TEST¶PythonAPI¶test_elo_service¶test_create_folder_with_metdata", separator="¶",
-            mask_name="Images",
-            metadata={
-                "LATITUDE": "35.732554",
-                "LONGITUDE": "139.714302",
-                "ITEMDOCDATE": "2023-12-26"
-            })
-        assert folderid is not None
-        assert folderid != ""
