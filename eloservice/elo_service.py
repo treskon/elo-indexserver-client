@@ -3,8 +3,8 @@ from eloclient.api.ix_service_port_if import (ix_service_port_if_checkin_sord_pa
 from eloclient.api.ix_service_port_if import (ix_service_port_if_copy_sord)
 from eloclient.models import (BRequestIXServicePortIFCheckinSordPath, BRequestIXServicePortIFDeleteSord)
 from eloclient.models import (BRequestIXServicePortIFCopySord)
-from eloclient.models import Sord, SordZ, SordC
-from eloservice.eloconstants import COPY_SORD_C_MOVE
+from eloclient.models import Sord
+from eloservice.eloconstants import COPY_SORD_C_MOVE, SORD_Z_MB_ALL
 from eloservice.error_handler import _check_response
 from eloservice.file_util import FileUtil
 from eloservice.login_util import LoginUtil
@@ -24,21 +24,35 @@ class EloService:
     map_util = None
     file_util = None
     search_util = None
+    cache_enable = None
+    cache_ttl = None
+    cache_maxsize = None
 
-    def __init__(self, url: str, user: str, password: str):
+    def __init__(self, url: str, user: str, password: str,
+                 cache_enable: bool = True, cache_ttl: int = 600, cache_maxsize: int = 128):
         """
         Known issue: Due to encoding issues the user and password should not contain special characters.
         :param url:  The URL to the ELO IX server rest endpoint e.g. http://eloserver.com:6056/ix-Archive/rest/
         :param user:  The user for the ELO IX server e.g. Administrator
         :param password:  The password for the ELO IX server user e.g. secret
+        :param cache_enable: If the caching should be enabled (default = True)
+                             Currently, the caching is only used for:
+                               * function overwrite_mask_fields (cache of existing masks and mask details)
+        :param cache_ttl:   The time to live of the cache in seconds (default = 600, so 10 minutes) only used if
+                            cache_enable is True
+        :param cache_maxsize: The maximum size of the cache (default = 128) only used if cache_enable is True
         """
         self.login_util = LoginUtil(url, user, password)
+        self.cache_enable = cache_enable
+        self.cache_ttl = cache_ttl
+        self.cache_maxsize = cache_maxsize
         self._update_utils()
 
     def _update_utils(self):
         self.elo_client = self.login_util.elo_client
         self.elo_connection = self.login_util.elo_connection
-        self.mask_util = MaskUtil(self.elo_client, self.elo_connection)
+        self.mask_util = MaskUtil(self.elo_client, self.elo_connection, cache_enable=self.cache_enable,
+                                  cache_ttl=self.cache_ttl, cache_maxsize=self.cache_maxsize)
         self.map_util = MapUtil(self.elo_client, self.elo_connection)
         self.file_util = FileUtil(self.elo_client, self.elo_connection)
         self.search_util = SearchUtil(self.elo_client, self.elo_connection)
@@ -52,17 +66,20 @@ class EloService:
 
         :param path: The path in ELO to the needed folder/ doc (e.g. = ¶Alpha AG¶Eingangsrechnungen¶2023¶November¶20¶)
         :param separator: The separator which should be used to split the path (default = "¶")
-
         :return: The sordID of the created folder
+
+        Note: a mask and metadata can not directly be assigned consistently to the folder in the same call. As they
+        would only be assigned if the folder did not exist before. If the folder already exists, the mask and metadata
+        would not be written. To write the mask and metadata, use the method :func:`overwrite_mask_fields` after the
+        folder was created.
         """
         parent_id = "1"  # the parent ID of the root element
-        sords = self._split_path_elements(path, separator)
+        sords: list[Sord] = self._split_path_elements(path, separator)
 
         body = BRequestIXServicePortIFCheckinSordPath(
-
             parent_id=parent_id,
             sords=sords,
-            sord_z=SordZ(SordC().mb_all)
+            sord_z=SORD_Z_MB_ALL,
         )
 
         erg = ix_service_port_if_checkin_sord_path.sync_detailed(client=self.elo_client, body=body)
@@ -121,7 +138,6 @@ class EloService:
         :param content_type: The content type of the blob (default = "text/plain; charset=ISO_8859_1")
         """
         self.map_util.write_map_fields(sord_id, fields, map_domain, value_type, content_type)
-
 
     def upload_file(self, file_path: str, parent_id: str, filemask_id="0", filename="") -> str:
         """

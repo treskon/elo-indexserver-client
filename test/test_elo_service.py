@@ -1,10 +1,10 @@
+import os
 import unittest
 from datetime import datetime
 
 from eloclient.models import Sord
 from eloservice import elo_service
 from test import TEST_ROOT_DIR
-import os
 
 
 class TestService(unittest.TestCase):
@@ -17,7 +17,8 @@ class TestService(unittest.TestCase):
 
     def test_create_folder(self):
         service = elo_service.EloService(self.url, self.user, self.password)
-        folderid = service.create_folder(path="¶Alpha AG¶temp rechnungen¶test42", separator="¶")
+        folderid = service.create_folder(path="¶EIWECK_INTEGRATION_TEST¶PythonAPI¶test_elo_service¶test_create_folder",
+                                         separator="¶")
         assert folderid is not None
         assert folderid != ""
 
@@ -50,12 +51,13 @@ class TestService(unittest.TestCase):
     def test_move(self):
         service = elo_service.EloService(self.url, self.user, self.password)
         currentTimestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        path = "¶EIWECK_INTEGRATION_TEST¶PythonAPI¶testMove¶" + currentTimestamp
+        path = "¶EIWECK_INTEGRATION_TEST¶PythonAPI¶test_elo_service¶testMove¶" + currentTimestamp
         folder_id = service.create_folder(path=path + "¶before", separator="¶")
         sordID = service.upload_file(file_path=TEST_ROOT_DIR + "/resources/testFile.png", parent_id=folder_id)
         service.move(source_sord_id=sordID, path=path + "¶after", separator="¶")
 
     def test_remove(self):
         service = elo_service.EloService(self.url, self.user, self.password)
-        id_elo = service.create_folder(path="¶EIWECK_INTEGRATION_TEST¶PythonAPI¶testRemove", separator="¶")
+        id_elo = service.create_folder(path="¶EIWECK_INTEGRATION_TEST¶PythonAPI¶test_elo_service¶testRemove",
+                                       separator="¶")
         service.remove(id_elo)
