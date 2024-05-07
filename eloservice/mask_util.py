@@ -1,6 +1,6 @@
 import logging
 
-from cachetools import cached, TTLCache
+import cachetools
 
 from eloclient import Client
 from eloclient.api.ix_service_port_if import ix_service_port_if_create_sord, \
@@ -16,35 +16,50 @@ from eloservice.login_util import EloConnection
 class MaskUtil:
     elo_connection: EloConnection
     elo_client: Client
+    # we can't use decorators for caching as we want it to be configurable
+    cache_get_all_masks_names: cachetools.TTLCache = None
+    cache_get_mask_detail: cachetools.TTLCache = None
 
-    def __init__(self, elo_client: Client, elo_connection: EloConnection):
+    def __init__(self, elo_client: Client, elo_connection: EloConnection,
+                 cache_enable: bool = True, cache_ttl: int = 600, cache_maxsize: int = 128):
         self.elo_connection = elo_connection
         self.elo_client = elo_client
+        if cache_enable:
+            logging.debug("Caching enabled")
+            self.cache_get_all_masks_names = cachetools.TTLCache(maxsize=1, ttl=cache_ttl)  # only one entry in cache
+            self.cache_get_mask_detail = cachetools.TTLCache(maxsize=cache_maxsize, ttl=cache_ttl)
 
-    # Cache the mask names for 10 minutes
-    @cached(cache=TTLCache(maxsize=128, ttl=600))
     def get_all_masks_names(self) -> [MaskName]:
+        cache_key = "get_all_masks_names"
+        if self.cache_get_all_masks_names is not None:
+            logging.debug("Using cache")
+            if cache_key in self.cache_get_all_masks_names:
+                logging.debug("Cache hit")
+                return self.cache_get_all_masks_names[cache_key]
+            else:
+                logging.debug("Cache miss")
+                masks = self._get_all_masks_names()
+                self.cache_get_all_masks_names[cache_key] = masks
+                return masks
+        else:
+            return self._get_all_masks_names()
+
+    def _get_all_masks_names(self) -> [MaskName]:
         logging.debug("Getting all mask names")
         # When creating a new Sord, the mask names are returned in the response, as we do not checkin the sord
         # afterward, nothing is saved. This is a workaround to get the mask names from ELO IX server
         body = BRequestIXServicePortIFCreateSord(
-
             parent_id="0",  # "0" (--> root folder in ELO)
             mask_id="0",  # "0" (--> mask "Freie Eingabe" = STD mask)
             edit_info_z=elo_const.EDIT_INFO_Z_MASK_NAMES
         )
-
         res = ix_service_port_if_create_sord.sync_detailed(client=self.elo_client, body=body)
-
         _check_response(res)
-
         read_access = 1  # = AccessC().lur_read => Access control right for reading an archive entry
-
         available_elomasks: [MaskName] = [
             mn for mn in res.parsed.result.mask_names
             if mn.access >= read_access
         ]
-
         return available_elomasks
 
     def _get_objKey_id(self, doc_mask: DocMask, key: str):
@@ -53,9 +68,22 @@ class MaskUtil:
                 return line.id
         raise ValueError(f"Could not find key '{key}' in mask '{doc_mask.name}'")
 
-    # Cache the mask details for 10 minutes
-    @cached(cache=TTLCache(maxsize=128, ttl=600))
     def get_mask_detail(self, mask_id) -> DocMask:
+        cache_key = f"get_mask_detail_{mask_id}"
+        if self.cache_get_mask_detail is not None:
+            logging.debug("Using cache")
+            if cache_key in self.cache_get_mask_detail:
+                logging.debug("Cache hit")
+                return self.cache_get_mask_detail[cache_key]
+            else:
+                logging.debug("Cache miss")
+                mask = self._get_mask_detail(mask_id)
+                self.cache_get_mask_detail[cache_key] = mask
+                return mask
+        else:
+            return self._get_mask_detail(mask_id)
+
+    def _get_mask_detail(self, mask_id) -> DocMask:
         # When creating a new Sord, with the correct mask_id we get the DocMask Object as a result.
         # This is a workaround to get the mask details from ELO IX server
         logging.debug(f"Getting mask details for mask_id {mask_id}")
@@ -63,7 +91,6 @@ class MaskUtil:
 
             parent_id="0",  # "0" (--> root folder in ELO)
             mask_id=mask_id,
-            # TODO use the correct edit_info_z not MB_ALL
             edit_info_z=elo_const.EDIT_INFO_Z_MB_ALL
         )
 

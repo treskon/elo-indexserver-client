@@ -3,7 +3,7 @@ from eloclient.api.ix_service_port_if import (ix_service_port_if_checkin_sord_pa
 from eloclient.api.ix_service_port_if import (ix_service_port_if_copy_sord)
 from eloclient.models import (BRequestIXServicePortIFCheckinSordPath, BRequestIXServicePortIFDeleteSord)
 from eloclient.models import (BRequestIXServicePortIFCopySord)
-from eloclient.models import Sord, SordZ, SordC
+from eloclient.models import Sord
 from eloservice.eloconstants import COPY_SORD_C_MOVE, SORD_Z_MB_ALL
 from eloservice.error_handler import _check_response
 from eloservice.file_util import FileUtil
@@ -24,21 +24,35 @@ class EloService:
     map_util = None
     file_util = None
     search_util = None
+    cache_enable = None
+    cache_ttl = None
+    cache_maxsize = None
 
-    def __init__(self, url: str, user: str, password: str):
+    def __init__(self, url: str, user: str, password: str,
+                 cache_enable: bool = True, cache_ttl: int = 600, cache_maxsize: int = 128):
         """
         Known issue: Due to encoding issues the user and password should not contain special characters.
         :param url:  The URL to the ELO IX server rest endpoint e.g. http://eloserver.com:6056/ix-Archive/rest/
         :param user:  The user for the ELO IX server e.g. Administrator
         :param password:  The password for the ELO IX server user e.g. secret
+        :param cache_enable: If the caching should be enabled (default = True)
+                             Currently, the caching is only used for:
+                               * function overwrite_mask_fields (cache of existing masks and mask details)
+        :param cache_ttl:   The time to live of the cache in seconds (default = 600, so 10 minutes) only used if
+                            cache_enable is True
+        :param cache_maxsize: The maximum size of the cache (default = 128) only used if cache_enable is True
         """
         self.login_util = LoginUtil(url, user, password)
+        self.cache_enable = cache_enable
+        self.cache_ttl = cache_ttl
+        self.cache_maxsize = cache_maxsize
         self._update_utils()
 
     def _update_utils(self):
         self.elo_client = self.login_util.elo_client
         self.elo_connection = self.login_util.elo_connection
-        self.mask_util = MaskUtil(self.elo_client, self.elo_connection)
+        self.mask_util = MaskUtil(self.elo_client, self.elo_connection, cache_enable=self.cache_enable,
+                                  cache_ttl=self.cache_ttl, cache_maxsize=self.cache_maxsize)
         self.map_util = MapUtil(self.elo_client, self.elo_connection)
         self.file_util = FileUtil(self.elo_client, self.elo_connection)
         self.search_util = SearchUtil(self.elo_client, self.elo_connection)
