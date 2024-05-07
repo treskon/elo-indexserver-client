@@ -29,8 +29,9 @@ class TestPerformance(unittest.TestCase):
         for i in range(__stop):
             if i % 10 == 0:
                 print("Iteration: ", i)
+            #path in elo: ¶EIWECK_INTEGRATION_TEST¶PythonAPI
             erg = util.overwrite_mask_fields(
-                sord_id="134699",
+                sord_id="139920",
                 mask_name="Images",
                 metadata={
                     "LATITUDE": "35.732554",

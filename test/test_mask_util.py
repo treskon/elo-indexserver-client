@@ -28,12 +28,11 @@ class TestService(unittest.TestCase):
         assert masks[0].access is not None
 
     def test_set_metadata_on_sord(self):
-        # "/Alpha AG/temp rechnungen/test1"
+        #path in elo: ¶EIWECK_INTEGRATION_TEST¶PythonAPI¶test_mask_api¶test_set_metadata_on_sord
         elo_connection, elo_client = self._login()
         util = MaskUtil(elo_client, elo_connection)
-
         erg = util.overwrite_mask_fields(
-            sord_id="134699",
+            sord_id="139942",
             mask_name="Images",
             metadata={
                 "LATITUDE": "35.732554",
