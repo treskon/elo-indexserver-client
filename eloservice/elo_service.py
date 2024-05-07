@@ -1,10 +1,10 @@
 from eloclient import Client
 from eloclient.api.ix_service_port_if import (ix_service_port_if_checkin_sord_path, ix_service_port_if_delete_sord)
 from eloclient.api.ix_service_port_if import (ix_service_port_if_copy_sord)
-from eloclient.models import (BRequestIXServicePortIFCheckinSordPath, BRequestIXServicePortIFDeleteSord)
+from eloclient.models import (BRequestIXServicePortIFCheckinSordPath, BRequestIXServicePortIFDeleteSord, SordZ, SordC)
 from eloclient.models import (BRequestIXServicePortIFCopySord)
 from eloclient.models import Sord
-from eloservice.eloconstants import COPY_SORD_C_MOVE, SORD_Z_MB_ALL
+from eloservice.eloconstants import COPY_SORD_C_MOVE, SORD_Z_MB_ALL, SORD_Z_EMPTY
 from eloservice.error_handler import _check_response
 from eloservice.file_util import FileUtil
 from eloservice.login_util import LoginUtil
@@ -79,7 +79,8 @@ class EloService:
         body = BRequestIXServicePortIFCheckinSordPath(
             parent_id=parent_id,
             sords=sords,
-            sord_z=SORD_Z_MB_ALL,
+            sord_z=SORD_Z_EMPTY,  # we need to set an empty bitset and not MB_ALL. Otherwise, the indexserver tries
+            # to assign the document mask 'Freie Eingabe' to the folder which fails
         )
 
         erg = ix_service_port_if_checkin_sord_path.sync_detailed(client=self.elo_client, body=body)

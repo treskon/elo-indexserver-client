@@ -10,6 +10,9 @@ class ElobitsetEditz(Enum):
     MB_MASK = "8192"
 
 
+SORD_Z_EMPTY = SordZ()  # Useful when you don't need any bitset, however the API requires it. This usually means that
+# the indexserver will decide for you. One example is the ix_service_port_if_checkin_sord_path
+
 SORD_Z_MB_ALL = SordZ(SordC.mb_all)
 SORD_Z_MB_ALL.bset = ElobitsetEditz.MB_ALL.value
 
