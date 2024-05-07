@@ -10,6 +10,9 @@ class ElobitsetEditz(Enum):
     MB_MASK = "8192"
 
 
+SORD_Z_MB_ALL = SordZ(SordC.mb_all)
+SORD_Z_MB_ALL.bset = ElobitsetEditz.MB_ALL.value
+
 EDIT_INFO_Z_MB_ALL = EditInfoZ(EditInfoC().mb_all)
 EDIT_INFO_Z_MB_ALL.bset = ElobitsetEditz.MB_ALL.value
 EDIT_INFO_Z_MB_ALL.sord_z = SordZ(SordC.mb_all)

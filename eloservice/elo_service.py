@@ -4,7 +4,7 @@ from eloclient.api.ix_service_port_if import (ix_service_port_if_copy_sord)
 from eloclient.models import (BRequestIXServicePortIFCheckinSordPath, BRequestIXServicePortIFDeleteSord)
 from eloclient.models import (BRequestIXServicePortIFCopySord)
 from eloclient.models import Sord, SordZ, SordC
-from eloservice.eloconstants import COPY_SORD_C_MOVE
+from eloservice.eloconstants import COPY_SORD_C_MOVE, SORD_Z_MB_ALL
 from eloservice.error_handler import _check_response
 from eloservice.file_util import FileUtil
 from eloservice.login_util import LoginUtil
@@ -43,26 +43,35 @@ class EloService:
         self.file_util = FileUtil(self.elo_client, self.elo_connection)
         self.search_util = SearchUtil(self.elo_client, self.elo_connection)
 
-    def create_folder(self, path: str, separator="¶") -> str:
+    def create_folder(self, path: str, separator="¶", mask_name: str = None, metadata: dict = None) -> str:
         """
         This function creates new folder in ELO
 
         Depending on the given path it is possible to create 1 or multiple folders. If the folder already exists,
         nothing is changed and the sordID of the existing folder is returned.
 
+        :param mask_name: The name of the mask in ELO, default is None (--> ELO default folder mask).
+                          The given mask should be a folder mask otherwise an error is thrown.
+        :param metadata: The metadata which should be set for the created folder (default = None)
         :param path: The path in ELO to the needed folder/ doc (e.g. = ¶Alpha AG¶Eingangsrechnungen¶2023¶November¶20¶)
         :param separator: The separator which should be used to split the path (default = "¶")
 
         :return: The sordID of the created folder
         """
+        if metadata is None:
+            metadata = {}
         parent_id = "1"  # the parent ID of the root element
-        sords = self._split_path_elements(path, separator)
+        sords: list[Sord] = self._split_path_elements(path, separator)
+        if mask_name is not None:
+            metadata_sord = self.mask_util.create_local_sord(mask_name, metadata if metadata is not None else {},
+                                                             sords[-1].id)
+            metadata_sord.name = sords[-1].name
+            sords[-1] = metadata_sord
 
         body = BRequestIXServicePortIFCheckinSordPath(
-
             parent_id=parent_id,
             sords=sords,
-            sord_z=SordZ(SordC().mb_all)
+            sord_z=SORD_Z_MB_ALL,
         )
 
         erg = ix_service_port_if_checkin_sord_path.sync_detailed(client=self.elo_client, body=body)
@@ -121,7 +130,6 @@ class EloService:
         :param content_type: The content type of the blob (default = "text/plain; charset=ISO_8859_1")
         """
         self.map_util.write_map_fields(sord_id, fields, map_domain, value_type, content_type)
-
 
     def upload_file(self, file_path: str, parent_id: str, filemask_id="0", filename="") -> str:
         """
