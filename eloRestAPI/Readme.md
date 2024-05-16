@@ -11,6 +11,11 @@ Also notice that other resources are available at http://eloServer.com:6056/ix-A
 In addition, there is a small example from elo directly:
 * https://eloServer.com/ix-Archive/js-api-examples/rest/index.html
 
+## Documentation 
+
+The documentation is available at https://docs.elo.com/dev/programming/de-de/elo-rest/ix-rest-api/
+A snapshot of the documentation is available [here](dev-programming_elo-rest-snapshot-16_5_24.pdf)
+
 ### Client generation
 
 based on the openapi.json we can generate a client to make our life easier
