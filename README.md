@@ -2,6 +2,7 @@
 
 Developed by [Treskon GmbH](https://treskon.at/) 
 * published on PyPI: https://pypi.org/project/elo-indexserver-client/ 
+* [Documentation](https://treskon.github.io/elo-indexserver-client/)
 * Sourcecode [GitHub repository](https://github.com/treskon/elo-indexserver-client)
 
 A client library for accessing Indexserver component of [ELO Digital Office GmbH](https://www.elo.com/de-at.html) via
