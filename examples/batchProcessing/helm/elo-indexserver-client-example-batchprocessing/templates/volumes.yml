@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-rabbitmq-pvc
+spec:
+  accessModes:
+    - {{ .Values.volumes.rabbitmq.accessMode }}
+  storageClassName: {{ .Values.volumes.rabbitmq.storageClass }}
+  resources:
+    requests:
+      storage: {{ .Values.volumes.rabbitmq.resources.requests.storage }}

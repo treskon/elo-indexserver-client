@@ -1,0 +1,28 @@
+{{ if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: {{ .Values.ingress.cluster_issuer }}
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+  labels:
+    app:  {{ .Release.Name }}
+spec:
+  ingressClassName: {{.Values.ingress.class }}
+  tls:
+    - hosts:
+        - {{ .Values.ingress.host }}
+      secretName: {{ .Values.ingress.secret_name}}
+  rules:
+    - host: {{ .Values.ingress.host }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}-rabbitmq
+                port:
+                  number: 15672
+{{ end }}

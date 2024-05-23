@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-rabbitmq
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-rabbitmq
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-rabbitmq
+    spec:
+      volumes:
+        - name: {{ .Release.Name }}-rabbitmq-pvc
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-rabbitmq-pvc
+      {{ if .Values.security_context.enabled }}
+      securityContext:
+        runAsUser: {{ .Values.security_context.runAsUser }}
+        fsGroup: {{ .Values.security_context.fsGroup }}
+      {{ end }}
+      containers:
+        - name: {{ .Release.Name }}-rabbitmq
+          image: {{ .Values.images.rabbitmq.repository }}:{{ .Values.images.rabbitmq.tag }}
+          ports:
+            - containerPort: 5672
+              name: amqp
+            - containerPort: 15672
+              name: management
+          volumeMounts:
+            - mountPath: /var/lib/rabbitmq
+              name: {{ .Release.Name }}-rabbitmq-pvc
+          env:
+            - name: RABBITMQ_DEFAULT_USER
+              value: {{ .Values.images.rabbitmq.default_user.name }}
+            - name: RABBITMQ_DEFAULT_PASS
+              value: {{ .Values.images.rabbitmq.default_user.password }}
+          resources:
+            limits:
+              memory: {{.Values.images.rabbitmq.resources.limits.memory }}
+            requests:
+              memory: {{.Values.images.rabbitmq.resources.requests.memory }}
