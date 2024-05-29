@@ -58,7 +58,6 @@ class FileUtil:
 
     def checkout_sord(self, sord_id) -> Sord:
         body = BRequestIXServicePortIFCheckoutSord(
-           
             obj_id=sord_id,
             edit_info_z=elo_const.EDIT_INFO_Z_MB_ALL,
             lock_z=LockZ(LockC().bset_no)

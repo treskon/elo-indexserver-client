@@ -2,10 +2,15 @@ import base64
 import logging
 
 from eloclient import Client
-from eloclient.api.ix_service_port_if import ix_service_port_if_checkin_map
+from eloclient.api.ix_service_port_if import ix_service_port_if_checkin_map, ix_service_port_if_checkout_map
 from eloclient.models import BRequestIXServicePortIFCheckinMap, KeyValue, MapValue, FileData
+from eloclient.models import BRequestIXServicePortIFCheckoutMap, LockZ, LockC
+
 from eloservice.error_handler import _check_response
 from eloservice.login_util import EloConnection
+
+from typing import Type
+import mimetypes
 
 
 def _convert_key_value(key: str, value: str) -> KeyValue:
@@ -66,11 +71,39 @@ def too_large_for_string(fields: dict):
     return False
 
 
+def _decode_blob(self):
+    text_types = [
+        'text/plain', 'text/html', 'text/xml', 'text/css', 'application/json',
+        'application/javascript', 'application/xml', 'application/x-www-form-urlencoded'
+    ]
+
+    # Check if the content type is text-based
+    if self.content_type in text_types:
+        return self.blob_value.decode('utf-8')
+
+    else:
+        # For non-text content types, just return the raw bytes
+        return self.blob_value
+
+
 class MapUtil:
     class ValueType:
         string = "string"
         blob_string = "blob_string"
         blob_file = "blob_file"
+
+    class MapValue:
+        type: Type['MapUtil.ValueType']
+        value: str  # when content_type is text based (e.g. text/plain, text/xml, etc.) automatically decode the bytes
+        # using the content_type. -> find a library that defines a list of text based content types, use regex, ...)
+        content_type: str  # this should be readable from ELO because it is stored in the DB
+        blob_value: bytes  # raw bytes, no decoding
+
+        def __init__(self, value_type: Type['MapUtil.ValueType'], value: str, content_type: str, blob_value: bytes):
+            self.type = value_type
+            self.value = value
+            self.content_type = content_type
+            self.blob_value = blob_value
 
     elo_connection: EloConnection
     elo_client: Client
@@ -123,3 +156,50 @@ class MapUtil:
         )
         res = ix_service_port_if_checkin_map.sync_detailed(client=self.elo_client, body=body)
         _check_response(res)
+
+    # Neuer Ansatz ab hier
+    def read_map_fields(self, sord_id: str, map_domain: str, key: str):
+        if key:
+            map_field = self._read_map_field(sord_id, map_domain, key)
+        else:
+            all_map_fields = self._read_all_map_fields(sord_id)
+
+    def _read_all_map_fields(self, sord_id: str, map_domain: str = "Objekte") -> dict[str, MapValue]:
+        logging.info(f"Called _read_all_map_fields for id {sord_id} mapDomain {map_domain}")
+
+        try:
+            body = BRequestIXServicePortIFCheckoutMap(
+                domain_name=map_domain,
+                id=sord_id,
+                key_names=None,
+                lock_z=LockZ(LockC().bset_no)
+            )
+            res = ix_service_port_if_checkout_map.sync_detailed(client=self.elo_client, body=body)
+            _check_response(res)
+
+            if type(res.parsed.result.map_items.additional_properties) is not dict[str, MapValue]:
+                raise ValueError(f"Map values of sord with ID {sord_id} not found")
+            return res.parsed.result.map_items.additional_properties
+
+        except Exception as e:
+            logging.error(f"error occurred while checking out map data for id {id} mapDomain {map_domain}")
+
+    def _read_map_field(self, sord_id: str, map_domain: str, key: str) -> MapValue:
+        logging.info(f"Called _read_map_field for id {sord_id} mapDomain {map_domain} key {key}")
+
+        try:
+            body = BRequestIXServicePortIFCheckoutMap(
+                domain_name=map_domain,
+                id=sord_id,
+                key_names=[key],
+                lock_z=LockZ(LockC().bset_no)
+            )
+            res = ix_service_port_if_checkout_map.sync_detailed(client=self.elo_client, body=body)
+            _check_response(res)
+
+            if type(res.parsed.result.map_items.additional_properties[key]) is not MapValue:
+                raise ValueError(f"Map value of sord with ID {sord_id} not found")
+            return res.parsed.result.map_items.additional_properties[key]
+
+        except Exception as e:
+            logging.error(f"error occurred while checking out map data for id {id} mapDomain {map_domain} key {key}")
