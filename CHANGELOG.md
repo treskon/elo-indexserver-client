@@ -8,7 +8,7 @@ base version
 Moved from private repo to public GitHub repo.
 
 ## 0.1.11
-PR: 
+PR:
 * https://github.com/treskon/elo-indexserver-client/pull/3
 
 Details:
@@ -16,16 +16,23 @@ Details:
 * Added write_map_fields method to EloService
 
 ## 0.1.12
-PR: 
+PR:
 * https://github.com/treskon/elo-indexserver-client/pull/6
 
 Details:
 * Added configurable caching for overwrite_mask_fields (caches get_all_masks_names and get_mask_detail)
 * Fix a bug that caused a severe performance issue during overwrite_mask_fields
 
-## 0.1.12
-PR: 
+## 0.1.13
+PR:
 * https://github.com/treskon/elo-indexserver-client/pull/7
 
 Details:
 * Hotfix create_folder method; used wrong bitset (mb_all) resulted in indexserver trying to assign 'freie eingabe' mask to a folder which is not possible on some elo instances. We updated our elo testing server to be more strict on this so we prevent this issue in the future
+
+## 0.1.14
+PR:
+* https://github.com/treskon/elo-indexserver-client/pull/10
+
+Details:
+* add optional parameter filename_objkey, filename_objkey_id for upload_file and update_file. Which sets the filename in the options tab (internally done via a predefined obj_key entry)
