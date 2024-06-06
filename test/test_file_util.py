@@ -59,3 +59,15 @@ class TestService(unittest.TestCase):
         _check_not_unset(sord.guid)
         _check_not_unset(sord.obj_keys)
 
+    def test_upload_file_with_custom_filename(self):
+        elo_connection, elo_client = self._login()
+        util = FileUtil(elo_client, elo_connection)
+        parentID = "134698"
+        sord = util.upload_file(TEST_ROOT_DIR + "/resources/testFile.png", parentID, filename="FileNameTestFile.png",
+                                filename_objkey="differentFilename.png")
+        assert sord is not None
+        assert sord != ""
+        checkSordID = sord
+        sord = util.checkout_sord(checkSordID)
+        assert sord.name == "FileNameTestFile.png"
+        assert sord.obj_keys[0].data[0] == "differentFilename.png"
