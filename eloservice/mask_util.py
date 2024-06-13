@@ -98,8 +98,8 @@ class MaskUtil:
         _check_response(res)
         return res.parsed.result.mask
 
-    def overwrite_mask_fields(self, sord_id: str, mask_name: str, metadata: dict):
-        sord = self.create_local_sord(mask_name, metadata, sord_id)
+    def overwrite_mask_fields(self, sord_id: str, mask_name: str, metadata: dict, metadata_force: dict = None):
+        sord = self._create_local_sord(mask_name, metadata, sord_id, metadata_force)
         body = BRequestIXServicePortIFCheckinSord(
             sord=sord,
             sord_z=SordZ_INFO_MB_MASK_INFOS,
@@ -108,7 +108,7 @@ class MaskUtil:
         erg = ix_service_port_if_checkin_sord.sync_detailed(client=self.elo_client, body=body)
         _check_response(erg)
 
-    def create_local_sord(self, mask_name, metadata, sord_id):
+    def _create_local_sord(self, mask_name, metadata, sord_id, metadata_force=None):
         mask = self.get_mask_name(mask_name)
         if mask is None:
             raise ValueError(f"Mask '{mask_name}' not found in ELO")
@@ -126,6 +126,12 @@ class MaskUtil:
                                             id=key_id))
             except ValueError:
                 logging.warning(f"Could not find key '{key}' in mask '{mask.name}', ignoring property and continuing")
+
+        if metadata_force is not None:
+            for key, value in metadata_force.items():
+                sord.obj_keys.append(ObjKey(data=[value], obj_id=sord_id, name=key,
+                                            id=key))
+
         return sord
 
     def get_mask_name(self, mask_name):
