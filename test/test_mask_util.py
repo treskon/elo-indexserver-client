@@ -40,3 +40,20 @@ class TestService(unittest.TestCase):
                 "ITEMDOCDATE": "2023-12-26"
             }
         )
+
+    def test_set_force_metadata_on_sord(self):
+        #path in elo: ¶EIWECK_INTEGRATION_TEST¶PythonAPI¶test_mask_api¶test_set_force_metadata_on_sord
+        elo_connection, elo_client = self._login()
+        util = MaskUtil(elo_client, elo_connection)
+        erg = util.overwrite_mask_fields(
+            sord_id="140523",
+            mask_name="Images",
+            metadata={
+                "LATITUDE": "35.732554",
+                "LONGITUDE": "139.714302",
+                "ITEMDOCDATE": "2023-12-26"
+            },
+            metadata_force={
+                "51": "testCustoMFilename.png"
+            }
+        )

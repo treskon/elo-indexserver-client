@@ -90,15 +90,18 @@ class EloService:
             raise ValueError("Could not create folder")
         return object_id
 
-    def overwrite_mask_fields(self, sord_id: str, mask_name: str, metadata: dict):
+    def overwrite_mask_fields(self, sord_id: str, mask_name: str, metadata: dict, metadata_force: dict = None):
         """
         This function removes the old metadata and overwrite it with the new metadata
 
         :param sord_id: The sordID of the mask in ELO
         :param mask_name: The name of the mask in ELO
         :param metadata: The metadata which should be overwritten
+        :param metadata_force: The metadata which should be overwritten even if the given key is not in the mask. Can be
+        needed for special metadata like the filename. The key in the dict is used as ID and as 'name' at the same time.
+        Setting the key name in ELO seems to be irrelevant anyway, the ID seems to always have priority.(default = None)
         """
-        self.mask_util.overwrite_mask_fields(sord_id, mask_name, metadata)
+        self.mask_util.overwrite_mask_fields(sord_id, mask_name, metadata, metadata_force)
 
     def write_map_fields(self, sord_id: str, fields: dict, map_domain: str = "Objekte",
                          value_type: MapUtil.ValueType = MapUtil.ValueType.string,
@@ -140,7 +143,8 @@ class EloService:
         """
         self.map_util.write_map_fields(sord_id, fields, map_domain, value_type, content_type)
 
-    def upload_file(self, file_path: str, parent_id: str, filemask_id="0", filename="", filename_objkey_id=FILENAME_OBJKEY_ID_DEFAULT,
+    def upload_file(self, file_path: str, parent_id: str, filemask_id="0", filename="",
+                    filename_objkey_id=FILENAME_OBJKEY_ID_DEFAULT,
                     filename_objkey="") -> str:
         """
         This function uploads a file to ELO
