@@ -140,13 +140,15 @@ class EloService:
         """
         self.map_util.write_map_fields(sord_id, fields, map_domain, value_type, content_type)
 
-
-    ### TODO: Einfügen read_map_fields
-
-
-
-    def upload_file(self, file_path: str, parent_id: str, filemask_id="0", filename="") -> str:
+    def read_map_fields(self, sord_id: str, map_domain: str, key: str):
         """
+        This function reads map fields of a sord in ELO.
+
+        """
+        self.map_util.read_map_fields(sord_id, map_domain, key)
+
+   def upload_file(self, file_path: str, parent_id: str, filemask_id="0", filename="") -> str:
+       """
         This function uploads a file to ELO
 
         :param filename: The name of the file in ELO, if not given the name of the file_path is used

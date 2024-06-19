@@ -157,7 +157,6 @@ class MapUtil:
         res = ix_service_port_if_checkin_map.sync_detailed(client=self.elo_client, body=body)
         _check_response(res)
 
-    # Neuer Ansatz ab hier
     def read_map_fields(self, sord_id: str, map_domain: str, key: str):
         if key:
             map_field = self._read_map_field(sord_id, map_domain, key)
