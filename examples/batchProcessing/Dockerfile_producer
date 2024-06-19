@@ -11,8 +11,8 @@ COPY ./Pipfile /app/
 RUN pip install pipenv
 RUN pipenv install --deploy --ignore-pipfile
 
-# Copy the pythonfile and the data to the working directory
-COPY ./producer.py /app/
+# Copy the folder producer to the working directory
+COPY ./producer /app/
 COPY ./sales_data_sample.csv /app/
 
 # Run the data_import.py script
