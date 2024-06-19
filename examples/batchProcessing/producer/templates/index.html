@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message queue based batch processing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<script >
+    // Intercept the form submit and submit it via JavaScript
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelector('form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const file = document.getElementById('file').files[0];
+            const encoding = document.getElementById('encoding').value;
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('encoding', encoding);
+            fetch('./upload', {
+                method: 'POST',
+                body: formData
+            }).then(response => {
+                if (response.ok) {
+                    alert('File uploaded');
+                } else {
+                    alert('Error uploading file');
+                }
+            });
+        });
+    });
+
+</script>
+
+<body class="font-sans bg-gray-100">
+
+<header class="bg-gray-800 text-white py-4 shadow-md text-center">
+    <h1 class="text-xl font-bold">Message queue based batch processing</h1>
+    <h4 class="text-md">Simple example of a producer. You can upload a file and the producer will send the content to the
+        message queue.</h4>
+</header>
+
+<main class="mx-auto max-w-screen-xl mt-8">
+    <div class="flex justify-center">
+        <div class="shadow-md p-4">
+            <p class="text-lg p-2">Upload a CSV file</p>
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" id="file" class="p-2 border border-gray-300 rounded-md w-9/12"
+                          accept=".csv">
+                <input type="text" name="encoding" id="encoding" class="p-2 border border-gray-300 rounded-md w-9/12"
+                       placeholder="Encoding (default: ISO-8859-1)" value="ISO-8859-1">
+                <input type="submit" value="Upload" class="p-2 bg-blue-500 text-white rounded-md grow w-auto">
+            </form>
+        </div>
+    </div>
+</main>
+<footer class="fixed inset-x-0 bottom-0  bg-gray-800 text-white py-4 shadow-md text-center">
+    <p>Author: <a href="https://emanum.dev">Manuel Eiweck</a> - <a href="https://treskon.at/">Treskon GmbH</a> </p>
+</footer>
+
+
+</body>
+
+</html>

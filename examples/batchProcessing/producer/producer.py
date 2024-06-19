@@ -3,6 +3,27 @@ import pandas as pd
 import sys
 import json
 import os
+from flask import Flask, render_template, request
+
+app = Flask(__name__)
+
+
+@app.route('/')
+def data():
+    return render_template("index.html")
+
+
+@app.route('/upload', methods=['POST'])
+def upload_csv_to_rabbitmq():
+    file = request.files['file']
+    encoding = request.form.get('encoding', 'ISO-8859-1')
+    if file.filename == '':
+        return "No file selected", 400
+    if file:
+        file.save(file.filename)
+        upload_to_rabbit(file.filename, encoding)
+        os.remove(file.filename)
+        return "File uploaded to rabbitmq", 200
 
 
 def connect_rabbitmq():
@@ -38,8 +59,8 @@ def build_json_message(row):
     return json.dumps(row.to_dict())
 
 
-def load_dataset():
-    df = pd.read_csv('sales_data_sample.csv', encoding='ISO-8859-1')
+def load_dataset(file_path='sales_data_sample.csv', encoding='ISO-8859-1'):
+    df = pd.read_csv(file_path, encoding=encoding)
     df["SALE_AMOUNT"] = df["QUANTITYORDERED"] * df["PRICEEACH"]
     df["SALE_PRODUCT"] = df["PRODUCTLINE"]
     df["SALE_DATE"] = df["ORDERDATE"]
@@ -55,14 +76,19 @@ def load_dataset():
 
 
 def main():
+    upload_to_rabbit()
+    sys.exit(0)
+
+
+def upload_to_rabbit(file_path='sales_data_sample.csv', encoding='ISO-8859-1'):
     channel = connect_rabbitmq()
     df = load_dataset()
     for index, row in df.iterrows():
         message = build_json_message(row)
         send_message(channel, str(message))
     print(" [x] Done")
-    sys.exit(0)
 
 
 if __name__ == "__main__":
-    main()
+    # main()
+    app.run(port=8080, debug=False)

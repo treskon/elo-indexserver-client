@@ -8,6 +8,7 @@ pandas = "*"
 pika = "*"
 elo-indexserver-client = "*"
 python-decouple = "*"
+flask = "*"
 
 [dev-packages]
 pika-stubs = "*"
