@@ -1,12 +1,12 @@
 from eloclient import Client
 from eloclient.api.ix_service_port_if import (ix_service_port_if_checkin_sord_path, ix_service_port_if_delete_sord)
 from eloclient.api.ix_service_port_if import (ix_service_port_if_copy_sord)
-from eloclient.models import (BRequestIXServicePortIFCheckinSordPath, BRequestIXServicePortIFDeleteSord, SordZ, SordC)
+from eloclient.models import (BRequestIXServicePortIFCheckinSordPath, BRequestIXServicePortIFDeleteSord)
 from eloclient.models import (BRequestIXServicePortIFCopySord)
 from eloclient.models import Sord
-from eloservice.eloconstants import COPY_SORD_C_MOVE, SORD_Z_MB_ALL, SORD_Z_EMPTY
+from eloservice.eloconstants import COPY_SORD_C_MOVE, SORD_Z_EMPTY
 from eloservice.error_handler import _check_response
-from eloservice.file_util import FileUtil
+from eloservice.file_util import FileUtil, FILENAME_OBJKEY_ID_DEFAULT
 from eloservice.login_util import LoginUtil
 from eloservice.map_util import MapUtil
 from eloservice.mask_util import MaskUtil
@@ -90,15 +90,18 @@ class EloService:
             raise ValueError("Could not create folder")
         return object_id
 
-    def overwrite_mask_fields(self, sord_id: str, mask_name: str, metadata: dict):
+    def overwrite_mask_fields(self, sord_id: str, mask_name: str, metadata: dict, metadata_force: dict = None):
         """
         This function removes the old metadata and overwrite it with the new metadata
 
         :param sord_id: The sordID of the mask in ELO
         :param mask_name: The name of the mask in ELO
         :param metadata: The metadata which should be overwritten
+        :param metadata_force: The metadata which should be overwritten even if the given key is not in the mask. Can be
+        needed for special metadata like the filename. The key in the dict is used as ID and as 'name' at the same time.
+        Setting the key name in ELO seems to be irrelevant anyway, the ID seems to always have priority.(default = None)
         """
-        self.mask_util.overwrite_mask_fields(sord_id, mask_name, metadata)
+        self.mask_util.overwrite_mask_fields(sord_id, mask_name, metadata, metadata_force)
 
     def write_map_fields(self, sord_id: str, fields: dict, map_domain: str = "Objekte",
                          value_type: MapUtil.ValueType = MapUtil.ValueType.string,
@@ -147,31 +150,40 @@ class EloService:
         """
         self.map_util.read_map_fields(sord_id, map_domain, key)
 
+    def upload_file(self, file_path: str, parent_id: str, filemask_id="0", filename="",
+                    filename_objkey_id=FILENAME_OBJKEY_ID_DEFAULT,
+                    filename_objkey="") -> str:
+        """
+        This function uploads a file to ELO
 
-def upload_file(self, file_path: str, parent_id: str, filemask_id="0", filename="") -> str:
-    """
-     This function uploads a file to ELO
+        :param filename: The name of the file in ELO, if not given the name of the file_path is used. This is the filename
+        which is shown in the directory tree. However, also referred to as kurzbezeichnung in ELO.
+        :param filemask_id:  The maskID of the filemask in ELO, default is "0" (--> mask "Freie Eingabe" = STD mask)
+        :param file_path: The path of the file which should be uploaded
+        :param parent_id: The sordID of the parent folder in ELO
+        :param filename_objkey_id: The objkeyID of the filename objkey in ELO, default is "51" (--> objkey "ELO_FNAME")
+        this sets the filename in the tab 'Options'
+        :filename_objkey The filename in the tab 'Options' in ELO
 
-     :param filename: The name of the file in ELO, if not given the name of the file_path is used
-     :param filemask_id:  The maskID of the filemask in ELO, default is "0" (--> mask "Freie Eingabe" = STD mask)
-     :param file_path: The path of the file which should be uploaded
-     :param parent_id: The sordID of the parent folder in ELO
+        :return: The sordID of the uploaded file
+        """
+        return self.file_util.upload_file(file_path=file_path, parent_id=parent_id, filemask_id=filemask_id,
+                                          filename=filename, filename_objkey_id=filename_objkey_id,
+                                          filename_objkey=filename_objkey)
 
-     :return: The sordID of the uploaded file
-     """
-    return self.file_util.upload_file(file_path=file_path, parent_id=parent_id, filemask_id=filemask_id,
-                                      filename=filename)
+    def update_file(self, sord_id: str, file_path: str, filename="", filename_objkey_id=FILENAME_OBJKEY_ID_DEFAULT,
+                    filename_objkey=""):
+        """
+        This function updates a file in ELO
 
-
-def update_file(self, sord_id: str, file_path: str, filename=""):
-    """
-    This function updates a file in ELO
-
-    :param sord_id: The sordID of the file in ELO
-    :param filename: The name of the file in ELO, if not given the name of the file_path is used
-    :param file_path: The path of the file which should be uploaded
-    """
-    self.file_util.update_file(file_path=file_path, file_id=sord_id, filename=filename)
+        :param sord_id: The sordID of the file in ELO
+        :param filename: The name of the file in ELO, if not given the name of the file_path is used
+        :param file_path: The path of the file which should be uploaded
+        :param filename_objkey_id: The objkeyID of the filename objkey in ELO, default is "51" (--> objkey "ELO_FNAME")
+        :param filename_objkey: The filename in the tab 'Options' in ELO
+        """
+        self.file_util.update_file(file_path=file_path, file_id=sord_id, filename=filename,
+                                   filename_objkey_id=filename_objkey_id, filename_objkey=filename_objkey)
 
 
 def search(self, search_mask_fields: dict = None, search_mask_id: str = None, max_results: int = 100) -> [str]:
