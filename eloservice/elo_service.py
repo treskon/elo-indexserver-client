@@ -185,95 +185,88 @@ class EloService:
         self.file_util.update_file(file_path=file_path, file_id=sord_id, filename=filename,
                                    filename_objkey_id=filename_objkey_id, filename_objkey=filename_objkey)
 
+    def search(self, search_mask_fields: dict = None, search_mask_id: str = None, max_results: int = 100) -> [str]:
+        """
+        This function searches for objects that match all the given metadata
 
-def search(self, search_mask_fields: dict = None, search_mask_id: str = None, max_results: int = 100) -> [str]:
-    """
-    This function searches for objects that match all the given metadata
+        :param search_mask_fields: The metadata that should be searched for (default = None)
+        :param search_mask_id: The maskID of the mask that should be searched (default = None)
+        :param max_results:  The maximum number of results that should be returned (default = 100)
 
-    :param search_mask_fields: The metadata that should be searched for (default = None)
-    :param search_mask_id: The maskID of the mask that should be searched (default = None)
-    :param max_results:  The maximum number of results that should be returned (default = 100)
+        :return: The sordIDs of the found objects
+        """
+        return self.search_util.search(search_mask_fields, search_mask_id, max_results)
 
-    :return: The sordIDs of the found objects
-    """
-    return self.search_util.search(search_mask_fields, search_mask_id, max_results)
+    def exists(self, search_mask_fields: dict = None, search_mask_id: str = None) -> bool:
+        """
+        This function checks if an object exists that matches all the given metadata
 
+        :param search_mask_fields: The metadata that should be searched for (default = None)
+        :param search_mask_id: The maskID of the mask that should be searched (default = None)
+        :return: True if an object exists, False if not
+        """
+        return len(self.search_util.search(search_mask_fields, search_mask_id, max_results=1)) > 0
 
-def exists(self, search_mask_fields: dict = None, search_mask_id: str = None) -> bool:
-    """
-    This function checks if an object exists that matches all the given metadata
+    def checkout(self, sord_id: str) -> Sord:
+        """
+        This function checks out a sord in ELO
 
-    :param search_mask_fields: The metadata that should be searched for (default = None)
-    :param search_mask_id: The maskID of the mask that should be searched (default = None)
-    :return: True if an object exists, False if not
-    """
-    return len(self.search_util.search(search_mask_fields, search_mask_id, max_results=1)) > 0
+        :param sord_id: The sordID of the sord in ELO
+        :return: The checked out sord
+        """
+        return self.file_util.checkout_sord(sord_id)
 
+    def remove(self, sord_id: str):
+        """
+        This function removes a sord in ELO
 
-def checkout(self, sord_id: str) -> Sord:
-    """
-    This function checks out a sord in ELO
+        :param sord_id: The sordID of the sord in ELO
+        """
+        body = BRequestIXServicePortIFDeleteSord(obj_id=sord_id)
+        res = ix_service_port_if_delete_sord.sync_detailed(client=self.elo_client, body=body)
+        _check_response(res)
+        if res.parsed.result is None:
+            raise ValueError("Could not delete sord")
 
-    :param sord_id: The sordID of the sord in ELO
-    :return: The checked out sord
-    """
-    return self.file_util.checkout_sord(sord_id)
+    def move(self, source_sord_id: str, path: str, separator="¶"):
+        """
+        This function moves a sord in ELO
 
+        :param source_sord_id: The sordID of the sord in ELO which should be moved
+        :param path: The path of the new parent folder in ELO
 
-def remove(self, sord_id: str):
-    """
-    This function removes a sord in ELO
+        :param separator: The separator which should be used to split the path (default = "¶")
+        :return: The sordId of the moved sord
+        """
+        new_destination_sordid = self.create_folder(path, separator)
+        return self._move_sord(source_sord_id=source_sord_id, new_parent_id=new_destination_sordid)
 
-    :param sord_id: The sordID of the sord in ELO
-    """
-    body = BRequestIXServicePortIFDeleteSord(obj_id=sord_id)
-    res = ix_service_port_if_delete_sord.sync_detailed(client=self.elo_client, body=body)
-    _check_response(res)
-    if res.parsed.result is None:
-        raise ValueError("Could not delete sord")
+    def _move_sord(self, source_sord_id: str, new_parent_id: str):
+        """
+        This function moves a sord in ELO
 
+        :param source_sord_id: The sordID of the sord in ELO
+        :param new_parent_id: The new parentID of the sord in ELO
 
-def move(self, source_sord_id: str, path: str, separator="¶"):
-    """
-    This function moves a sord in ELO
+        :return: The sordId of the moved sord
+        """
+        body = BRequestIXServicePortIFCopySord(
 
-    :param source_sord_id: The sordID of the sord in ELO which should be moved
-    :param path: The path of the new parent folder in ELO
+            new_parent_id=new_parent_id,
+            obj_id=source_sord_id,
+            copy_sord_z=COPY_SORD_C_MOVE
+        )
+        res = ix_service_port_if_copy_sord.sync_detailed(client=self.elo_client, body=body)
+        _check_response(res)
+        return new_parent_id
 
-    :param separator: The separator which should be used to split the path (default = "¶")
-    :return: The sordId of the moved sord
-    """
-    new_destination_sordid = self.create_folder(path, separator)
-    return self._move_sord(source_sord_id=source_sord_id, new_parent_id=new_destination_sordid)
+    def _split_path_elements(self, path, separator="¶") -> list[Sord]:
+        """
+        This help function splits a path in subparts and return the splitte parts
 
+        :param path: A path with a given separator, e.g = "/Alpha AG/Eingangsrechnungen/2023/November/20"
+        :param separator: The separator which should be used to split the path (default = "¶")
 
-def _move_sord(self, source_sord_id: str, new_parent_id: str):
-    """
-    This function moves a sord in ELO
-
-    :param source_sord_id: The sordID of the sord in ELO
-    :param new_parent_id: The new parentID of the sord in ELO
-
-    :return: The sordId of the moved sord
-    """
-    body = BRequestIXServicePortIFCopySord(
-
-        new_parent_id=new_parent_id,
-        obj_id=source_sord_id,
-        copy_sord_z=COPY_SORD_C_MOVE
-    )
-    res = ix_service_port_if_copy_sord.sync_detailed(client=self.elo_client, body=body)
-    _check_response(res)
-    return new_parent_id
-
-
-def _split_path_elements(self, path, separator="¶") -> list[Sord]:
-    """
-    This help function splits a path in subparts and return the splitte parts
-
-    :param path: A path with a given separator, e.g = "/Alpha AG/Eingangsrechnungen/2023/November/20"
-    :param separator: The separator which should be used to split the path (default = "¶")
-
-    :return: The subparts of the path = path slices
-    """
-    return [Sord(name=path_element) for path_element in filter(None, path.split(separator))]
+        :return: The subparts of the path = path slices
+        """
+        return [Sord(name=path_element) for path_element in filter(None, path.split(separator))]
