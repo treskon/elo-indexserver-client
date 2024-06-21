@@ -67,3 +67,13 @@ Details:
 
 * Add metadata_force to method overwrite_mask_fields. This allows to set metadata by ID that is otherwise not assignable
   to a mask. Useful in certain cases like the special filename mask objkeys
+
+## 0.1.16
+
+PR:
+
+* https://github.com/treskon/elo-indexserver-client/pull/13
+
+file_util: guess mimetype based on the obj_key parameter instead of the filename
+
+
