@@ -143,6 +143,13 @@ class EloService:
         """
         self.map_util.write_map_fields(sord_id, fields, map_domain, value_type, content_type)
 
+    def read_map_fields(self, sord_id: str, map_domain: str, key: str):
+        """
+        This function reads map fields of a sord in ELO.
+
+        """
+        self.map_util.read_map_fields(sord_id, map_domain, key)
+
     def upload_file(self, file_path: str, parent_id: str, filemask_id="0", filename="",
                     filename_objkey_id=FILENAME_OBJKEY_ID_DEFAULT,
                     filename_objkey="") -> str:
