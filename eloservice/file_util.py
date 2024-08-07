@@ -1,4 +1,6 @@
 import mimetypes
+import os
+from datetime import datetime
 
 from eloclient import Client
 from eloclient.api.ix_service_port_if import ix_service_port_if_create_doc, ix_service_port_if_checkin_doc_end, \
@@ -30,9 +32,12 @@ class FileUtil:
         self.elo_client = elo_client
 
     def update_file(self, file_path: str, file_id: str, filename="", filename_objkey_id=FILENAME_OBJKEY_ID_DEFAULT,
-                    filename_objkey="") -> str:
+                    filename_objkey="",
+                    filedate=datetime.now().isoformat()) -> str:
         """
         This function updates a file in ELO
+        :param filedate: The date of the file, default is the modification date of the file. Format is in ISO 8601 e.g.
+        "2021-08-25T15:00:00"
         :param filename:
         :param filemask_id:  The maskID of the filemask in ELO, default is "0" (--> mask "Freie Eingabe" = STD mask)
         :param file_path: The path of the file which should be uploaded
@@ -44,17 +49,23 @@ class FileUtil:
         :return: The sordID of the updated file
         """
         file_content, file_name_path = _read_file(file_path)
+        filedate = datetime.fromtimestamp(
+            os.path.getmtime(file_path)).isoformat() if filedate is None else filedate
         sord = self.checkout_sord(file_id)
         filename_elo, kurzbezeichnung = self._prepare_checkin_doc(file_name_path, filename, filename_objkey)
         return self._checkin_doc(sord, filecontent=file_content,
                                  kurzbezeichnung=kurzbezeichnung, filename=filename_elo,
-                                 filename_objkey_id=filename_objkey_id)
+                                 filename_objkey_id=filename_objkey_id,
+                                 x_date_iso=filedate)
 
     def upload_file(self, file_path: str, parent_id: str, filemask_id="0", filename="",
                     filename_objkey_id=FILENAME_OBJKEY_ID_DEFAULT,
-                    filename_objkey="") -> str:
+                    filename_objkey="",
+                    filedate=datetime.now().isoformat()) -> str:
         """
         This function uploads a file to ELO
+        :param filedate: The date of the file, default is the modification date of the file. Format is in ISO 8601 e.g.
+        "2021-08-25T15:00:00"
         :param filename: The name of the file in ELO, if not given the name of the file_path is used. This is the filename
         which is shown in the directory tree. However, also referred to as kurzbezeichnung in ELO.
         :param filemask_id:  The maskID of the filemask in ELO, default is "0" (--> mask "Freie Eingabe" = STD mask)
@@ -67,11 +78,14 @@ class FileUtil:
         :return: The sordID of the uploaded file
         """
         file_content, file_name_path = _read_file(file_path)
+        filedate = datetime.fromtimestamp(
+            os.path.getmtime(file_path)).isoformat() if filedate is None else filedate
         filename_elo, kurzbezeichnung = self._prepare_checkin_doc(file_name_path, filename, filename_objkey)
         document_sord = self._create_doc(filemask_id, parent_id)
         return self._checkin_doc(document_sord, filecontent=file_content,
                                  kurzbezeichnung=kurzbezeichnung, filename=filename_elo,
-                                 filename_objkey_id=filename_objkey_id)
+                                 filename_objkey_id=filename_objkey_id,
+                                 x_date_iso=filedate)
 
     def checkout_sord(self, sord_id) -> Sord:
         body = BRequestIXServicePortIFCheckoutSord(
@@ -97,8 +111,21 @@ class FileUtil:
         return filename_elo, kurzbezeichnung
 
     def _checkin_doc(self, document_sord, filecontent, kurzbezeichnung, filename,
-                     filename_objkey_id=FILENAME_OBJKEY_ID_DEFAULT):
+                     filename_objkey_id=FILENAME_OBJKEY_ID_DEFAULT,
+                     x_date_iso=datetime.now().isoformat()) -> str:
+        """
+
+        :param document_sord:
+        :param filecontent:
+        :param kurzbezeichnung:
+        :param filename:
+        :param objidate: Internal = Sord.objidate = Time of the archiving
+        :param objxdate: External = Sord.objxdate = Primary document date (optional)
+        :param filename_objkey_id:
+        :return:
+        """
         document_sord.name = kurzbezeichnung
+        document_sord.x_date_iso = x_date_iso
         document_sord.obj_keys = [
             ObjKey(data=[filename], name="ELO_FNAME", id=filename_objkey_id, obj_id=document_sord.id)]
         mimetype = mimetypes.guess_type(filename)[0]
