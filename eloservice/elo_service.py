@@ -148,7 +148,7 @@ class EloService:
     def upload_file(self, file_path: str, parent_id: str, filemask_id="0", filename="",
                     filename_objkey_id=FILENAME_OBJKEY_ID_DEFAULT,
                     filename_objkey="",
-                    filedate=datetime.now().isoformat()) -> str:
+                    filedate=None) -> str:
         """
         This function uploads a file to ELO
 
@@ -171,7 +171,7 @@ class EloService:
 
     def update_file(self, sord_id: str, file_path: str, filename="", filename_objkey_id=FILENAME_OBJKEY_ID_DEFAULT,
                     filename_objkey="",
-                    filedate=datetime.now().isoformat()):
+                    filedate=None):
         """
         This function updates a file in ELO
 

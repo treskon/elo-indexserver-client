@@ -71,3 +71,18 @@ class TestService(unittest.TestCase):
         sord = util.checkout_sord(checkSordID)
         assert sord.name == "importantDokument"
         assert sord.obj_keys[0].data[0] == "chicken.pdf"
+
+    def test_upload_file_with_custom_filedate(self):
+        elo_connection, elo_client = self._login()
+        util = FileUtil(elo_client, elo_connection)
+        parentID = "134698"
+        sord = util.upload_file(TEST_ROOT_DIR + "/resources/chicken.pdf", parentID, filename="customFiledate",
+                                filename_objkey="chicken.pdf",
+                                filedate="2021-08-25T15:00:00")
+        assert sord is not None
+        assert sord != ""
+        checkSordID = sord
+        sord = util.checkout_sord(checkSordID)
+        assert sord.name == "customFiledate"
+        assert sord.x_date_iso == "20210825150000"
+        assert sord.obj_keys[0].data[0] == "chicken.pdf"
