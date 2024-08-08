@@ -77,3 +77,21 @@ PR:
 file_util: guess mimetype based on the obj_key parameter instead of the filename
 
 
+## 0.1.17
+
+PR:
+
+* https://github.com/treskon/elo-indexserver-client/pull/14
+  * update method upload_file and update_file.
+* https://github.com/treskon/elo-indexserver-client/pull/15
+  * Add a method to download a file by its sord_id
+
+Details:
+upload_file and update_file are now also setting the x_date_iso.
+Automatically:
+* the modified date of the file
+Manually:
+* can be set by the caller of the function.
+
+i_date_iso = Time of the archiving - technical date on which the file was uploaded
+x_date_iso = Primary document date (optional) - usecase dependent date, e.g. invoice date, contract date, etc.
