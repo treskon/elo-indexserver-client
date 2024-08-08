@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from eloclient import Client
 from eloclient.api.ix_service_port_if import (ix_service_port_if_checkin_sord_path, ix_service_port_if_delete_sord)
 from eloclient.api.ix_service_port_if import (ix_service_port_if_copy_sord)
@@ -160,8 +158,9 @@ class EloService:
         :param filename_objkey_id: The objkeyID of the filename objkey in ELO, default is "51" (--> objkey "ELO_FNAME")
         this sets the filename in the tab 'Options'
         :param filename_objkey The filename in the tab 'Options' in ELO
-        :param filedate: The date of the file, default is the modification date of the file. Format is in ISO 8601 e.g.
-        "2021-08-25T15:00:00"
+        :param filedate: The date of the file, in UTC, default is the modification date of the file. Format is in
+        ISO 8601 e.g."2021-08-25T15:00:00". The date is stored in UTC in ELO and displayed in the local time zone of the
+         user client.
         :return: The sordID of the uploaded file
         """
         return self.file_util.upload_file(file_path=file_path, parent_id=parent_id, filemask_id=filemask_id,
@@ -180,8 +179,9 @@ class EloService:
         :param file_path: The path of the file which should be uploaded
         :param filename_objkey_id: The objkeyID of the filename objkey in ELO, default is "51" (--> objkey "ELO_FNAME")
         :param filename_objkey: The filename in the tab 'Options' in ELO
-        :param filedate: The date of the file, default is the modification date of the file. Format is in ISO 8601 e.g.
-        "2021-08-25T15:00:00"
+        :param filedate: The date of the file, in UTC, default is the modification date of the file. Format is in
+        ISO 8601 e.g."2021-08-25T15:00:00". The date is stored in UTC in ELO and displayed in the local time zone of the
+         user client.
         """
         self.file_util.update_file(file_path=file_path, file_id=sord_id, filename=filename,
                                    filename_objkey_id=filename_objkey_id, filename_objkey=filename_objkey,
