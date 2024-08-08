@@ -187,6 +187,14 @@ class EloService:
                                    filename_objkey_id=filename_objkey_id, filename_objkey=filename_objkey,
                                    filedate=filedate)
 
+    def download_file(self, sord_id: str, file_path: str):
+        """
+        This function downloads a file from ELO
+        :param sord_id: The sordID of the file which should be downloaded
+        :param file_path: The path where the file should be saved
+        """
+        self.file_util.download_file(sord_id, file_path)
+
     def search(self, search_mask_fields: dict = None, search_mask_id: str = None, max_results: int = 100) -> [str]:
         """
         This function searches for objects that match all the given metadata
