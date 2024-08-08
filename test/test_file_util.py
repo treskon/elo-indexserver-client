@@ -4,6 +4,7 @@ from eloservice.file_util import FileUtil
 from eloservice.login_util import LoginUtil
 from test import TEST_ROOT_DIR, _check_not_unset
 import os
+import tempfile
 
 
 class TestService(unittest.TestCase):
@@ -86,3 +87,12 @@ class TestService(unittest.TestCase):
         assert sord.name == "customFiledate"
         assert sord.x_date_iso == "20210825150000"
         assert sord.obj_keys[0].data[0] == "chicken.pdf"
+
+    def test_download_file(self):
+        elo_connection, elo_client = self._login()
+        util = FileUtil(elo_client, elo_connection)
+        sordID = "143926"
+        temp_file_path = tempfile.mktemp()
+        file = util.download_file(sordID, temp_file_path)
+        assert file is not None
+        assert file != ""

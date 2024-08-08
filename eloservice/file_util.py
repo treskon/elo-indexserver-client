@@ -1,5 +1,6 @@
 import mimetypes
 import os
+import re
 from datetime import datetime, timezone
 
 from eloclient import Client
@@ -76,6 +77,26 @@ class FileUtil:
                                  kurzbezeichnung=kurzbezeichnung, filename=filename_elo,
                                  filename_objkey_id=filename_objkey_id,
                                  x_date_iso=filedate)
+
+    def download_file(self, sord_id: str, file_path: str):
+        """
+        This function downloads a file from ELO
+        :param sord_id: The sordID of the file which should be downloaded
+        :param file_path: The path where the file should be saved
+        """
+        sord = self.checkout_sord(sord_id)
+        doc_url = sord.doc_version.url
+        # often the url is not directly accessible due to it being behind a reverse proxy or firewall.
+        # therefore we need to replace the url with the hostname and port of the elo connection
+        regex = "http(s)?://(.*):(\\d+)"
+        # get only the http(s)://hostname:port part of the url
+        hostname_port = re.search(regex, self.elo_connection.url).group(0)
+        replaced_url = re.sub(regex, hostname_port, doc_url)
+        stream = self.elo_client.get_httpx_client().get(replaced_url)
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        with open(file_path, "wb") as file:
+            file.write(stream.content)
+        return file
 
     def checkout_sord(self, sord_id) -> Sord:
         body = BRequestIXServicePortIFCheckoutSord(
