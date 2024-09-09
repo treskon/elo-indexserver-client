@@ -98,8 +98,8 @@ class EloService:
         :param mask_name: The name of the mask in ELO
         :param metadata: The metadata which should be overwritten
         :param metadata_force: The metadata which should be overwritten even if the given key is not in the mask. Can be
-        needed for special metadata like the filename. The key in the dict is used as ID and as 'name' at the same time.
-        Setting the key name in ELO seems to be irrelevant anyway, the ID seems to always have priority.(default = None)
+            needed for special metadata like the filename. The key in the dict is used as ID and as 'name' at the same time.
+            Setting the key name in ELO seems to be irrelevant anyway, the ID seems to always have priority.(default = None)
         """
         self.mask_util.overwrite_mask_fields(sord_id, mask_name, metadata, metadata_force)
 
@@ -151,7 +151,7 @@ class EloService:
         :param sord_id: The sordID of the sord in ELO you want to read the map fields from
         :param keys: A list of keys which should be read. If None or empty list, all keys are read (default = None)
         :param map_domain: The map domain in ELO (default = "Objekte"). This is what is displayed in the ELO client in
-         the additional infos tab. Common map domains are 'Objekte' and 'Formdata'.
+            the additional infos tab. Common map domains are 'Objekte' and 'Formdata'.
         """
         return self.map_util.read_map_fields(sord_id=sord_id, keys=keys, map_domain=map_domain)
 
@@ -163,15 +163,15 @@ class EloService:
         This function uploads a file to ELO
 
         :param filename: The name of the file in ELO, if not given the name of the file_path is used. This is the filename
-        which is shown in the directory tree. However, also referred to as kurzbezeichnung in ELO.
+         which is shown in the directory tree. However, also referred to as kurzbezeichnung in ELO.
         :param filemask_id:  The maskID of the filemask in ELO, default is "0" (--> mask "Freie Eingabe" = STD mask)
         :param file_path: The path of the file which should be uploaded
         :param parent_id: The sordID of the parent folder in ELO
         :param filename_objkey_id: The objkeyID of the filename objkey in ELO, default is "51" (--> objkey "ELO_FNAME")
-        this sets the filename in the tab 'Options'
+         this sets the filename in the tab 'Options'
         :param filename_objkey The filename in the tab 'Options' in ELO
         :param filedate: The date of the file, in UTC, default is the modification date of the file. Format is in
-        ISO 8601 e.g."2021-08-25T15:00:00". The date is stored in UTC in ELO and displayed in the local time zone of the
+         ISO 8601 e.g."2021-08-25T15:00:00". The date is stored in UTC in ELO and displayed in the local time zone of the
          user client.
         :return: The sordID of the uploaded file
         """
