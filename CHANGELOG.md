@@ -95,3 +95,15 @@ Manually:
 
 i_date_iso = Time of the archiving - technical date on which the file was uploaded
 x_date_iso = Primary document date (optional) - usecase dependent date, e.g. invoice date, contract date, etc.
+
+## 0.1.18
+
+PR:
+* https://github.com/treskon/elo-indexserver-client/pull/12
+  * Read map fields
+
+Details:
+* Added read_map_fields method to EloService to read map fields from a sord
+  * Can load all map fields or only specific ones
+  * Can load strings or entire byte arrays
+  * Can load a specific map domain
