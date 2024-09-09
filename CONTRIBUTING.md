@@ -94,6 +94,7 @@ Relevant files are:
 The release is done by the following steps:
 
 * increase the version in the pyproject.toml
+* update the CHANGELOG.md
 * git commit
 * git tag 'releases/stable-<version>' use Semantic Versioning. Remember that a version can't be deleted or overwritten
   once it's

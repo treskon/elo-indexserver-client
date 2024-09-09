@@ -152,7 +152,8 @@ class EloService:
 
     def upload_file(self, file_path: str, parent_id: str, filemask_id="0", filename="",
                     filename_objkey_id=FILENAME_OBJKEY_ID_DEFAULT,
-                    filename_objkey="") -> str:
+                    filename_objkey="",
+                    filedate=None) -> str:
         """
         This function uploads a file to ELO
 
@@ -163,16 +164,20 @@ class EloService:
         :param parent_id: The sordID of the parent folder in ELO
         :param filename_objkey_id: The objkeyID of the filename objkey in ELO, default is "51" (--> objkey "ELO_FNAME")
         this sets the filename in the tab 'Options'
-        :filename_objkey The filename in the tab 'Options' in ELO
-
+        :param filename_objkey The filename in the tab 'Options' in ELO
+        :param filedate: The date of the file, in UTC, default is the modification date of the file. Format is in
+        ISO 8601 e.g."2021-08-25T15:00:00". The date is stored in UTC in ELO and displayed in the local time zone of the
+         user client.
         :return: The sordID of the uploaded file
         """
         return self.file_util.upload_file(file_path=file_path, parent_id=parent_id, filemask_id=filemask_id,
                                           filename=filename, filename_objkey_id=filename_objkey_id,
-                                          filename_objkey=filename_objkey)
+                                          filename_objkey=filename_objkey,
+                                          filedate=filedate)
 
     def update_file(self, sord_id: str, file_path: str, filename="", filename_objkey_id=FILENAME_OBJKEY_ID_DEFAULT,
-                    filename_objkey=""):
+                    filename_objkey="",
+                    filedate=None):
         """
         This function updates a file in ELO
 
@@ -181,9 +186,21 @@ class EloService:
         :param file_path: The path of the file which should be uploaded
         :param filename_objkey_id: The objkeyID of the filename objkey in ELO, default is "51" (--> objkey "ELO_FNAME")
         :param filename_objkey: The filename in the tab 'Options' in ELO
+        :param filedate: The date of the file, in UTC, default is the modification date of the file. Format is in
+        ISO 8601 e.g."2021-08-25T15:00:00". The date is stored in UTC in ELO and displayed in the local time zone of the
+         user client.
         """
         self.file_util.update_file(file_path=file_path, file_id=sord_id, filename=filename,
-                                   filename_objkey_id=filename_objkey_id, filename_objkey=filename_objkey)
+                                   filename_objkey_id=filename_objkey_id, filename_objkey=filename_objkey,
+                                   filedate=filedate)
+
+    def download_file(self, sord_id: str, file_path: str):
+        """
+        This function downloads a file from ELO
+        :param sord_id: The sordID of the file which should be downloaded
+        :param file_path: The path where the file should be saved
+        """
+        self.file_util.download_file(sord_id, file_path)
 
     def search(self, search_mask_fields: dict = None, search_mask_id: str = None, max_results: int = 100) -> [str]:
         """
