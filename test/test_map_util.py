@@ -50,7 +50,7 @@ class TestService(unittest.TestCase):
         service = elo_service.EloService(self.url, self.user, self.password)
         util = MapUtil(elo_client, elo_connection)
 
-        folderid = service.create_folder(path="¶Alpha AG¶IntegrationTests¶test2",
+        folderid = service.create_folder(path="¶Alpha AG¶IntegrationTests¶test",
                                          separator="¶")
 
         util.write_map_fields(sord_id=folderid, fields={"testBlob": "testBlob",
@@ -66,7 +66,7 @@ class TestService(unittest.TestCase):
         service = elo_service.EloService(self.url, self.user, self.password)
         util = MapUtil(elo_client, elo_connection)
 
-        folderid = service.create_folder(path="¶Alpha AG¶IntegrationTests¶test2",
+        folderid = service.create_folder(path="¶Alpha AG¶IntegrationTests¶test",
                                          separator="¶")
 
         filepath = TEST_ROOT_DIR + "/resources/testFile.png"
@@ -81,7 +81,7 @@ class TestService(unittest.TestCase):
         service = elo_service.EloService(self.url, self.user, self.password)
         util = MapUtil(elo_client, elo_connection)
 
-        folderid = service.create_folder(path="¶Alpha AG¶IntegrationTests¶test2",
+        folderid = service.create_folder(path="¶Alpha AG¶IntegrationTests¶test",
                                          separator="¶")
 
         filepath = TEST_ROOT_DIR + "/resources/testFile.png"
@@ -93,8 +93,6 @@ class TestService(unittest.TestCase):
                               map_domain="Objekte",
                               value_type=MapUtil.ValueType.blob_file)
 
-    # map_value_instance = MapUtil.MapValue(MapUtil.ValueType.blob_string, "example_value", "text/plain", b"Hello, world!")
-
     def test_read_all_map_fields(self):
         elo_connection, elo_client = self._login()
         service = elo_service.EloService(self.url, self.user, self.password)
@@ -102,21 +100,38 @@ class TestService(unittest.TestCase):
 
         folderid = service.create_folder(path="¶Alpha AG¶IntegrationTests¶test",
                                          separator="¶")
+        util.write_map_fields(sord_id=folderid, fields={"mapfieldKey1": "mapfieldValue1",
+                                                        "mapfieldKey2": "mapfieldValue2",
+                                                        "mapfieldKey3": "mapfieldValue3",
+                                                        "mapfieldKey4": "mapfieldValue4"
+                                                        }
+                              , map_domain="Objekte",
+                              value_type=MapUtil.ValueType.string)
 
-        util.read_map_fields(sord_id=folderid,
-                             map_domain="Objekte",
-                             key='')
+        fields = util.read_map_fields(sord_id=folderid)
+        self.assertEqual(fields["mapfieldKey1"].value, "mapfieldValue1")
+        self.assertEqual(fields["mapfieldKey2"].type, MapUtil.ValueType.string)
+        self.assertEqual(fields["mapfieldKey2"].value, "mapfieldValue2")
+        self.assertEqual(fields["mapfieldKey3"].value, "mapfieldValue3")
+        self.assertEqual(fields["mapfieldKey4"].value, "mapfieldValue4")
 
-    def test_read_map_field(self):
+    def test_read_specific_map_fields(self):
         elo_connection, elo_client = self._login()
         service = elo_service.EloService(self.url, self.user, self.password)
         util = MapUtil(elo_client, elo_connection)
 
         folderid = service.create_folder(path="¶Alpha AG¶IntegrationTests¶test",
                                          separator="¶")
+        util.write_map_fields(sord_id=folderid, fields={"mapfieldKey1": "mapfieldValue1",
+                                                        "mapfieldKey2": "mapfieldValue2",
+                                                        "mapfieldKey3": "mapfieldValue3",
+                                                        "mapfieldKey4": "mapfieldValue4"
+                                                        }
+                              , map_domain="Objekte",
+                              value_type=MapUtil.ValueType.string)
 
-        key = 'test'
-
-        util.read_map_fields(sord_id=folderid,
-                             map_domain="Objekte",
-                             key=key)
+        fields = util.read_map_fields(sord_id=folderid, keys=["mapfieldKey1", "mapfieldKey2"])
+        self.assertEqual(fields["mapfieldKey1"].value, "mapfieldValue1")
+        self.assertEqual(fields["mapfieldKey2"].value, "mapfieldValue2")
+        self.assertNotIn("mapfieldKey3", fields)
+        self.assertNotIn("mapfieldKey4", fields)
