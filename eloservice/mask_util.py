@@ -1,5 +1,4 @@
 import logging
-
 import cachetools
 
 from eloclient import Client

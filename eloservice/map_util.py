@@ -1,9 +1,12 @@
 import base64
 import logging
+from typing import Type
 
 from eloclient import Client
-from eloclient.api.ix_service_port_if import ix_service_port_if_checkin_map
+from eloclient.api.ix_service_port_if import ix_service_port_if_checkin_map, ix_service_port_if_checkout_map
 from eloclient.models import BRequestIXServicePortIFCheckinMap, KeyValue, MapValue, FileData
+from eloclient.models import BRequestIXServicePortIFCheckoutMap, LockZ, LockC
+from eloclient.types import Unset
 from eloservice.error_handler import _check_response
 from eloservice.login_util import EloConnection
 
@@ -65,12 +68,17 @@ def too_large_for_string(fields: dict):
             return True
     return False
 
-
 class MapUtil:
     class ValueType:
         string = "string"
         blob_string = "blob_string"
         blob_file = "blob_file"
+
+    class MapValue:
+        type: Type['MapUtil.ValueType']
+        value: str
+        mime_type: str
+        blob_value: bytes
 
     elo_connection: EloConnection
     elo_client: Client
@@ -123,3 +131,62 @@ class MapUtil:
         )
         res = ix_service_port_if_checkin_map.sync_detailed(client=self.elo_client, body=body)
         _check_response(res)
+
+    def read_map_fields(self, sord_id: str, keys: list[str] = None, map_domain: str = "Objekte") -> dict[str, MapValue]:
+        if not keys or len(keys) == 0:
+            keys = None
+        body = BRequestIXServicePortIFCheckoutMap(
+            domain_name=map_domain,
+            id=sord_id,
+            key_names=keys, # if keys is None, all fields are read
+            lock_z=LockZ(LockC().bset_no)
+        )
+        res = ix_service_port_if_checkout_map.sync_detailed(client=self.elo_client, body=body)
+        _check_response(res)
+        return self._process_checkout_map(res, sord_id)
+
+    def _process_checkout_map(self, res, sord_id):
+        map_items = res.parsed.result.map_items
+        map_items_keys = map_items.additional_keys
+        result: dict[str, MapValue] = {}
+        for map_key in map_items_keys:
+            map_item = map_items.additional_properties[map_key]  # type: MapValue
+            if not map_item and not isinstance(map_item, Unset):
+                logging.debug(f"Skipping map item with key {map_key} on sord with ID {sord_id}")
+            result[map_key] = self._process_map_item(map_item, map_key, sord_id)
+        return result
+
+    def _process_map_item(self, map_item, map_key, sord_id) -> MapValue:
+        map_value = MapUtil.MapValue()
+        # Order is important: if blob_value is set, it will be used instead of value, sometimes value is filled with
+        # an empty string
+        if 'value' in set(map_item.additional_keys):
+            map_value.type = MapUtil.ValueType.string
+            map_value.key = map_key
+            map_value.value = map_item.additional_properties['value']
+        if map_item.blob_value and not isinstance(map_item.blob_value, Unset):
+            map_value.type = MapUtil.ValueType.blob_file
+            map_value.key = map_key
+            map_value.value = map_item.blob_value.stream.url
+            map_value.mime_type = map_item.blob_value.content_type
+            try:
+                map_value.blob_value = self._load_file_from_stream(map_value.value)
+                map_value.value = None
+            except ValueError as e:
+                logging.warning(f"Could not load file from stream {map_value.value}: {e} sordID {sord_id}")
+            if map_value.blob_value:
+                if isinstance(map_value.blob_value, bytes):
+                    map_value.type = MapUtil.ValueType.blob_file
+                    map_value.value = None
+                elif isinstance(map_value.blob_value, str):
+                    map_value.type = MapUtil.ValueType.blob_string
+                    map_value.value = map_value.blob_value
+        return map_value
+
+    def _load_file_from_stream(self, stream_url: str) -> bytes:
+        full_url = self.elo_connection.url + ("/" if self.elo_connection.url[-1] != "/" else "") + stream_url
+        res = self.elo_client.get_httpx_client().get(full_url)
+        if res.status_code != 200:
+            raise ValueError(f"Could not load file from stream {stream_url}")
+        return res.content
+

@@ -8,9 +8,9 @@ from test import TEST_ROOT_DIR
 
 
 class TestService(unittest.TestCase):
-    url = os.environ["TEST_ELO_IX_URL"]
-    user = os.environ["TEST_ELO_IX_USER"]
-    password = os.environ["TEST_ELO_IX_PASSWORD"]
+    url = "http://node2.treskon.net:6056/ix-Archive/rest"
+    user = "Administrator"
+    password = "bKKn1uNDY"
 
     lorem = ("ÄÖÜLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut "
              "labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et "
@@ -92,3 +92,68 @@ class TestService(unittest.TestCase):
                               content_type="image/png",
                               map_domain="Objekte",
                               value_type=MapUtil.ValueType.blob_file)
+
+    def test_read_all_map_fields(self):
+        elo_connection, elo_client = self._login()
+        service = elo_service.EloService(self.url, self.user, self.password)
+        util = MapUtil(elo_client, elo_connection)
+
+        folderid = service.create_folder(path="¶Alpha AG¶IntegrationTests¶test",
+                                         separator="¶")
+        util.write_map_fields(sord_id=folderid, fields={"mapfieldKey1": "mapfieldValue1",
+                                                        "mapfieldKey2": "mapfieldValue2",
+                                                        "mapfieldKey3": "mapfieldValue3",
+                                                        "mapfieldKey4": "mapfieldValue4"
+                                                        }
+                              , map_domain="Objekte",
+                              value_type=MapUtil.ValueType.string)
+
+        fields = util.read_map_fields(sord_id=folderid)
+        self.assertEqual(fields["mapfieldKey1"].value, "mapfieldValue1")
+        self.assertEqual(fields["mapfieldKey2"].type, MapUtil.ValueType.string)
+        self.assertEqual(fields["mapfieldKey2"].value, "mapfieldValue2")
+        self.assertEqual(fields["mapfieldKey3"].value, "mapfieldValue3")
+        self.assertEqual(fields["mapfieldKey4"].value, "mapfieldValue4")
+
+    def test_read_specific_map_fields(self):
+        elo_connection, elo_client = self._login()
+        service = elo_service.EloService(self.url, self.user, self.password)
+        util = MapUtil(elo_client, elo_connection)
+
+        folderid = service.create_folder(path="¶Alpha AG¶IntegrationTests¶test",
+                                         separator="¶")
+        util.write_map_fields(sord_id=folderid, fields={"mapfieldKey1": "mapfieldValue1",
+                                                        "mapfieldKey2": "mapfieldValue2",
+                                                        "mapfieldKey3": "mapfieldValue3",
+                                                        "mapfieldKey4": "mapfieldValue4"
+                                                        }
+                              , map_domain="Objekte",
+                              value_type=MapUtil.ValueType.string)
+
+        fields = util.read_map_fields(sord_id=folderid, keys=["mapfieldKey1", "mapfieldKey2"])
+        self.assertEqual(fields["mapfieldKey1"].value, "mapfieldValue1")
+        self.assertEqual(fields["mapfieldKey2"].value, "mapfieldValue2")
+        self.assertNotIn("mapfieldKey3", fields)
+        self.assertNotIn("mapfieldKey4", fields)
+
+    def test_read_map_fields_blob_file(self):
+        elo_connection, elo_client = self._login()
+        service = elo_service.EloService(self.url, self.user, self.password)
+        util = MapUtil(elo_client, elo_connection)
+
+        folderid = service.create_folder(path="¶Alpha AG¶IntegrationTests¶test",
+                                         separator="¶")
+
+        filepath = TEST_ROOT_DIR + "/resources/testFile.png"
+        #read file path as bytes
+        filebytes = open(filepath, "rb").read()
+
+        util.write_map_fields(sord_id=folderid,
+                              fields={"testFileBlobPath": filebytes},
+                              content_type="image/png",
+                              map_domain="Objekte",
+                              value_type=MapUtil.ValueType.blob_file)
+        fields = util.read_map_fields(sord_id=folderid, keys=["testFileBlobPath"])
+        self.assertEqual(fields["testFileBlobPath"].mime_type, "image/png")
+        self.assertEqual(fields["testFileBlobPath"].type, MapUtil.ValueType.blob_file)
+        self.assertEqual(fields["testFileBlobPath"].blob_value, filebytes)

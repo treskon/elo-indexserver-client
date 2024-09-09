@@ -143,6 +143,18 @@ class EloService:
         """
         self.map_util.write_map_fields(sord_id, fields, map_domain, value_type, content_type)
 
+    def read_map_fields(self, sord_id: str, keys: list[str] = None, map_domain: str = "Objekte") -> dict[str, MapUtil.MapValue]:
+        """
+        This function read either all map fields or a list of specific map field from a sord in ELO. In both cases, the
+        return type is a dictionary with the key as the key of the map field and the value as the value of the map field.
+
+        :param sord_id: The sordID of the sord in ELO you want to read the map fields from
+        :param keys: A list of keys which should be read. If None or empty list, all keys are read (default = None)
+        :param map_domain: The map domain in ELO (default = "Objekte"). This is what is displayed in the ELO client in
+         the additional infos tab. Common map domains are 'Objekte' and 'Formdata'.
+        """
+        return self.map_util.read_map_fields(sord_id=sord_id, keys=keys, map_domain=map_domain)
+
     def upload_file(self, file_path: str, parent_id: str, filemask_id="0", filename="",
                     filename_objkey_id=FILENAME_OBJKEY_ID_DEFAULT,
                     filename_objkey="",
