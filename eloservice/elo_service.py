@@ -1,10 +1,13 @@
 from eloclient import Client
 from eloclient.api.ix_service_port_if import (ix_service_port_if_checkin_sord_path, ix_service_port_if_delete_sord)
-from eloclient.api.ix_service_port_if import (ix_service_port_if_copy_sord)
-from eloclient.models import (BRequestIXServicePortIFCheckinSordPath, BRequestIXServicePortIFDeleteSord)
+from eloclient.api.ix_service_port_if import (ix_service_port_if_copy_sord, ix_service_port_if_checkout_sord,
+                                              ix_service_port_if_checkin_sord)
+from eloclient.models import (BRequestIXServicePortIFCheckinSordPath, BRequestIXServicePortIFDeleteSord, LockZ,
+                              EditInfoZ, BRequestIXServicePortIFCheckoutSord, BRequestIXServicePortIFCheckinSord)
 from eloclient.models import (BRequestIXServicePortIFCopySord)
 from eloclient.models import Sord
-from eloservice.eloconstants import COPY_SORD_C_MOVE, SORD_Z_EMPTY
+from eloservice.eloconstants import COPY_SORD_C_MOVE, SORD_Z_EMPTY, EDIT_INFO_Z_MB_GUID, SORD_Z_MB_GUID, \
+    EDIT_INFO_Z_MB_ALL
 from eloservice.error_handler import _check_response
 from eloservice.file_util import FileUtil, FILENAME_OBJKEY_ID_DEFAULT
 from eloservice.login_util import LoginUtil
@@ -90,6 +93,84 @@ class EloService:
             raise ValueError("Could not create folder")
         return object_id
 
+    def change_lock(self, sord_id: str, lock_mode: LockZ, operation: str = "checkout"):
+        """
+        This function locks a sord in ELO
+
+        :param sord_id: The sordID of the sord in ELO
+        :param lock_mode: The lock mode of the sord in ELO, use eloconstants.LOCK_Z_YES, eloconstants.LOCK_Z_NO,
+        eloconstants.LOCK_Z_IF_FREE or eloconstants.LOCK_Z_FORCE
+        :param operation: The operation which should be performed. Possible values are "checkout" and "checkin"
+
+        quote from the official ELO documentation (german only):
+
+        Die checkout- und checkin-Funktionen der Indexserver-API fordern als letzen Para-
+        meter lockZ eine Konstante, die beschreibt, wie die Sperre auf das Objekt über-
+        nommen werden soll.
+        Objektsperren beziehen sich auf Anwender und nicht auf Sitzungen. Insbesondere
+        wenn dasselbe Anwenderkonto in verschiedenen Programmen gleichzeitig verwen-
+        det wird, sollte die Sperre auf ein Objekt immer mit LockC.IF_FREE gesetzt wer-
+        den. So kann verhindert werde, dass eine Sperre aus einem anderen Programm
+        versehentlich aufgehoben wird.
+        Insbesondere bei der Entwicklung von Dienstprogrammen sollte dieser Hinweis be-
+        achtet werden. Denn in der Praxis werden verschiedene Dienstprogramme gerne
+        unter demselben Anwenderkonto (oft „Administrator“) betrieben.
+        Die folgenden Unterabschnitte beschreiben die Sperrmodus im Einzelnen.
+
+
+        21.3.1.1 LockC.NO
+        checkout-Funktion: Keine Sperre setzen. Eine vorhandene Sperre wird nicht geän-
+        dert. Die Operation gelingt auch dann, wenn das Objekt gesperrt ist.
+        checkin-Funktion: Sperre wird mit LockC.YES beim Eintritt in die Funktion ange-
+        fordert. Beim Verlassen der Funktion wird die Sperre auf den Zustand gesetzt, der
+        beim Eintritt der Funktion herrschte.
+
+        21.3.1.2 LockC.YES
+        checkout-Funktion: Sperre setzen. Wenn das Objekt nicht gesperrt ist oder dersel-
+        be Anwender das Objekt gesperrt hat, gelingt die Operation. Wenn ein anderer An-
+        wender das Objekt gesperrt hat, schlägt die Operation fehl.
+        checkin-Funktion: Sperre aufheben. Sperre wird mit LockC.YES beim Eintritt in
+        die Funktion angefordert. Beim Verlassen der Funktion wird die Sperre aufgehoben
+
+        21.3.1.3 LockC.IF_FREE
+        checkout-Funktion: Sperre setzen. Die Operation gelingt nur dann, wenn das Ob-
+        jekt nicht gesperrt ist. Die Operation schlägt fehl, wenn das Objekt bereits gesperrt
+        ist. Dies gilt auch dann, wenn derselbe Anwender die Sperre hält. Er könnte das Ob-
+        jekt in einem anderen Programm gesperrt haben, beispielsweise wenn dasselbe An-
+        wenderkonto für verschiedene Dienstprogramme verwendet wird.
+        checkin-Funktion: Wie LockC.YES.
+        21.3.1.4 LockC.FORCE
+        checkout-Funktion: Sperre setzen. Die Operation gelingt auch dann, wenn das
+        Objekt bereits gesperrt ist. Eine bestehende Sperre wird verdrängt. Nur Administra-
+        toren können diesen Modus verwenden.
+        checkin-Funktion: Sperre aufheben. Sperre wird mit LockC.FORCE beim Eintritt
+        in die Funktion angefordert. Beim Verlassen der Funktion wird die Sperre aufgeho-
+        ben.
+
+        """
+        if operation == "checkout":
+            body = BRequestIXServicePortIFCheckoutSord(
+                obj_id=sord_id,
+                lock_z=lock_mode,
+                edit_info_z=EDIT_INFO_Z_MB_ALL
+            )
+            res = ix_service_port_if_checkout_sord.sync_detailed(client=self.elo_client,
+                                                                 body=body)
+            _check_response(res)
+        elif operation == "checkin":
+            sord = Sord(id=sord_id)
+            body = BRequestIXServicePortIFCheckinSord(
+                sord=sord,
+                sord_z=SORD_Z_MB_GUID,
+                unlock_z=lock_mode
+            )
+            erg = ix_service_port_if_checkin_sord.sync_detailed(client=self.elo_client,
+                                                                body=body)
+            _check_response(erg)
+        else:
+            raise ValueError(f"Operation {operation} is not supported")
+
+
     def overwrite_mask_fields(self, sord_id: str, mask_name: str, metadata: dict, metadata_force: dict = None):
         """
         This function removes the old metadata and overwrite it with the new metadata
@@ -143,7 +224,8 @@ class EloService:
         """
         self.map_util.write_map_fields(sord_id, fields, map_domain, value_type, content_type)
 
-    def read_map_fields(self, sord_id: str, keys: list[str] = None, map_domain: str = "Objekte") -> dict[str, MapUtil.MapValue]:
+    def read_map_fields(self, sord_id: str, keys: list[str] = None, map_domain: str = "Objekte") -> dict[
+        str, MapUtil.MapValue]:
         """
         This function read either all map fields or a list of specific map field from a sord in ELO. In both cases, the
         return type is a dictionary with the key as the key of the map field and the value as the value of the map field.

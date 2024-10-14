@@ -1,6 +1,6 @@
 from enum import Enum
 
-from eloclient.models import SordZ, SordC, EditInfoZ, EditInfoC, copy_sord_z, CopySordC, LockC
+from eloclient.models import SordZ, SordC, EditInfoZ, EditInfoC, copy_sord_z, CopySordC, LockC, LockZ
 
 
 class ElobitsetEditz(Enum):
@@ -8,13 +8,19 @@ class ElobitsetEditz(Enum):
     MB_ALL = "2196631817761587199"  # Results as a Bitshift, originates from java source code
     MB_OBJ_KEYS = "9007199254740992"
     MB_MASK = "8192"
+    MB_ID_ONLY = "0"
 
+class ElobitsetSordZ(Enum):
+    MB_GUID = "2" # DB column: objguid; useful for checkout/checkin as little as possible
 
 SORD_Z_EMPTY = SordZ()  # Useful when you don't need any bitset, however the API requires it. This usually means that
 # the indexserver will decide for you. One example is the ix_service_port_if_checkin_sord_path
 
 SORD_Z_MB_ALL = SordZ(SordC.mb_all)
 SORD_Z_MB_ALL.bset = ElobitsetEditz.MB_ALL.value
+
+SORD_Z_MB_GUID = SordZ()
+SORD_Z_MB_GUID.bset = ElobitsetSordZ.MB_GUID.value
 
 EDIT_INFO_Z_MB_ALL = EditInfoZ(EditInfoC().mb_all)
 EDIT_INFO_Z_MB_ALL.bset = ElobitsetEditz.MB_ALL.value
@@ -25,6 +31,11 @@ EDIT_INFO_Z_MASK_NAMES = EditInfoZ(EditInfoC().mb_mask_names)
 EDIT_INFO_Z_MASK_NAMES.bset = ElobitsetEditz.MASK_NAMES.value
 EDIT_INFO_Z_MASK_NAMES.sord_z = SordZ()
 EDIT_INFO_Z_MASK_NAMES.bset = ElobitsetEditz.MASK_NAMES.value
+
+EDIT_INFO_Z_MB_GUID = EditInfoZ(EditInfoC().mb_only_id)
+EDIT_INFO_Z_MB_GUID.bset = ElobitsetEditz.MB_ID_ONLY.value
+EDIT_INFO_Z_MB_GUID.sord_z = SordZ()
+EDIT_INFO_Z_MB_GUID.bset = ElobitsetEditz.MB_ID_ONLY.value
 
 COPY_SORD_C_MOVE = copy_sord_z.CopySordZ(CopySordC().move)
 COPY_SORD_C_MOVE.bset = 1
@@ -37,5 +48,8 @@ EDIT_INFO_Z_MB_MASK_INFOS.sord_z.bset = str(int(ElobitsetEditz.MB_OBJ_KEYS.value
 
 SordZ_INFO_MB_MASK_INFOS = SordZ(bset=EDIT_INFO_Z_MB_MASK_INFOS.bset)
 
-LOCK_Z_YES = SordZ(LockC().yes)
-LOCK_Z_NO = SordZ(LockC().no)
+
+LOCK_Z_YES = LockZ("1")
+LOCK_Z_NO = LockZ("0")
+LOCK_Z_IF_FREE = LockZ("2")
+LOCK_Z_FORCE = LockZ("4")

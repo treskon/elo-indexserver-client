@@ -4,6 +4,7 @@ from datetime import datetime
 
 from eloclient.models import Sord
 from eloservice import elo_service
+from eloservice.eloconstants import LOCK_Z_YES, LOCK_Z_IF_FREE
 from test import TEST_ROOT_DIR
 
 
@@ -61,3 +62,14 @@ class TestService(unittest.TestCase):
         id_elo = service.create_folder(path="¶EIWECK_INTEGRATION_TEST¶PythonAPI¶test_elo_service¶testRemove",
                                        separator="¶")
         service.remove(id_elo)
+
+    def test_change_lock(self):
+        service = elo_service.EloService(self.url, self.user, self.password)
+        id_elo = service.create_folder(path="¶EIWECK_INTEGRATION_TEST¶PythonAPI¶test_elo_service¶test_change_lock",
+                                       separator="¶")
+        service.change_lock(id_elo, LOCK_Z_YES, "checkout")
+        service.change_lock(id_elo, LOCK_Z_IF_FREE, "checkout")
+        assert False
+
+
+
