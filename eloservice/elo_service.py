@@ -143,7 +143,8 @@ class EloService:
         """
         self.map_util.write_map_fields(sord_id, fields, map_domain, value_type, content_type)
 
-    def read_map_fields(self, sord_id: str, keys: list[str] = None, map_domain: str = "Objekte") -> dict[str, MapUtil.MapValue]:
+    def read_map_fields(self, sord_id: str, keys: list[str] = None, map_domain: str = "Objekte") -> dict[
+        str, MapUtil.MapValue]:
         """
         This function read either all map fields or a list of specific map field from a sord in ELO. In both cases, the
         return type is a dictionary with the key as the key of the map field and the value as the value of the map field.
@@ -154,6 +155,46 @@ class EloService:
             the additional infos tab. Common map domains are 'Objekte' and 'Formdata'.
         """
         return self.map_util.read_map_fields(sord_id=sord_id, keys=keys, map_domain=map_domain)
+
+    def transform_keyvalue_to_table(self, map_fields: dict[str, MapUtil.MapValue], table_name: str,
+                                    column_names: list[str]):
+        """
+        Helper Method to transform the result of read_map_fields to a table like datastructure
+
+        In Elo a table is faked by formatting the keys of the map fields. Example:
+        table_name is "EMPLOYEE" and columns are "NAME", "AGE", and we assume 2 rows, then the keys are formatted
+        as follows:
+        "EMPLOYEE_NAME1", "EMPLOYEE_AGE1", "EMPLOYEE_NAME2", "EMPLOYEE_AGE2"
+
+        Notice that the row number is appended to the column name. Where the row number is a positive integer starting
+        from 1 and can be any number of digits.
+
+        :param map_fields: a dictionary of map fields
+        :param table_name: the name of the table
+        :param column_names: a list of column names
+        :return: a list of dictionaries, each dictionary represents a row in the table
+        """
+        return self.map_util.transform_keyvalue_to_table(map_fields, table_name, column_names)
+
+    def transform_table_to_keyvalue(self, table: list[dict[str, MapUtil.MapValue]], table_name: str) -> dict[str, str]:
+        """
+        Helper Method to transform a table like datastructure to a dictionary of map fields
+
+        In Elo a table is faked by formatting the keys of the map fields. Example:
+        table_name is "EMPLOYEE" and columns are "NAME", "AGE", and we assume 2 rows, then the keys are formatted
+        as follows:
+        "EMPLOYEE_NAME1", "EMPLOYEE_AGE1", "EMPLOYEE_NAME2", "EMPLOYEE_AGE2"
+
+        Notice that the row number is appended to the column name. Where the row number is a positive integer starting
+        from 1 and can be any number of digits.
+
+        the result can directly be used in the function write_map_fields
+
+        :param table: a list of dictionaries, each dictionary represents a row in the table
+        :param table_name: the name of the table
+        :return: a dictionary of map fields
+        """
+        return self.map_util.transform_table_to_keyvalue(table, table_name)
 
     def upload_file(self, file_path: str, parent_id: str, filemask_id="0", filename="",
                     filename_objkey_id=FILENAME_OBJKEY_ID_DEFAULT,
@@ -256,7 +297,6 @@ class EloService:
         :return: The mask fields of the sord
         """
         return self.mask_util.get_mask_fields(sord_id)
-
 
     def remove(self, sord_id: str):
         """
