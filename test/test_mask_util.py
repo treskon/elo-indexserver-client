@@ -1,4 +1,6 @@
 import unittest
+from datetime import datetime
+
 from eloservice.login_util import LoginUtil
 from eloservice.mask_util import MaskUtil
 import os
@@ -42,7 +44,7 @@ class TestService(unittest.TestCase):
         )
 
     def test_set_force_metadata_on_sord(self):
-        #path in elo: ¶EIWECK_INTEGRATION_TEST¶PythonAPI¶test_mask_api¶test_set_force_metadata_on_sord
+        #path in elo: ¶EIWECK_INTEGRATION_TEST¶PythonAPI¶test_mask_api¶test_set_metadata_on_sord
         elo_connection, elo_client = self._login()
         util = MaskUtil(elo_client, elo_connection)
         erg = util.overwrite_mask_fields(
@@ -57,3 +59,15 @@ class TestService(unittest.TestCase):
                 "51": "testCustoMFilename.png"
             }
         )
+
+    def test_get_mask_fields(self):
+        #path in elo: ¶EIWECK_INTEGRATION_TEST¶PythonAPI¶test_mask_api¶test_get_mask_fields
+        elo_connection, elo_client = self._login()
+        util = MaskUtil(elo_client, elo_connection)
+        mask_fields = util.get_mask_fields(sord_id="139942")
+        assert mask_fields is not None
+        assert len(mask_fields) > 0
+        assert mask_fields['LATITUDE'] == "35.732554"
+        assert mask_fields['LONGITUDE'] == "139.714302"
+        assert mask_fields['ITEMDOCDATE'] == datetime.strptime("2023-12-26", "%Y-%m-%d")
+        assert mask_fields['ITEMNAME'] is None

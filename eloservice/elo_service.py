@@ -238,6 +238,26 @@ class EloService:
         """
         return self.file_util.checkout_sord(sord_id)
 
+    def get_mask_fields(self, sord_id: str) -> dict:
+        """
+        This function returns the mask fields of a sord in ELO
+
+        ELOFIELD -> Python type:
+
+        * text -> str
+
+        * numerical -> float, int, Decimal
+
+        * date(time) -> datetime
+
+        * list -> list of str
+
+        :param sord_id: The sordID of the sord in ELO
+        :return: The mask fields of the sord
+        """
+        return self.mask_util.get_mask_fields(sord_id)
+
+
     def remove(self, sord_id: str):
         """
         This function removes a sord in ELO

@@ -1,6 +1,6 @@
 from enum import Enum
 
-from eloclient.models import SordZ, SordC, EditInfoZ, EditInfoC, copy_sord_z, CopySordC, LockC
+from eloclient.models import SordZ, SordC, EditInfoZ, EditInfoC, copy_sord_z, CopySordC, LockC, LockZ
 
 
 class ElobitsetEditz(Enum):
@@ -37,5 +37,7 @@ EDIT_INFO_Z_MB_MASK_INFOS.sord_z.bset = str(int(ElobitsetEditz.MB_OBJ_KEYS.value
 
 SordZ_INFO_MB_MASK_INFOS = SordZ(bset=EDIT_INFO_Z_MB_MASK_INFOS.bset)
 
-LOCK_Z_YES = SordZ(LockC().yes)
-LOCK_Z_NO = SordZ(LockC().no)
+LOCK_Z_YES = LockZ("1")
+LOCK_Z_NO = LockZ("0")
+LOCK_Z_IF_FREE = LockZ("2")
+LOCK_Z_FORCE = LockZ("4")
