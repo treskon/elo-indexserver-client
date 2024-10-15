@@ -76,21 +76,21 @@ PR:
 
 file_util: guess mimetype based on the obj_key parameter instead of the filename
 
-
 ## 0.1.17
 
 PR:
 
 * https://github.com/treskon/elo-indexserver-client/pull/14
-  * update method upload_file and update_file.
+    * update method upload_file and update_file.
 * https://github.com/treskon/elo-indexserver-client/pull/15
-  * Add a method to download a file by its sord_id
+    * Add a method to download a file by its sord_id
 
 Details:
 upload_file and update_file are now also setting the x_date_iso.
 Automatically:
+
 * the modified date of the file
-Manually:
+  Manually:
 * can be set by the caller of the function.
 
 i_date_iso = Time of the archiving - technical date on which the file was uploaded
@@ -99,11 +99,21 @@ x_date_iso = Primary document date (optional) - usecase dependent date, e.g. inv
 ## 0.1.18
 
 PR:
+
 * https://github.com/treskon/elo-indexserver-client/pull/12
-  * Read map fields
+    * Read map fields
 
 Details:
+
 * Added read_map_fields method to EloService to read map fields from a sord
-  * Can load all map fields or only specific ones
-  * Can load strings or entire byte arrays
-  * Can load a specific map domain
+    * Can load all map fields or only specific ones
+    * Can load strings or entire byte arrays
+    * Can load a specific map domain
+
+## 0.1.19
+
+PR:
+
+* https://github.com/treskon/elo-indexserver-client/pull/16
+  * add a convenient method to automatically convert the obj_keys from a sord to a dict and cast them to their type
+  according to the config in the docmask.
