@@ -220,7 +220,7 @@ class MapUtil:
                     row = table[row_number] if row_number in table else {}
                     row[column_name] = value
                     table[row_number] = row
-        return [row for row in table.values()]
+        return [table[row_number] for row_number in sorted(table.keys())]
 
     def transform_table_to_keyvalue(self, table: list[dict], table_name: str):
         """
