@@ -191,8 +191,11 @@ class MapUtil:
             raise ValueError(f"Could not load file from stream {stream_url}")
         return res.content
 
-    def transform_keyvalue_to_table(self, map_fields: dict[str, MapValue], table_name: str, column_names: list[str]):
+    def serialize_table(self, map_fields: dict[str, MapValue], table_name: str, column_names: list[str]) -> list[dict]:
         """
+        This method serializes, given the raw elo map fields, a table like format. The table is represented as a list
+        of dictionaries, where each dictionary represents a row in the table.
+
         In Elo a table is faked by formatting the keys of the map fields. Example:
         table_name is "EMPLOYEE" and columns are "NAME", "AGE", and we assume 2 rows, then the keys are formatted
         as follows:
@@ -222,9 +225,11 @@ class MapUtil:
                     table[row_number] = row
         return [table[row_number] for row_number in sorted(table.keys())]
 
-    def transform_table_to_keyvalue(self, table: list[dict], table_name: str):
+    def deserialize_table(self, table: list[dict], table_name: str):
         """
-        The reverse of transform_keyvalue_to_table. Given a table, it transforms it to a dictionary of map fields.
+        The reverse of serialize_table. Given a table, it transforms it to a dictionary of map fields.
+        Which can be directly written to elo via the method write_map_fields.
+
         :param table: a list of dictionaries, each dictionary represents a row in the table
         :param table_name: the name of the table
         :return: a dictionary of map fields

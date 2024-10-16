@@ -156,12 +156,14 @@ class EloService:
         """
         return self.map_util.read_map_fields(sord_id=sord_id, keys=keys, map_domain=map_domain)
 
-    def transform_keyvalue_to_table(self, map_fields: dict[str, MapUtil.MapValue], table_name: str,
-                                    column_names: list[str]):
+    def serialize_map_fields_table(self, map_fields: dict[str, MapUtil.MapValue], table_name: str,
+                                   column_names: list[str]):
         """
-        Helper Method to transform the result of read_map_fields to a table like datastructure
+        Helper Method to serializes, given the raw elo map fields, a table like format. The table is represented as a list
+        of dictionaries, where each dictionary represents a row in the table.
+        All operations are done in memory and no ELO operations are performed.
 
-        In Elo a table is faked by formatting the keys of the map fields. Example:
+        In Elo a table inside the map fields, is faked by formatting the keys of the map fields. Example:
         table_name is "EMPLOYEE" and columns are "NAME", "AGE", and we assume 2 rows, then the keys are formatted
         as follows:
         "EMPLOYEE_NAME1", "EMPLOYEE_AGE1", "EMPLOYEE_NAME2", "EMPLOYEE_AGE2"
@@ -174,11 +176,14 @@ class EloService:
         :param column_names: a list of column names
         :return: a list of dictionaries, each dictionary represents a row in the table
         """
-        return self.map_util.transform_keyvalue_to_table(map_fields, table_name, column_names)
+        return self.map_util.serialize_table(map_fields, table_name, column_names)
 
-    def transform_table_to_keyvalue(self, table: list[dict[str, MapUtil.MapValue]], table_name: str) -> dict[str, str]:
+    def deserialize_map_fields_table(self, table: list[dict[str, MapUtil.MapValue]], table_name: str) -> dict[str, str]:
         """
-        Helper Method to transform a table like datastructure to a dictionary of map fields
+        The reverse of serialize_map_fields_table.
+        Given a table, it transforms it to a dictionary of map fields.
+        Which can be directly written to elo via the method write_map_fields.
+        All operations are done in memory and no ELO operations are performed.
 
         In Elo a table is faked by formatting the keys of the map fields. Example:
         table_name is "EMPLOYEE" and columns are "NAME", "AGE", and we assume 2 rows, then the keys are formatted
@@ -194,7 +199,7 @@ class EloService:
         :param table_name: the name of the table
         :return: a dictionary of map fields
         """
-        return self.map_util.transform_table_to_keyvalue(table, table_name)
+        return self.map_util.deserialize_table(table, table_name)
 
     def upload_file(self, file_path: str, parent_id: str, filemask_id="0", filename="",
                     filename_objkey_id=FILENAME_OBJKEY_ID_DEFAULT,

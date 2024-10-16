@@ -159,7 +159,7 @@ class TestService(unittest.TestCase):
         self.assertEqual(fields["testFileBlobPath"].blob_value, filebytes)
 
 
-    def test_transform_keyvalue_to_table(self):
+    def test_serialize_table(self):
         folderid = "115365"
         elo_connection, elo_client = self._login()
         service = elo_service.EloService(self.url, self.user, self.password)
@@ -167,11 +167,11 @@ class TestService(unittest.TestCase):
         map_fields = util.read_map_fields(sord_id=folderid)
         col_names = ["ASSIGNMENT", "ELOGUID","ELOOBJID","SHAREHOLDER","SHAREINPERCENT", "SHAREHOLDERID",]
         table_name = "SHARE_PARENT"
-        table = util.transform_keyvalue_to_table(map_fields, table_name=table_name, column_names=col_names)
+        table = util.serialize_table(map_fields, table_name=table_name, column_names=col_names)
         assert table is not None
         assert len(table) > 0
 
-    def test_transform_table_to_keyvalue(self):
+    def test_deserialize_table(self):
         folderid = "115365"
         elo_connection, elo_client = self._login()
         service = elo_service.EloService(self.url, self.user, self.password)
@@ -179,10 +179,10 @@ class TestService(unittest.TestCase):
         map_fields = util.read_map_fields(sord_id=folderid)
         col_names = ["ASSIGNMENT", "ELOGUID","ELOOBJID","SHAREHOLDER","SHAREINPERCENT", "SHAREHOLDERID",]
         table_name = "SHARE_PARENT"
-        table = util.transform_keyvalue_to_table(map_fields, table_name=table_name, column_names=col_names)
+        table = util.serialize_table(map_fields, table_name=table_name, column_names=col_names)
         assert table is not None
         assert len(table) > 0
-        key_values = util.transform_table_to_keyvalue(table, table_name=table_name)
+        key_values = util.deserialize_table(table, table_name=table_name)
         # assert that all keys from key_values are in map_fields and that the values are the same
         for key, value in key_values.items():
             assert key in map_fields
