@@ -115,5 +115,13 @@ Details:
 PR:
 
 * https://github.com/treskon/elo-indexserver-client/pull/16
-  * add a convenient method to automatically convert the obj_keys from a sord to a dict and cast them to their type
-  according to the config in the docmask.
+    * add a convenient method to automatically convert the obj_keys from a sord to a dict and cast them to their type
+      according to the config in the docmask.
+
+## 0.1.20
+
+* https://github.com/treskon/elo-indexserver-client/pull/17
+    * add serialize_map_fields_table and deserialize_map_fields_table:  Helper Method to serializes, given the raw elo
+      map fields, a table like format. The table is represented as a list
+      of dictionaries, where each dictionary represents a row in the table.
+      All operations are done in memory and no ELO operations are performed.
