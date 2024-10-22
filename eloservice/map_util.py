@@ -191,29 +191,30 @@ class MapUtil:
             raise ValueError(f"Could not load file from stream {stream_url}")
         return res.content
 
-    def serialize_table(self, map_fields: dict[str, MapValue], table_name: str, column_names: list[str]) -> list[dict]:
+    def serialize_table(self, map_fields: dict[str, MapValue], column_names: list[str]) -> list[dict]:
         """
         This method serializes, given the raw elo map fields, a table like format. The table is represented as a list
         of dictionaries, where each dictionary represents a row in the table.
 
         In Elo a table is faked by formatting the keys of the map fields. Example:
-        table_name is "EMPLOYEE" and columns are "NAME", "AGE", and we assume 2 rows, then the keys are formatted
+        We assume some employee table with columns are "EMPLOYEE_NAME", "AGE", and we assume 2 rows, then the keys are formatted
         as follows:
-        "EMPLOYEE_NAME1", "EMPLOYEE_AGE1", "EMPLOYEE_NAME2", "EMPLOYEE_AGE2"
+        "EMPLOYEE_NAME1", "AGE1", "EMPLOYEE_NAME2", "AGE2"
 
         Notice that the row number is appended to the column name. Where the row number is a positive integer starting
         from 1 and can be any number of digits.
+        Also Notice that there is no "table name" in the keys. The column names are arbitrary and do not need to contain
+        any information about the table.
 
         :param map_fields: a dictionary of map fields
-        :param table_name: the name of the table
         :param column_names: a list of column names
         :return: a list of dictionaries, each dictionary represents a row in the table
         """
         table = {}
         for key, value in map_fields.items():
             for column_name in column_names:
-                if key.startswith(table_name + "_" + column_name):
-                    name = key[len(table_name + "_" + column_name):]
+                if key.startswith(column_name):
+                    name = key[len(column_name):]
                     try:
                         row_number = int(name)
                     except ValueError:
@@ -225,18 +226,17 @@ class MapUtil:
                     table[row_number] = row
         return [table[row_number] for row_number in sorted(table.keys())]
 
-    def deserialize_table(self, table: list[dict], table_name: str):
+    def deserialize_table(self, table: list[dict]):
         """
         The reverse of serialize_table. Given a table, it transforms it to a dictionary of map fields.
         Which can be directly written to elo via the method write_map_fields.
 
         :param table: a list of dictionaries, each dictionary represents a row in the table
-        :param table_name: the name of the table
         :return: a dictionary of map fields
         """
         map_fields = {}
         for row_number, row in enumerate(table, start=1):
             for column_name, value in row.items():
-                key = f"{table_name}_{column_name}{row_number}"
+                key = f"{column_name}{row_number}"
                 map_fields[key] = value
         return map_fields

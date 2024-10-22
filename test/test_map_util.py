@@ -145,7 +145,7 @@ class TestService(unittest.TestCase):
                                          separator="¶")
 
         filepath = TEST_ROOT_DIR + "/resources/testFile.png"
-        #read file path as bytes
+        # read file path as bytes
         filebytes = open(filepath, "rb").read()
 
         util.write_map_fields(sord_id=folderid,
@@ -158,16 +158,15 @@ class TestService(unittest.TestCase):
         self.assertEqual(fields["testFileBlobPath"].type, MapUtil.ValueType.blob_file)
         self.assertEqual(fields["testFileBlobPath"].blob_value, filebytes)
 
-
     def test_serialize_table(self):
         folderid = "115365"
         elo_connection, elo_client = self._login()
         service = elo_service.EloService(self.url, self.user, self.password)
         util = MapUtil(elo_client, elo_connection)
         map_fields = util.read_map_fields(sord_id=folderid)
-        col_names = ["ASSIGNMENT", "ELOGUID","ELOOBJID","SHAREHOLDER","SHAREINPERCENT", "SHAREHOLDERID",]
-        table_name = "SHARE_PARENT"
-        table = util.serialize_table(map_fields, table_name=table_name, column_names=col_names)
+        col_names = ["SHARE_PARENT_ASSIGNMENT", "SHARE_PARENT_ELOGUID", "SHARE_PARENT_ELOOBJID",
+                     "SHARE_PARENT_SHAREHOLDER", "SHARE_PARENT_SHAREINPERCENT", "SHARE_PARENT_SHAREHOLDERID", ]
+        table = util.serialize_table(map_fields, column_names=col_names)
         assert table is not None
         assert len(table) > 0
 
@@ -177,14 +176,13 @@ class TestService(unittest.TestCase):
         service = elo_service.EloService(self.url, self.user, self.password)
         util = MapUtil(elo_client, elo_connection)
         map_fields = util.read_map_fields(sord_id=folderid)
-        col_names = ["ASSIGNMENT", "ELOGUID","ELOOBJID","SHAREHOLDER","SHAREINPERCENT", "SHAREHOLDERID",]
-        table_name = "SHARE_PARENT"
-        table = util.serialize_table(map_fields, table_name=table_name, column_names=col_names)
+        col_names = ["SHARE_PARENT_ASSIGNMENT", "SHARE_PARENT_ELOGUID", "SHARE_PARENT_ELOOBJID",
+                     "SHARE_PARENT_SHAREHOLDER", "SHARE_PARENT_SHAREINPERCENT", "SHARE_PARENT_SHAREHOLDERID", ]
+        table = util.serialize_table(map_fields, column_names=col_names)
         assert table is not None
         assert len(table) > 0
-        key_values = util.deserialize_table(table, table_name=table_name)
+        key_values = util.deserialize_table(table)
         # assert that all keys from key_values are in map_fields and that the values are the same
         for key, value in key_values.items():
             assert key in map_fields
             assert value.value == map_fields[key].value
-
