@@ -125,3 +125,8 @@ PR:
       map fields, a table like format. The table is represented as a list
       of dictionaries, where each dictionary represents a row in the table.
       All operations are done in memory and no ELO operations are performed.
+
+## 0.1.21
+
+* https://github.com/treskon/elo-indexserver-client/pull/18
+    * maputils: serialize_table, deserialize_table remove table_name parameter as it was a wrong assumption that elo uses best practices
