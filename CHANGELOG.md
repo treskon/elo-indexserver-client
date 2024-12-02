@@ -130,3 +130,13 @@ PR:
 
 * https://github.com/treskon/elo-indexserver-client/pull/18
     * maputils: serialize_table, deserialize_table remove table_name parameter as it was a wrong assumption that elo uses best practices
+
+## 0.1.22
+
+* https://github.com/treskon/elo-indexserver-client/pull/19
+    * maputils: 'write_map_fields': change fallback behaviour when a value > 255 is stored
+
+
+Previously if one value was larger all other values were also written as blob. 
+Patched Version: Only the larger values are written as blobs. Other values are still written as strings.
+This results in 2 API calls which reduces performance. However, in a real world scenario the old behaviour was not useful as ELO does not have that fallback build in. So most UIs would show just an empty field, even if the Map Blob field was filled.
