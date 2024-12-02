@@ -61,12 +61,13 @@ def to_base64_bytes(value: bytes):
     return base64_bytes.decode("ISO_8859_1")
 
 
-def too_large_for_string(fields: dict):
+def too_large_for_string(fields: dict) -> list[str]:
+    too_large = []
     for key, value in fields.items():
         if len(key) > 255 or len(value) > 255:
-            logging.warning(f"Key or value too large for string: {key} {value}")
-            return True
-    return False
+            logging.warning(f"Key {key} too large (>255 chars) to be stored as a string:\"{value}\"")
+            too_large.append(key)
+    return too_large
 
 
 class MapUtil:
@@ -91,11 +92,16 @@ class MapUtil:
     def write_map_fields(self, sord_id: str, fields: dict, map_domain: str = "Objekte",
                          value_type: ValueType = ValueType.string,
                          content_type="text/plain; charset=ISO_8859_1"):
-        if value_type == MapUtil.ValueType.string and too_large_for_string(fields):
-            logging.warning("Fields too large for string, using blob_string instead")
-            value_type = MapUtil.ValueType.blob_string
-
-        if value_type == MapUtil.ValueType.string:
+        too_large_keys: list = too_large_for_string(fields)
+        if len(too_large_keys) > 0 and value_type == MapUtil.ValueType.string:
+            logging.warning(
+                f"Following Keys are too large to be stored as string: {too_large_keys}; these will be written as "
+                f"blob instead")
+            ok_fields = {key: value for key, value in fields.items() if key not in too_large_keys}
+            too_large_fields = {key: value for key, value in fields.items() if key in too_large_keys}
+            self._write_map_field_string(sord_id, map_domain, ok_fields)
+            self._write_map_field_blob_string(sord_id, map_domain, too_large_fields, content_type)
+        elif value_type == MapUtil.ValueType.string:
             self._write_map_field_string(sord_id, map_domain, fields)
         elif value_type == MapUtil.ValueType.blob_string:
             self._write_map_field_blob_string(sord_id, map_domain, fields, content_type)
