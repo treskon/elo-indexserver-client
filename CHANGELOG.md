@@ -140,3 +140,10 @@ PR:
 Previously if one value was larger all other values were also written as blob. 
 Patched Version: Only the larger values are written as blobs. Other values are still written as strings.
 This results in 2 API calls which reduces performance. However, in a real world scenario the old behaviour was not useful as ELO does not have that fallback build in. So most UIs would show just an empty field, even if the Map Blob field was filled.
+
+## 0.1.23
+
+* https://github.com/treskon/elo-indexserver-client/pull/20
+    * maputils: 
+      * Change the default charset to UTF-8;
+      * Reading: use the elo db column content_type to automatically convert a bytes array to a string with the given charset
