@@ -7,6 +7,7 @@ from eloclient.api.ix_service_port_if import ix_service_port_if_checkin_map, ix_
 from eloclient.models import BRequestIXServicePortIFCheckinMap, KeyValue, MapValue, FileData
 from eloclient.models import BRequestIXServicePortIFCheckoutMap, LockZ, LockC
 from eloclient.types import Unset
+from eloservice.eloconstants import elo_text_mime_types
 from eloservice.error_handler import _check_response
 from eloservice.login_util import EloConnection
 
@@ -24,7 +25,7 @@ def _convert_map_value(key: str, value: str, content_type) -> MapValue:
 
     file_data = FileData()
     file_data.content_type = content_type
-    file_data.data = to_base64(value)  # according to docs 'File data as byte array.'
+    file_data.data = to_base64(value, _extract_charset(content_type))  # according to docs 'File data as byte array.'
     map_value.blob_value = file_data
     return map_value
 
@@ -49,14 +50,22 @@ def _convert_map_value_blob(key: str, value: object, content_type) -> MapValue:
     return map_value
 
 
-def to_base64(value: str):
-    return to_base64_bytes(value.encode("ISO_8859_1"))
+def to_base64(value: str, charset: str) -> str:
+    # On Writing: It is two times encoded.
+    # 1: given str in python to the given charset e.g. UTF-8
+    # 2: encoded to base64, as a target base64 charset ISO_8859_1 is always used. Due to the Indexserver extracting it with ISO_8859_1
+
+    # On Reading: It the same but in reverse
+    # 1: read as byte[] from the DB; the indexserver always uses ISO_8859_1 to decode the base64
+    # 2: decode the base64 to the given charset e.g. UTF-8
+    return to_base64_bytes(value.encode(charset))
 
 
 def to_base64_bytes(value: bytes):
     # We have to encode toBase64 according to
     # https://github.com/wolfgangimig/byps/blob/7521b79e39df2e577821c6fa37487c24757385e7/java/bypshttp/src/byps/http/rest/BytesSerializer.java#L29
     # and in Java 'Base64.getDecoder().decode(base64) uses 'ISO_8859_1'
+    # https://github.com/openjdk/jdk/blob/807f6f7fb868240cba5ba117c7059216f69a53f9/src/java.base/share/classes/java/util/Base64.java#L593
     base64_bytes = base64.b64encode(value)
     return base64_bytes.decode("ISO_8859_1")
 
@@ -69,6 +78,17 @@ def too_large_for_string(fields: dict) -> list[str]:
             too_large.append(key)
     return too_large
 
+
+def _is_text_content_type(content_type: str) -> bool:
+    return any(content_type.startswith(text_mime_type) for text_mime_type in elo_text_mime_types)
+
+def _extract_charset(content_type: str) -> str:
+    try:
+        if "charset=" in content_type:
+            return content_type.split("charset=")[1]
+    except IndexError:
+        pass
+    return "UTF-8"
 
 class MapUtil:
     class ValueType:
@@ -91,7 +111,7 @@ class MapUtil:
 
     def write_map_fields(self, sord_id: str, fields: dict, map_domain: str = "Objekte",
                          value_type: ValueType = ValueType.string,
-                         content_type="text/plain; charset=ISO_8859_1"):
+                         content_type="text/plain; charset=UTF-8"):
         too_large_keys: list = too_large_for_string(fields)
         if len(too_large_keys) > 0 and value_type == MapUtil.ValueType.string:
             logging.warning(
@@ -182,12 +202,12 @@ class MapUtil:
             except ValueError as e:
                 logging.warning(f"Could not load file from stream {map_value.value}: {e} sordID {sord_id}")
             if map_value.blob_value:
-                if isinstance(map_value.blob_value, bytes):
+                if _is_text_content_type(map_value.mime_type):
+                    map_value.type = MapUtil.ValueType.blob_string
+                    map_value.value = map_value.blob_value.decode(_extract_charset(map_value.mime_type))
+                else:
                     map_value.type = MapUtil.ValueType.blob_file
                     map_value.value = None
-                elif isinstance(map_value.blob_value, str):
-                    map_value.type = MapUtil.ValueType.blob_string
-                    map_value.value = map_value.blob_value
         return map_value
 
     def _load_file_from_stream(self, stream_url: str) -> bytes:
