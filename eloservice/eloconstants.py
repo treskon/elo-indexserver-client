@@ -41,3 +41,19 @@ LOCK_Z_YES = LockZ("1")
 LOCK_Z_NO = LockZ("0")
 LOCK_Z_IF_FREE = LockZ("2")
 LOCK_Z_FORCE = LockZ("4")
+
+
+elo_text_mime_types = [
+    "text/",
+    "application/json",
+    "application/javascript",
+    "application/xml",
+    "application/x-www-form-urlencoded",
+    "application/xhtml+xml",
+    "application/html",
+    "application/xml",
+    "application/yaml",
+    "application/csv"
+    # not complete
+]
+
