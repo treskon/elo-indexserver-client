@@ -105,7 +105,7 @@ class EloService:
 
     def write_map_fields(self, sord_id: str, fields: dict, map_domain: str = "Objekte",
                          value_type: MapUtil.ValueType = MapUtil.ValueType.string,
-                         content_type="text/plain; charset=ISO_8859_1"):
+                         content_type="text/plain; charset=UTF-8"):
         """
         This function writes map fields to a sord in ELO.
 
@@ -139,7 +139,7 @@ class EloService:
                 or bytes which is interpreted as the content blob.
         :param map_domain: The map domain in ELO (default = "Objekte")
         :param value_type: The value type of the fields (default = MapUtil.ValueType.string)
-        :param content_type: The content type of the blob (default = "text/plain; charset=ISO_8859_1")
+        :param content_type: The content type of the blob (default = "text/plain; charset=UTF-8")
         """
         self.map_util.write_map_fields(sord_id, fields, map_domain, value_type, content_type)
 
