@@ -147,3 +147,8 @@ This results in 2 API calls which reduces performance. However, in a real world 
     * maputils: 
       * Change the default charset to UTF-8;
       * Reading: use the elo db column content_type to automatically convert a bytes array to a string with the given charset
+
+## 0.1.24
+
+* https://github.com/treskon/elo-indexserver-client/pull/21
+    * elo_service: change default charset function param to UTF-8 instead of ISO_8859_1
