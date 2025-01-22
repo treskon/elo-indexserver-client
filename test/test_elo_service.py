@@ -61,3 +61,15 @@ class TestService(unittest.TestCase):
         id_elo = service.create_folder(path="¶EIWECK_INTEGRATION_TEST¶PythonAPI¶test_elo_service¶testRemove",
                                        separator="¶")
         service.remove(id_elo)
+
+    def test_rename(self):
+        service = elo_service.EloService(self.url, self.user, self.password)
+        og = service.checkout("162399")
+        og_name = og.name
+        new_name = "NewName"
+        service.rename("162399", new_name)
+        new = service.checkout("162399")
+        self.assertEqual(new.name, new_name)
+        service.rename("162399", og_name)
+        self.assertEqual(og.name, og_name)
+
