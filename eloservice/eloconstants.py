@@ -8,6 +8,7 @@ class ElobitsetEditz(Enum):
     MB_ALL = "2196631817761587199"  # Results as a Bitshift, originates from java source code
     MB_OBJ_KEYS = "9007199254740992"
     MB_MASK = "8192"
+    MB_NAME = "32" # long mbName = (1L << 5);
 
 
 SORD_Z_EMPTY = SordZ()  # Useful when you don't need any bitset, however the API requires it. This usually means that
@@ -15,6 +16,9 @@ SORD_Z_EMPTY = SordZ()  # Useful when you don't need any bitset, however the API
 
 SORD_Z_MB_ALL = SordZ(SordC.mb_all)
 SORD_Z_MB_ALL.bset = ElobitsetEditz.MB_ALL.value
+
+SORD_Z_MB_NAME = SordZ()
+SORD_Z_MB_NAME.bset = ElobitsetEditz.MB_NAME.value
 
 EDIT_INFO_Z_MB_ALL = EditInfoZ(EditInfoC().mb_all)
 EDIT_INFO_Z_MB_ALL.bset = ElobitsetEditz.MB_ALL.value

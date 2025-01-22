@@ -1,10 +1,12 @@
 from eloclient import Client
+from eloclient.api.ix_service_port_if import ix_service_port_if_checkin_sord
 from eloclient.api.ix_service_port_if import (ix_service_port_if_checkin_sord_path, ix_service_port_if_delete_sord)
 from eloclient.api.ix_service_port_if import (ix_service_port_if_copy_sord)
-from eloclient.models import (BRequestIXServicePortIFCheckinSordPath, BRequestIXServicePortIFDeleteSord)
+from eloclient.models import (BRequestIXServicePortIFCheckinSordPath, BRequestIXServicePortIFDeleteSord,
+                              BRequestIXServicePortIFCheckinSord)
 from eloclient.models import (BRequestIXServicePortIFCopySord)
 from eloclient.models import Sord
-from eloservice.eloconstants import COPY_SORD_C_MOVE, SORD_Z_EMPTY
+from eloservice.eloconstants import COPY_SORD_C_MOVE, SORD_Z_EMPTY, SORD_Z_MB_NAME
 from eloservice.error_handler import _check_response
 from eloservice.file_util import FileUtil, FILENAME_OBJKEY_ID_DEFAULT
 from eloservice.login_util import LoginUtil
@@ -359,3 +361,23 @@ class EloService:
         :return: The subparts of the path = path slices
         """
         return [Sord(name=path_element) for path_element in filter(None, path.split(separator))]
+
+    def rename(self, sord_id: str, new_name: str):
+        """
+        This function renames a sord in ELO
+
+        :param sord_id: The sordID of the sord in ELO
+        :param new_name: The new name of the sord
+        """
+        # This could be optimized in theory because we could create the sord inMemory; only fill in the
+        # required fields and then checkin only with the correct flag so that only the name gets set and all other
+        # fields are ignored.
+        sord = self.checkout(sord_id)
+        sord.name = new_name
+        body = BRequestIXServicePortIFCheckinSord(
+            sord_z=SORD_Z_MB_NAME, # warning: I think it still saves all infos not only the name. ¯\_(ツ)_/¯
+            sord=sord
+        )
+        res = ix_service_port_if_checkin_sord.sync_detailed(client=self.elo_client,
+                                                            body=body)
+        _check_response(res)
