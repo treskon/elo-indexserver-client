@@ -152,3 +152,8 @@ This results in 2 API calls which reduces performance. However, in a real world 
 
 * https://github.com/treskon/elo-indexserver-client/pull/21
     * elo_service: change default charset function param to UTF-8 instead of ISO_8859_1
+
+## 0.1.25
+
+* https://github.com/treskon/elo-indexserver-client/pull/22
+  * add function to rename a sord 
