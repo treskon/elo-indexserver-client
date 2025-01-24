@@ -3,10 +3,10 @@ from eloclient.api.ix_service_port_if import ix_service_port_if_checkin_sord
 from eloclient.api.ix_service_port_if import (ix_service_port_if_checkin_sord_path, ix_service_port_if_delete_sord)
 from eloclient.api.ix_service_port_if import (ix_service_port_if_copy_sord)
 from eloclient.models import (BRequestIXServicePortIFCheckinSordPath, BRequestIXServicePortIFDeleteSord,
-                              BRequestIXServicePortIFCheckinSord)
+                              BRequestIXServicePortIFCheckinSord, ArcPath, IdName, EditInfoZ)
 from eloclient.models import (BRequestIXServicePortIFCopySord)
 from eloclient.models import Sord
-from eloservice.eloconstants import COPY_SORD_C_MOVE, SORD_Z_EMPTY, SORD_Z_MB_NAME
+from eloservice.eloconstants import COPY_SORD_C_MOVE, SORD_Z_EMPTY, SORD_Z_MB_NAME, SORD_Z_MB_ALL, EDIT_INFO_Z_MB_ALL
 from eloservice.error_handler import _check_response
 from eloservice.file_util import FileUtil, FILENAME_OBJKEY_ID_DEFAULT
 from eloservice.login_util import LoginUtil
@@ -279,14 +279,15 @@ class EloService:
         """
         return len(self.search_util.search(search_mask_fields, search_mask_id, max_results=1)) > 0
 
-    def checkout(self, sord_id: str) -> Sord:
+    def checkout(self, sord_id: str, edit_info_z: EditInfoZ = EDIT_INFO_Z_MB_ALL) -> Sord:
         """
         This function checks out a sord in ELO
 
         :param sord_id: The sordID of the sord in ELO
+        :param edit_info_z: This controls what parameters are returned in the sord. The default is EDIT_INFO_Z_MB_ALL
         :return: The checked out sord
         """
-        return self.file_util.checkout_sord(sord_id)
+        return self.file_util.checkout_sord(sord_id, edit_info_z)
 
     def get_mask_fields(self, sord_id: str) -> dict:
         """
@@ -375,9 +376,61 @@ class EloService:
         sord = self.checkout(sord_id)
         sord.name = new_name
         body = BRequestIXServicePortIFCheckinSord(
-            sord_z=SORD_Z_MB_NAME, # warning: I think it still saves all infos not only the name. ¯\_(ツ)_/¯
+            sord_z=SORD_Z_MB_NAME,  # warning: I think it still saves all infos not only the name. ¯\_(ツ)_/¯
             sord=sord
         )
         res = ix_service_port_if_checkin_sord.sync_detailed(client=self.elo_client,
                                                             body=body)
         _check_response(res)
+
+    def change_references(self, sord_id: str, references: list[str], keep_existing_references: bool = False):
+        """
+        This function changes the references of a sord in ELO
+
+        :param sord_id: The sordID of the sord in ELO
+        :param references: The references of the sord; Path as string. The first charachter is the path separator.
+        """
+        sord = self.checkout(sord_id)
+        old_paths: list[ArcPath] = sord.ref_paths
+        new_paths = []
+        # we always keep the first one cause that's just the actual object and not a reference (cause elo that's why)
+        if len(old_paths) > 0:  # never trust the doku tho
+            new_paths.append(old_paths[0])
+        if keep_existing_references:
+            new_paths.extend(old_paths[1:])
+        # we take the first char as a path separator
+        ref_list = []
+        for reference in references:
+            separator = reference[0]  # get the separator
+            folder_path = reference.split(separator)[
+                          :-1]  # get the parent path (so path without the reference we want to create)
+            full_folder = separator.join(folder_path)
+            id_names = self._get_arc_path_id(full_folder, separator)
+            id_name_itself = IdName(name=reference.split(separator)[-1])
+            arc_path_ref = ArcPath(path=id_names + [id_name_itself], path_as_string=reference)
+            ref_list.append(arc_path_ref)
+        new_paths.extend(ref_list)
+        sord.ref_paths = new_paths
+        body = BRequestIXServicePortIFCheckinSord(
+            sord_z=SORD_Z_MB_ALL,
+            sord=sord
+        )
+        res = ix_service_port_if_checkin_sord.sync_detailed(client=self.elo_client,
+                                                            body=body)
+        _check_response(res)
+
+    def _get_arc_path_id(self, path: str, separator="¶") -> list[IdName]:
+        """
+        This help function get the list of the of ArcPath objects
+
+        :param path: A path with a given separator, e.g = "¶Alpha AG¶Eingangsrechnungen¶2023¶November¶20"
+        :param separator: The separator which should be used to split the path (default = "¶")
+
+        :return: The list of the of IdName objects (one IdName object for each folder along the path; so Alpha AG, Eingangsrechnungen, 2023, November, 20 in this case)
+        """
+        # create folder to get the sordID
+        id = self.create_folder(path, separator)
+        # now checkout the folder to get the recursive ArcPath
+        # folder = self.file_util.checkout_sord(id, EDIT_INFO_Z_MB_ID) # does not work, idk why but also idc about performance
+        folder = self.file_util.checkout_sord(id, EDIT_INFO_Z_MB_ALL)
+        return folder.ref_paths[0].path

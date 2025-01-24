@@ -7,7 +7,7 @@ from eloclient import Client
 from eloclient.api.ix_service_port_if import ix_service_port_if_create_doc, ix_service_port_if_checkin_doc_end, \
     ix_service_port_if_checkout_sord
 from eloclient.models import BRequestIXServicePortIFCreateDoc, Sord, BRequestIXServicePortIFCheckinDocEnd, SordZ, LockZ, \
-    LockC, Document, FileData, BStreamReference, DocVersion, BRequestIXServicePortIFCheckoutSord, ObjKey
+    LockC, Document, FileData, BStreamReference, DocVersion, BRequestIXServicePortIFCheckoutSord, ObjKey, EditInfoZ
 from eloservice import eloconstants as elo_const
 from eloservice.error_handler import _check_response
 from eloservice.login_util import EloConnection
@@ -98,10 +98,10 @@ class FileUtil:
             file.write(stream.content)
         return file
 
-    def checkout_sord(self, sord_id) -> Sord:
+    def checkout_sord(self, sord_id, edit_info_z: EditInfoZ = elo_const.EDIT_INFO_Z_MB_ALL) -> Sord:
         body = BRequestIXServicePortIFCheckoutSord(
             obj_id=sord_id,
-            edit_info_z=elo_const.EDIT_INFO_Z_MB_ALL,
+            edit_info_z=edit_info_z,
             lock_z=LockZ(LockC().bset_no)
         )
         res = ix_service_port_if_checkout_sord.sync_detailed(client=self.elo_client, body=body)
