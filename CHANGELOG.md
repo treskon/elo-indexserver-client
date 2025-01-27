@@ -157,3 +157,8 @@ This results in 2 API calls which reduces performance. However, in a real world 
 
 * https://github.com/treskon/elo-indexserver-client/pull/22
   * add function to rename a sord 
+
+## 0.1.26
+
+* https://github.com/treskon/elo-indexserver-client/pull/23
+    * add function to add a reference
