@@ -1,12 +1,12 @@
 from eloclient import Client
 from eloclient.api.ix_service_port_if import ix_service_port_if_checkin_sord
 from eloclient.api.ix_service_port_if import (ix_service_port_if_checkin_sord_path, ix_service_port_if_delete_sord)
-from eloclient.api.ix_service_port_if import (ix_service_port_if_copy_sord)
+from eloclient.api.ix_service_port_if import (ix_service_port_if_copy_sord, ix_service_port_if_ref_sord)
 from eloclient.models import (BRequestIXServicePortIFCheckinSordPath, BRequestIXServicePortIFDeleteSord,
-                              BRequestIXServicePortIFCheckinSord)
-from eloclient.models import (BRequestIXServicePortIFCopySord)
+                              BRequestIXServicePortIFCheckinSord, EditInfoZ)
+from eloclient.models import (BRequestIXServicePortIFCopySord, BRequestIXServicePortIFRefSord)
 from eloclient.models import Sord
-from eloservice.eloconstants import COPY_SORD_C_MOVE, SORD_Z_EMPTY, SORD_Z_MB_NAME
+from eloservice.eloconstants import COPY_SORD_C_MOVE, SORD_Z_EMPTY, SORD_Z_MB_NAME, EDIT_INFO_Z_MB_ALL
 from eloservice.error_handler import _check_response
 from eloservice.file_util import FileUtil, FILENAME_OBJKEY_ID_DEFAULT
 from eloservice.login_util import LoginUtil
@@ -279,14 +279,15 @@ class EloService:
         """
         return len(self.search_util.search(search_mask_fields, search_mask_id, max_results=1)) > 0
 
-    def checkout(self, sord_id: str) -> Sord:
+    def checkout(self, sord_id: str, edit_info_z: EditInfoZ = EDIT_INFO_Z_MB_ALL) -> Sord:
         """
         This function checks out a sord in ELO
 
         :param sord_id: The sordID of the sord in ELO
+        :param edit_info_z: This controls what parameters are returned in the sord. The default is EDIT_INFO_Z_MB_ALL
         :return: The checked out sord
         """
-        return self.file_util.checkout_sord(sord_id)
+        return self.file_util.checkout_sord(sord_id, edit_info_z)
 
     def get_mask_fields(self, sord_id: str) -> dict:
         """
@@ -375,9 +376,30 @@ class EloService:
         sord = self.checkout(sord_id)
         sord.name = new_name
         body = BRequestIXServicePortIFCheckinSord(
-            sord_z=SORD_Z_MB_NAME, # warning: I think it still saves all infos not only the name. ¯\_(ツ)_/¯
+            sord_z=SORD_Z_MB_NAME,  # warning: I think it still saves all infos not only the name. ¯\_(ツ)_/¯
             sord=sord
         )
         res = ix_service_port_if_checkin_sord.sync_detailed(client=self.elo_client,
                                                             body=body)
         _check_response(res)
+
+    def add_reference(self, sord_id: str, reference_path: str, separator="¶"):
+        """
+        This function changes the references of a sord in ELO
+
+        :param sord_id: The sordID of the sord in ELO
+        :param references: The references which should be added
+        :param separator: The separator which should be used to split the path (default = "¶")
+        """
+        # sord = self.checkout(sord_id)
+        ref_folder = self.create_folder(reference_path, separator)
+        body = BRequestIXServicePortIFRefSord(
+            obj_id=sord_id,
+            new_parent_id=ref_folder,
+            man_sort_idx=-1
+        )
+
+        res = ix_service_port_if_ref_sord.sync_detailed(client=self.elo_client, body=body)
+
+        _check_response(res)
+

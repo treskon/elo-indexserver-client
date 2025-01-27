@@ -1,5 +1,5 @@
-import os
 import unittest
+import os
 from datetime import datetime
 
 from eloclient.models import Sord
@@ -73,3 +73,7 @@ class TestService(unittest.TestCase):
         service.rename("162399", og_name)
         self.assertEqual(og.name, og_name)
 
+    def test_add_reference(self):
+        service = elo_service.EloService(self.url, self.user, self.password)
+        service.add_reference("162468", "¶EIWECK_INTEGRATION_TEST¶PythonAPI¶test-references-ref")
+        service.add_reference("162479", "¶EIWECK_INTEGRATION_TEST¶PythonAPI¶test-references-ref")

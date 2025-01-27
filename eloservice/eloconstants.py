@@ -9,6 +9,7 @@ class ElobitsetEditz(Enum):
     MB_OBJ_KEYS = "9007199254740992"
     MB_MASK = "8192"
     MB_NAME = "32" # long mbName = (1L << 5);
+    MB_ID_ONLY = "1"
 
 
 SORD_Z_EMPTY = SordZ()  # Useful when you don't need any bitset, however the API requires it. This usually means that
@@ -29,6 +30,12 @@ EDIT_INFO_Z_MASK_NAMES = EditInfoZ(EditInfoC().mb_mask_names)
 EDIT_INFO_Z_MASK_NAMES.bset = ElobitsetEditz.MASK_NAMES.value
 EDIT_INFO_Z_MASK_NAMES.sord_z = SordZ()
 EDIT_INFO_Z_MASK_NAMES.bset = ElobitsetEditz.MASK_NAMES.value
+
+EDIT_INFO_Z_MB_ID = EditInfoZ(EditInfoC().mb_only_id)
+EDIT_INFO_Z_MB_ID.bset = ElobitsetEditz.MB_ID_ONLY.value
+EDIT_INFO_Z_MB_ID.sord_z = SordZ()
+EDIT_INFO_Z_MB_ID.bset = ElobitsetEditz.MB_ID_ONLY.value
+
 
 COPY_SORD_C_MOVE = copy_sord_z.CopySordZ(CopySordC().move)
 COPY_SORD_C_MOVE.bset = 1
