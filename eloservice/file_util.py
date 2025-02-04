@@ -180,6 +180,9 @@ class FileUtil:
         document_sord.obj_keys = [
             ObjKey(data=[filename], name="ELO_FNAME", id=filename_objkey_id, obj_id=document_sord.id)]
         mimetype = mimetypes.guess_type(filename)[0]
+        # if mimetype is jpeg then use jpg as extension bc elo
+        if "jpeg" in mimetype:
+            mimetype = "image/jpg"
         # upload File and get the reference link
         streamID = self._upload_file(filecontent)
         document = Document(
