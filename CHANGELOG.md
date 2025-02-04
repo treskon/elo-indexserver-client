@@ -162,3 +162,8 @@ This results in 2 API calls which reduces performance. However, in a real world 
 
 * https://github.com/treskon/elo-indexserver-client/pull/23
     * add function to add a reference
+
+# 0.1.27
+
+* https://github.com/treskon/elo-indexserver-client/pull/24
+  * change behaviour when setting the mimetype in upload_file and update_file for image/jpeg. ELO wants image/jpg instead of image/jpeg 
