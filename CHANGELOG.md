@@ -167,3 +167,8 @@ This results in 2 API calls which reduces performance. However, in a real world 
 
 * https://github.com/treskon/elo-indexserver-client/pull/24
   * change behaviour when setting the mimetype in upload_file and update_file for image/jpeg. ELO wants image/jpg instead of image/jpeg 
+
+# 0.1.28
+
+* https://github.com/treskon/elo-indexserver-client/pull/25
+    * file_util set sord.type in addition to mimetype
