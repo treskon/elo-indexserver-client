@@ -15,6 +15,16 @@ from eloservice.login_util import EloConnection
 FILENAME_OBJKEY_ID_DEFAULT = "51"
 
 
+# This is a map of known mimetypes to ELO mimetypes. This is necessary because ELO has a different set of mimetypes for some f reason.
+KNOWN_MIMETYPES_TO_ELO_MIMETYPES = {
+    "image/jpeg": 260,
+    "image/jpg": 260,
+    "image/png": 273,
+    "application/octet-stream": 245 # this is the default 'document' which basically means 'unknown'. It's not really octet-stream, but it's the closest we can get.
+    # obviously not complete, if you need more add them. You can find the ELO mimetypes when you checkout a sord and look at the set param.
+    # I could not find a list of all mimetypes in the docs.
+}
+
 class FileUtil:
     elo_connection: EloConnection
     elo_client: Client
@@ -183,6 +193,11 @@ class FileUtil:
         # if mimetype is jpeg then use jpg as extension bc elo
         if "jpeg" in mimetype:
             mimetype = "image/jpg"
+        if mimetype is None:
+            mimetype = "application/octet-stream"
+        if mimetype in KNOWN_MIMETYPES_TO_ELO_MIMETYPES:
+            document_sord.type = KNOWN_MIMETYPES_TO_ELO_MIMETYPES.get(mimetype)
+
         # upload File and get the reference link
         streamID = self._upload_file(filecontent)
         document = Document(
