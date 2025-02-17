@@ -480,3 +480,36 @@ class EloService:
         :return: guid of user
         """
         return self.user_util.create_new_user(user_info)
+
+    def create_new_group(self, group_info: UserInfo) -> int:
+        """
+        Creates a new group
+
+        The following attributes are set
+        * name
+        * desc
+        * group_list
+        * user_props
+        * flags
+        * flags2
+
+        rights if 'flag2' is not set we automatically set it to 4 which means:
+           # FLAG2_VISIBLE_USER = 4;
+
+        rights if 'flag' is not set we automatically set it to 0 which means:
+            # default allow nothing
+
+        user_props: the order defines what property is set. Important you can either set None property or a list with 7 properties! Otherwise, the server throws an ArrayIndexOutOfBoundsException.
+        prop[0] = Unknown
+        prop[1] = email address
+        prop[2] = "Eigenschaft 5"
+        prop[3] = Unknown
+        prop[4] = "Eigenschaft 1"
+        prop[5] = "Eigenschaft 2"
+        prop[6] = "Eigenschaft 3"
+        prop[7] = "Eigenschaft 4"
+
+        :param group_info: GroupInfo object
+        :return: guid of group
+        """
+        return self.user_util.create_new_group(group_info)

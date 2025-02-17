@@ -114,6 +114,52 @@ class UserUtil:
         _check_response(res)
         return res.parsed.result
 
+    def create_new_group(self, group_info: UserInfo) -> int:
+        """
+        Creates a new group
+
+        The following attributes are set
+        * name
+        * desc
+        * group_list
+        * user_props
+        * flags
+        * flags2
+
+        rights if 'flag2' is not set we automatically set it to 4 which means:
+           # FLAG2_VISIBLE_USER = 4;
+
+        rights if 'flag' is not set we automatically set it to 0 which means:
+            # default allow nothing
+
+        user_props: the order defines what property is set. Important you can either set None property or a list with 7 properties! Otherwise, the server throws an ArrayIndexOutOfBoundsException.
+        prop[0] = Unknown
+        prop[1] = email address
+        prop[2] = "Eigenschaft 5"
+        prop[3] = Unknown
+        prop[4] = "Eigenschaft 1"
+        prop[5] = "Eigenschaft 2"
+        prop[6] = "Eigenschaft 3"
+        prop[7] = "Eigenschaft 4"
+
+        :param group_info: GroupInfo object
+        :return: guid of group
+        """
+        body = BRequestIXServicePortIFCreateUser()
+        res: Response[BResult1485735592] = ix_service_port_if_create_user.sync_detailed(client=self.elo_client,
+                                                                                        body=body)
+        _check_response(res)
+        new_user_info = self._init_group_info(res, group_info)
+
+        body = BRequestIXServicePortIFCheckinUser(
+            user_info=new_user_info,
+            checkin_users_z=CHECKIN_USER_CREATE,
+        )
+        res: Response[BResult5] = ix_service_port_if_checkin_user.sync_detailed(client=self.elo_client,
+                                                                                body=body)
+        _check_response(res)
+        return res.parsed.result
+
     def _init_user_info(self, res, user_info):
         new_user_info: UserInfo = res.parsed.result
         new_user_info.name = user_info.name
@@ -121,18 +167,7 @@ class UserUtil:
         new_user_info.group_list = user_info.group_list
         new_user_info.internal_user = user_info.internal_user
 
-        if type(user_info.user_props) == list and len(user_info.user_props) != 8:
-            # limit to 8
-            user_info.user_props = user_info.user_props[:8]
-
-            # add elems that it has 7 elements
-            actual_len = len(user_info.user_props)
-            missing = 8 - actual_len
-            if missing > 0:
-                for i in range(missing):
-                    user_info.user_props.append("")
-
-        new_user_info.user_props = user_info.user_props
+        self._set_user_props(new_user_info, user_info)
 
         new_user_info.type = 1  # 1 = user, 0 = group
         if user_info.flags2 is None or type(user_info.flags2) is Unset:
@@ -149,6 +184,40 @@ class UserUtil:
         else:
             new_user_info.flags = user_info.flags
         return new_user_info
+
+    def _set_user_props(self, new_user_info, user_info):
+        if type(user_info.user_props) == list and len(user_info.user_props) != 8:
+            user_info.user_props = user_info.user_props[:8]
+            actual_len = len(user_info.user_props)
+            missing = 8 - actual_len
+            if missing > 0:
+                for i in range(missing):
+                    user_info.user_props.append("")
+        new_user_info.user_props = user_info.user_props
+
+    def _init_group_info(self, res, group_info):
+        new_group_info: UserInfo = res.parsed.result
+        new_group_info.name = group_info.name
+        new_group_info.desc = group_info.desc
+        new_group_info.group_list = group_info.group_list
+
+        self._set_user_props(new_group_info, group_info)
+
+        new_group_info.type = 0  # 1 = user, 0 = group
+        if group_info.flags2 is None or type(group_info.flags2) is Unset:
+            # default allow nothing
+            # FLAG2_VISIBLE_USER = 4;
+            new_group_info.flags2 = 4
+        else:
+            new_group_info.flags2 = group_info.flags2
+
+        if group_info.flags is None or type(group_info.flags2) is Unset:
+            # default allow nothing
+            new_group_info.flags = 0
+        else:
+            new_group_info.flags = group_info.flags
+        return new_group_info
+
 
     def get_group_base(self, *group_identifier: str) -> [UserName]:
         """

@@ -97,6 +97,21 @@ class TestService(unittest.TestCase):
         assert details is not None
         assert details.name == user.name
 
+    def test_create_new_group(self):
+        elo_connection, elo_client = self._login()
+        util = UserUtil(elo_client, elo_connection)
+        # Craft UserObject
+        group = UserInfo()
+        # dd-mm-yyyy:hh:mm:ss
+        timestamp = datetime.now().strftime("%d-%m-%Y:%H:%M:%S")
+        group.name = "Test Group [" + timestamp + "]"
+        # we explicitly set the user_props to 7 instead of 8 to also test our validation
+        group.user_props = ["0", "1", "2", "3", "4", "5", "6", "7"]
+        new_group_guid = util.create_new_group(group)
+        details = util.get_group_details(str(new_group_guid))
+        assert details is not None
+        assert details.name == group.name
+
     def test_get_group(self):
         elo_connection, elo_client = self._login()
         util = UserUtil(elo_client, elo_connection)
