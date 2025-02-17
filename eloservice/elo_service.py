@@ -3,7 +3,7 @@ from eloclient.api.ix_service_port_if import ix_service_port_if_checkin_sord
 from eloclient.api.ix_service_port_if import (ix_service_port_if_checkin_sord_path, ix_service_port_if_delete_sord)
 from eloclient.api.ix_service_port_if import (ix_service_port_if_copy_sord, ix_service_port_if_ref_sord)
 from eloclient.models import (BRequestIXServicePortIFCheckinSordPath, BRequestIXServicePortIFDeleteSord,
-                              BRequestIXServicePortIFCheckinSord, EditInfoZ)
+                              BRequestIXServicePortIFCheckinSord, EditInfoZ, UserName)
 from eloclient.models import (BRequestIXServicePortIFCopySord, BRequestIXServicePortIFRefSord)
 from eloclient.models import Sord
 from eloservice.eloconstants import COPY_SORD_C_MOVE, SORD_Z_EMPTY, SORD_Z_MB_NAME, EDIT_INFO_Z_MB_ALL
@@ -13,6 +13,7 @@ from eloservice.login_util import LoginUtil
 from eloservice.map_util import MapUtil
 from eloservice.mask_util import MaskUtil
 from eloservice.search_util import SearchUtil
+from eloservice.user_util import UserUtil
 
 
 class EloService:
@@ -26,6 +27,7 @@ class EloService:
     map_util = None
     file_util = None
     search_util = None
+    user_util = None
     cache_enable = None
     cache_ttl = None
     cache_maxsize = None
@@ -58,6 +60,7 @@ class EloService:
         self.map_util = MapUtil(self.elo_client, self.elo_connection)
         self.file_util = FileUtil(self.elo_client, self.elo_connection)
         self.search_util = SearchUtil(self.elo_client, self.elo_connection)
+        self.user_util = UserUtil(self.elo_client, self.elo_connection)
 
     def create_folder(self, path: str, separator="¶") -> str:
         """
@@ -402,4 +405,12 @@ class EloService:
         res = ix_service_port_if_ref_sord.sync_detailed(client=self.elo_client, body=body)
 
         _check_response(res)
+
+    def get_user_base(self, *user_identifier: str) -> [UserName]:
+        """
+        Loads base info for a user. Useful for retrieving exchanging the username to an id or guid for other methods.
+        :param user_identifier: can either be the username 'Max Mustermann' or an id '16' or a guid '(5330D865-5082-1CF3-B58A-75CCAEAB9B26)'
+        :return: List of dataclasses of type UserName
+        """
+        return self.user_util.get_user_base(*user_identifier)
 
