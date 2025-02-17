@@ -1,6 +1,6 @@
 from enum import Enum
 
-from eloclient.models import SordZ, SordC, EditInfoZ, EditInfoC, copy_sord_z, CopySordC, LockC, LockZ
+from eloclient.models import SordZ, SordC, EditInfoZ, EditInfoC, copy_sord_z, CopySordC, LockZ, CheckoutUsersZ
 
 
 class ElobitsetEditz(Enum):
@@ -8,7 +8,7 @@ class ElobitsetEditz(Enum):
     MB_ALL = "2196631817761587199"  # Results as a Bitshift, originates from java source code
     MB_OBJ_KEYS = "9007199254740992"
     MB_MASK = "8192"
-    MB_NAME = "32" # long mbName = (1L << 5);
+    MB_NAME = "32"  # long mbName = (1L << 5);
     MB_ID_ONLY = "1"
 
 
@@ -36,7 +36,6 @@ EDIT_INFO_Z_MB_ID.bset = ElobitsetEditz.MB_ID_ONLY.value
 EDIT_INFO_Z_MB_ID.sord_z = SordZ()
 EDIT_INFO_Z_MB_ID.bset = ElobitsetEditz.MB_ID_ONLY.value
 
-
 COPY_SORD_C_MOVE = copy_sord_z.CopySordZ(CopySordC().move)
 COPY_SORD_C_MOVE.bset = 1
 
@@ -52,6 +51,15 @@ LOCK_Z_YES = LockZ("1")
 LOCK_Z_NO = LockZ("0")
 LOCK_Z_IF_FREE = LockZ("2")
 LOCK_Z_FORCE = LockZ("4")
+
+CHECKOUT_USERS_Z_ALL_BY_ID = CheckoutUsersZ()
+CHECKOUT_USERS_Z_ALL_BY_ID.bset = "1"
+
+CHECKOUT_USERS_Z_ALL_USER = CheckoutUsersZ()
+CHECKOUT_USERS_Z_ALL_USER.bset = "2"
+
+CHECKOUT_USERS_Z_ALL_GROUPS = CheckoutUsersZ()
+CHECKOUT_USERS_Z_ALL_GROUPS.bset = "3"
 
 
 elo_text_mime_types = [
