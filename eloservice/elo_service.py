@@ -415,7 +415,6 @@ class EloService:
         return self.user_util.get_user_base(*user_identifier)
 
 
-
     def get_user_details(self, user_identifier: str) -> UserInfo:
         """
         Loads the user details.
@@ -431,3 +430,20 @@ class EloService:
         :return: userid
         """
         return self.user_util.update_user_details(user_info)
+
+    def get_group_base(self, *group_identifier: str) -> [UserName]:
+        """
+        Loads base info for a user
+        :param user_identifier: can either be the groupname 'Verwaltung' or an id '16' or a guid '(5330D865-5082-1CF3-B58A-75CCAEAB9B26)'
+        :return: List of dataclasses of type UserName or None if one of the groups does not exist.
+        """
+        return self.user_util.get_group_base(*group_identifier)
+
+    def get_group_details(self, group_identifier: str) -> UserInfo:
+        """
+        Loads the group details.
+        :param group_identifier:id or guid
+        :return:
+        """
+        return self.user_util.get_group_details(group_identifier)
+

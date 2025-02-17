@@ -79,3 +79,28 @@ class UserUtil:
     #                                                                                     body=body)
     #     _check_response(res)
     #     return res.parsed.result.guid
+
+    def get_group_base(self, *group_identifier: str) -> [UserName]:
+        """
+        Loads base info for a user
+        :param user_identifier: can either be the groupname 'Verwaltung' or an id '16' or a guid '(5330D865-5082-1CF3-B58A-75CCAEAB9B26)'
+        :return: List of dataclasses of type UserName or None if one of the groups does not exist.
+        """
+        body = BRequestIXServicePortIFGetUserNames(ids=list(group_identifier),
+                                                   checkout_users_z=CHECKOUT_USERS_Z_ALL_BY_ID)
+        res: Response[BResult1001617329] = ix_service_port_if_get_user_names.sync_detailed(client=self.elo_client,
+                                                                                           body=body)
+        userNotExistLog = '[ELOIX:5023]Unknown user or key;'
+        # check if this string is contained in the non parsed response
+        if userNotExistLog in res.content.decode('utf-8'):
+            return None
+        _check_response(res)
+        return res.parsed.result
+
+    def get_group_details(self, group_identifier: str) -> UserInfo:
+        """
+        Loads the group details.
+        :param group_identifier: id or guid
+        :return:
+        """
+        return self.get_user_details(group_identifier)

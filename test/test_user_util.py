@@ -98,3 +98,54 @@ class TestService(unittest.TestCase):
     #     user.user_props = ["NTNAME"]
     #     util.update_user_details(user)
 
+
+    def test_get_group(self):
+        elo_connection, elo_client = self._login()
+        util = UserUtil(elo_client, elo_connection)
+        groups = util.get_group_base("TestACUser")
+        assert groups is not None
+        assert len(groups) == 1
+        assert groups[0].name == "TestACUser"
+
+    def test_get_group_notexists(self):
+        elo_connection, elo_client = self._login()
+        util = UserUtil(elo_client, elo_connection)
+        groups = util.get_group_base("TestACUserExistNot")
+        assert groups is None
+
+    def test_get_group_details(self):
+        elo_connection, elo_client = self._login()
+        util = UserUtil(elo_client, elo_connection)
+        groups = util.get_group_base("TestACUser")
+        group = util.get_group_details(groups[0].id)
+        assert group is not None
+        assert group.name == "TestACUser"
+
+
+    def test_manually_add_group(self):
+        elo_connection, elo_client = self._login()
+        util = UserUtil(elo_client, elo_connection)
+        groups = util.get_group_base("TestACUser")
+        group_id = groups[0].id
+
+        # 1. Get user details
+        user = util.get_user_details("19")
+        assert user is not None
+        assert user.id == 19
+        assert user.name == "L23 TURNER Claudia"
+
+        # 2. Remove user from group
+        user.group_list.remove(group_id)
+        util.update_user_details(user)
+        user = util.get_user_details("19")
+        assert user is not None
+        assert user.id == 19
+        assert group_id not in user.group_list
+
+        # 3. Add user to group
+        user.group_list.append(group_id)
+        util.update_user_details(user)
+        user = util.get_user_details("19")
+        assert user is not None
+        assert user.id == 19
+        assert group_id in user.group_list
