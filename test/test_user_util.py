@@ -82,22 +82,20 @@ class TestService(unittest.TestCase):
         assert user.id == 19
         assert user.name == "L23 TURNER Claudia"
 
-    # def test_create_new_user(self):
-    #     elo_connection, elo_client = self._login()
-    #     util = UserUtil(elo_client, elo_connection)
-    #     # Craft UserObject
-    #     # user = UserInfo()
-    #     # dd-mm-yyyy:hh:mm:ss
-    #     timestamp = datetime.now().strftime("%d-%m-%Y:%H:%M:%S")
-    #     # user.name = "Test User [" + timestamp + "]"
-    #     # user.user_props = ["NTNAME"]
-    #     # user.internal_user = False
-    #     new_user_guid = util.create_new_user()
-    #     user = util.get_user_details(new_user_guid)
-    #     user.name = "Test User [" + timestamp + "]"
-    #     user.user_props = ["NTNAME"]
-    #     util.update_user_details(user)
-
+    def test_create_new_user(self):
+        elo_connection, elo_client = self._login()
+        util = UserUtil(elo_client, elo_connection)
+        # Craft UserObject
+        user = UserInfo()
+        # dd-mm-yyyy:hh:mm:ss
+        timestamp = datetime.now().strftime("%d-%m-%Y:%H:%M:%S")
+        user.name = "Test User [" + timestamp + "]"
+        # we explicitly set the user_props to 7 instead of 8 to also test our validation
+        user.user_props = ["NTNAME", "1", "2", "3", "4", "5", "6"]
+        new_user_guid = util.create_new_user(user)
+        details = util.get_user_details(str(new_user_guid))
+        assert details is not None
+        assert details.name == user.name
 
     def test_get_group(self):
         elo_connection, elo_client = self._login()
@@ -120,7 +118,6 @@ class TestService(unittest.TestCase):
         group = util.get_group_details(groups[0].id)
         assert group is not None
         assert group.name == "TestACUser"
-
 
     def test_manually_add_group(self):
         elo_connection, elo_client = self._login()

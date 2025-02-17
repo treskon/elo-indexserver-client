@@ -1,10 +1,11 @@
 from eloclient import Client
 from eloclient.api.ix_service_port_if import ix_service_port_if_get_user_names, ix_service_port_if_checkout_user, \
-    ix_service_port_if_checkin_user
+    ix_service_port_if_checkin_user, ix_service_port_if_create_user
 from eloclient.models import BRequestIXServicePortIFGetUserNames, BResult1001617329, UserName, \
-    BRequestIXServicePortIFCheckoutUser, BResult1485735592, UserInfo, BRequestIXServicePortIFCheckinUser, BResult5
-from eloclient.types import Response
-from eloservice.eloconstants import CHECKOUT_USERS_Z_ALL_BY_ID, LOCK_Z_NO, CHECKIN_USER_UPDATE
+    BRequestIXServicePortIFCheckoutUser, BResult1485735592, UserInfo, BRequestIXServicePortIFCheckinUser, BResult5, \
+    BRequestIXServicePortIFCreateUser
+from eloclient.types import Response, Unset
+from eloservice.eloconstants import CHECKOUT_USERS_Z_ALL_BY_ID, LOCK_Z_NO, CHECKIN_USER_UPDATE, CHECKIN_USER_CREATE
 from eloservice.error_handler import _check_response
 from eloservice.login_util import EloConnection
 
@@ -65,20 +66,89 @@ class UserUtil:
         _check_response(res)
         return res.parsed.result
 
-    # TODO we do not know currently how to create a new user
-    # there is a method but it does not create a valid user and only delivers a guid that can not be used for further operations
+    def create_new_user(self, user_info: UserInfo) -> int:
+        """
+        Creates a new user
 
-    # def create_new_user(self):
-    #     """
-    #     Creates a new user
-    #     :param user_info: UserInfo object
-    #     :return: guid of user
-    #     """
-    #     body = BRequestIXServicePortIFCreateUser()
-    #     res: Response[BResult1485735592] = ix_service_port_if_create_user.sync_detailed(client=self.elo_client,
-    #                                                                                     body=body)
-    #     _check_response(res)
-    #     return res.parsed.result.guid
+        The following attributes are set
+        * name
+        * desc
+        * group_list
+        * internal_user
+        * user_props
+        * flags
+        * flags2
+
+        rights if 'flag2' is not set we automatically set it to 5 which means:
+            # FLAG2_VISIBLE_USER = 4;
+            # FLAG2_INTERACTIVE_LOGIN = 1
+
+        rights if 'flag' is not set we automatically set it to 0 which means:
+            # default allow nothing
+
+        user_props: the order defines what property is set. Important you can either set None property or a list with 7 properties! Otherwise, the server throws an ArrayIndexOutOfBoundsException.
+        prop[0] = Windows NET User
+        prop[1] = email address
+        prop[2] = "Eigenschaft 5"
+        prop[3] = "Aktion"
+        prop[4] = "Eigenschaft 1"
+        prop[5] = "Eigenschaft 2"
+        prop[6] = "Eigenschaft 3"
+        prop[7] = "Eigenschaft 4"
+
+        :param user_info: UserInfo object
+        :return: guid of user
+        """
+        body = BRequestIXServicePortIFCreateUser()
+        res: Response[BResult1485735592] = ix_service_port_if_create_user.sync_detailed(client=self.elo_client,
+                                                                                        body=body)
+        _check_response(res)
+        new_user_info = self._init_user_info(res, user_info)
+
+        body = BRequestIXServicePortIFCheckinUser(
+            user_info=new_user_info,
+            checkin_users_z=CHECKIN_USER_CREATE,
+        )
+        res: Response[BResult5] = ix_service_port_if_checkin_user.sync_detailed(client=self.elo_client,
+                                                                                body=body)
+        _check_response(res)
+        return res.parsed.result
+
+    def _init_user_info(self, res, user_info):
+        new_user_info: UserInfo = res.parsed.result
+        new_user_info.name = user_info.name
+        new_user_info.desc = user_info.desc
+        new_user_info.group_list = user_info.group_list
+        new_user_info.internal_user = user_info.internal_user
+
+        if type(user_info.user_props) == list and len(user_info.user_props) != 8:
+            # limit to 8
+            user_info.user_props = user_info.user_props[:8]
+
+            # add elems that it has 7 elements
+            actual_len = len(user_info.user_props)
+            missing = 8 - actual_len
+            if missing > 0:
+                for i in range(missing):
+                    user_info.user_props.append("")
+
+        new_user_info.user_props = user_info.user_props
+
+        new_user_info.type = 1  # 1 = user, 0 = group
+        if user_info.flags2 is None or type(user_info.flags2) is Unset:
+            # FLAG2_VISIBLE_USER = 4;
+            # FLAG2_INTERACTIVE_LOGIN = 1
+            # default allow this
+            new_user_info.flags2 = 5
+        else:
+            new_user_info.flags2 = user_info.flags2
+
+        if user_info.flags is None or type(user_info.flags2) is Unset:
+            # default allow nothing
+            new_user_info.flags = 0
+        else:
+            new_user_info.flags = user_info.flags
+        return new_user_info
 
     def get_group_base(self, *group_identifier: str) -> [UserName]:
         """
