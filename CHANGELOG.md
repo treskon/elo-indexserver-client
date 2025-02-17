@@ -172,3 +172,9 @@ This results in 2 API calls which reduces performance. However, in a real world 
 
 * https://github.com/treskon/elo-indexserver-client/pull/25
     * file_util set sord.type in addition to mimetype
+
+
+# 0.1.29
+
+* https://github.com/treskon/elo-indexserver-client/pull/26
+    * add user_util and function get_user_base
