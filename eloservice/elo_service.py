@@ -3,7 +3,7 @@ from eloclient.api.ix_service_port_if import ix_service_port_if_checkin_sord
 from eloclient.api.ix_service_port_if import (ix_service_port_if_checkin_sord_path, ix_service_port_if_delete_sord)
 from eloclient.api.ix_service_port_if import (ix_service_port_if_copy_sord, ix_service_port_if_ref_sord)
 from eloclient.models import (BRequestIXServicePortIFCheckinSordPath, BRequestIXServicePortIFDeleteSord,
-                              BRequestIXServicePortIFCheckinSord, EditInfoZ, UserName)
+                              BRequestIXServicePortIFCheckinSord, EditInfoZ, UserName, UserInfo)
 from eloclient.models import (BRequestIXServicePortIFCopySord, BRequestIXServicePortIFRefSord)
 from eloclient.models import Sord
 from eloservice.eloconstants import COPY_SORD_C_MOVE, SORD_Z_EMPTY, SORD_Z_MB_NAME, EDIT_INFO_Z_MB_ALL
@@ -410,7 +410,24 @@ class EloService:
         """
         Loads base info for a user. Useful for retrieving exchanging the username to an id or guid for other methods.
         :param user_identifier: can either be the username 'Max Mustermann' or an id '16' or a guid '(5330D865-5082-1CF3-B58A-75CCAEAB9B26)'
-        :return: List of dataclasses of type UserName
+        :return: List of dataclasses of type UserName or None if one of the users does not exist.
         """
         return self.user_util.get_user_base(*user_identifier)
 
+
+
+    def get_user_details(self, user_identifier: str) -> UserInfo:
+        """
+        Loads the user details.
+        :param user_identifier:id or guid
+        :return:
+        """
+        return self.user_util.get_user_details(user_identifier)
+
+    def update_user_details(self, user_info: UserInfo) -> int:
+        """
+        Saves the user details.
+        :param user_info: UserInfo object
+        :return: userid
+        """
+        return self.user_util.update_user_details(user_info)

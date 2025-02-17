@@ -1,6 +1,8 @@
 import os
 import unittest
+from datetime import datetime
 
+from eloclient.models import UserInfo
 from eloservice.login_util import LoginUtil
 from eloservice.user_util import UserUtil
 
@@ -40,3 +42,59 @@ class TestService(unittest.TestCase):
         assert users[0].name == "M11 STEIN Martina"
         assert users[1].name == "K33 MUSTER Max"
         assert users[2].name == "L23 TURNER Claudia"
+
+    def test_get_user_does_not_exist(self):
+        elo_connection, elo_client = self._login()
+        util = UserUtil(elo_client, elo_connection)
+        users = util.get_user_base("M11 STEIN Martina", "RandomUserNameThatSurelyDoesNotExistPls")
+        assert users is None
+
+    def test_get_user_details(self):
+        elo_connection, elo_client = self._login()
+        util = UserUtil(elo_client, elo_connection)
+        user = util.get_user_details("19")
+        assert user is not None
+        assert user.id == 19
+        assert user.name == "L23 TURNER Claudia"
+
+    def test_update_user_details(self):
+        elo_connection, elo_client = self._login()
+        util = UserUtil(elo_client, elo_connection)
+        # 1. Get user details
+        user = util.get_user_details("19")
+        assert user is not None
+        assert user.id == 19
+        assert user.name == "L23 TURNER Claudia"
+
+        # 2. Update user details
+        user.name = "L23 TURNER Claudia Updated"
+        util.update_user_details(user)
+        user = util.get_user_details("19")
+        assert user is not None
+        assert user.id == 19
+        assert user.name == "L23 TURNER Claudia Updated"
+
+        # 3. Revert user details
+        user.name = "L23 TURNER Claudia"
+        util.update_user_details(user)
+        user = util.get_user_details("19")
+        assert user is not None
+        assert user.id == 19
+        assert user.name == "L23 TURNER Claudia"
+
+    # def test_create_new_user(self):
+    #     elo_connection, elo_client = self._login()
+    #     util = UserUtil(elo_client, elo_connection)
+    #     # Craft UserObject
+    #     # user = UserInfo()
+    #     # dd-mm-yyyy:hh:mm:ss
+    #     timestamp = datetime.now().strftime("%d-%m-%Y:%H:%M:%S")
+    #     # user.name = "Test User [" + timestamp + "]"
+    #     # user.user_props = ["NTNAME"]
+    #     # user.internal_user = False
+    #     new_user_guid = util.create_new_user()
+    #     user = util.get_user_details(new_user_guid)
+    #     user.name = "Test User [" + timestamp + "]"
+    #     user.user_props = ["NTNAME"]
+    #     util.update_user_details(user)
+
