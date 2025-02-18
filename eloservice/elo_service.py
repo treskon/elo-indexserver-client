@@ -55,8 +55,10 @@ class EloService:
     def _update_utils(self):
         self.elo_client = self.login_util.elo_client
         self.elo_connection = self.login_util.elo_connection
-        self.mask_util = MaskUtil(self.elo_client, self.elo_connection, cache_enable=self.cache_enable,
-                                  cache_ttl=self.cache_ttl, cache_maxsize=self.cache_maxsize)
+        self.mask_util = MaskUtil(
+            self.elo_client, self.elo_connection, cache_enable=self.cache_enable,
+            cache_ttl=self.cache_ttl, cache_maxsize=self.cache_maxsize
+        )
         self.map_util = MapUtil(self.elo_client, self.elo_connection)
         self.file_util = FileUtil(self.elo_client, self.elo_connection)
         self.search_util = SearchUtil(self.elo_client, self.elo_connection)
@@ -88,7 +90,10 @@ class EloService:
             # to assign the document mask 'Freie Eingabe' to the folder which fails
         )
 
-        erg = ix_service_port_if_checkin_sord_path.sync_detailed(client=self.elo_client, body=body)
+        erg = ix_service_port_if_checkin_sord_path.sync_detailed(
+            client=self.elo_client,
+            body=body
+        )
         _check_response(erg)
         object_id = erg.parsed.result[-1]
         if object_id is None:
@@ -159,7 +164,11 @@ class EloService:
         :param map_domain: The map domain in ELO (default = "Objekte"). This is what is displayed in the ELO client in
             the additional infos tab. Common map domains are 'Objekte' and 'Formdata'.
         """
-        return self.map_util.read_map_fields(sord_id=sord_id, keys=keys, map_domain=map_domain)
+        return self.map_util.read_map_fields(
+            sord_id=sord_id,
+            keys=keys,
+            map_domain=map_domain
+        )
 
     def serialize_map_fields_table(self, map_fields: dict[str, MapUtil.MapValue],
                                    column_names: list[str]):
@@ -228,14 +237,14 @@ class EloService:
          user client.
         :return: The sordID of the uploaded file
         """
-        return self.file_util.upload_file(file_path=file_path, parent_id=parent_id, filemask_id=filemask_id,
-                                          filename=filename, filename_objkey_id=filename_objkey_id,
-                                          filename_objkey=filename_objkey,
-                                          filedate=filedate)
+        return self.file_util.upload_file(
+            file_path=file_path, parent_id=parent_id, filemask_id=filemask_id,
+            filename=filename, filename_objkey_id=filename_objkey_id,
+            filename_objkey=filename_objkey, filedate=filedate
+        )
 
     def update_file(self, sord_id: str, file_path: str, filename="", filename_objkey_id=FILENAME_OBJKEY_ID_DEFAULT,
-                    filename_objkey="",
-                    filedate=None):
+                    filename_objkey="", filedate=None):
         """
         This function updates a file in ELO
 
@@ -248,9 +257,11 @@ class EloService:
         ISO 8601 e.g."2021-08-25T15:00:00". The date is stored in UTC in ELO and displayed in the local time zone of the
          user client.
         """
-        self.file_util.update_file(file_path=file_path, file_id=sord_id, filename=filename,
-                                   filename_objkey_id=filename_objkey_id, filename_objkey=filename_objkey,
-                                   filedate=filedate)
+        self.file_util.update_file(
+            file_path=file_path, file_id=sord_id, filename=filename,
+            filename_objkey_id=filename_objkey_id, filename_objkey=filename_objkey,
+            filedate=filedate
+        )
 
     def download_file(self, sord_id: str, file_path: str):
         """
@@ -318,7 +329,10 @@ class EloService:
         :param sord_id: The sordID of the sord in ELO
         """
         body = BRequestIXServicePortIFDeleteSord(obj_id=sord_id)
-        res = ix_service_port_if_delete_sord.sync_detailed(client=self.elo_client, body=body)
+        res = ix_service_port_if_delete_sord.sync_detailed(
+            client=self.elo_client,
+            body=body
+        )
         _check_response(res)
         if res.parsed.result is None:
             raise ValueError("Could not delete sord")
@@ -334,7 +348,10 @@ class EloService:
         :return: The sordId of the moved sord
         """
         new_destination_sordid = self.create_folder(path, separator)
-        return self._move_sord(source_sord_id=source_sord_id, new_parent_id=new_destination_sordid)
+        return self._move_sord(
+            source_sord_id=source_sord_id,
+            new_parent_id=new_destination_sordid
+        )
 
     def _move_sord(self, source_sord_id: str, new_parent_id: str):
         """
@@ -346,12 +363,14 @@ class EloService:
         :return: The sordId of the moved sord
         """
         body = BRequestIXServicePortIFCopySord(
-
             new_parent_id=new_parent_id,
             obj_id=source_sord_id,
             copy_sord_z=COPY_SORD_C_MOVE
         )
-        res = ix_service_port_if_copy_sord.sync_detailed(client=self.elo_client, body=body)
+        res = ix_service_port_if_copy_sord.sync_detailed(
+            client=self.elo_client,
+            body=body
+        )
         _check_response(res)
         return new_parent_id
 
@@ -382,8 +401,10 @@ class EloService:
             sord_z=SORD_Z_MB_NAME,  # warning: I think it still saves all infos not only the name. ¯\_(ツ)_/¯
             sord=sord
         )
-        res = ix_service_port_if_checkin_sord.sync_detailed(client=self.elo_client,
-                                                            body=body)
+        res = ix_service_port_if_checkin_sord.sync_detailed(
+            client=self.elo_client,
+            body=body
+        )
         _check_response(res)
 
     def add_reference(self, sord_id: str, reference_path: str, separator="¶"):
@@ -402,7 +423,10 @@ class EloService:
             man_sort_idx=-1
         )
 
-        res = ix_service_port_if_ref_sord.sync_detailed(client=self.elo_client, body=body)
+        res = ix_service_port_if_ref_sord.sync_detailed(
+            client=self.elo_client,
+            body=body
+        )
 
         _check_response(res)
 
@@ -430,23 +454,7 @@ class EloService:
         """
         return self.user_util.update_user_details(user_info)
 
-    def get_group_base(self, *group_identifier: str) -> [UserName]:
-        """
-        Loads base info for a user
-        :param user_identifier: can either be the groupname 'Verwaltung' or an id '16' or a guid '(5330D865-5082-1CF3-B58A-75CCAEAB9B26)'
-        :return: List of dataclasses of type UserName or None if one of the groups does not exist.
-        """
-        return self.user_util.get_group_base(*group_identifier)
-
-    def get_group_details(self, group_identifier: str) -> UserInfo:
-        """
-        Loads the group details.
-        :param group_identifier:id or guid
-        :return:
-        """
-        return self.user_util.get_group_details(group_identifier)
-
-    def create_user(self, user_info: UserInfo) -> int:
+    def create_new_user(self, user_info: UserInfo) -> int:
         """
         Creates a new user
 
@@ -480,6 +488,30 @@ class EloService:
         :return: guid of user
         """
         return self.user_util.create_new_user(user_info)
+
+    def delete_user(self, user_info: UserInfo) -> str:
+        """
+        Deletes the user.
+        :param user_info: UserInfo object
+        :return: Exception
+        """
+        return self.user_util.delete_user(user_info)
+
+    def get_group_base(self, *group_identifier: str) -> [UserName]:
+        """
+        Loads base info for a user
+        :param user_identifier: can either be the groupname 'Verwaltung' or an id '16' or a guid '(5330D865-5082-1CF3-B58A-75CCAEAB9B26)'
+        :return: List of dataclasses of type UserName or None if one of the groups does not exist.
+        """
+        return self.user_util.get_group_base(*group_identifier)
+
+    def get_group_details(self, group_identifier: str) -> UserInfo:
+        """
+        Loads the group details.
+        :param group_identifier:id or guid
+        :return:
+        """
+        return self.user_util.get_group_details(group_identifier)
 
     def create_new_group(self, group_info: UserInfo) -> int:
         """

@@ -8,9 +8,9 @@ from eloservice.user_util import UserUtil
 
 
 class TestService(unittest.TestCase):
-    url = os.environ["TEST_ELO_IX_URL"]
-    user = os.environ["TEST_ELO_IX_USER"]
-    password = os.environ["TEST_ELO_IX_PASSWORD"]
+    url = 'http://node2.treskon.net:6056/ix-Archive/ix'
+    user = 'Administrator'
+    password = 'BnlZzo2jeAHAjqCw24z'
 
     if __name__ == '__main__':
         unittest.main()
@@ -96,6 +96,15 @@ class TestService(unittest.TestCase):
         details = util.get_user_details(str(new_user_guid))
         assert details is not None
         assert details.name == user.name
+
+    def test_delete_user(self):
+        elo_connection, elo_client = self._login()
+        util = UserUtil(elo_client, elo_connection)
+
+        user = util.get_user_base("19")
+        delete = util.delete_user(user)
+
+        assert delete is not None
 
     def test_create_new_group(self):
         elo_connection, elo_client = self._login()

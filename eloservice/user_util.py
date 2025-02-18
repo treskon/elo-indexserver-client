@@ -1,9 +1,11 @@
 from eloclient import Client
 from eloclient.api.ix_service_port_if import ix_service_port_if_get_user_names, ix_service_port_if_checkout_user, \
-    ix_service_port_if_checkin_user, ix_service_port_if_create_user
+    ix_service_port_if_checkin_user, ix_service_port_if_create_user, ix_service_port_if_delete_user
+
 from eloclient.models import BRequestIXServicePortIFGetUserNames, BResult1001617329, UserName, \
     BRequestIXServicePortIFCheckoutUser, BResult1485735592, UserInfo, BRequestIXServicePortIFCheckinUser, BResult5, \
-    BRequestIXServicePortIFCreateUser
+    BRequestIXServicePortIFCreateUser, BRequestIXServicePortIFDeleteUser, BResult19
+
 from eloclient.types import Response, Unset
 from eloservice.eloconstants import CHECKOUT_USERS_Z_ALL_BY_ID, LOCK_Z_NO, CHECKIN_USER_UPDATE, CHECKIN_USER_CREATE
 from eloservice.error_handler import _check_response
@@ -24,10 +26,14 @@ class UserUtil:
         :param user_identifier: can either be the username 'Max Mustermann' or an id '16' or a guid '(5330D865-5082-1CF3-B58A-75CCAEAB9B26)'
         :return: List of dataclasses of type UserName or None if one of the users does not exist.
         """
-        body = BRequestIXServicePortIFGetUserNames(ids=list(user_identifier),
-                                                   checkout_users_z=CHECKOUT_USERS_Z_ALL_BY_ID)
-        res: Response[BResult1001617329] = ix_service_port_if_get_user_names.sync_detailed(client=self.elo_client,
-                                                                                           body=body)
+        body = BRequestIXServicePortIFGetUserNames(
+            ids=list(user_identifier),
+            checkout_users_z=CHECKOUT_USERS_Z_ALL_BY_ID
+        )
+        res: Response[BResult1001617329] = ix_service_port_if_get_user_names.sync_detailed(
+            client=self.elo_client,
+            body=body
+        )
         userNotExistLog = '[ELOIX:5023]Unknown user or key;'
         # check if this string is contained in the non parsed response
         if userNotExistLog in res.content.decode('utf-8'):
@@ -46,8 +52,10 @@ class UserUtil:
             checkout_users_z=CHECKOUT_USERS_Z_ALL_BY_ID,
             lock_z=LOCK_Z_NO
         )
-        res: Response[BResult1485735592] = ix_service_port_if_checkout_user.sync_detailed(client=self.elo_client,
-                                                                                          body=body)
+        res: Response[BResult1485735592] = ix_service_port_if_checkout_user.sync_detailed(
+            client=self.elo_client,
+            body=body
+        )
         _check_response(res)
         return res.parsed.result
 
@@ -59,10 +67,12 @@ class UserUtil:
         """
         body = BRequestIXServicePortIFCheckinUser(
             user_info=user_info,
-            checkin_users_z=CHECKIN_USER_UPDATE,
+            checkin_users_z=CHECKIN_USER_UPDATE
         )
-        res: Response[BResult5] = ix_service_port_if_checkin_user.sync_detailed(client=self.elo_client,
-                                                                                body=body)
+        res: Response[BResult5] = ix_service_port_if_checkin_user.sync_detailed(
+            client=self.elo_client,
+            body=body
+        )
         _check_response(res)
         return res.parsed.result
 
@@ -100,19 +110,40 @@ class UserUtil:
         :return: guid of user
         """
         body = BRequestIXServicePortIFCreateUser()
-        res: Response[BResult1485735592] = ix_service_port_if_create_user.sync_detailed(client=self.elo_client,
-                                                                                        body=body)
+        res: Response[BResult1485735592] = ix_service_port_if_create_user.sync_detailed(
+            client=self.elo_client,
+            body=body
+        )
         _check_response(res)
         new_user_info = self._init_user_info(res, user_info)
 
         body = BRequestIXServicePortIFCheckinUser(
             user_info=new_user_info,
-            checkin_users_z=CHECKIN_USER_CREATE,
+            checkin_users_z=CHECKIN_USER_CREATE
         )
-        res: Response[BResult5] = ix_service_port_if_checkin_user.sync_detailed(client=self.elo_client,
-                                                                                body=body)
+        res: Response[BResult5] = ix_service_port_if_checkin_user.sync_detailed(
+            client=self.elo_client,
+            body=body
+        )
         _check_response(res)
         return res.parsed.result
+
+    def delete_user(self, user_info: UserInfo) -> str:
+        """
+        Deletes the user.
+        :param user_info: UserInfo object
+        :return: Exception
+        """
+        body = BRequestIXServicePortIFDeleteUser(
+            user_info=user_info,
+            unlock_z=LOCK_Z_NO
+        )
+        res: Response[BResult19] = ix_service_port_if_delete_user.sync_detailed(
+            client=self.elo_client,
+            body=body
+        )
+        _check_response(res)
+        return res.parsed.exception
 
     def create_new_group(self, group_info: UserInfo) -> int:
         """
@@ -146,8 +177,10 @@ class UserUtil:
         :return: guid of group
         """
         body = BRequestIXServicePortIFCreateUser()
-        res: Response[BResult1485735592] = ix_service_port_if_create_user.sync_detailed(client=self.elo_client,
-                                                                                        body=body)
+        res: Response[BResult1485735592] = ix_service_port_if_create_user.sync_detailed(
+            client=self.elo_client,
+            body=body
+        )
         _check_response(res)
         new_user_info = self._init_group_info(res, group_info)
 
@@ -155,8 +188,10 @@ class UserUtil:
             user_info=new_user_info,
             checkin_users_z=CHECKIN_USER_CREATE,
         )
-        res: Response[BResult5] = ix_service_port_if_checkin_user.sync_detailed(client=self.elo_client,
-                                                                                body=body)
+        res: Response[BResult5] = ix_service_port_if_checkin_user.sync_detailed(
+            client=self.elo_client,
+            body=body
+        )
         _check_response(res)
         return res.parsed.result
 
@@ -225,10 +260,14 @@ class UserUtil:
         :param user_identifier: can either be the groupname 'Verwaltung' or an id '16' or a guid '(5330D865-5082-1CF3-B58A-75CCAEAB9B26)'
         :return: List of dataclasses of type UserName or None if one of the groups does not exist.
         """
-        body = BRequestIXServicePortIFGetUserNames(ids=list(group_identifier),
-                                                   checkout_users_z=CHECKOUT_USERS_Z_ALL_BY_ID)
-        res: Response[BResult1001617329] = ix_service_port_if_get_user_names.sync_detailed(client=self.elo_client,
-                                                                                           body=body)
+        body = BRequestIXServicePortIFGetUserNames(
+            ids=list(group_identifier),
+            checkout_users_z=CHECKOUT_USERS_Z_ALL_BY_ID
+        )
+        res: Response[BResult1001617329] = ix_service_port_if_get_user_names.sync_detailed(
+            client=self.elo_client,
+            body=body
+        )
         userNotExistLog = '[ELOIX:5023]Unknown user or key;'
         # check if this string is contained in the non parsed response
         if userNotExistLog in res.content.decode('utf-8'):
