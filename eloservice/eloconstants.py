@@ -1,6 +1,7 @@
 from enum import Enum
 
-from eloclient.models import SordZ, SordC, EditInfoZ, EditInfoC, copy_sord_z, CopySordC, LockZ, CheckoutUsersZ
+from eloclient.models import SordZ, SordC, EditInfoZ, EditInfoC, copy_sord_z, CopySordC, LockZ, CheckoutUsersZ, \
+    CheckinUsersZ
 
 
 class ElobitsetEditz(Enum):
@@ -60,6 +61,12 @@ CHECKOUT_USERS_Z_ALL_USER.bset = "2"
 
 CHECKOUT_USERS_Z_ALL_GROUPS = CheckoutUsersZ()
 CHECKOUT_USERS_Z_ALL_GROUPS.bset = "3"
+
+CHECKIN_USER_UPDATE = CheckinUsersZ()
+CHECKIN_USER_UPDATE.bset = "1" # Update an existing user
+
+CHECKIN_USER_CREATE = CheckinUsersZ()
+CHECKIN_USER_CREATE.bset = "5" # Create a new user
 
 
 elo_text_mime_types = [

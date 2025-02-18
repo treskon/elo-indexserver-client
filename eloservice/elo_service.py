@@ -3,7 +3,7 @@ from eloclient.api.ix_service_port_if import ix_service_port_if_checkin_sord
 from eloclient.api.ix_service_port_if import (ix_service_port_if_checkin_sord_path, ix_service_port_if_delete_sord)
 from eloclient.api.ix_service_port_if import (ix_service_port_if_copy_sord, ix_service_port_if_ref_sord)
 from eloclient.models import (BRequestIXServicePortIFCheckinSordPath, BRequestIXServicePortIFDeleteSord,
-                              BRequestIXServicePortIFCheckinSord, EditInfoZ, UserName)
+                              BRequestIXServicePortIFCheckinSord, EditInfoZ, UserName, UserInfo)
 from eloclient.models import (BRequestIXServicePortIFCopySord, BRequestIXServicePortIFRefSord)
 from eloclient.models import Sord
 from eloservice.eloconstants import COPY_SORD_C_MOVE, SORD_Z_EMPTY, SORD_Z_MB_NAME, EDIT_INFO_Z_MB_ALL
@@ -410,7 +410,106 @@ class EloService:
         """
         Loads base info for a user. Useful for retrieving exchanging the username to an id or guid for other methods.
         :param user_identifier: can either be the username 'Max Mustermann' or an id '16' or a guid '(5330D865-5082-1CF3-B58A-75CCAEAB9B26)'
-        :return: List of dataclasses of type UserName
+        :return: List of dataclasses of type UserName or None if one of the users does not exist.
         """
         return self.user_util.get_user_base(*user_identifier)
 
+    def get_user_details(self, user_identifier: str) -> UserInfo:
+        """
+        Loads the user details.
+        :param user_identifier:id or guid
+        :return:
+        """
+        return self.user_util.get_user_details(user_identifier)
+
+    def update_user_details(self, user_info: UserInfo) -> int:
+        """
+        Saves the user details.
+        :param user_info: UserInfo object
+        :return: userid
+        """
+        return self.user_util.update_user_details(user_info)
+
+    def get_group_base(self, *group_identifier: str) -> [UserName]:
+        """
+        Loads base info for a user
+        :param user_identifier: can either be the groupname 'Verwaltung' or an id '16' or a guid '(5330D865-5082-1CF3-B58A-75CCAEAB9B26)'
+        :return: List of dataclasses of type UserName or None if one of the groups does not exist.
+        """
+        return self.user_util.get_group_base(*group_identifier)
+
+    def get_group_details(self, group_identifier: str) -> UserInfo:
+        """
+        Loads the group details.
+        :param group_identifier:id or guid
+        :return:
+        """
+        return self.user_util.get_group_details(group_identifier)
+
+    def create_user(self, user_info: UserInfo) -> int:
+        """
+        Creates a new user
+
+        The following attributes are set
+        * name
+        * desc
+        * group_list
+        * internal_user
+        * user_props
+        * flags
+        * flags2
+
+        rights if 'flag2' is not set we automatically set it to 5 which means:
+            # FLAG2_VISIBLE_USER = 4;
+            # FLAG2_INTERACTIVE_LOGIN = 1
+
+        rights if 'flag' is not set we automatically set it to 0 which means:
+            # default allow nothing
+
+        user_props: the order defines what property is set. Important you can either set None property or a list with 7 properties! Otherwise, the server throws an ArrayIndexOutOfBoundsException.
+        prop[0] = Windows NET User
+        prop[1] = email address
+        prop[2] = "Eigenschaft 5"
+        prop[3] = "Aktion"
+        prop[4] = "Eigenschaft 1"
+        prop[5] = "Eigenschaft 2"
+        prop[6] = "Eigenschaft 3"
+        prop[7] = "Eigenschaft 4"
+
+        :param user_info: UserInfo object
+        :return: guid of user
+        """
+        return self.user_util.create_new_user(user_info)
+
+    def create_new_group(self, group_info: UserInfo) -> int:
+        """
+        Creates a new group
+
+        The following attributes are set
+        * name
+        * desc
+        * group_list
+        * user_props
+        * flags
+        * flags2
+
+        rights if 'flag2' is not set we automatically set it to 4 which means:
+           # FLAG2_VISIBLE_USER = 4;
+
+        rights if 'flag' is not set we automatically set it to 0 which means:
+            # default allow nothing
+
+        user_props: the order defines what property is set. Important you can either set None property or a list with 7 properties! Otherwise, the server throws an ArrayIndexOutOfBoundsException.
+        prop[0] = Unknown
+        prop[1] = email address
+        prop[2] = "Eigenschaft 5"
+        prop[3] = Unknown
+        prop[4] = "Eigenschaft 1"
+        prop[5] = "Eigenschaft 2"
+        prop[6] = "Eigenschaft 3"
+        prop[7] = "Eigenschaft 4"
+
+        :param group_info: GroupInfo object
+        :return: guid of group
+        """
+        return self.user_util.create_new_group(group_info)
