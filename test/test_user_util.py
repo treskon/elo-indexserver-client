@@ -8,9 +8,9 @@ from eloservice.user_util import UserUtil
 
 
 class TestService(unittest.TestCase):
-    url = 'http://node2.treskon.net:6056/ix-Archive/ix'
-    user = 'Administrator'
-    password = 'BnlZzo2jeAHAjqCw24z'
+    url = os.environ["TEST_ELO_IX_URL"]
+    user = os.environ["TEST_ELO_IX_USER"]
+    password = os.environ["TEST_ELO_IX_PASSWORD"]
 
     if __name__ == '__main__':
         unittest.main()
