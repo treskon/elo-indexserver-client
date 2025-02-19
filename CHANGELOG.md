@@ -178,3 +178,23 @@ This results in 2 API calls which reduces performance. However, in a real world 
 
 * https://github.com/treskon/elo-indexserver-client/pull/26
     * add user_util and function get_user_base
+
+
+# 0.1.30
+
+* https://github.com/treskon/elo-indexserver-client/pull/27
+* https://github.com/treskon/elo-indexserver-client/pull/28
+
+Further improvements to the user_util contains now the following functions:
+* get_user_base
+* get_user_details
+* get_group_base
+* get_group_details
+* create_user
+* create_group
+* update_user_details
+* update_group_details
+
+also two convenience functions to get add user to group and remove user from group
+* user_add_to_group
+* user_remove_from_group
