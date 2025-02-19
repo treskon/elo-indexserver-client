@@ -454,7 +454,7 @@ class EloService:
         """
         return self.user_util.update_user_details(user_info)
 
-    def create_new_user(self, user_info: UserInfo) -> int:
+    def create_user(self, user_info: UserInfo) -> int:
         """
         Creates a new user
 
@@ -487,15 +487,21 @@ class EloService:
         :param user_info: UserInfo object
         :return: guid of user
         """
-        return self.user_util.create_new_user(user_info)
+        return self.user_util.create_user(user_info)
 
-    def delete_user(self, user_info: UserInfo) -> str:
+    def delete_user(self, user_identifier: str):
         """
-        Deletes the user.
-        :param user_info: UserInfo object
-        :return: Exception
+        Deletes a user
+        :param user_identifier: id or guid
         """
-        return self.user_util.delete_user(user_info)
+        return self.user_util.delete_user(user_identifier)
+
+    def delete_group(self, group_identifier: str):
+        """
+        Deletes a group
+        :param group_identifier: id or guid
+        """
+        return self.user_util.delete_group(group_identifier)
 
     def get_group_base(self, *group_identifier: str) -> [UserName]:
         """
@@ -513,7 +519,7 @@ class EloService:
         """
         return self.user_util.get_group_details(group_identifier)
 
-    def create_new_group(self, group_info: UserInfo) -> int:
+    def create_group(self, group_info: UserInfo) -> int:
         """
         Creates a new group
 
@@ -544,4 +550,4 @@ class EloService:
         :param group_info: GroupInfo object
         :return: guid of group
         """
-        return self.user_util.create_new_group(group_info)
+        return self.user_util.create_group(group_info)

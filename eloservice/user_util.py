@@ -76,7 +76,7 @@ class UserUtil:
         _check_response(res)
         return res.parsed.result
 
-    def create_new_user(self, user_info: UserInfo) -> int:
+    def create_user(self, user_info: UserInfo) -> int:
         """
         Creates a new user
 
@@ -128,14 +128,13 @@ class UserUtil:
         _check_response(res)
         return res.parsed.result
 
-    def delete_user(self, user_info: UserInfo) -> str:
+    def delete_user(self, user_identifier: str):
         """
-        Deletes the user.
-        :param user_info: UserInfo object
-        :return: Exception
+        Deletes a user
+        :param user_identifier: id or guid
         """
         body = BRequestIXServicePortIFDeleteUser(
-            user_info=user_info,
+            id=user_identifier,
             unlock_z=LOCK_Z_NO
         )
         res: Response[BResult19] = ix_service_port_if_delete_user.sync_detailed(
@@ -143,9 +142,16 @@ class UserUtil:
             body=body
         )
         _check_response(res)
-        return res.parsed.exception
 
-    def create_new_group(self, group_info: UserInfo) -> int:
+    def delete_group(self, group_identifier: str):
+        """
+        Deletes a group
+        :param group_identifier: id or guid
+        """
+        # ELO does not differentiate between deleting a user or a group
+        self.delete_user(group_identifier)
+
+    def create_group(self, group_info: UserInfo) -> int:
         """
         Creates a new group
 
@@ -252,7 +258,6 @@ class UserUtil:
         else:
             new_group_info.flags = group_info.flags
         return new_group_info
-
 
     def get_group_base(self, *group_identifier: str) -> [UserName]:
         """

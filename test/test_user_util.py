@@ -92,7 +92,7 @@ class TestService(unittest.TestCase):
         user.name = "Test User [" + timestamp + "]"
         # we explicitly set the user_props to 7 instead of 8 to also test our validation
         user.user_props = ["NTNAME", "1", "2", "3", "4", "5", "6"]
-        new_user_guid = util.create_new_user(user)
+        new_user_guid = util.create_user(user)
         details = util.get_user_details(str(new_user_guid))
         assert details is not None
         assert details.name == user.name
@@ -101,10 +101,27 @@ class TestService(unittest.TestCase):
         elo_connection, elo_client = self._login()
         util = UserUtil(elo_client, elo_connection)
 
-        user = util.get_user_base("19")
-        delete = util.delete_user(user)
+        user = UserInfo()
+        # dd-mm-yyyy:hh:mm:ss
+        timestamp = datetime.now().strftime("%d-%m-%Y:%H:%M:%S")
+        user.name = "Test User deleteme [" + timestamp + "]"
+        # we explicitly set the user_props to 7 instead of 8 to also test our validation
+        user.user_props = ["NTNAME", "1", "2", "3", "4", "5", "6"]
+        new_user_guid = util.create_user(user)
+        util.delete_user(str(new_user_guid))
 
-        assert delete is not None
+    def test_delete_group(self):
+        elo_connection, elo_client = self._login()
+        util = UserUtil(elo_client, elo_connection)
+
+        group = UserInfo()
+        # dd-mm-yyyy:hh:mm:ss
+        timestamp = datetime.now().strftime("%d-%m-%Y:%H:%M:%S")
+        group.name = "Test Group deleteme [" + timestamp + "]"
+        # we explicitly set the user_props to 7 instead of 8 to also test our validation
+        group.user_props = ["0", "1", "2", "3", "4", "5", "6", "7"]
+        new_group_guid = util.create_group(group)
+        util.delete_group(str(new_group_guid))
 
     def test_create_new_group(self):
         elo_connection, elo_client = self._login()
@@ -116,7 +133,7 @@ class TestService(unittest.TestCase):
         group.name = "Test Group [" + timestamp + "]"
         # we explicitly set the user_props to 7 instead of 8 to also test our validation
         group.user_props = ["0", "1", "2", "3", "4", "5", "6", "7"]
-        new_group_guid = util.create_new_group(group)
+        new_group_guid = util.create_group(group)
         details = util.get_group_details(str(new_group_guid))
         assert details is not None
         assert details.name == group.name
