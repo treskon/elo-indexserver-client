@@ -551,3 +551,27 @@ class EloService:
         :return: guid of group
         """
         return self.user_util.create_group(group_info)
+
+    def user_add_to_group(self, user_identifier: str, group_identifier: str):
+        """
+        Adds a user to a group
+
+        Note: if you want to add multiple groups or do more complex operations,
+         you should use the update_user_details method manually.
+
+        :param user_identifier: id or guid
+        :param group_identifier: id or guid
+        """
+        return self.user_util.user_add_to_group(user_identifier, group_identifier)
+
+    def user_remove_from_group(self, user_identifier: str, group_identifier: str):
+        """
+        Removes a user from a group
+
+        Note: if you want to remove multiple groups or do more complex operations,
+        you should use the update_user_details method manually.
+
+        :param user_identifier: id or guid
+        :param group_identifier: id or guid
+        """
+        return self.user_util.user_remove_from_group(user_identifier, group_identifier)

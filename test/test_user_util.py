@@ -187,3 +187,30 @@ class TestService(unittest.TestCase):
         assert user is not None
         assert user.id == 19
         assert group_id in user.group_list
+
+
+    def test_user_add_and_remove_to_group(self):
+        elo_connection, elo_client = self._login()
+        util = UserUtil(elo_client, elo_connection)
+        groups = util.get_group_base("TestACUser")
+        group_id = groups[0].id
+        user = util.get_user_base("R25 REISS Christian")
+        user_id = user[0].id
+
+        # 1. Remove user from group
+        util.user_remove_from_group(user_id, group_id)
+        user = util.get_user_details(user_id)
+        assert user is not None
+        assert user.id == user_id
+        assert group_id not in user.group_list
+
+        # 2. Add user to group
+        util.user_add_to_group(user_id, group_id)
+        user = util.get_user_details(user_id)
+        assert user is not None
+        assert user.id == user_id
+        assert group_id in user.group_list
+
+        # 3. Remove user to reset Test case
+        util.user_remove_from_group(user_id, group_id)
+

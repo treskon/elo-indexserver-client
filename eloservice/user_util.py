@@ -1,11 +1,11 @@
+import logging
+
 from eloclient import Client
 from eloclient.api.ix_service_port_if import ix_service_port_if_get_user_names, ix_service_port_if_checkout_user, \
     ix_service_port_if_checkin_user, ix_service_port_if_create_user, ix_service_port_if_delete_user
-
 from eloclient.models import BRequestIXServicePortIFGetUserNames, BResult1001617329, UserName, \
     BRequestIXServicePortIFCheckoutUser, BResult1485735592, UserInfo, BRequestIXServicePortIFCheckinUser, BResult5, \
     BRequestIXServicePortIFCreateUser, BRequestIXServicePortIFDeleteUser, BResult19
-
 from eloclient.types import Response, Unset
 from eloservice.eloconstants import CHECKOUT_USERS_Z_ALL_BY_ID, LOCK_Z_NO, CHECKIN_USER_UPDATE, CHECKIN_USER_CREATE
 from eloservice.error_handler import _check_response
@@ -287,3 +287,41 @@ class UserUtil:
         :return:
         """
         return self.get_user_details(group_identifier)
+
+    def user_add_to_group(self, user_identifier: str, group_identifier: str):
+        """
+        Adds a user to a group
+        :param user_identifier: id or guid
+        :param group_identifier: id or guid
+        """
+        # we retrieve the user details in order to make sure we have the ID and not the GUID
+        user = self.get_user_details(user_identifier)
+        group = self.get_group_details(group_identifier)
+
+        if user.group_list is None or type(user.group_list) is Unset:
+            user.group_list = []
+        if group.id in user.group_list:
+            logging.warning(f"User {user.name} is already in group {group.name} skipping")
+            return
+
+        user.group_list.append(group.id)
+        self.update_user_details(user)
+
+    def user_remove_from_group(self, user_identifier: str, group_identifier: str):
+        """
+        Removes a user from a group
+        :param user_identifier: id or guid
+        :param group_identifier: id or guid
+        """
+        # we retrieve the user details in order to make sure we have the ID and not the GUID
+        user = self.get_user_details(user_identifier)
+        group = self.get_group_details(group_identifier)
+
+        if user.group_list is None or type(user.group_list) is Unset:
+            user.group_list = []
+        if group.id not in user.group_list:
+            logging.warning(f"User {user.name} is not in group {group.name} skipping")
+            return
+
+        user.group_list.remove(group.id)
+        self.update_user_details(user)
