@@ -92,10 +92,36 @@ class TestService(unittest.TestCase):
         user.name = "Test User [" + timestamp + "]"
         # we explicitly set the user_props to 7 instead of 8 to also test our validation
         user.user_props = ["NTNAME", "1", "2", "3", "4", "5", "6"]
-        new_user_guid = util.create_new_user(user)
+        new_user_guid = util.create_user(user)
         details = util.get_user_details(str(new_user_guid))
         assert details is not None
         assert details.name == user.name
+
+    def test_delete_user(self):
+        elo_connection, elo_client = self._login()
+        util = UserUtil(elo_client, elo_connection)
+
+        user = UserInfo()
+        # dd-mm-yyyy:hh:mm:ss
+        timestamp = datetime.now().strftime("%d-%m-%Y:%H:%M:%S")
+        user.name = "Test User deleteme [" + timestamp + "]"
+        # we explicitly set the user_props to 7 instead of 8 to also test our validation
+        user.user_props = ["NTNAME", "1", "2", "3", "4", "5", "6"]
+        new_user_guid = util.create_user(user)
+        util.delete_user(str(new_user_guid))
+
+    def test_delete_group(self):
+        elo_connection, elo_client = self._login()
+        util = UserUtil(elo_client, elo_connection)
+
+        group = UserInfo()
+        # dd-mm-yyyy:hh:mm:ss
+        timestamp = datetime.now().strftime("%d-%m-%Y:%H:%M:%S")
+        group.name = "Test Group deleteme [" + timestamp + "]"
+        # we explicitly set the user_props to 7 instead of 8 to also test our validation
+        group.user_props = ["0", "1", "2", "3", "4", "5", "6", "7"]
+        new_group_guid = util.create_group(group)
+        util.delete_group(str(new_group_guid))
 
     def test_create_new_group(self):
         elo_connection, elo_client = self._login()
@@ -107,7 +133,7 @@ class TestService(unittest.TestCase):
         group.name = "Test Group [" + timestamp + "]"
         # we explicitly set the user_props to 7 instead of 8 to also test our validation
         group.user_props = ["0", "1", "2", "3", "4", "5", "6", "7"]
-        new_group_guid = util.create_new_group(group)
+        new_group_guid = util.create_group(group)
         details = util.get_group_details(str(new_group_guid))
         assert details is not None
         assert details.name == group.name
@@ -161,3 +187,30 @@ class TestService(unittest.TestCase):
         assert user is not None
         assert user.id == 19
         assert group_id in user.group_list
+
+
+    def test_user_add_and_remove_to_group(self):
+        elo_connection, elo_client = self._login()
+        util = UserUtil(elo_client, elo_connection)
+        groups = util.get_group_base("TestACUser")
+        group_id = groups[0].id
+        user = util.get_user_base("R25 REISS Christian")
+        user_id = user[0].id
+
+        # 1. Remove user from group
+        util.user_remove_from_group(user_id, group_id)
+        user = util.get_user_details(user_id)
+        assert user is not None
+        assert user.id == user_id
+        assert group_id not in user.group_list
+
+        # 2. Add user to group
+        util.user_add_to_group(user_id, group_id)
+        user = util.get_user_details(user_id)
+        assert user is not None
+        assert user.id == user_id
+        assert group_id in user.group_list
+
+        # 3. Remove user to reset Test case
+        util.user_remove_from_group(user_id, group_id)
+
