@@ -198,3 +198,9 @@ Further improvements to the user_util contains now the following functions:
 also two convenience functions to get add user to group and remove user from group
 * user_add_to_group
 * user_remove_from_group
+
+
+# 0.1.31
+
+* create_user
+  * Add param password 
