@@ -82,6 +82,7 @@ class UserUtil:
 
         The following attributes are set
         * name
+        * pwd
         * desc
         * group_list
         * internal_user
@@ -204,6 +205,7 @@ class UserUtil:
     def _init_user_info(self, res, user_info):
         new_user_info: UserInfo = res.parsed.result
         new_user_info.name = user_info.name
+        new_user_info.pwd = user_info.pwd
         new_user_info.desc = user_info.desc
         new_user_info.group_list = user_info.group_list
         new_user_info.internal_user = user_info.internal_user
