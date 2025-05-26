@@ -204,3 +204,11 @@ also two convenience functions to get add user to group and remove user from gro
 
 * create_user
   * Add param password 
+
+
+# 0.1.32
+
+* https://github.com/treskon/elo-indexserver-client/pull/29
+
+* create_user
+    * Add param superior_id
