@@ -91,6 +91,7 @@ class TestService(unittest.TestCase):
         timestamp = datetime.now().strftime("%d-%m-%Y:%H:%M:%S")
         user.name = "Test WL [" + timestamp + "]"
         user.pwd = "Test_123456"
+        user.superior_id = '18'
         # we explicitly set the user_props to 7 instead of 8 to also test our validation
         user.user_props = ["NTNAME", "1", "2", "3", "4", "5", "6"]
         new_user_guid = util.create_user(user)

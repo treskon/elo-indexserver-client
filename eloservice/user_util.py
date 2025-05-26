@@ -86,6 +86,7 @@ class UserUtil:
         * desc
         * group_list
         * internal_user
+        * superior_id
         * user_props
         * flags
         * flags2
@@ -209,6 +210,7 @@ class UserUtil:
         new_user_info.desc = user_info.desc
         new_user_info.group_list = user_info.group_list
         new_user_info.internal_user = user_info.internal_user
+        new_user_info.superior_id = user_info.superior_id
 
         self._set_user_props(new_user_info, user_info)
 
