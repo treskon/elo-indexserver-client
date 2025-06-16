@@ -212,3 +212,11 @@ also two convenience functions to get add user to group and remove user from gro
 
 * create_user
     * Add param superior_id
+
+
+# 0.1.33
+
+* https://github.com/treskon/elo-indexserver-client/pull/30
+
+Further improvements to the user_util contains now the following functions:
+* get_group_members
