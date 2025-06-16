@@ -62,6 +62,14 @@ CHECKOUT_USERS_Z_ALL_USER.bset = "2"
 CHECKOUT_USERS_Z_ALL_GROUPS = CheckoutUsersZ()
 CHECKOUT_USERS_Z_ALL_GROUPS.bset = "3"
 
+CHECKOUT_USERS_Z_MEMBERS_OF_GROUP = CheckoutUsersZ()
+CHECKOUT_USERS_Z_MEMBERS_OF_GROUP.bset = "5"
+# 1 = Gruppen Details der übergebenen ID
+# 2 = Alle Benutzer von AC
+# 3 = Alle Gruppen von AC
+# 4 = Alle Gruppen und alle Benutzer von AC
+# 5 = Benutzer Details der Gruppenmitglieder (übergebene ID)
+
 CHECKIN_USER_UPDATE = CheckinUsersZ()
 CHECKIN_USER_UPDATE.bset = "1" # Update an existing user
 

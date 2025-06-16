@@ -162,6 +162,14 @@ class TestService(unittest.TestCase):
         assert group is not None
         assert group.name == "TestACUser"
 
+    def test_get_group_members(self):
+        elo_connection, elo_client = self._login()
+        util = UserUtil(elo_client, elo_connection)
+        groups = util.get_group_base("TestACUser")
+        group = util.get_group_members(groups[0].id)
+        assert group is not None
+        assert group[0].name == "K33 MUSTER Max"
+
     def test_manually_add_group(self):
         elo_connection, elo_client = self._login()
         util = UserUtil(elo_client, elo_connection)
