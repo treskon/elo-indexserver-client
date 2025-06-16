@@ -2,12 +2,15 @@ import logging
 
 from eloclient import Client
 from eloclient.api.ix_service_port_if import ix_service_port_if_get_user_names, ix_service_port_if_checkout_user, \
-    ix_service_port_if_checkin_user, ix_service_port_if_create_user, ix_service_port_if_delete_user
+    ix_service_port_if_checkin_user, ix_service_port_if_create_user, ix_service_port_if_delete_user, \
+    ix_service_port_if_checkout_users
 from eloclient.models import BRequestIXServicePortIFGetUserNames, BResult1001617329, UserName, \
     BRequestIXServicePortIFCheckoutUser, BResult1485735592, UserInfo, BRequestIXServicePortIFCheckinUser, BResult5, \
-    BRequestIXServicePortIFCreateUser, BRequestIXServicePortIFDeleteUser, BResult19
+    BRequestIXServicePortIFCreateUser, BRequestIXServicePortIFDeleteUser, BResult19, \
+    BRequestIXServicePortIFCheckoutUsers, BResult1132956238
 from eloclient.types import Response, Unset
-from eloservice.eloconstants import CHECKOUT_USERS_Z_ALL_BY_ID, LOCK_Z_NO, CHECKIN_USER_UPDATE, CHECKIN_USER_CREATE
+from eloservice.eloconstants import CHECKOUT_USERS_Z_ALL_BY_ID, LOCK_Z_NO, CHECKIN_USER_UPDATE, CHECKIN_USER_CREATE, \
+    CHECKOUT_USERS_Z_MEMBERS_OF_GROUP
 from eloservice.error_handler import _check_response
 from eloservice.login_util import EloConnection
 
@@ -291,6 +294,25 @@ class UserUtil:
         :return:
         """
         return self.get_user_details(group_identifier)
+
+    def get_group_members(self, group_identifier: str) -> list[UserInfo]:
+        """
+        Loads all members of a given group.
+
+        :param group_identifier: id or guid of the group
+        :return: List of UserInfo objects representing group members
+        """
+        body = BRequestIXServicePortIFCheckoutUsers(
+            ids=[group_identifier],
+            checkout_users_z=CHECKOUT_USERS_Z_MEMBERS_OF_GROUP,
+            lock_z=LOCK_Z_NO
+        )
+        res: Response[BResult1132956238] = ix_service_port_if_checkout_users.sync_detailed(
+            client=self.elo_client,
+            body=body
+        )
+        _check_response(res)
+        return res.parsed.result
 
     def user_add_to_group(self, user_identifier: str, group_identifier: str):
         """
