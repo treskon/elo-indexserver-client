@@ -460,9 +460,11 @@ class EloService:
 
         The following attributes are set
         * name
+        * pwd
         * desc
         * group_list
         * internal_user
+        * superior_id
         * user_props
         * flags
         * flags2
@@ -518,6 +520,14 @@ class EloService:
         :return:
         """
         return self.user_util.get_group_details(group_identifier)
+
+    def get_group_members(self, group_identifier: str) -> list[UserInfo]:
+        """
+        Loads all members of a given group.
+        :param group_identifier: id or guid of the group
+        :return: List of UserInfo objects representing group members
+        """
+        return self.user_util.get_group_members(group_identifier)
 
     def create_group(self, group_info: UserInfo) -> int:
         """
