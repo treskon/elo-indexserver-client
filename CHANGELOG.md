@@ -220,3 +220,10 @@ also two convenience functions to get add user to group and remove user from gro
 
 Further improvements to the user_util contains now the following functions:
 * get_group_members
+
+
+# 0.1.34
+
+* https://github.com/treskon/elo-indexserver-client/pull/31
+
+Add the get_group_members call in elo_service and update documentation
