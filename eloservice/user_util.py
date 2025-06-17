@@ -298,7 +298,6 @@ class UserUtil:
     def get_group_members(self, group_identifier: str) -> list[UserInfo]:
         """
         Loads all members of a given group.
-
         :param group_identifier: id or guid of the group
         :return: List of UserInfo objects representing group members
         """

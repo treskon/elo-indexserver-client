@@ -77,3 +77,9 @@ class TestService(unittest.TestCase):
         service = elo_service.EloService(self.url, self.user, self.password)
         service.add_reference("162468", "¶EIWECK_INTEGRATION_TEST¶PythonAPI¶test-references-ref")
         service.add_reference("162479", "¶EIWECK_INTEGRATION_TEST¶PythonAPI¶test-references-ref")
+
+    def test_get_group_members(self):
+        service = elo_service.EloService(self.url, self.user, self.password)
+        group = service.get_group_base("TestACUser")
+        group_member = service.get_group_members(group[0].id)
+        self.assertEqual(group_member[0].name, "K33 MUSTER Max")
