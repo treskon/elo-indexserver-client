@@ -412,7 +412,7 @@ class EloService:
         This function changes the references of a sord in ELO
 
         :param sord_id: The sordID of the sord in ELO
-        :param references: The references which should be added
+        :param reference_path: The references which should be added
         :param separator: The separator which should be used to split the path (default = "¶")
         """
         # sord = self.checkout(sord_id)
@@ -466,6 +466,7 @@ class EloService:
         * internal_user
         * superior_id
         * user_props
+        * ldap_properties
         * flags
         * flags2
 
@@ -476,7 +477,8 @@ class EloService:
         rights if 'flag' is not set we automatically set it to 0 which means:
             # default allow nothing
 
-        user_props: the order defines what property is set. Important you can either set None property or a list with 7 properties! Otherwise, the server throws an ArrayIndexOutOfBoundsException.
+        user_props: the order defines what property is set. Important you can either set None property or a list with 7
+        properties! Otherwise, the server throws an ArrayIndexOutOfBoundsException.
         prop[0] = Windows NET User
         prop[1] = email address
         prop[2] = "Eigenschaft 5"
@@ -485,6 +487,15 @@ class EloService:
         prop[5] = "Eigenschaft 2"
         prop[6] = "Eigenschaft 3"
         prop[7] = "Eigenschaft 4"
+
+        ldap_properties:
+            "givenname":
+            "extensionattribute3":
+            "extensionattribute2":
+            "sn":
+            "samaccountname":
+            "manager":
+            "department":
 
         :param user_info: UserInfo object
         :return: guid of user
