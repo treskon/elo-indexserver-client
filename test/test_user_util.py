@@ -2,7 +2,7 @@ import os
 import unittest
 from datetime import datetime
 
-from eloclient.models import UserInfo
+from eloclient.models import UserInfo, MapToString
 from eloservice.login_util import LoginUtil
 from eloservice.user_util import UserUtil
 
@@ -91,13 +91,26 @@ class TestService(unittest.TestCase):
         timestamp = datetime.now().strftime("%d-%m-%Y:%H:%M:%S")
         user.name = "Test WL [" + timestamp + "]"
         user.pwd = "Test_123456"
-        user.superior_id = '18'
+        user.superior_id = 18
         # we explicitly set the user_props to 7 instead of 8 to also test our validation
         user.user_props = ["NTNAME", "1", "2", "3", "4", "5", "6"]
+        user.ldap_properties = MapToString.from_dict({
+            "givenname":            "Test WL",
+            "extensionattribute3":  "25300",
+            "extensionattribute2":  "518827",
+            "sn":                   "[" + timestamp + "]",
+            "samaccountname":       "NTNAME",
+            "manager":              "18",
+            "department":           "WL-R25s"
+        })
         new_user_guid = util.create_user(user)
         details = util.get_user_details(str(new_user_guid))
         assert details is not None
         assert details.name == user.name
+        assert details.pwd is not None
+        assert details.superior_id == user.superior_id
+        assert details.user_props == user.user_props
+        assert details.ldap_properties == user.ldap_properties
 
     def test_delete_user(self):
         elo_connection, elo_client = self._login()

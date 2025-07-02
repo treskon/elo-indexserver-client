@@ -7,7 +7,7 @@ from eloclient.api.ix_service_port_if import ix_service_port_if_get_user_names, 
 from eloclient.models import BRequestIXServicePortIFGetUserNames, BResult1001617329, UserName, \
     BRequestIXServicePortIFCheckoutUser, BResult1485735592, UserInfo, BRequestIXServicePortIFCheckinUser, BResult5, \
     BRequestIXServicePortIFCreateUser, BRequestIXServicePortIFDeleteUser, BResult19, \
-    BRequestIXServicePortIFCheckoutUsers, BResult1132956238
+    BRequestIXServicePortIFCheckoutUsers, BResult1132956238, MapToString
 from eloclient.types import Response, Unset
 from eloservice.eloconstants import CHECKOUT_USERS_Z_ALL_BY_ID, LOCK_Z_NO, CHECKIN_USER_UPDATE, CHECKIN_USER_CREATE, \
     CHECKOUT_USERS_Z_MEMBERS_OF_GROUP
@@ -91,6 +91,7 @@ class UserUtil:
         * internal_user
         * superior_id
         * user_props
+        * ldap_properties
         * flags
         * flags2
 
@@ -101,7 +102,8 @@ class UserUtil:
         rights if 'flag' is not set we automatically set it to 0 which means:
             # default allow nothing
 
-        user_props: the order defines what property is set. Important you can either set None property or a list with 7 properties! Otherwise, the server throws an ArrayIndexOutOfBoundsException.
+        user_props: the order defines what property is set. Important you can either set None property or a list with 7
+        properties! Otherwise, the server throws an ArrayIndexOutOfBoundsException.
         prop[0] = Windows NET User
         prop[1] = email address
         prop[2] = "Eigenschaft 5"
@@ -110,6 +112,15 @@ class UserUtil:
         prop[5] = "Eigenschaft 2"
         prop[6] = "Eigenschaft 3"
         prop[7] = "Eigenschaft 4"
+
+        ldap_properties:
+            "givenname":
+            "extensionattribute3":
+            "extensionattribute2":
+            "sn":
+            "samaccountname":
+            "manager":
+            "department":
 
         :param user_info: UserInfo object
         :return: guid of user
@@ -216,6 +227,7 @@ class UserUtil:
         new_user_info.superior_id = user_info.superior_id
 
         self._set_user_props(new_user_info, user_info)
+        self._set_ldap_props(new_user_info, user_info)
 
         new_user_info.type = 1  # 1 = user, 0 = group
         if user_info.flags2 is None or type(user_info.flags2) is Unset:
@@ -242,6 +254,14 @@ class UserUtil:
                 for i in range(missing):
                     user_info.user_props.append("")
         new_user_info.user_props = user_info.user_props
+
+    def _set_ldap_props(self, new_user_info, user_info):
+        if (
+            user_info.ldap_properties is not Unset
+            and isinstance(user_info.ldap_properties, MapToString)
+        ):
+            for key in user_info.ldap_properties.additional_keys:
+                new_user_info.ldap_properties[key] = user_info.ldap_properties[key]
 
     def _init_group_info(self, res, group_info):
         new_group_info: UserInfo = res.parsed.result
