@@ -227,3 +227,11 @@ Further improvements to the user_util contains now the following functions:
 * https://github.com/treskon/elo-indexserver-client/pull/31
 
 Add the get_group_members call in elo_service and update documentation
+
+
+# 0.1.35
+
+* https://github.com/treskon/elo-indexserver-client/pull/32
+
+* create_user
+    * Add param ldap_properties
