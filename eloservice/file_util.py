@@ -58,7 +58,7 @@ class FileUtil:
         return self._checkin_doc(sord, filecontent=file_content,
                                  kurzbezeichnung=kurzbezeichnung, filename=filename_elo,
                                  filename_objkey_id=filename_objkey_id,
-                                 x_date_iso=filedate)
+                                 x_date_iso=filedate, keep_obj_keys=True)
 
     def upload_file(self, file_path: str, parent_id: str, filemask_id="0", filename="",
                     filename_objkey_id=FILENAME_OBJKEY_ID_DEFAULT,
@@ -173,9 +173,11 @@ class FileUtil:
 
     def _checkin_doc(self, document_sord, filecontent, kurzbezeichnung, filename,
                      filename_objkey_id=FILENAME_OBJKEY_ID_DEFAULT,
-                     x_date_iso=datetime.now().isoformat()) -> str:
+                     x_date_iso=datetime.now().isoformat(), keep_obj_keys=False) -> str:
         """
 
+        :param keep_obj_keys: keep the index fields (obj_keys) of document_sord and only set ELO_FNAME; used for new
+        versions of an existing document, whose index fields would otherwise be cleared by the checkin with SordZ MB_ALL
         :param document_sord:
         :param filecontent:
         :param kurzbezeichnung:
@@ -187,8 +189,12 @@ class FileUtil:
         """
         document_sord.name = kurzbezeichnung
         document_sord.x_date_iso = x_date_iso
-        document_sord.obj_keys = [
-            ObjKey(data=[filename], name="ELO_FNAME", id=filename_objkey_id, obj_id=document_sord.id)]
+        existing_keys = document_sord.obj_keys if keep_obj_keys and isinstance(document_sord.obj_keys, list) else []
+        existing_fname = next((key for key in existing_keys if key.name == "ELO_FNAME"), None)
+        if existing_fname is not None and isinstance(existing_fname.id, int):
+            filename_objkey_id = existing_fname.id
+        filename_key = ObjKey(data=[filename], name="ELO_FNAME", id=filename_objkey_id, obj_id=document_sord.id)
+        document_sord.obj_keys = [key for key in existing_keys if key.name != "ELO_FNAME"] + [filename_key]
         mimetype = mimetypes.guess_type(filename)[0]
         # if mimetype is jpeg then use jpg as extension bc elo
         if "jpeg" in mimetype:

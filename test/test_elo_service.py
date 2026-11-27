@@ -83,3 +83,26 @@ class TestService(unittest.TestCase):
         group = service.get_group_base("TestACUser")
         group_member = service.get_group_members(group[0].id)
         self.assertEqual(group_member[0].name, "K33 MUSTER Max")
+
+
+class TestUpdateFileKeepsIndexFields(unittest.TestCase):
+    """update_file adds a version without clearing the document's index fields. Self-contained: creates a folder,
+    uploads a document with mask E-Mail (part of every ELO repository), and removes the folder at the end."""
+
+    def test_update_file_keeps_index_fields(self):
+        import time
+        service = elo_service.EloService(url=os.environ["TEST_ELO_IX_URL"], user=os.environ["TEST_ELO_IX_USER"],
+                             password=os.environ["TEST_ELO_IX_PASSWORD"])
+        folder = service.create_folder(f"¶update-file-test-{int(time.time() * 1000)}")
+        try:
+            sord_id = service.upload_file(TEST_ROOT_DIR + "/resources/testFile.png", folder, filename="index-fields")
+            service.overwrite_mask_fields(sord_id, "E-Mail", {"ELOOUTL1": "first value", "ELOOUTL2": "second value"})
+            service.update_file(sord_id, TEST_ROOT_DIR + "/resources/mona.jpeg", filename="index-fields")
+            fields = service.get_mask_fields(sord_id)
+            sord = service.checkout(sord_id)
+            self.assertEqual("E-Mail", sord.mask_name)
+            self.assertEqual("first value", fields["ELOOUTL1"])
+            self.assertEqual("second value", fields["ELOOUTL2"])
+            self.assertEqual(["mona.jpeg"], next(key.data for key in sord.obj_keys if key.name == "ELO_FNAME"))
+        finally:
+            service.remove(folder)
