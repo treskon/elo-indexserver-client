@@ -40,9 +40,17 @@ def _ensure_test_aspect(service) -> int:
     existing = next((a for a in service.get_aspects() if a.name == ASPECT_NAME), None)
     if existing is not None:
         return existing.id
-    lines = [{"key": key, "type": line_type, "displayName": key} for key, line_type in LINES.items()]
-    aspect = util._call("createAspect", {"name": ASPECT_NAME, "lines": lines})
-    return util._call("checkinAspect", {"aspect": aspect, "aspectZ": ASPECT_Z_MB_ALL, "unlockZ": LOCK_Z_NO})
+    errors = []
+    # AspectLineC.TYPE_* (DocMaskLineC.TYPE_* + 100); some Indexserver versions only accept the DocMaskLineC types
+    for offset in (0, -100):
+        lines = [{"key": key, "type": line_type + offset, "displayName": key} for key, line_type in LINES.items()]
+        try:
+            aspect = util._call("createAspect", {"name": ASPECT_NAME, "lines": lines})
+            return util._call("checkinAspect", {"aspect": aspect, "aspectZ": ASPECT_Z_MB_ALL, "unlockZ": LOCK_Z_NO})
+        except ValueError as e:
+            errors.append(str(e))
+    version = util._call("getConstants", {}).get("STREAM_VERSION")
+    raise ValueError(f"Could not create test aspect on Indexserver {version}: {errors}")
 
 
 def _ensure_test_mask(service, aspect_id: int) -> str:
@@ -96,7 +104,7 @@ class TestAspects(unittest.TestCase):
         for identifier in [ASPECT_NAME, str(self.aspect_id)]:
             aspect = self.service.get_aspect(identifier)
             self.assertEqual(ASPECT_NAME, aspect.name)
-            self.assertEqual(LINES, {key: line.type for key, line in aspect.lines.items()})
+            self.assertEqual(set(LINES), set(aspect.lines))
 
     def test_get_mask_aspect_assocs(self):
         assocs = self.service.get_mask_aspect_assocs(MASK_NAME)

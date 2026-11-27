@@ -20,7 +20,8 @@ KNOWN_MIMETYPES_TO_ELO_MIMETYPES = {
     "image/jpeg": 260,
     "image/jpg": 260,
     "image/png": 273,
-    "application/octet-stream": 245 # this is the default 'document' which basically means 'unknown'. It's not really octet-stream, but it's the closest we can get.
+    "application/octet-stream": 254  # SordC.LBT_DOCUMENT: the generic 'document' type, which basically means 'unknown'.
+    # (Types below 254 are folder types, see https://github.com/treskon/elo-indexserver-client/issues/33)
     # obviously not complete, if you need more add them. You can find the ELO mimetypes when you checkout a sord and look at the set param.
     # I could not find a list of all mimetypes in the docs.
 }
