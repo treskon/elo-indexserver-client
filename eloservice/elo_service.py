@@ -35,7 +35,8 @@ class EloService:
     def __init__(self, url: str, user: str, password: str,
                  cache_enable: bool = True, cache_ttl: int = 600, cache_maxsize: int = 128):
         """
-        Known issue: Due to encoding issues the user and password should not contain special characters.
+        User and password may contain special characters (e.g. ä, ö, ü, ß, §, €), see
+        :class:`eloservice.login_util.LoginUtil`.
         :param url:  The URL to the ELO IX server rest endpoint e.g. http://eloserver.com:6056/ix-Archive/rest/
         :param user:  The user for the ELO IX server e.g. Administrator
         :param password:  The password for the ELO IX server user e.g. secret
