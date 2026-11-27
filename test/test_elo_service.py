@@ -106,3 +106,28 @@ class TestUpdateFileKeepsIndexFields(unittest.TestCase):
             self.assertEqual(["mona.jpeg"], next(key.data for key in sord.obj_keys if key.name == "ELO_FNAME"))
         finally:
             service.remove(folder)
+
+
+class TestUploadUnknownFileType(unittest.TestCase):
+    """upload_file works for files whose mimetype can't be guessed (falls back to application/octet-stream).
+    https://github.com/treskon/elo-indexserver-client/issues/33"""
+
+    def test_upload_file_with_unknown_extension(self):
+        import tempfile
+        import time
+        service = elo_service.EloService(url=os.environ["TEST_ELO_IX_URL"], user=os.environ["TEST_ELO_IX_USER"],
+                                         password=os.environ["TEST_ELO_IX_PASSWORD"])
+        folder = service.create_folder(f"¶unknown-mimetype-test-{int(time.time() * 1000)}")
+        try:
+            with tempfile.TemporaryDirectory() as tmp:
+                file_path = os.path.join(tmp, "data.unknownextension")
+                with open(file_path, "wb") as f:
+                    f.write(b"some content of an unknown file type")
+                sord_id = service.upload_file(file_path, folder, filename="unknown-mimetype")
+                self.assertIsNotNone(sord_id)
+                download_path = os.path.join(tmp, "downloaded")
+                service.download_file(sord_id, download_path)
+                with open(download_path, "rb") as f:
+                    self.assertEqual(b"some content of an unknown file type", f.read())
+        finally:
+            service.remove(folder)
