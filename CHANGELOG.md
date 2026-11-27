@@ -241,3 +241,18 @@ Add the get_group_members call in elo_service and update documentation
 * update_file keeps the index fields (obj_keys) of the document and only sets ELO_FNAME (reusing the id of the
   mask's ELO_FNAME field). Before, the new version was checked in with only ELO_FNAME, which cleared every other
   index field (seen on ELO 25.00.030).
+
+# 0.2.0
+
+* https://github.com/treskon/elo-indexserver-client/pull/35
+
+New: support for keywording aspects (ELO 23+)
+* get_aspects, get_aspect, get_mask_aspect_assocs
+* get_aspect_fields, write_aspect_fields
+* search / exists: new parameter search_aspect_fields
+
+Fixes:
+* Login with special characters in user name or password (e.g. ä, ö, ü, ß, §, €). These credentials are sent via
+  IXServicePortIF/login and the session ticket is used as Bearer token; ASCII credentials keep using Basic auth.
+* upload_file / update_file: unknown file types fall back to application/octet-stream and the generic document
+  type 254 (https://github.com/treskon/elo-indexserver-client/issues/33)
