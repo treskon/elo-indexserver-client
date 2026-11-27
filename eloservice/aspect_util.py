@@ -85,8 +85,13 @@ CARDINALITIES = ["OPTIONAL", "MANDATORY", "MANDATORY_MANY", "OPTIONAL_MANY"]
 # IndexSearchOperator enum, in the order of its ordinal values
 INDEX_SEARCH_OPERATORS = ["GREATER_THAN", "GREATER", "LOWER_THAN", "LOWER", "EQUALS", "LIKE", "ISNULL", "ISEMPTY"]
 
+# formats of IndexValue.stringValue (verified on ELO 25): yyyyMMdd and yyyyMMddHHmmssSSS
 ISO_DATE_ONLY_FORMAT = "%Y%m%d"
-ISO_DATE_TIME_FORMAT = "%Y%m%d%H%M%S"
+
+
+def format_iso_date_time(value: datetime) -> str:
+    """Formats a datetime as ELO aspect ISO date time: yyyyMMddHHmmssSSS"""
+    return value.strftime("%Y%m%d%H%M%S") + f"{value.microsecond // 1000:03d}"
 
 ASPECT_SEARCH_KEY_SEPARATOR = "¶"
 
@@ -164,6 +169,9 @@ def _cardinality_name(value) -> str:
 def _parse_iso(value: str, date_only: bool) -> Union[date, datetime, str]:
     if not value:
         return value
+    if len(value) == 17 and value.isdigit():  # yyyyMMddHHmmssSSS
+        parsed = datetime.strptime(value[:14], "%Y%m%d%H%M%S").replace(microsecond=int(value[14:]) * 1000)
+        return parsed.date() if date_only else parsed
     formats = ["%Y%m%d", "%Y-%m-%d"] if date_only else []
     formats += ["%Y%m%d%H%M%S", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%d %H:%M:%S", "%Y%m%d%H%M", "%Y-%m-%dT%H:%M:%S.%f"]
     if not date_only:
@@ -231,9 +239,9 @@ def python_to_index_value(value: Any, line_type: int) -> dict:
         return {"type": value_type, "stringValue": str(value)}
     if value_type == INDEX_VALUE_TYPE_ISO_DATE_TIME:
         if isinstance(value, datetime):
-            value = value.strftime(ISO_DATE_TIME_FORMAT)
+            value = format_iso_date_time(value)
         elif isinstance(value, date):
-            value = datetime(value.year, value.month, value.day).strftime(ISO_DATE_TIME_FORMAT)
+            value = format_iso_date_time(datetime(value.year, value.month, value.day))
         return {"type": value_type, "stringValue": str(value)}
     return {"type": value_type, "stringValue": str(value)}
 
@@ -249,7 +257,7 @@ def _search_condition(value: Any, operator: str = "EQUALS") -> dict:
     if isinstance(value, float):
         return {"doubleValue": {"operator": operator, "operand": value}}
     if isinstance(value, datetime):
-        value = value.strftime(ISO_DATE_TIME_FORMAT)
+        value = format_iso_date_time(value)
     elif isinstance(value, date):
         value = value.strftime(ISO_DATE_ONLY_FORMAT)
     return {"stringValue": {"operator": operator, "operand": "" if value is None else str(value)}}
@@ -261,7 +269,9 @@ def build_aspect_search(search_aspect_fields: dict) -> dict:
 
     :param search_aspect_fields: key -> search value. The key has the form
         ``"<association name>¶<aspect name, id or guid>¶<line key>"``, an empty part is a wildcard
-        (e.g. ``"¶ADDRESS¶CITY"`` searches the line CITY of the aspect ADDRESS in all associations). Values:
+        (e.g. ``"¶ADDRESS¶CITY"`` searches the line CITY of the aspect ADDRESS in all associations).
+        Note: when combining several conditions, specify the association name, otherwise the Indexserver
+        (ELO 25) finds nothing. Values:
 
         * a single value (str, int, float, Decimal, date, datetime): equals
         * a tuple ``(operator, value)``, operator is one of GREATER_THAN (>), GREATER (>=), LOWER_THAN (<),

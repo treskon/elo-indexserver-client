@@ -133,7 +133,7 @@ class TestAspectConversion(unittest.TestCase):
                          python_to_index_value(Decimal("12.30"), aspect_util.ASPECT_LINE_TYPE_FIXED_POINT_NUMBER))
         self.assertEqual({"type": 4, "stringValue": "20240131"},
                          python_to_index_value(date(2024, 1, 31), aspect_util.ASPECT_LINE_TYPE_ISO_DATE_ONLY))
-        self.assertEqual({"type": 5, "stringValue": "20240131134510"},
+        self.assertEqual({"type": 5, "stringValue": "20240131134510000"},
                          python_to_index_value(datetime(2024, 1, 31, 13, 45, 10),
                                                aspect_util.ASPECT_LINE_TYPE_ISO_DATE_TIME))
         self.assertEqual({"type": 8, "stringValue": "(GUID)"},
@@ -146,6 +146,8 @@ class TestAspectConversion(unittest.TestCase):
         self.assertEqual(Decimal("12.30"), index_value_to_python({"type": 10, "stringValue": "12.30"}))
         self.assertEqual(date(2024, 1, 31), index_value_to_python({"type": 4, "stringValue": "20240131"}))
         self.assertEqual(date(2024, 1, 31), index_value_to_python({"type": 4, "stringValue": "2024-01-31"}))
+        self.assertEqual(datetime(2024, 1, 31, 13, 45, 10, 123000),
+                         index_value_to_python({"type": 5, "stringValue": "20240131134510123"}))
         self.assertEqual(datetime(2024, 1, 31, 13, 45, 10),
                          index_value_to_python({"type": 5, "stringValue": "20240131134510"}))
         self.assertEqual(datetime(2024, 1, 31, 13, 45, 10),

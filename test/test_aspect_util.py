@@ -40,17 +40,11 @@ def _ensure_test_aspect(service) -> int:
     existing = next((a for a in service.get_aspects() if a.name == ASPECT_NAME), None)
     if existing is not None:
         return existing.id
-    errors = []
-    # AspectLineC.TYPE_* (DocMaskLineC.TYPE_* + 100); some Indexserver versions only accept the DocMaskLineC types
-    for offset in (0, -100):
-        lines = [{"key": key, "type": line_type + offset, "displayName": key} for key, line_type in LINES.items()]
-        try:
-            aspect = util._call("createAspect", {"name": ASPECT_NAME, "lines": lines})
-            return util._call("checkinAspect", {"aspect": aspect, "aspectZ": ASPECT_Z_MB_ALL, "unlockZ": LOCK_Z_NO})
-        except ValueError as e:
-            errors.append(str(e))
-    version = util._call("getConstants", {}).get("STREAM_VERSION")
-    raise ValueError(f"Could not create test aspect on Indexserver {version}: {errors}")
+    lines = [{"key": key, "type": line_type, "displayName": key, "nameTranslationKey": "",
+              "commentTranslationKey": "", "comment": ""} for key, line_type in LINES.items()]
+    aspect = util._call("createAspect", {"name": ASPECT_NAME, "lines": lines})
+    aspect["translationKey"] = aspect.get("translationKey") or ""
+    return util._call("checkinAspect", {"aspect": aspect, "aspectZ": ASPECT_Z_MB_ALL, "unlockZ": LOCK_Z_NO})
 
 
 def _ensure_test_mask(service, aspect_id: int) -> str:
@@ -84,6 +78,9 @@ class TestAspects(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.service = _service()
+        version = cls.service.aspect_util._call("getConstants", {}).get("STREAM_VERSION", "")
+        if int(version.split(".")[0] or 0) < 23:
+            raise unittest.SkipTest(f"Indexserver {version} does not support keywording aspects (ELO 23+)")
         cls.aspect_id = _ensure_test_aspect(cls.service)
         cls.mask_id = _ensure_test_mask(cls.service, cls.aspect_id)
         cls.folder = cls.service.create_folder(f"¶aspect-test-{int(time.time() * 1000)}")
@@ -118,7 +115,7 @@ class TestAspects(unittest.TestCase):
         sord_id = self._new_sord()
         objects = [
             {"TXT": "Grüß Gott", "NUM": 42, "DBL": 3.5, "DAY": date(2024, 1, 31),
-             "TS": datetime(2024, 1, 31, 13, 45, 10)},
+             "TS": datetime(2024, 1, 31, 13, 45, 10, 250000)},
             {"TXT": "second", "NUM": -7},
         ]
         self.service.write_aspect_fields(sord_id, {ASSOC_MANY: objects, ASSOC_SINGLE: {"TXT": "single"}})
@@ -154,16 +151,19 @@ class TestAspects(unittest.TestCase):
 
         found = self.service.search(search_aspect_fields={f"{ASSOC_MANY}¶{ASPECT_NAME}¶TXT": marker})
         self.assertEqual({sord_id, other_id}, set(found))
-        # wildcard for the association
-        found = self.service.search(search_aspect_fields={f"¶{ASPECT_NAME}¶TXT": marker,
-                                                          f"¶{ASPECT_NAME}¶NUM": ("GREATER", 1000)})
+        # wildcard for the association and the aspect
+        found = self.service.search(search_aspect_fields={"¶¶TXT": marker})
+        self.assertEqual({sord_id, other_id}, set(found))
+        # several conditions with operator
+        found = self.service.search(search_aspect_fields={f"{ASSOC_MANY}¶{ASPECT_NAME}¶TXT": marker,
+                                                          f"{ASSOC_MANY}¶{ASPECT_NAME}¶NUM": ("GREATER", 1000)})
         self.assertEqual([sord_id], found)
         # or
-        found = self.service.search(search_aspect_fields={f"¶{ASPECT_NAME}¶TXT": marker,
-                                                          f"¶{ASPECT_NAME}¶NUM": [1001, 5]})
+        found = self.service.search(search_aspect_fields={f"{ASSOC_MANY}¶{ASPECT_NAME}¶TXT": marker,
+                                                          f"{ASSOC_MANY}¶{ASPECT_NAME}¶NUM": [1001, 5]})
         self.assertEqual({sord_id, other_id}, set(found))
-        self.assertTrue(self.service.exists(search_aspect_fields={f"¶{ASPECT_NAME}¶NUM": 1001,
-                                                                  f"¶{ASPECT_NAME}¶TXT": marker}))
+        self.assertTrue(self.service.exists(search_aspect_fields={f"{ASSOC_MANY}¶{ASPECT_NAME}¶NUM": 1001,
+                                                                  f"{ASSOC_MANY}¶{ASPECT_NAME}¶TXT": marker}))
         self.assertFalse(self.service.exists(search_aspect_fields={f"¶{ASPECT_NAME}¶TXT": marker + "-none"}))
 
 

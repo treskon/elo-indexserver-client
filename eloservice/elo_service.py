@@ -291,13 +291,15 @@ class EloService:
             form ``"<association name>¶<aspect name, id or guid>¶<line key>"``, an empty part is a wildcard. The value
             is either a single value (equals), a tuple ``(operator, value)`` with operator GREATER_THAN (>),
             GREATER (>=), LOWER_THAN (<), LOWER (<=), EQUALS, LIKE, ISNULL or ISEMPTY, or a list of those (any of
-            them must match). Example::
+            them must match). When combining several conditions, specify the association name (otherwise the
+            Indexserver finds nothing). Example::
 
+                search(search_aspect_fields={"¶ADDRESS¶CITY": "Graz"})  # in all associations
                 search(search_aspect_fields={
                     "INVOICE_ADDRESS¶ADDRESS¶CITY": "Graz",
-                    "¶ADDRESS¶ZIP": ["8010", "8020"],
-                    "¶POSITION¶AMOUNT": ("GREATER", 100),
+                    "INVOICE_ADDRESS¶ADDRESS¶ZIP": ["8010", "8020"],
                 })
+                search(search_aspect_fields={"POSITIONS¶POSITION¶AMOUNT": ("GREATER", 100)})
 
         :return: The sordIDs of the found objects
         """
