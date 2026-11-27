@@ -5,6 +5,7 @@ from eloclient.api.ix_service_port_if import ix_service_port_if_find_first_sords
 from eloclient.models import FindInfo, FindByIndex, ObjKey, FindOptions, BRequestIXServicePortIFFindFirstSords, SordZ, \
     SordC
 from eloclient.types import Unset
+from eloservice.aspect_util import build_aspect_search
 from eloservice.login_util import EloConnection
 
 
@@ -17,13 +18,15 @@ class SearchUtil:
         self.elo_client = elo_client
 
     def search(self, search_mask_fields: dict = None, search_mask_id: str = None,
-               max_results: int = 100
+               max_results: int = 100, search_aspect_fields: dict = None
                ) -> [str]:
         """
         This function searches for objects that match all the given metadata
         :param search_mask_fields: The metadata that should be searched for (default = None)
         :param search_mask_id: The maskID of the mask that should be searched (default = None)
         :param max_results:  The maximum number of results that should be returned (default = 100)
+        :param search_aspect_fields: Aspect values that should be searched for (default = None), see
+            :func:`eloservice.aspect_util.build_aspect_search`
         :return: The sordIDs of the found objects
         """
         find_info = FindInfo()
@@ -38,6 +41,10 @@ class SearchUtil:
                 obj_key.data = [value]
                 obj_keys.append(obj_key)
             find_by_index.obj_keys = obj_keys
+
+        if search_aspect_fields:
+            # set as raw JSON: the generated models can't serialize the IndexSearchOperator enum
+            find_by_index.additional_properties["aspects"] = build_aspect_search(search_aspect_fields)
 
         if search_mask_id is not None:
             find_by_index.mask_id = search_mask_id

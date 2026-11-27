@@ -7,6 +7,11 @@ import unittest
 
 import httpx
 
+from datetime import date, datetime
+from decimal import Decimal
+
+from eloservice import aspect_util
+from eloservice.aspect_util import build_aspect_search, index_value_to_python, python_to_index_value
 from eloservice.file_util import _guess_mimetype
 from eloservice.login_util import EloTicketAuth, _basic_auth_possible, prepare_elo_client, EloConnection
 
@@ -113,6 +118,74 @@ class TestLogin(unittest.TestCase):
             client.post(self.url + "IXServicePortIF/getServerInfo", json={})
         self.assertEqual(2, len(server.logins))
         self.assertEqual(["Bearer TICKET2"], server.authorizations)
+
+
+
+class TestAspectConversion(unittest.TestCase):
+
+    def test_python_to_index_value(self):
+        self.assertEqual({"type": 3, "stringValue": "Grüß Gott"},
+                         python_to_index_value("Grüß Gott", aspect_util.ASPECT_LINE_TYPE_TEXT))
+        self.assertEqual({"type": 1, "intValue": 42}, python_to_index_value(42, aspect_util.ASPECT_LINE_TYPE_INTEGER))
+        self.assertEqual({"type": 2, "doubleValue": 3.5},
+                         python_to_index_value(Decimal("3.5"), aspect_util.ASPECT_LINE_TYPE_DOUBLE))
+        self.assertEqual({"type": 10, "stringValue": "12.30"},
+                         python_to_index_value(Decimal("12.30"), aspect_util.ASPECT_LINE_TYPE_FIXED_POINT_NUMBER))
+        self.assertEqual({"type": 4, "stringValue": "20240131"},
+                         python_to_index_value(date(2024, 1, 31), aspect_util.ASPECT_LINE_TYPE_ISO_DATE_ONLY))
+        self.assertEqual({"type": 5, "stringValue": "20240131134510"},
+                         python_to_index_value(datetime(2024, 1, 31, 13, 45, 10),
+                                               aspect_util.ASPECT_LINE_TYPE_ISO_DATE_TIME))
+        self.assertEqual({"type": 8, "stringValue": "(GUID)"},
+                         python_to_index_value("(GUID)", aspect_util.ASPECT_LINE_TYPE_USER))
+
+    def test_index_value_to_python(self):
+        self.assertEqual("text", index_value_to_python({"type": 3, "stringValue": "text"}))
+        self.assertEqual(42, index_value_to_python({"type": 1, "intValue": 42}))
+        self.assertEqual(3.5, index_value_to_python({"type": 2, "doubleValue": 3.5}))
+        self.assertEqual(Decimal("12.30"), index_value_to_python({"type": 10, "stringValue": "12.30"}))
+        self.assertEqual(date(2024, 1, 31), index_value_to_python({"type": 4, "stringValue": "20240131"}))
+        self.assertEqual(date(2024, 1, 31), index_value_to_python({"type": 4, "stringValue": "2024-01-31"}))
+        self.assertEqual(datetime(2024, 1, 31, 13, 45, 10),
+                         index_value_to_python({"type": 5, "stringValue": "20240131134510"}))
+        self.assertEqual(datetime(2024, 1, 31, 13, 45, 10),
+                         index_value_to_python({"type": 5, "stringValue": "2024-01-31T13:45:10"}))
+        self.assertEqual("not a date", index_value_to_python({"type": 4, "stringValue": "not a date"}))
+        self.assertIsNone(index_value_to_python(None))
+
+    def test_cardinality_name(self):
+        self.assertEqual("OPTIONAL_MANY", aspect_util._cardinality_name("OPTIONAL_MANY"))
+        self.assertEqual("OPTIONAL_MANY", aspect_util._cardinality_name(3))
+        self.assertEqual("OPTIONAL", aspect_util._cardinality_name(0))
+
+    def test_build_aspect_search(self):
+        self.assertEqual({
+            "A¶ADDRESS¶CITY": {"condition": {"stringValue": {"operator": "EQUALS", "operand": "Graz"}}},
+            "¶ADDRESS¶ZIP": {"disjunctConditions": [{"stringValue": {"operator": "EQUALS", "operand": "8010"}},
+                                                    {"stringValue": {"operator": "EQUALS", "operand": "8020"}}]},
+            "¶POS¶AMOUNT": {"condition": {"intValue": {"operator": "GREATER", "operand": 100}}},
+            "¶POS¶PRICE": {"condition": {"doubleValue": {"operator": "LOWER_THAN", "operand": 9.5}}},
+            "¶POS¶DAY": {"condition": {"stringValue": {"operator": "EQUALS", "operand": "20240131"}}},
+        }, build_aspect_search({
+            "A¶ADDRESS¶CITY": "Graz",
+            "¶ADDRESS¶ZIP": ["8010", "8020"],
+            "¶POS¶AMOUNT": ("GREATER", 100),
+            "¶POS¶PRICE": ("LOWER_THAN", 9.5),
+            "¶POS¶DAY": date(2024, 1, 31),
+        }))
+
+    def test_build_aspect_search_invalid(self):
+        with self.assertRaises(ValueError):
+            build_aspect_search({"ADDRESS¶CITY": "Graz"})
+        with self.assertRaises(ValueError):
+            build_aspect_search({"¶ADDRESS¶CITY": ("NOT_AN_OPERATOR", "Graz")})
+
+    def test_search_body_contains_aspects(self):
+        from eloclient.models import FindByIndex
+        find_by_index = FindByIndex()
+        find_by_index.additional_properties["aspects"] = build_aspect_search({"¶A¶B": 1})
+        self.assertEqual({"¶A¶B": {"condition": {"intValue": {"operator": "EQUALS", "operand": 1}}}},
+                         find_by_index.to_dict()["aspects"])
 
 
 if __name__ == '__main__':

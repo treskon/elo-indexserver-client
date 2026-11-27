@@ -7,6 +7,7 @@ from eloclient.models import (BRequestIXServicePortIFCheckinSordPath, BRequestIX
 from eloclient.models import (BRequestIXServicePortIFCopySord, BRequestIXServicePortIFRefSord)
 from eloclient.models import Sord
 from eloservice.eloconstants import COPY_SORD_C_MOVE, SORD_Z_EMPTY, SORD_Z_MB_NAME, EDIT_INFO_Z_MB_ALL
+from eloservice.aspect_util import AspectUtil, AspectInfo, Aspect, AspectAssoc
 from eloservice.error_handler import _check_response
 from eloservice.file_util import FileUtil, FILENAME_OBJKEY_ID_DEFAULT
 from eloservice.login_util import LoginUtil
@@ -28,6 +29,7 @@ class EloService:
     file_util = None
     search_util = None
     user_util = None
+    aspect_util = None
     cache_enable = None
     cache_ttl = None
     cache_maxsize = None
@@ -43,6 +45,7 @@ class EloService:
         :param cache_enable: If the caching should be enabled (default = True)
                              Currently, the caching is only used for:
                                * function overwrite_mask_fields (cache of existing masks and mask details)
+                               * aspect functions (cache of aspect definitions and the aspect associations of masks)
         :param cache_ttl:   The time to live of the cache in seconds (default = 600, so 10 minutes) only used if
                             cache_enable is True
         :param cache_maxsize: The maximum size of the cache (default = 128) only used if cache_enable is True
@@ -64,6 +67,10 @@ class EloService:
         self.file_util = FileUtil(self.elo_client, self.elo_connection)
         self.search_util = SearchUtil(self.elo_client, self.elo_connection)
         self.user_util = UserUtil(self.elo_client, self.elo_connection)
+        self.aspect_util = AspectUtil(
+            self.elo_client, self.elo_connection, cache_enable=self.cache_enable,
+            cache_ttl=self.cache_ttl, cache_maxsize=self.cache_maxsize
+        )
 
     def create_folder(self, path: str, separator="¶") -> str:
         """
@@ -272,27 +279,110 @@ class EloService:
         """
         self.file_util.download_file(sord_id, file_path)
 
-    def search(self, search_mask_fields: dict = None, search_mask_id: str = None, max_results: int = 100) -> [str]:
+    def search(self, search_mask_fields: dict = None, search_mask_id: str = None, max_results: int = 100,
+               search_aspect_fields: dict = None) -> [str]:
         """
         This function searches for objects that match all the given metadata
 
         :param search_mask_fields: The metadata that should be searched for (default = None)
         :param search_mask_id: The maskID of the mask that should be searched (default = None)
         :param max_results:  The maximum number of results that should be returned (default = 100)
+        :param search_aspect_fields: The aspect values that should be searched for (default = None). The key has the
+            form ``"<association name>¶<aspect name, id or guid>¶<line key>"``, an empty part is a wildcard. The value
+            is either a single value (equals), a tuple ``(operator, value)`` with operator GREATER_THAN (>),
+            GREATER (>=), LOWER_THAN (<), LOWER (<=), EQUALS, LIKE, ISNULL or ISEMPTY, or a list of those (any of
+            them must match). Example::
+
+                search(search_aspect_fields={
+                    "INVOICE_ADDRESS¶ADDRESS¶CITY": "Graz",
+                    "¶ADDRESS¶ZIP": ["8010", "8020"],
+                    "¶POSITION¶AMOUNT": ("GREATER", 100),
+                })
 
         :return: The sordIDs of the found objects
         """
-        return self.search_util.search(search_mask_fields, search_mask_id, max_results)
+        return self.search_util.search(search_mask_fields, search_mask_id, max_results, search_aspect_fields)
 
-    def exists(self, search_mask_fields: dict = None, search_mask_id: str = None) -> bool:
+    def exists(self, search_mask_fields: dict = None, search_mask_id: str = None,
+               search_aspect_fields: dict = None) -> bool:
         """
         This function checks if an object exists that matches all the given metadata
 
         :param search_mask_fields: The metadata that should be searched for (default = None)
         :param search_mask_id: The maskID of the mask that should be searched (default = None)
+        :param search_aspect_fields: The aspect values that should be searched for (default = None), see
+            :func:`search`
         :return: True if an object exists, False if not
         """
-        return len(self.search_util.search(search_mask_fields, search_mask_id, max_results=1)) > 0
+        return len(self.search_util.search(search_mask_fields, search_mask_id, max_results=1,
+                                           search_aspect_fields=search_aspect_fields)) > 0
+
+    def get_aspects(self) -> list[AspectInfo]:
+        """
+        Returns all keywording aspects of the repository (ELO 23 and newer)
+
+        :return: List of AspectInfo (id, name, guid, display_name, package_name)
+        """
+        return self.aspect_util.get_aspects()
+
+    def get_aspect(self, aspect_identifier: str) -> Aspect:
+        """
+        Returns a keywording aspect with its lines (fields)
+
+        :param aspect_identifier: id, guid or name of the aspect
+        :return: Aspect with lines: line key -> AspectLine (key, type, display_name)
+        """
+        return self.aspect_util.get_aspect(aspect_identifier)
+
+    def get_mask_aspect_assocs(self, mask_identifier: str) -> dict[str, AspectAssoc]:
+        """
+        Returns the aspect associations of a mask. Empty if the mask is not based on aspects.
+
+        :param mask_identifier: id, guid or name of the mask
+        :return: association name -> AspectAssoc (name, aspect_id, cardinality, display_name)
+        """
+        return self.aspect_util.get_mask_aspect_assocs(mask_identifier)
+
+    def get_aspect_fields(self, sord_id: str) -> dict[str, list[dict]]:
+        """
+        Returns the aspect data of a sord whose mask is based on aspects.
+
+        The result maps the name of the aspect association to a list of aspect objects (as an association can have
+        the cardinality "many"). An aspect object maps the line key to its value. Example::
+
+            {"INVOICE_ADDRESS": [{"STREET": "Hauptplatz 1", "CITY": "Graz", "ZIP": "8010"}]}
+
+        ELO aspect line type -> Python type:
+
+        * text, status, user (guid), relation (sord guid), time -> str
+
+        * integer -> int, double -> float, fixed point number -> Decimal
+
+        * iso date -> datetime.date, iso date time -> datetime.datetime
+
+        :param sord_id: The sordID of the sord in ELO
+        :return: association name -> list of aspect objects
+        """
+        return self.aspect_util.get_aspect_fields(sord_id)
+
+    def write_aspect_fields(self, sord_id: str, aspect_fields: dict):
+        """
+        Writes aspect data of a sord whose mask is based on aspects.
+
+        For every given association all its aspect objects are replaced by the given ones. Associations that are not
+        given stay unchanged; an empty list removes all objects of an association. Values are converted according
+        to the type of the aspect line (int, float, Decimal, str, datetime.date, datetime.datetime).
+        Example::
+
+            write_aspect_fields(sord_id, {
+                "INVOICE_ADDRESS": {"STREET": "Hauptplatz 1", "CITY": "Graz", "ZIP": "8010"},
+                "POSITIONS": [{"ITEM": "Ramen", "AMOUNT": 2}, {"ITEM": "Gyoza", "AMOUNT": 1}],
+            })
+
+        :param sord_id: The sordID of the sord in ELO
+        :param aspect_fields: association name -> aspect object (dict) or list of aspect objects
+        """
+        self.aspect_util.write_aspect_fields(sord_id, aspect_fields)
 
     def checkout(self, sord_id: str, edit_info_z: EditInfoZ = EDIT_INFO_Z_MB_ALL) -> Sord:
         """
