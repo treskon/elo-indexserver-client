@@ -236,7 +236,7 @@ Add the get_group_members call in elo_service and update documentation
 * create_user
     * Add param ldap_properties
 
-# Unreleased
+# 0.1.36
 
 * update_file keeps the index fields (obj_keys) of the document and only sets ELO_FNAME (reusing the id of the
   mask's ELO_FNAME field). Before, the new version was checked in with only ELO_FNAME, which cleared every other
