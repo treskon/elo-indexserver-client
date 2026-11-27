@@ -24,3 +24,33 @@ class TestService(unittest.TestCase):
 
     def test_login(self):
         self._login()
+
+
+class TestLoginSpecialCharacters(unittest.TestCase):
+    """Login of a user whose name and password contain special characters. Self-contained: creates the user and
+    deletes it at the end."""
+
+    def test_login_with_special_characters(self):
+        from datetime import datetime
+        from eloclient.models import UserInfo
+        from eloservice.user_util import UserUtil
+
+        admin = LoginUtil(os.environ["TEST_ELO_IX_URL"], os.environ["TEST_ELO_IX_USER"],
+                          os.environ["TEST_ELO_IX_PASSWORD"])
+        admin_util = UserUtil(admin.elo_client, admin.elo_connection)
+        user = UserInfo()
+        user.name = "Test Jürgen Größ [" + datetime.now().strftime("%d-%m-%Y:%H:%M:%S") + "]"
+        user.pwd = "Pässwörd_§€ß:1"
+        user.user_props = ["", "", "", "", "", "", "", ""]
+        new_user_id = admin_util.create_user(user)
+        try:
+            login_util = LoginUtil(os.environ["TEST_ELO_IX_URL"], user.name, user.pwd)
+            util = UserUtil(login_util.elo_client, login_util.elo_connection)
+            users = util.get_user_base(user.name)
+            self.assertEqual(user.name, users[0].name)
+            # a second call reuses the ticket
+            self.assertEqual(user.name, util.get_user_base(str(users[0].id))[0].name)
+            with self.assertRaises(ValueError):
+                LoginUtil(os.environ["TEST_ELO_IX_URL"], user.name, "Wrong_Pässwörd")
+        finally:
+            admin_util.delete_user(str(new_user_id))

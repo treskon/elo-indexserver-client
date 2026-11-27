@@ -40,7 +40,9 @@ rest_password = "elo"
 elo_service = EloService(url=rest_baseurl, user=rest_user, password=rest_password)
 ```
 
-**Known issue: Due to encoding issues the user and password should not contain special characters.**
+User and password may contain special characters (e.g. `ä`, `ö`, `ü`, `ß`, `§`, `€`). Pure ASCII credentials are sent
+via HTTP Basic auth. Otherwise, the client logs in via `IXServicePortIF/login` (credentials in the UTF-8 JSON body) and
+authenticates all further calls with the returned session ticket, which is renewed automatically.
 
 Then you can use the service to access the Index server REST API.
 Here are often examples:
@@ -59,6 +61,22 @@ elo_service.overwrite_mask_fields(sord_id=file_id, mask_name="Images", metadata=
 # search
 search_result = elo_service.search(search_mask_fields={"LATITUDE": "35.73258119685775"}, max_results=1)
 print(f"sordID of the found file: {search_result[0]}")
+```
+
+### Keywording aspects (ELO 23+)
+
+```python
+# aspects of the repository and the aspect associations of a mask
+aspects = elo_service.get_aspects()
+assocs = elo_service.get_mask_aspect_assocs("Invoice")
+# write and read aspect data: association name -> aspect object(s)
+elo_service.write_aspect_fields(sord_id=file_id, aspect_fields={
+    "INVOICE_ADDRESS": {"STREET": "Hauptplatz 1", "CITY": "Graz", "ZIP": "8010"},
+    "POSITIONS": [{"ITEM": "Ramen", "AMOUNT": 2}, {"ITEM": "Gyoza", "AMOUNT": 1}],
+})
+aspect_fields = elo_service.get_aspect_fields(sord_id=file_id)
+# search: "<association>¶<aspect>¶<line>", empty parts are wildcards
+search_result = elo_service.search(search_aspect_fields={"¶ADDRESS¶CITY": "Graz"})
 ```
 
 For more information visit the [Documentation](https://treskon.github.io/elo-indexserver-client/) or see the

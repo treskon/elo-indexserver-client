@@ -20,10 +20,24 @@ KNOWN_MIMETYPES_TO_ELO_MIMETYPES = {
     "image/jpeg": 260,
     "image/jpg": 260,
     "image/png": 273,
-    "application/octet-stream": 245 # this is the default 'document' which basically means 'unknown'. It's not really octet-stream, but it's the closest we can get.
+    "application/octet-stream": 254  # SordC.LBT_DOCUMENT: the generic 'document' type, which basically means 'unknown'.
+    # (Types below 254 are folder types, see https://github.com/treskon/elo-indexserver-client/issues/33)
     # obviously not complete, if you need more add them. You can find the ELO mimetypes when you checkout a sord and look at the set param.
     # I could not find a list of all mimetypes in the docs.
 }
+
+def _guess_mimetype(filename: str) -> str:
+    """
+    Guesses the mimetype of a file by its name. Falls back to "application/octet-stream" if the type is unknown
+    (e.g. no or an unknown file extension). Jpeg files get "image/jpg", as ELO expects it this way.
+    """
+    mimetype = mimetypes.guess_type(filename)[0] if filename else None
+    if mimetype is None:
+        return "application/octet-stream"
+    if "jpeg" in mimetype:
+        return "image/jpg"
+    return mimetype
+
 
 class FileUtil:
     elo_connection: EloConnection
@@ -195,12 +209,7 @@ class FileUtil:
             filename_objkey_id = existing_fname.id
         filename_key = ObjKey(data=[filename], name="ELO_FNAME", id=filename_objkey_id, obj_id=document_sord.id)
         document_sord.obj_keys = [key for key in existing_keys if key.name != "ELO_FNAME"] + [filename_key]
-        mimetype = mimetypes.guess_type(filename)[0]
-        # if mimetype is jpeg then use jpg as extension bc elo
-        if "jpeg" in mimetype:
-            mimetype = "image/jpg"
-        if mimetype is None:
-            mimetype = "application/octet-stream"
+        mimetype = _guess_mimetype(filename)
         if mimetype in KNOWN_MIMETYPES_TO_ELO_MIMETYPES:
             document_sord.type = KNOWN_MIMETYPES_TO_ELO_MIMETYPES.get(mimetype)
 
